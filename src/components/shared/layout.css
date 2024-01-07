@@ -1,0 +1,212 @@
+@font-face {
+  font-family: "DM Serif Display";
+  src: url("../../fonts/DM_Serif_Display/DMSerifDisplay-Regular.ttf");
+
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Vilane";
+  src: url("../../fonts/Vilane/Vilane Regular.ttf");
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "DM Serif Display";
+  src: url("../../fonts/DM_Serif_Display/DMSerifDisplay-Italic.ttf");
+  font-style: italic;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("../../fonts/Inter/static/Inter-Thin.ttf");
+  font-style: normal;
+  font-weight: 100;
+}
+
+@font-face {
+  font-family: "Vilane";
+  src: url("../../fonts/Vilane/Vilane Thin.ttf");
+  font-style: normal;
+  font-weight: 100;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("../../fonts/Inter/static/Inter-ExtraLight.ttf");
+  font-style: normal;
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: "Vilane";
+  src: url("../../fonts/Vilane/Vilane Extra Light.ttf");
+  font-style: normal;
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("../../fonts/Inter/static/Inter-Light.ttf");
+  font-style: normal;
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Vilane";
+  src: url("../../fonts/Vilane/Vilane Light.ttf");
+  font-style: normal;
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("../../fonts/Inter/static/Inter-Regular.ttf");
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("../../fonts/Inter/static/Inter-Medium.ttf");
+  font-style: normal;
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Vilane";
+  src: url("../../fonts/Vilane/Vilane Medium.ttf");
+  font-style: normal;
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("../../fonts/Inter/static/Inter-SemiBold.ttf");
+  font-style: normal;
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Vilane";
+  src: url("../../fonts/Vilane/Vilane Semi Bold.ttf");
+  font-style: normal;
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("../../fonts/Inter/static/Inter-Bold.ttf");
+  font-style: normal;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Vilane";
+  src: url("../../fonts/Vilane/Vilane Bold.ttf");
+  font-style: normal;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("../../fonts/Inter/static/Inter-ExtraBold.ttf");
+  font-style: normal;
+  font-weight: 800;
+}
+
+@font-face {
+  font-family: "Vilane";
+  src: url("../../fonts/Vilane/Vilane Bold.ttf");
+  font-style: normal;
+  font-weight: 800;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("../../fonts/Inter/static/Inter-Black.ttf");
+  font-style: normal;
+  font-weight: 900;
+}
+
+@font-face {
+  font-family: "Vilane";
+  src: url("../../fonts/Vilane/Vilane Bold.ttf");
+  font-style: normal;
+  font-weight: 900;
+}
+
+body {
+  background-color: black;
+  background-image: url("../../images/noise.png");
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  box-sizing: border-box;
+  margin: 0;
+  width: 100%;
+}
+
+div {
+  font-family: "Inter";
+  /* letter-spacing: 1px; */
+  font-style: normal;
+  font-weight: 300;
+  box-sizing: border-box;
+}
+section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 80px;
+}
+
+@media (max-width: 768px) {
+  section {
+    margin-bottom: 40px;
+  }
+}
+
+@media (max-width: 475px) {
+  section {
+    margin-bottom: 20px;
+  }
+}
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  text-transform: uppercase;
+  box-sizing: border-box;
+}
+
+main {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  margin: auto;
+  max-width: 1320px;
+}
+
+div {
+  width: max-content;
+}
+
+#gatsby-focus-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+#___gatsby {
+  width: 100%;
+}

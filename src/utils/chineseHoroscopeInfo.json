@@ -1,0 +1,110 @@
+{
+  "sobolan": {
+    "element": "Apă",
+    "guvernator": "Yang",
+    "ani": "1924, 1936, 1948, 1960, 1972, 1984, 1996, 2008, 2020, 2032",
+    "forte": "Ingenios, versatil, amabil, deștept, spiritos, curios, observator, cu mintea ageră",
+    "slabe": "Timid, instabil, încăpățânat, pretențios, lipsă de persistență, cârcotaș",
+    "likes": "Să se bucure de lux, să-și facă prieteni, să aibă aventuri, să mănânce mâncare bună, să rămână activ",
+    "dislikes": "Rutina zilnică banală, să fie forțat în situații, să se simtă prins sau constrâns"
+  },
+  "bivol": {
+    "element": "Pământ",
+    "guvernator": "Yin",
+    "ani": "1925, 1937, 1949, 1961, 1973, 1985, 1997, 2009, 2021, 2033",
+    "forte": "Loial, de încredere, responsabil, puternic, persistent, metodic",
+    "slabe": "Inflexibil, conservator, încăpățânat, dependent de rutină, lent",
+    "likes": "Stabilitatea, lucrurile materiale, confortul, lucrul manual, fiind lider",
+    "dislikes": "Schimbările neașteptate, complicațiile, ineficiența, lucrurile care amenință securitatea sa"
+  },
+  "tigru": {
+    "element": "Lemn",
+    "guvernator": "Yang",
+    "ani": "1926, 1938, 1950, 1962, 1974, 1986, 1998, 2010, 2022, 2034",
+    "forte": "Curajos, activ, auto-încredere, carismatic, lider înnăscut, îndrăzneț, aventuros",
+    "slabe": "Impulsiv, rebel, imprudent, neînfrânat, egoist, capricios, instabil",
+    "likes": "Libertatea, rolurile de conducere, noi provocări, aventuri, călătoriile, petrecerile",
+    "dislikes": "Sentimentul de restricție, rutina, lipsa de respect, situațiile monoton"
+  },
+  "iepure": {
+    "element": "Lemn",
+    "guvernator": "Yin",
+    "ani": "1927, 1939, 1951, 1963, 1975, 1987, 1999, 2011, 2023, 2035",
+    "forte": "Empatic, diplomatic, prudență, tact, sensibil, creativ, norocos, elegant",
+    "slabe": "Timid, conservator, nesigur, melancolic, superficial, evitant",
+    "likes": "Confortul, arta, cultura, pacea, liniștea, viața de familie, natura",
+    "dislikes": "Conflictele, riscul, critica, neglijența, dezordinea, incertitudinea"
+  },
+  "dragon": {
+    "element": "Pământ",
+    "guvernator": "Yang",
+    "ani": "1928, 1940, 1952, 1964, 1976, 1988, 2000, 2012, 2024, 2036",
+    "forte": "Ambițios, curajos, energic, independent, generos, carismatic, norocos",
+    "slabe": "Arogant, dominant, impetuos, irascibil, pretentios, intolerant",
+    "likes": "Să fie lider, să aibă succes, să fie lăudat, luxul, puterea, aventura",
+    "dislikes": "Eșecul, opoziția, viața monotonă, lipsa de respect, constrângerile"
+  },
+  "sarpe": {
+    "element": "Foc",
+    "guvernator": "Yin",
+    "ani": "1929, 1941, 1953, 1965, 1977, 1989, 2001, 2013, 2025, 2037",
+    "forte": "Înțelept, misterios, intuitiv, empatic, atractiv, elegant, prudență",
+    "slabe": "Suspicios, manipulator, melancolic, pesimist, tăcut, vanitos",
+    "likes": "Intimitatea, enigmele, cărțile, muzica, rafinamentul, oamenii apropiați",
+    "dislikes": "Zgomotul, haosul, eșecul, superficialitatea, indiferența, sarcinile banale"
+  },
+  "cal": {
+    "element": "Foc",
+    "guvernator": "Yang",
+    "ani": "1930, 1942, 1954, 1966, 1978, 1990, 2002, 2014, 2026, 2038",
+    "forte": "Energetic, independent, impulsiv, optimist, sociabil, deschis",
+    "slabe": "Impacient, sensibil, capricios, neînfrânat, rebel",
+    "likes": "Libertatea, călătoriile, aventurile, sporturile, petrecerile, natura",
+    "dislikes": "Limitările, singurătatea, monotonia, rutina, constrângerile"
+  },
+  "oaie": {
+    "element": "Pământ",
+    "guvernator": "Yin",
+    "ani": "1931, 1943, 1955, 1967, 1979, 1991, 2003, 2015, 2027, 2039",
+    "forte": "Creativ, artistic, blând, sensibil, amabil, empatic",
+    "slabe": "Timid, nesigur, pesimist, nehotărât, pasiv, anxios",
+    "likes": "Arta, frumusețea, confortul, spațiile liniștite, natura, simplitatea",
+    "dislikes": "Presiunea, criticile, situațiile complicate, agitația, haosul, violența"
+  },
+  "maimuta": {
+    "element": "Metal",
+    "guvernator": "Yang",
+    "ani": "1932, 1944, 1956, 1968, 1980, 1992, 2004, 2016, 2028, 2040",
+    "forte": "Inteligent, inventiv, curios, agil, adaptabil, vesel",
+    "slabe": "Șiret, nepăsător, neserios, inconstant, capricios",
+    "likes": "Jocurile, enigmele, petrecerile, activitățile sociale, călătoriile, aventurile",
+    "dislikes": "Rutina, plictiseala, constrângerile, să fie ignorat, să piardă"
+  },
+  "cocos": {
+    "element": "Metal",
+    "guvernator": "Yin",
+    "ani": "1933, 1945, 1957, 1969, 1981, 1993, 2005, 2017, 2029, 2041",
+    "forte": "Organizat, observator, curajos, talentat, activ, amuzant",
+    "slabe": "Arogant, vanitos, impulsiv, critic, anxios, sensibil la ego",
+    "likes": "Atenția, admirația, frumusețea, curățenia, hainele elegante, arta",
+    "dislikes": "Neglijența, mizeria, pericolul, indiferența, lipsa de recunoaștere, monotonie"
+  },
+  "caine": {
+    "element": "Pământ",
+    "guvernator": "Yang",
+    "ani": "1934, 1946, 1958, 1970, 1982, 1994, 2006, 2018, 2030, 2042",
+    "forte": "Loial, sincer, inteligent, curajos, responsabil, etic",
+    "slabe": "Pesimist, anxios, critic, încăpățânat, cinic, rezervat",
+    "likes": "Dreptatea, egalitatea, onestitatea, fidelitatea, activitățile în aer liber, natura",
+    "dislikes": "Injustiția, trădarea, superficialitatea, indiferența, nepăsarea, minciuna"
+  },
+  "porc": {
+    "element": "Apă",
+    "guvernator": "Yin",
+    "ani": "1935, 1947, 1959, 1971, 1983, 1995, 2007, 2019, 2031, 2043",
+    "forte": "Onest, tolerant, calm, generos, jovial, sincronizat",
+    "slabe": "Naiv, materialist, lipsit de voință, dependent, indulgent",
+    "likes": "Confortul, mâncarea, materialismul, luxul, plăcerile vieții, ospitalitatea",
+    "dislikes": "Necinstea, incertitudinea, conflictul, singurătatea, fiind ignorat"
+  }
+}
