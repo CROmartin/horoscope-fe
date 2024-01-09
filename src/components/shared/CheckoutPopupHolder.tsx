@@ -149,11 +149,8 @@ const StarRow = styled.div`
     max-height: 122px;
   }
 `;
-const ProdKey =
-  "pk_live_51N0jBmL9u6AFblMaS20jA1dnmMXajovU8u2A8V1qaCq7mTDIaAZv9ZDvPE8By8gFoXJRFbS1F9DihnGraN5CvPHS00rr7ggJqD";
-const TestKey =
-  "pk_test_51N0jBmL9u6AFblMaCZGUXqdMgDAPgA9MV5vBI4WT6eblRG5QXLCMH9A3LuWigi76aC70nLGGfXA8IiWtwoOya9he00CluBiOZS";
-const Key = TestKey;
+
+const Key = process.env.Key || "";
 const stripePromise = loadStripe(Key);
 
 function CheckoutPopupHolder({ children, setIsPopupOpen }: any) {

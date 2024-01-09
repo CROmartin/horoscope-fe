@@ -9,6 +9,7 @@ dist/
 .cache/
 public/
 
+.env
 # Compiled Java class files
 *.class
 
