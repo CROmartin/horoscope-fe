@@ -1,4 +1,7 @@
 import type { GatsbyConfig } from "gatsby";
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+});
 
 const config: GatsbyConfig = {
   siteMetadata: {
@@ -38,7 +41,7 @@ const config: GatsbyConfig = {
       options: {
         typeName: "horoscop",
         fieldName: "horoscop",
-        url: "http://localhost:3000/graphql",
+        url: `${process.env.URL}/graphql`,
         // refetchInterval: 60,
       },
     },

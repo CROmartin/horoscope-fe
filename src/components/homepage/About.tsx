@@ -102,7 +102,7 @@ function About() {
       <Wrapper>
         <Section>
           <LeftSide>
-            <TittleH2> DESPRE </TittleH2>
+            <TittleH2> DESPRE NOI</TittleH2>
             <Paragraph>
               Am reinventat modul în care sunt create horoscoapele. Mergând
               dincolo de tradiționalele metode astrologice, ne mândrim cu
@@ -117,7 +117,7 @@ function About() {
               horoscoapele noastre revoluționare.
             </Paragraph>
 
-            <Button message={"Află mai multe"} />
+            <Button message={"Află mai multe"} link="/despre-noi" />
           </LeftSide>
         </Section>
         <Section image={true}>

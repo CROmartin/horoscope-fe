@@ -48,7 +48,10 @@ function Leu() {
             </IntervalBox>
           </IntervalHolder>
           <RowHoroscopes>
-            <Button message="Mai Multe Horoscoape" link={`/horoscop`} />
+            <Button
+              message="Horoscopul chinezesc"
+              link={`/horoscop-chinezesc`}
+            />
           </RowHoroscopes>
           <ContentBox>
             <div>

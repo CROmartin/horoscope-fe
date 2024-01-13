@@ -26,13 +26,23 @@ import { ReactComponent as Virgo } from "../components/horoscopes/Icons/VirgoBig
 import { HeadFC } from "gatsby";
 import SeoHeader from "../components/shared/SeoHeader";
 import TryMoreZodiacSigns from "../components/horoscopes/TryMoreZodiacSigns";
+import { Link } from "gatsby";
+import styled from "styled-components";
+
+const HomeLink = styled(Link)`
+  :hover {
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
+  }
+`;
 
 function HoroscopePage(data: any) {
   console.log(data);
   const { description, sign, interval } = data.pageContext;
   return (
     <AlignWrapper>
-      <Illustration />
+      <HomeLink to="/">
+        <Illustration />
+      </HomeLink>
       <Title>
         Horoscop {interval} {sign}
       </Title>

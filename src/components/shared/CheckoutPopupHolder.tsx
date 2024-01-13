@@ -150,7 +150,9 @@ const StarRow = styled.div`
   }
 `;
 
-const Key = process.env.Key || "";
+const Key =
+  process.env.GATSBY_STRIPE_KEY ||
+  "pk_test_51N0jBmL9u6AFblMaCZGUXqdMgDAPgA9MV5vBI4WT6eblRG5QXLCMH9A3LuWigi76aC70nLGGfXA8IiWtwoOya9he00CluBiOZS";
 const stripePromise = loadStripe(Key);
 
 function CheckoutPopupHolder({ children, setIsPopupOpen }: any) {
@@ -160,10 +162,11 @@ function CheckoutPopupHolder({ children, setIsPopupOpen }: any) {
   const { purchased } = useSubscriptionStore();
 
   useEffect(() => {
+    console.log("Key", process.env.GATSBY_STRIPE_KEY);
     let getPrice = parseInt(localStorage.getItem("priceHoroscope") || "1000");
     setPrice(getPrice / 100);
     // Create PaymentIntent as soon as the page loads
-    fetch("http://localhost:3000/create-payment-intent", {
+    fetch(`${process.env.URL}/create-payment-intent`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ price: getPrice }),

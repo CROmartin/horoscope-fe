@@ -16,18 +16,17 @@ function DespreNoi() {
         <Illustration />
       </Link>
       <AboutUs />
+      <br />
+      <br />
+      <br />
+
+      <br />
+
+      <br />
+      <br />
+      <HoroscopeTypes />
       <Benefits />
       <WhyHoroscope />
-      <br />
-      <br />
-      <br />
-
-      <br />
-
-      <br />
-      <br />
-
-      <HoroscopeTypes />
     </AlignWrapper>
   );
 }

@@ -5,13 +5,14 @@ import Fullmoon from "../../Icons/Fullmoon";
 import Star from "../../Icons/Star";
 import Button from "../shared/Button";
 import { TittleH2 } from "../styles/styles.styled";
-const HoroscopeTypesWrapper = styled.section`
+const HoroscopeTypesWrapper = styled.div`
   display: flex;
   border: 2px solid #d7be8a;
   border-right: none;
   flex-direction: row;
   flex-wrap: wrap;
   margin-top: 50px;
+  width: 100%;
   @media (max-width: 1285px) {
     justify-content: center;
     border: none;
@@ -82,7 +83,7 @@ function HoroscopeTypes() {
             Iată unde poți afla HOROSCOPUL TĂU ZILNIC! Haide, descoperă ce îți
             rezervă astrele astăzi!
           </Paragraph>
-          <Button message="Află mai multe" link="horoscop-zilnic" />
+          <Button message="Află mai multe" link="/horoscop-zilnic" />
         </TypeHolder>
         <TypeHolder>
           <Halfmoon />
@@ -91,7 +92,7 @@ function HoroscopeTypes() {
             Iată unde poți afla HOROSCOPUL TĂU SĂPTĂMÂNAL! Haide, vezi ce
             surprize îți pregătesc astrele săptămâna aceasta!
           </Paragraph>
-          <Button message="Află mai multe" link="horoscop-saptamanal" />
+          <Button message="Află mai multe" link="/horoscop-saptamanal" />
         </TypeHolder>
         <TypeHolder>
           <Fullmoon />
@@ -100,7 +101,7 @@ function HoroscopeTypes() {
             Iată unde poți afla HOROSCOPUL TĂU CHINEZESC! Haide, descoperă ce
             secrete îți dezvăluie zodiacul chinezesc!
           </Paragraph>
-          <Button message="Află mai multe" link="horoscop-chinezesc" />
+          <Button message="Află mai multe" link="/horoscop-chinezesc" />
         </TypeHolder>
       </HoroscopeTypesWrapper>
     </section>

@@ -1,6 +1,7 @@
 import { StaticImage } from "gatsby-plugin-image";
 import React from "react";
 import styled from "styled-components";
+import Button from "../shared/Button";
 
 const Holder = styled.div`
   width: 100%;
@@ -93,6 +94,7 @@ function WhyHoroscope() {
           pentru a explora previziuni și percepții personalizate. Harta ta
           cosmică este la doar un clic distanță.
         </Paragraph>
+        <Button message={"Află mai multe"} link="/despre-noi" />
       </Column>
       <StaticImage
         src="./images/HappyCostumer.webp"

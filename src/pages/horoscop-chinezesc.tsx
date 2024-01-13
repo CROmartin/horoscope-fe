@@ -25,12 +25,11 @@ function Horoscop() {
       <HoroscopesChinezesc />
 
       <Introduction />
+      <ZodiacCircle />
 
       <WhyHoroscope />
 
       <Benefits />
-
-      <ZodiacCircle />
     </AlignWrapper>
   );
 }

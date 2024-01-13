@@ -5,13 +5,14 @@ import Fullmoon from "../../Icons/Fullmoon";
 import Star from "../../Icons/Star";
 import Button from "../shared/Button";
 import { TittleH2 } from "../styles/styles.styled";
-const HoroscopeTypesWrapper = styled.section`
+const HoroscopeTypesWrapper = styled.div`
   display: flex;
   border: 2px solid #d7be8a;
   border-right: none;
   flex-direction: row;
   flex-wrap: wrap;
   margin-top: 50px;
+  width: 100%;
   @media (max-width: 1285px) {
     justify-content: center;
     border: none;

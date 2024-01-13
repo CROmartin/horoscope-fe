@@ -80,6 +80,12 @@ const IconWrapper = styled.a<IconWrapperProps>`
     filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
   }
 `;
+
+const HomeLink = styled(Link)`
+  :hover {
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
+  }
+`;
 function HoroscopeChinesePage(data: any) {
   console.log(data);
   const { description, sign, signStandard, interval } = data.pageContext;
@@ -90,9 +96,9 @@ function HoroscopeChinesePage(data: any) {
 
   return (
     <AlignWrapper>
-      <Link to="/horoscop">
+      <HomeLink to="/">
         <Illustration />
-      </Link>
+      </HomeLink>
       <h1>{sign}</h1>
       <Row>
         <LeftSide>
