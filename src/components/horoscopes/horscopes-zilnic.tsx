@@ -1,17 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import { ReactComponent as Aquarius } from "./Icons/AquariusBig.svg";
-import { ReactComponent as Aries } from "./Icons/AriesBig.svg";
-import { ReactComponent as Cancer } from "./Icons/CancerBig.svg";
-import { ReactComponent as Capricorn } from "./Icons/CapricornBig.svg";
-import { ReactComponent as Gemini } from "./Icons/GeminiBig.svg";
-import { ReactComponent as Leo } from "./Icons/LeoBig.svg";
-import { ReactComponent as Libra } from "./Icons/LibraBig.svg";
-import { ReactComponent as Pisces } from "./Icons/PiscesBig.svg";
-import { ReactComponent as Sagittarius } from "./Icons/SagittariusBig.svg";
-import { ReactComponent as Scorpio } from "./Icons/ScorpioBig.svg";
-import { ReactComponent as Taurus } from "./Icons/TaurusBig.svg";
-import { ReactComponent as Virgo } from "./Icons/VirgoBig.svg";
+import { ReactComponent as Aquarius } from "./Icons/aquariusBig.svg";
+import { ReactComponent as Aries } from "./Icons/ariesBig.svg";
+import { ReactComponent as Cancer } from "./Icons/cancerBig.svg";
+import { ReactComponent as Capricorn } from "./Icons/capricornBig.svg";
+import { ReactComponent as Gemini } from "./Icons/geminiBig.svg";
+import { ReactComponent as Leo } from "./Icons/leoBig.svg";
+import { ReactComponent as Libra } from "./Icons/libraBig.svg";
+import { ReactComponent as Pisces } from "./Icons/piscesBig.svg";
+import { ReactComponent as Sagittarius } from "./Icons/sagittariusBig.svg";
+import { ReactComponent as Scorpio } from "./Icons/scorpioBig.svg";
+import { ReactComponent as Taurus } from "./Icons/taurusBig.svg";
+import { ReactComponent as Virgo } from "./Icons/virgoBig.svg";
 
 import { Link } from "gatsby";
 
