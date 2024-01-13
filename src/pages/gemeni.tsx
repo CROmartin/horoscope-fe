@@ -6,7 +6,7 @@ import Star from "../Icons/Star";
 import Button from "../components/shared/Button";
 import AlignWrapper from "../components/shared/AlignWrapper";
 
-import { ReactComponent as Gemini } from "../components/horoscopes/Icons/GeminiBig.svg";
+import { ReactComponent as Gemini } from "../components/horoscopes/Icons/geminiBig.svg";
 
 import {
   Row,

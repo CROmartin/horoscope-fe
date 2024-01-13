@@ -5,7 +5,7 @@ import Illustration from "../components/horoscopes/Icons/illustration";
 import Star from "../Icons/Star";
 import Button from "../components/shared/Button";
 import AlignWrapper from "../components/shared/AlignWrapper";
-import { ReactComponent as Taurus } from "../components/horoscopes/Icons/TaurusBig.svg";
+import { ReactComponent as Taurus } from "../components/horoscopes/Icons/taurusBig.svg";
 import {
   Row,
   LeftSide,

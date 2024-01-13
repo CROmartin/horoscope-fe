@@ -6,7 +6,7 @@ import Star from "../Icons/Star";
 import Button from "../components/shared/Button";
 import AlignWrapper from "../components/shared/AlignWrapper";
 
-import { ReactComponent as Cancer } from "../components/horoscopes/Icons/CancerBig.svg";
+import { ReactComponent as Cancer } from "../components/horoscopes/Icons/cancerBig.svg";
 
 import {
   Row,

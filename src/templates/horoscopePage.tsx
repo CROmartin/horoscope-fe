@@ -11,18 +11,18 @@ import {
   IconWrapper,
   Title,
 } from "../components/horoscope/HoroscopePageStyled";
-import { ReactComponent as Aquarius } from "../components/horoscopes/Icons/AquariusBig.svg";
-import { ReactComponent as Aries } from "../components/horoscopes/Icons/AriesBig.svg";
-import { ReactComponent as Cancer } from "../components/horoscopes/Icons/CancerBig.svg";
-import { ReactComponent as Capricorn } from "../components/horoscopes/Icons/CapricornBig.svg";
-import { ReactComponent as Gemini } from "../components/horoscopes/Icons/GeminiBig.svg";
-import { ReactComponent as Leo } from "../components/horoscopes/Icons/LeoBig.svg";
-import { ReactComponent as Libra } from "../components/horoscopes/Icons/LibraBig.svg";
-import { ReactComponent as Pisces } from "../components/horoscopes/Icons/PiscesBig.svg";
-import { ReactComponent as Sagittarius } from "../components/horoscopes/Icons/SagittariusBig.svg";
-import { ReactComponent as Scorpio } from "../components/horoscopes/Icons/ScorpioBig.svg";
-import { ReactComponent as Taurus } from "../components/horoscopes/Icons/TaurusBig.svg";
-import { ReactComponent as Virgo } from "../components/horoscopes/Icons/VirgoBig.svg";
+import { ReactComponent as Aquarius } from "../components/horoscopes/Icons/aquariusBig.svg";
+import { ReactComponent as Aries } from "../components/horoscopes/Icons/ariesBig.svg";
+import { ReactComponent as Cancer } from "../components/horoscopes/Icons/cancerBig.svg";
+import { ReactComponent as Capricorn } from "../components/horoscopes/Icons/capricornBig.svg";
+import { ReactComponent as Gemini } from "../components/horoscopes/Icons/geminiBig.svg";
+import { ReactComponent as Leo } from "../components/horoscopes/Icons/leoBig.svg";
+import { ReactComponent as Libra } from "../components/horoscopes/Icons/libraBig.svg";
+import { ReactComponent as Pisces } from "../components/horoscopes/Icons/piscesBig.svg";
+import { ReactComponent as Sagittarius } from "../components/horoscopes/Icons/sagittariusBig.svg";
+import { ReactComponent as Scorpio } from "../components/horoscopes/Icons/scorpioBig.svg";
+import { ReactComponent as Taurus } from "../components/horoscopes/Icons/taurusBig.svg";
+import { ReactComponent as Virgo } from "../components/horoscopes/Icons/virgoBig.svg";
 import { HeadFC } from "gatsby";
 import SeoHeader from "../components/shared/SeoHeader";
 import TryMoreZodiacSigns from "../components/horoscopes/TryMoreZodiacSigns";

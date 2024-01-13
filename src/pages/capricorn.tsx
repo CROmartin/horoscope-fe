@@ -6,7 +6,7 @@ import Star from "../Icons/Star";
 import Button from "../components/shared/Button";
 import AlignWrapper from "../components/shared/AlignWrapper";
 
-import { ReactComponent as CapricornSvg } from "../components/horoscopes/Icons/CapricornBig.svg";
+import { ReactComponent as CapricornSvg } from "../components/horoscopes/Icons/capricornBig.svg";
 
 import {
   Row,

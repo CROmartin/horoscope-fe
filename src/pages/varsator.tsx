@@ -6,7 +6,7 @@ import Star from "../Icons/Star";
 import Button from "../components/shared/Button";
 import AlignWrapper from "../components/shared/AlignWrapper";
 
-import { ReactComponent as Aquarius } from "../components/horoscopes/Icons/AquariusBig.svg";
+import { ReactComponent as Aquarius } from "../components/horoscopes/Icons/aquariusBig.svg";
 
 import {
   Row,

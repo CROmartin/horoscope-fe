@@ -5,7 +5,7 @@ import Illustration from "../components/horoscopes/Icons/illustration";
 import Star from "../Icons/Star";
 import Button from "../components/shared/Button";
 import AlignWrapper from "../components/shared/AlignWrapper";
-import { ReactComponent as Scorpio } from "../components/horoscopes/Icons/ScorpioBig.svg";
+import { ReactComponent as Scorpio } from "../components/horoscopes/Icons/scorpioBig.svg";
 
 import {
   Row,

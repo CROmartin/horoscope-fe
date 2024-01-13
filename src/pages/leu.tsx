@@ -6,7 +6,7 @@ import Star from "../Icons/Star";
 import Button from "../components/shared/Button";
 import AlignWrapper from "../components/shared/AlignWrapper";
 
-import { ReactComponent as Leo } from "../components/horoscopes/Icons/LeoBig.svg";
+import { ReactComponent as Leo } from "../components/horoscopes/Icons/leoBig.svg";
 
 import {
   Row,

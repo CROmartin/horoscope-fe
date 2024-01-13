@@ -18,7 +18,7 @@ import {
 } from "../components/horoscope/HoroscopeStyled";
 import { HeadFC, Link } from "gatsby";
 import SeoHeader from "../components/shared/SeoHeader";
-import { ReactComponent as Virgo } from "../components/horoscopes/Icons/VirgoBig.svg";
+import { ReactComponent as Virgo } from "../components/horoscopes/Icons/virgoBig.svg";
 
 function Berbec() {
   return (

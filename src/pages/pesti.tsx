@@ -6,7 +6,7 @@ import Star from "../Icons/Star";
 import Button from "../components/shared/Button";
 import AlignWrapper from "../components/shared/AlignWrapper";
 
-import { ReactComponent as Pisces } from "../components/horoscopes/Icons/PiscesBig.svg";
+import { ReactComponent as Pisces } from "../components/horoscopes/Icons/piscesBig.svg";
 
 import {
   Row,

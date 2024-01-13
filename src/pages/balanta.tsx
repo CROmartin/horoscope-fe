@@ -5,7 +5,7 @@ import Illustration from "../components/horoscopes/Icons/illustration";
 import Star from "../Icons/Star";
 import Button from "../components/shared/Button";
 import AlignWrapper from "../components/shared/AlignWrapper";
-import { ReactComponent as Libra } from "../components/horoscopes/Icons/LibraBig.svg";
+import { ReactComponent as Libra } from "../components/horoscopes/Icons/libraBig.svg";
 import {
   Row,
   LeftSide,

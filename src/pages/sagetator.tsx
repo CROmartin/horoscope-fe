@@ -6,7 +6,7 @@ import Star from "../Icons/Star";
 import Button from "../components/shared/Button";
 import AlignWrapper from "../components/shared/AlignWrapper";
 
-import { ReactComponent as Sagittarius } from "../components/horoscopes/Icons/SagittariusBig.svg";
+import { ReactComponent as Sagittarius } from "../components/horoscopes/Icons/sagittariusBig.svg";
 
 import {
   Row,
