@@ -166,7 +166,7 @@ function CheckoutPopupHolder({ children, setIsPopupOpen }: any) {
     let getPrice = parseInt(localStorage.getItem("priceHoroscope") || "1000");
     setPrice(getPrice / 100);
     // Create PaymentIntent as soon as the page loads
-    fetch(`${process.env.URL}/create-payment-intent`, {
+    fetch(`${process.env.PAYMENT_URL}/create-payment-intent`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ price: getPrice }),
