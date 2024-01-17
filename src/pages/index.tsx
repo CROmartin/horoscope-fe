@@ -24,9 +24,25 @@ const IndexPage = () => {
 
 export default IndexPage;
 
-export const Head: HeadFC = () => (
-  <SeoHeader
-    title="Horoscop Zilnic, Săptămânal și Chinezesc: Ghidul Tău Celest"
-    description="Navighează prin cele mai precise previziuni cu Horoscopul Zilnic, Săptămânal și Chinezesc. Rămâi la curent cu influențele astrale care îți modelează zilele și descoperă secretele destinului tău în ghidul nostru celestial complet."
-  />
-);
+export const Head: HeadFC = () => {
+  const schemaMarkup = `<script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Horoscop zilnic, săptămânal și chinezesc: ghidul tău celest",
+  "url": "https://horoscopzodii.ro/",
+  "logo": "https://horoscopzodii.ro/seo-logo.png",
+  "description": "Navighează prin cele mai precise previziuni cu Horoscopul Zilnic, Săptămânal și Chinezesc. Rămâi la curent cu influențele astrale care îți modelează zilele și descoperă secretele destinului tău în ghidul nostru celestial complet.",
+  "legalName": "Horoscopzodii.ro",
+  "contactPoint": {"contactType":"customer support"}
+  }
+  </script>
+  `;
+  return (
+    <SeoHeader
+      title="Horoscop Zilnic, Săptămânal și Chinezesc: Ghidul Tău Celest"
+      description="Navighează prin cele mai precise previziuni cu Horoscopul Zilnic, Săptămânal și Chinezesc. Rămâi la curent cu influențele astrale care îți modelează zilele și descoperă secretele destinului tău în ghidul nostru celestial complet."
+      schemaMarkup={schemaMarkup}
+    />
+  );
+};

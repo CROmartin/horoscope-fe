@@ -15,7 +15,12 @@ const config: GatsbyConfig = {
   graphqlTypegen: true,
   plugins: [
     "gatsby-plugin-styled-components",
-    // "gatsby-plugin-google-gtag",
+    {
+      resolve: "gatsby-plugin-manifest",
+      options: {
+        icon: "src/images/logo-seo.png",
+      },
+    },
     "gatsby-plugin-image",
     {
       resolve: "gatsby-plugin-sitemap",
