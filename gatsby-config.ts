@@ -6,7 +6,7 @@ require("dotenv").config({
 const config: GatsbyConfig = {
   siteMetadata: {
     title: `Horoscop`,
-    siteUrl: `https://horoscopzodii.ro/`,
+    siteUrl: `https://horoscopzodii.ro`,
     author: "Smart Solutions",
   },
   // More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.
@@ -17,7 +17,41 @@ const config: GatsbyConfig = {
     "gatsby-plugin-styled-components",
     // "gatsby-plugin-google-gtag",
     "gatsby-plugin-image",
-    "gatsby-plugin-sitemap",
+    {
+      resolve: "gatsby-plugin-sitemap",
+      options: {
+        query: `
+          {
+            site {
+              siteMetadata {
+                siteUrl
+              }
+            }
+            allSitePage {
+              nodes {
+                path
+                pageContext
+              }
+            }
+          }`,
+        resolveSiteUrl: ({
+          site: {
+            siteMetadata: { siteUrl },
+          },
+        }: any) => siteUrl,
+        resolvePages: ({ allSitePage: { nodes } }: any) => {
+          return nodes.map((page: any) => {
+            return { ...page };
+          });
+        },
+        serialize: ({ path, pageContext, siteUrl }: any) => {
+          return {
+            url: `${"https://horoscopzodii.ro"}${path}`,
+            lastmod: pageContext?.date,
+          };
+        },
+      },
+    },
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
     {

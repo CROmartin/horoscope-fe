@@ -24,14 +24,17 @@ exports.createPages = async ({ graphql, actions }) => {
         getAllHoroscopeDaily {
           description
           name
+          date
         }
         getAllHoroscopeWeekly {
           description
           name
+          date
         }
         getAllHoroscopeYearly {
           description
           name
+          date
         }
       }
     }
@@ -58,6 +61,7 @@ exports.createPages = async ({ graphql, actions }) => {
         sign: item.name,
         description: item.description,
         interval: "zilnic",
+        date: item.date,
       },
     });
   });
@@ -70,6 +74,7 @@ exports.createPages = async ({ graphql, actions }) => {
         sign: item.name,
         description: item.description,
         interval: "saptamanal",
+        date: item.date,
       },
     });
   });
@@ -83,6 +88,7 @@ exports.createPages = async ({ graphql, actions }) => {
         signStandard: replaceChars(item.name.toLowerCase()),
         description: item.description,
         interval: "anual",
+        date: item.date,
       },
     });
   });

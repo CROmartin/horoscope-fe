@@ -29,11 +29,11 @@ function PopupResolver() {
 
   return (
     <>
-      {isPopupOpen && (
+      {/* {isPopupOpen && (
         <CheckoutPopupHolder setIsPopupOpen={setIsPopupOpen}>
-          <CheckoutForm />{" "}
+          <CheckoutForm />
         </CheckoutPopupHolder>
-      )}
+      )} */}
     </>
   );
 }

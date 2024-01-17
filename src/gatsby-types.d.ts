@@ -2519,6 +2519,7 @@ type horoscop_getHoroscopeYearlyArgs = {
 };
 
 type horoscop_Horoscope = {
+  readonly date: Scalars['String'];
   readonly description: Scalars['String'];
   readonly name: Scalars['String'];
 };
