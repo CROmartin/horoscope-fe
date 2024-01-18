@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactElement } from "react";
 import { useStaticQuery, graphql } from "gatsby";
 
 interface SiteMetadata {
@@ -26,7 +26,7 @@ interface SEOProps {
   noindex?: boolean;
 }
 
-const SeoHeader = ({
+const SeoHeader: React.FC<SEOProps> = ({
   description,
   lang = "en",
   meta = [],
@@ -35,14 +35,14 @@ const SeoHeader = ({
   special,
   prevBranch,
   noindex,
-}: SEOProps): React.ReactElement[] => {
+}): ReactElement => {
   const { site } = useStaticQuery<QueryResult>(
     graphql`
       query {
         site {
           siteMetadata {
             title
-            siteUrl
+            description
             author
           }
         }
@@ -57,30 +57,6 @@ const SeoHeader = ({
     return text[0].toUpperCase() + text.slice(1);
   };
 
-  const [scripts, setScripts] = useState<JSX.Element[]>([]);
-
-  useEffect(() => {
-    const parser = new DOMParser();
-    const schemaArray = parser
-      .parseFromString(schemaMarkup || "", "text/html")
-      .querySelectorAll("script");
-
-    let scr: JSX.Element[] = [];
-
-    schemaArray.forEach(
-      (e, i) =>
-        (scr[i] = (
-          <script
-            key={i}
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: e.innerHTML }}
-          />
-        ))
-    );
-
-    setScripts(scr);
-  }, [schemaMarkup]);
-
   const metaTags = [
     { name: `description`, content: metaDescription },
     { property: `og:title`, content: title },
@@ -93,18 +69,47 @@ const SeoHeader = ({
     ...meta,
   ].map((tag, i) => <meta key={i} {...tag} />);
 
-  const noIndexTag = noindex ? <meta name="robots" content="noindex" /> : null;
+  const createMarkup = (htmlString: string) => {
+    return {
+      __html: htmlString,
+    };
+  };
 
-  return [
-    <title key="title">
-      {capitalizeFirstLetter(title)}
-      {defaultTitle ? ` | ${defaultTitle}` : ""}
-    </title>,
-    <html key="html" lang={lang} />,
-    ...metaTags,
-    ...scripts,
-    noIndexTag,
-  ].filter(Boolean) as React.ReactElement[];
+  // If `schemaMarkup` contains multiple scripts, split them and create an array of script elements
+  const schemaScripts = schemaMarkup
+    ? schemaMarkup
+        .split(/<\/script>/gi)
+        .filter((script) => script.trim().length > 0)
+        .map((scriptContent, index) => {
+          const scriptHtml = scriptContent.replace(/<script.*?>/gi, "").trim(); // Remove the opening <script> tag
+          return (
+            <script
+              key={`schema-script-${index}`}
+              type="application/ld+json"
+              dangerouslySetInnerHTML={createMarkup(scriptHtml)}
+            />
+          );
+        })
+    : null;
+
+  console.log("Schema: ", schemaScripts);
+
+  const noIndexTag = noindex ? (
+    <meta name="robots" content="noindex" key="noindex" />
+  ) : null;
+
+  return (
+    <>
+      <title key="title">
+        {capitalizeFirstLetter(title)}
+        {defaultTitle ? ` | ${defaultTitle}` : ""}
+      </title>
+      <html key="html" lang={lang} />
+      {metaTags}
+      {schemaScripts}
+      {noIndexTag}
+    </>
+  );
 };
 
 export default SeoHeader;
