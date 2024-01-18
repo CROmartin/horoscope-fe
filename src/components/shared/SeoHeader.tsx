@@ -106,6 +106,11 @@ const SeoHeader: React.FC<SEOProps> = ({
       </title>
       <html key="html" lang={lang} />
       {metaTags}
+      <meta
+        property="og:image"
+        content="https://horoscopzodii.ro/logo-seo.png"
+      />
+
       {schemaScripts}
       {noIndexTag}
     </>
