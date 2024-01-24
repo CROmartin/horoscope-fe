@@ -82,17 +82,17 @@ const ImageFramer = styled.div<any>`
   }
 
   img {
-    object-fit: cover;
-    height: 650px;
+    object-fit: cover !important;
+    height: 650px !important;
     @media (max-width: 1100px) {
-      height: 650px;
+      height: 650px !important;
     }
     @media (max-width: 900px) {
-      height: 750px;
+      height: 750px !important;
     }
     @media (max-width: 800px) {
-      height: 90vw;
-      min-height: 520px;
+      height: 90vw !important;
+      min-height: 520px !important;
     }
   }
   height: 100%;
