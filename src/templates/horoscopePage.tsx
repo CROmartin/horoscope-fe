@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 import Illustration from "../components/horoscopes/Icons/illustration";
 import AlignWrapper from "../components/shared/AlignWrapper";
@@ -38,6 +38,22 @@ const HomeLink = styled(Link)`
 function HoroscopePage(data: any) {
   console.log(data);
   const { description, sign, interval } = data.pageContext;
+  const dailyHoroscopeRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const isMobile = window.innerWidth <= 768; // or any other width you consider as mobile
+    if (isMobile && dailyHoroscopeRef.current) {
+      const offset = 150; // Adjust this value to control how far above the element you want to stop
+      const elementPosition =
+        dailyHoroscopeRef.current.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  }, []);
   return (
     <AlignWrapper>
       <HomeLink to="/">
@@ -63,7 +79,7 @@ function HoroscopePage(data: any) {
             {sign === "Varsator" && <Aquarius />}
           </IconWrapper>
         </LeftSide>
-        <RightSide>
+        <RightSide ref={dailyHoroscopeRef}>
           <ContentBox>
             <p>{description}</p>
           </ContentBox>

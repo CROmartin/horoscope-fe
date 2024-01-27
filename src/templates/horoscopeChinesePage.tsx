@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 import AlignWrapper from "../components/shared/AlignWrapper";
 
@@ -94,6 +94,23 @@ function HoroscopeChinesePage(data: any) {
   const HoroscopesInfo = require("../utils/chineseHoroscopeInfo.json");
   const signInfo = HoroscopesInfo[signStandard.toLocaleLowerCase()];
 
+  const dailyHoroscopeRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const isMobile = window.innerWidth <= 768; // or any other width you consider as mobile
+    if (isMobile && dailyHoroscopeRef.current) {
+      const offset = 150; // Adjust this value to control how far above the element you want to stop
+      const elementPosition =
+        dailyHoroscopeRef.current.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  }, []);
+
   return (
     <AlignWrapper>
       <HomeLink to="/">
@@ -102,7 +119,7 @@ function HoroscopeChinesePage(data: any) {
       <h1>{sign}</h1>
       <Row>
         <LeftSide>
-          <IntervalHolder>
+          <IntervalHolder ref={dailyHoroscopeRef}>
             <ContentBox>
               <p>{description}</p>
             </ContentBox>

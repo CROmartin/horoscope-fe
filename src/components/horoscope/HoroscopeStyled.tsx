@@ -57,6 +57,7 @@ export const ContentBox = styled.div`
   font-weight: 600;
   div {
     font-weight: 600;
+    width: auto;
   }
   span {
     color: #d7be8a;
