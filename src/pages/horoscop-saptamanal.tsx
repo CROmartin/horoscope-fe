@@ -1,7 +1,7 @@
 import React from "react";
-import Hero from "../components/horoscopes/hero";
+
 import AlignWrapper from "../components/shared/AlignWrapper";
-import Heroscopes from "../components/horoscopes/horscopes-săptămânal";
+
 import Introduction from "../components/horoscopes/introduction";
 import WhyHoroscope from "../components/horoscopes/whyHoroscope";
 import ZodiacCircle from "../components/horoscopes/zodiacCircle";
@@ -9,6 +9,7 @@ import Benefits from "../components/horoscopes/benefits";
 import styled from "styled-components";
 import { HeadFC } from "gatsby";
 import SeoHeader from "../components/shared/SeoHeader";
+import HeroSaptamal from "../components/homepage/HeroSaptamal";
 
 const Line = styled.div`
   width: 100%;
@@ -20,8 +21,7 @@ const Line = styled.div`
 function Horoscop() {
   return (
     <AlignWrapper>
-      <Hero />
-      <Heroscopes />
+      <HeroSaptamal />
 
       <Introduction />
 

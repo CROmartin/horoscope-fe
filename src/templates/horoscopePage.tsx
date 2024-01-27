@@ -22,7 +22,9 @@ import { ReactComponent as Pisces } from "../components/horoscopes/Icons/piscesB
 import { ReactComponent as Sagittarius } from "../components/horoscopes/Icons/sagittariusBig.svg";
 import { ReactComponent as Scorpio } from "../components/horoscopes/Icons/scorpioBig.svg";
 import { ReactComponent as Taurus } from "../components/horoscopes/Icons/taurusBig.svg";
+
 import { ReactComponent as Virgo } from "../components/horoscopes/Icons/virgoBig.svg";
+
 import { HeadFC } from "gatsby";
 import SeoHeader from "../components/shared/SeoHeader";
 import TryMoreZodiacSigns from "../components/horoscopes/TryMoreZodiacSigns";
@@ -40,6 +42,7 @@ function HoroscopePage(data: any) {
   const { description, sign, interval } = data.pageContext;
   const dailyHoroscopeRef = useRef<HTMLDivElement>(null);
 
+  console.log("Horoscope sign: ", sign);
   useEffect(() => {
     const isMobile = window.innerWidth <= 768; // or any other width you consider as mobile
     if (isMobile && dailyHoroscopeRef.current) {
@@ -65,18 +68,19 @@ function HoroscopePage(data: any) {
       <Row>
         <LeftSide>
           <IconWrapper>
-            {sign === "Balanta" && <Libra />}
+            {sign === "Balanță" && <Libra />}
             {sign === "Berbec" && <Aries />}
             {sign === "Capricorn" && <Capricorn />}
-            {sign === "Fecioara" && <Virgo />}
+            {sign === "Fecioară" && <Virgo />}
+
             {sign === "Gemeni" && <Gemini />}
             {sign === "Leu" && <Leo />}
-            {sign === "Pesti" && <Pisces />}
+            {sign === "Pești" && <Pisces />}
             {sign === "Rac" && <Cancer />}
-            {sign === "Sagetator" && <Sagittarius />}
+            {sign === "Săgetător" && <Sagittarius />}
             {sign === "Scorpion" && <Scorpio />}
             {sign === "Taur" && <Taurus />}
-            {sign === "Varsator" && <Aquarius />}
+            {sign === "Vărsător" && <Aquarius />}
           </IconWrapper>
         </LeftSide>
         <RightSide ref={dailyHoroscopeRef}>
