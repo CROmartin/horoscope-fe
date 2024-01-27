@@ -1,5 +1,5 @@
 import React from "react";
-import Hero from "../components/horoscopes/hero";
+// import Hero from "../components/horoscopes/hero";
 import AlignWrapper from "../components/shared/AlignWrapper";
 
 import HoroscopesChinezesc from "../components/horoscopes/horscopes-chinezesc";
@@ -11,6 +11,7 @@ import styled from "styled-components";
 import { HeadFC } from "gatsby";
 import SeoHeader from "../components/shared/SeoHeader";
 import TryMoreChineseSigns from "../components/horoscopes/TryMoreChineseSigns";
+import Hero from "../components/chineseHoroscope/Hero";
 
 const Line = styled.div`
   width: 100%;
@@ -22,7 +23,7 @@ function Horoscop() {
   return (
     <AlignWrapper>
       <Hero />
-      <HoroscopesChinezesc />
+      {/* <HoroscopesChinezesc /> */}
 
       <Introduction />
       <ZodiacCircle />

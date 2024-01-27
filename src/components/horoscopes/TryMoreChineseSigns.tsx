@@ -208,7 +208,7 @@ function TryMoreChineseSigns() {
             <Rabbit />
           </IconWrapper>
 
-          <ZodiacName>Rac</ZodiacName>
+          <ZodiacName>Iepure</ZodiacName>
           <ZodiacCaracteristics>
             Compasiv, tacticos, prudent
           </ZodiacCaracteristics>
