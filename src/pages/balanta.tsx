@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 import Halfmoon from "../Icons/Halfmoon";
 import Illustration from "../components/horoscopes/Icons/illustration";
@@ -20,15 +20,32 @@ import { HeadFC, Link } from "gatsby";
 import SeoHeader from "../components/shared/SeoHeader";
 
 function Berbec() {
+  const dailyHoroscopeRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const isMobile = window.innerWidth <= 768; // or any other width you consider as mobile
+    if (isMobile && dailyHoroscopeRef.current) {
+      const offset = 20; // Adjust this value to control how far above the element you want to stop
+      const elementPosition =
+        dailyHoroscopeRef.current.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  }, []);
+
   return (
     <AlignWrapper>
-      <Link to="/horoscop">
+      <Link to="/">
         <Illustration />
       </Link>
       <h1>Balanță</h1>
 
       <Row>
-        <LeftSide>
+        <LeftSide ref={dailyHoroscopeRef}>
           <IntervalHolder>
             <IntervalBox>
               <Star />
