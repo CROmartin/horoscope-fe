@@ -2496,15 +2496,22 @@ type WebPOptions = {
 
 type horoscop = {
   readonly getAllHoroscopeDaily: ReadonlyArray<horoscop_Horoscope>;
+  readonly getAllHoroscopeDailyChinese: ReadonlyArray<horoscop_Horoscope>;
   readonly getAllHoroscopeWeekly: ReadonlyArray<horoscop_Horoscope>;
   readonly getAllHoroscopeYearly: ReadonlyArray<horoscop_Horoscope>;
   readonly getHoroscopeDaily: ReadonlyArray<horoscop_Horoscope>;
+  readonly getHoroscopeDailyChinese: ReadonlyArray<horoscop_Horoscope>;
   readonly getHoroscopeWeekly: ReadonlyArray<horoscop_Horoscope>;
   readonly getHoroscopeYearly: ReadonlyArray<horoscop_Horoscope>;
 };
 
 
 type horoscop_getHoroscopeDailyArgs = {
+  name: InputMaybe<Scalars['String']>;
+};
+
+
+type horoscop_getHoroscopeDailyChineseArgs = {
   name: InputMaybe<Scalars['String']>;
 };
 

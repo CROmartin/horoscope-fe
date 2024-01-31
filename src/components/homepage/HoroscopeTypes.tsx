@@ -23,20 +23,23 @@ const TypeHolder = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  /* align-items: center; */
   padding: 34px 60px;
   border-right: 2px solid #d7be8a;
-  width: 33.33%;
+  width: 25%;
   min-height: 460px;
   background: black;
-  min-width: 380px;
+  /* min-width: 380px; */
   @media (max-width: 1285px) {
     border: 2px solid #d7be8a;
+    width: 48%;
+    /* align-items: auto; */
   }
   @media (max-width: 890px) {
     min-width: 100%;
   }
   @media (max-width: 425px) {
-    padding: 5% 8%;
+    padding: 10%;
   }
 `;
 
@@ -83,7 +86,24 @@ function HoroscopeTypes() {
             Iată unde poți afla HOROSCOPUL TĂU ZILNIC! Haide, descoperă ce îți
             rezervă astrele astăzi!
           </Paragraph>
-          <Button message="Află mai multe" link="horoscop-zilnic" />
+          <Button
+            small={true}
+            message="Află mai multe"
+            link="horoscop-zilnic"
+          />
+        </TypeHolder>
+        <TypeHolder>
+          <Fullmoon />
+          <TitleSub>Horoscop zilnic chinezesc</TitleSub>
+          <Paragraph>
+            Iată unde poți afla HOROSCOPUL TĂU CHINEZESC! Haide, descoperă ce
+            secrete îți dezvăluie zodiacul chinezesc!
+          </Paragraph>
+          <Button
+            small={true}
+            message="Află mai multe"
+            link="horoscop-zilnic-chinezesc"
+          />
         </TypeHolder>
         <TypeHolder>
           <Halfmoon />
@@ -92,7 +112,11 @@ function HoroscopeTypes() {
             Iată unde poți afla HOROSCOPUL TĂU SĂPTĂMÂNAL! Haide, vezi ce
             surprize îți pregătesc astrele săptămâna aceasta!
           </Paragraph>
-          <Button message="Află mai multe" link="horoscop-saptamanal" />
+          <Button
+            small={true}
+            message="Află mai multe"
+            link="horoscop-saptamanal"
+          />
         </TypeHolder>
         <TypeHolder>
           <Fullmoon />
@@ -101,7 +125,11 @@ function HoroscopeTypes() {
             Iată unde poți afla HOROSCOPUL TĂU CHINEZESC! Haide, descoperă ce
             secrete îți dezvăluie zodiacul chinezesc!
           </Paragraph>
-          <Button message="Află mai multe" link="horoscop-chinezesc" />
+          <Button
+            small={true}
+            message="Află mai multe"
+            link="horoscop-chinezesc"
+          />
         </TypeHolder>
       </HoroscopeTypesWrapper>
     </section>

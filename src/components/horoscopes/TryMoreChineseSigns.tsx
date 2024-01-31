@@ -169,6 +169,9 @@ function TryMoreChineseSigns() {
     if (window.location.pathname.includes("zilnic")) {
       setInterval("zilnic");
     }
+    if (window.location.pathname.includes("anual")) {
+      setInterval("anual");
+    }
   }, []);
   return (
     <Holder>
@@ -176,7 +179,7 @@ function TryMoreChineseSigns() {
         <h2>Ești interesat de alte semne zodiacale?</h2>
       </TextHolder>
       <Zodiacs>
-        <ZodiacHolder to={`/horoscop-anual-sobolan`}>
+        <ZodiacHolder to={`/horoscop-${interval}-sobolan`}>
           <IconWrapper fill={true}>
             <Rat />
           </IconWrapper>
@@ -185,7 +188,7 @@ function TryMoreChineseSigns() {
             Ingenios, isteț, fermecător
           </ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/horoscop-anual-bivol`}>
+        <ZodiacHolder to={`/horoscop-${interval}-bivol`}>
           <IconWrapper fill={true}>
             <Ox />
           </IconWrapper>
@@ -193,7 +196,7 @@ function TryMoreChineseSigns() {
           <ZodiacName>Bivol</ZodiacName>
           <ZodiacCaracteristics>Stabil, loial, hotărât</ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/horoscop-anual-tigru`}>
+        <ZodiacHolder to={`/horoscop-${interval}-tigru`}>
           <IconWrapper fill={true}>
             <Tiger />
           </IconWrapper>
@@ -203,7 +206,7 @@ function TryMoreChineseSigns() {
             Curajos, încrezător, competitiv
           </ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/horoscop-anual-iepure`}>
+        <ZodiacHolder to={`/horoscop-${interval}-iepure`}>
           <IconWrapper fill={true}>
             <Rabbit />
           </IconWrapper>
@@ -213,7 +216,7 @@ function TryMoreChineseSigns() {
             Compasiv, tacticos, prudent
           </ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/horoscop-anual-dragon`}>
+        <ZodiacHolder to={`/horoscop-${interval}-dragon`}>
           <IconWrapper stroke={true}>
             <Dragon className="dragon" />
           </IconWrapper>
@@ -223,7 +226,7 @@ function TryMoreChineseSigns() {
             Carismatic, încrezător, puternic
           </ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/horoscop-anual-sarpe`}>
+        <ZodiacHolder to={`/horoscop-${interval}-sarpe`}>
           <IconWrapper fill={true}>
             <Snake />
           </IconWrapper>
@@ -233,7 +236,7 @@ function TryMoreChineseSigns() {
             Înțelept, grațios, simpatic
           </ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/horoscop-anual-cal`}>
+        <ZodiacHolder to={`/horoscop-${interval}-cal`}>
           <IconWrapper fill={true}>
             <Horse />
           </IconWrapper>
@@ -243,7 +246,7 @@ function TryMoreChineseSigns() {
             Energetic, independent, nerăbdător
           </ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/horoscop-anual-oaie`}>
+        <ZodiacHolder to={`/horoscop-${interval}-oaie`}>
           <IconWrapper stroke={true}>
             <Goat />
           </IconWrapper>
@@ -251,14 +254,14 @@ function TryMoreChineseSigns() {
           <ZodiacName>Oaie</ZodiacName>
           <ZodiacCaracteristics>Creativ, blând, gânditor</ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/horoscop-anual-maimuta`}>
+        <ZodiacHolder to={`/horoscop-${interval}-maimuta`}>
           <IconWrapper fill={true}>
             <Monkey />
           </IconWrapper>
           <ZodiacName>Maimuță</ZodiacName>
           <ZodiacCaracteristics>Deștept, curios, jucăuș</ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/horoscop-anual-cocos`}>
+        <ZodiacHolder to={`/horoscop-${interval}-cocos`}>
           <IconWrapper fill={true}>
             <Rooster />
           </IconWrapper>
@@ -268,7 +271,7 @@ function TryMoreChineseSigns() {
             Observator, muncitor, curajos
           </ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/horoscop-anual-caine`}>
+        <ZodiacHolder to={`/horoscop-${interval}-caine`}>
           <IconWrapper fill={true}>
             <Dog />
           </IconWrapper>
@@ -278,7 +281,7 @@ function TryMoreChineseSigns() {
             Loial, sincer, de încredere
           </ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/horoscop-anual-porc`}>
+        <ZodiacHolder to={`/horoscop-${interval}-porc`}>
           <IconWrapper stroke={true}>
             <Pig />
           </IconWrapper>

@@ -36,6 +36,11 @@ exports.createPages = async ({ graphql, actions }) => {
           name
           date
         }
+        getAllHoroscopeDailyChinese {
+          description
+          name
+          date
+        }
       }
     }
   `);
@@ -88,6 +93,20 @@ exports.createPages = async ({ graphql, actions }) => {
         signStandard: replaceChars(item.name.toLowerCase()),
         description: item.description,
         interval: "anual",
+        date: item.date,
+      },
+    });
+  });
+
+  result.data.horoscop.getAllHoroscopeDailyChinese.forEach((item) => {
+    createPage({
+      path: `/horoscop-zilnic-${replaceChars(item.name.toLowerCase())}`,
+      component: templateChinese,
+      context: {
+        sign: item.name,
+        signStandard: replaceChars(item.name.toLowerCase()),
+        description: item.description,
+        interval: "zilnic",
         date: item.date,
       },
     });
