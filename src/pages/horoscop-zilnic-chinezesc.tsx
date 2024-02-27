@@ -3,14 +3,14 @@ import React from "react";
 import AlignWrapper from "../components/shared/AlignWrapper";
 
 import HoroscopesChinezesc from "../components/horoscopes/horscopes-chinezesc";
-import Introduction from "../components/horoscopes/introduction";
-import WhyHoroscope from "../components/horoscopes/whyHoroscope";
-import ZodiacCircle from "../components/horoscopes/zodiacCircle";
-import Benefits from "../components/horoscopes/benefits";
+import Introduction from "../components/horoscopes/chinese-zilnic/introduction";
+import WhyHoroscope from "../components/horoscopes/chinese-zilnic/whyHoroscope";
+import Benefits from "../components/horoscopes/chinese-zilnic/benefits";
 import styled from "styled-components";
 import { HeadFC } from "gatsby";
 import SeoHeader from "../components/shared/SeoHeader";
-import TryMoreChineseSigns from "../components/horoscopes/TryMoreChineseSigns";
+
+import ZodiacChineseCircle from "../components/horoscopes/chinese-zilnic/zodiacChineseCircle";
 
 import HeroDaily from "../components/chineseHoroscope/HeroDaily";
 
@@ -26,7 +26,7 @@ function Horoscop() {
       <HeroDaily />
 
       <Introduction />
-      <ZodiacCircle />
+      <ZodiacChineseCircle />
 
       <WhyHoroscope />
 
@@ -39,7 +39,7 @@ export default Horoscop;
 
 export const Head: HeadFC = () => (
   <SeoHeader
-    title="Horoscop Chinezesc: Secretele Zodiacului Oriental"
-    description="Plonjează în înțelepciunea milenară a zodiacului chinezesc. Află ce spun semnele orientale despre personalitatea, destinul și anul tău astral. Horoscopul nostru chinezesc îți dezvăluie misterul și magia tradițiilor ancestrale."
+    title="Horoscopul Zilnic Chinezesc: Ghidul Tău Astral Zilnic"
+    description="Descoperă zilnic tainele zodiacului chinezesc.</b> Fiecare zi aduce noi oportunități, provocări și revelații, ghidate de ciclurile lunare și de influența animalului zodiacal al anului. Horoscopul nostru zilnic chinezesc îți oferă o fereastră spre înțelegerea profundă a energiilor ce guvernează zilele, influențând personalitatea, relațiile, succesul profesional și parcursul spiritual. Lasă-te condus de previziunile astrale și de înțelepciunea ancestrală pentru a naviga cu încredere prin fiecare zi, descoperind armonia între tine și ritmurile universului."
   />
 );

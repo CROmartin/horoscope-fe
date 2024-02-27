@@ -18,9 +18,11 @@ const Holder = styled.div`
 
   @media (max-width: 485px) {
     margin-top: 32px;
+    gap: 32px;
   }
   @media (max-width: 400px) {
     padding: 0 5%;
+    padding-bottom: 5%;
 
     margin-top: 32px;
   }
