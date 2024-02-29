@@ -115,7 +115,7 @@ export default Berbec;
 
 export const Head: HeadFC = () => (
   <SeoHeader
-    title="Horoscop Berbec Zilnic și Săptămânal: Lumină Astrală pentru Drumul Tău"
+    title="Horoscop Berbec: Ghid Zilnic și Săptămânal"
     description="Ești Berbec și vrei să afli direcțiile astrale pentru zilele și săptămâna ce vine? Examinează previziunile noastre zilnice și săptămânale, elaborate special pentru energia ta, oferindu-ți claritate și inspirație pentru fiecare pas pe care îl faci."
   />
 );

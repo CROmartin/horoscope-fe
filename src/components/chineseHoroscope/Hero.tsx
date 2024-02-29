@@ -180,7 +180,7 @@ function Hero() {
           </IconWrapper>
           <SignName>Iepure</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-anual-dragon`">
+        <SignHolder to="/horoscop-anual-dragon">
           <IconWrapper stroke={true}>
             <Dragon className="dragon" />
           </IconWrapper>

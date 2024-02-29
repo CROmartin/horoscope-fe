@@ -35,7 +35,7 @@ export default DespreNoi;
 
 export const Head: HeadFC = () => (
   <SeoHeader
-    title="Horoscop AI Personalizat: Perspective Astrologice Precise, Personalizate pentru Tine"
+    title="Horoscop AI: Perspective Personalizate"
     description="Descoperă perspective astrologice fără egal cu Horoscopul nostru AI avansat. Predicții precise și personalizate despre carieră, dragoste și viață, pe o platformă ușor de utilizat."
   />
 );

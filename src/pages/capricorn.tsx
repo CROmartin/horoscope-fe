@@ -115,7 +115,7 @@ export default Capricorn;
 
 export const Head: HeadFC = () => (
   <SeoHeader
-    title="Horoscop Fecioară Zilnic și Săptămânal: Ghidul Tău Celest"
+    title="Horoscop Capricorn Zilnic și Săptămânal: Ghidul Tău Celest"
     description="Ești Capricorn și îți dorești să descoperi implicațiile astrale pentru zilele și săptămâna ta? Navighează prin previziunile noastre zilnice și săptămânale, meticulos create pentru semnul tău, pentru a te îndruma cu claritate și a te conecta la vibrațiile universale."
   />
 );
