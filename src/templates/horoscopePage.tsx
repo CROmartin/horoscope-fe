@@ -22,14 +22,17 @@ import { ReactComponent as Pisces } from "../components/horoscopes/Icons/piscesB
 import { ReactComponent as Sagittarius } from "../components/horoscopes/Icons/sagittariusBig.svg";
 import { ReactComponent as Scorpio } from "../components/horoscopes/Icons/scorpioBig.svg";
 import { ReactComponent as Taurus } from "../components/horoscopes/Icons/taurusBig.svg";
-
 import { ReactComponent as Virgo } from "../components/horoscopes/Icons/virgoBig.svg";
+
+import { ReactComponent as Improvement } from "../components/horoscopes/Icons/improvement.svg";
+import { ReactComponent as Affiliation } from "../components/horoscopes/Icons/affiliation.svg";
 
 import { HeadFC } from "gatsby";
 import SeoHeader from "../components/shared/SeoHeader";
 import TryMoreZodiacSigns from "../components/horoscopes/TryMoreZodiacSigns";
 import { Link } from "gatsby";
 import styled from "styled-components";
+import { renderAffirmations } from "../utils/helpers";
 
 const HomeLink = styled(Link)`
   :hover {
@@ -37,10 +40,52 @@ const HomeLink = styled(Link)`
   }
 `;
 
+const RowAzi = styled(Row)`
+  margin-bottom: 32px;
+  @media (max-width: 1100px) {
+    .hide {
+      display: none;
+    }
+  }
+`;
+
+const ParagraphAzi = styled(ContentBox)`
+  p {
+    text-align: left;
+    margin: 0;
+  }
+  h2 {
+    margin-top: 0;
+  }
+`;
+
+const IconWrapperIcon = styled(IconWrapper)`
+  width: 100px;
+  height: 100px;
+  svg {
+    scale: 1.75;
+  }
+
+  fill: rgba(215, 190, 138, 0);
+  stroke: rgba(215, 190, 138);
+  stroke-width: 2;
+  margin: 0;
+  .special {
+    scale: 2.25;
+    stroke-width: 2.5;
+  }
+`;
+
+const TitleAzi = styled(Title)`
+  margin-bottom: 32px;
+`;
+
 function HoroscopePage(data: any) {
   console.log(data);
-  const { description, sign, interval } = data.pageContext;
+  const { description, compatibility, affirmations, sign, interval } =
+    data.pageContext;
   const dailyHoroscopeRef = useRef<HTMLDivElement>(null);
+  const affirmationList = renderAffirmations(affirmations);
 
   console.log("Horoscope sign: ", sign);
   useEffect(() => {
@@ -62,10 +107,16 @@ function HoroscopePage(data: any) {
       <HomeLink to="/">
         <Illustration />
       </HomeLink>
-      <Title>
+      <TitleAzi>
         Horoscop {interval} {sign}
-      </Title>
-      <Row>
+      </TitleAzi>
+      <RowAzi>
+        <RightSide>
+          <ContentBox ref={dailyHoroscopeRef}>
+            <p>{description}</p>
+          </ContentBox>
+        </RightSide>
+
         <LeftSide>
           <IconWrapper>
             {sign === "Balanță" && <Libra />}
@@ -83,12 +134,36 @@ function HoroscopePage(data: any) {
             {sign === "Vărsător" && <Aquarius />}
           </IconWrapper>
         </LeftSide>
-        <RightSide ref={dailyHoroscopeRef}>
-          <ContentBox>
-            <p>{description}</p>
-          </ContentBox>
+      </RowAzi>
+      <RowAzi>
+        <LeftSide className="hide">
+          <IconWrapperIcon>
+            <Affiliation className="special" />
+          </IconWrapperIcon>
+        </LeftSide>
+        <RightSide>
+          <ParagraphAzi>
+            <h2>Compatibilitate</h2>
+            <p>{compatibility}</p>
+          </ParagraphAzi>
         </RightSide>
-      </Row>
+      </RowAzi>
+      <RowAzi>
+        <RightSide>
+          <ParagraphAzi>
+            <h2>Afirmări</h2>
+
+            {affirmationList.map((affirmation, index) => (
+              <p key={index}>{affirmation}</p>
+            ))}
+          </ParagraphAzi>
+        </RightSide>
+        <LeftSide className="hide">
+          <IconWrapperIcon>
+            <Improvement />
+          </IconWrapperIcon>
+        </LeftSide>
+      </RowAzi>
       <TryMoreZodiacSigns />
     </AlignWrapper>
   );

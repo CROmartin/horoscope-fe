@@ -37,6 +37,10 @@ export const ContentBox = styled.div`
     width: 100%;
     align-items: flex-start;
   }
+
+  @media (max-width: 400px) {
+    padding: 16px;
+  }
 `;
 
 export const LeftSide = styled.div`

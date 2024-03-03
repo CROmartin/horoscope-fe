@@ -6,11 +6,14 @@ import {
   Row,
   LeftSide,
   IntervalHolder,
-  IntervalBox,
   ContentBox,
   RightSide,
   RowHoroscopes,
 } from "../components/horoscope/HoroscopeStyled";
+import {
+  Title,
+  IconWrapper,
+} from "../components/horoscope/HoroscopePageStyled";
 
 import Halfmoon from "../Icons/Halfmoon";
 import Illustration from "../components/horoscopes/Icons/illustration";
@@ -28,6 +31,8 @@ import { ReactComponent as Rabbit } from "../components/horoscopes/Icons/Rabbit.
 import { ReactComponent as Rat } from "../components/horoscopes/Icons/Rat.svg";
 import { ReactComponent as Rooster } from "../components/horoscopes/Icons/Rooster.svg";
 import { ReactComponent as Pig } from "../components/horoscopes/Icons/Pig.svg";
+import { ReactComponent as Improvement } from "../components/horoscopes/Icons/improvement.svg";
+import { ReactComponent as Affiliation } from "../components/horoscopes/Icons/affiliation.svg";
 
 import { HeadFC } from "gatsby";
 import SeoHeader from "../components/shared/SeoHeader";
@@ -36,12 +41,13 @@ import TryMoreChineseSigns from "../components/horoscopes/TryMoreChineseSigns";
 import { Link } from "gatsby";
 import Button from "../components/shared/Button";
 import styled from "styled-components";
+import { renderAffirmations } from "../utils/helpers";
 
 interface IconWrapperProps {
   fill?: boolean;
   stroke?: boolean;
 }
-const IconWrapper = styled.a<IconWrapperProps>`
+const IconWrapperChinese = styled.a<IconWrapperProps>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -86,10 +92,55 @@ const HomeLink = styled(Link)`
     filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
   }
 `;
+
+const RowAzi = styled(Row)`
+  margin-bottom: 32px;
+  @media (max-width: 1100px) {
+    .hide {
+      display: none;
+    }
+  }
+`;
+
+const ParagraphAzi = styled(ContentBox)`
+  p {
+    text-align: left;
+    margin: 0;
+  }
+  h2 {
+    margin-top: 0;
+  }
+`;
+
+const IconWrapperIcon = styled(IconWrapper)`
+  width: 100px;
+  height: 100px;
+  svg {
+    scale: 1.75;
+  }
+
+  fill: rgba(215, 190, 138, 0);
+  stroke: rgba(215, 190, 138);
+  stroke-width: 2;
+  margin: 0;
+  .special {
+    scale: 2.25;
+    stroke-width: 2.5;
+  }
+`;
+
+const TitleAzi = styled(Title)`
+  margin-bottom: 32px;
+`;
+
+const RightSideIcon = styled(RightSide)`
+  justify-content: center;
+`;
 function HoroscopeChinesePage(data: any) {
   console.log(data);
-  const { description, sign, signStandard, interval } = data.pageContext;
-  console.log("Sign: ", sign);
+  const { description, sign, compatibility, affirmations, signStandard } =
+    data.pageContext;
+  const affirmationList = renderAffirmations(affirmations);
 
   const HoroscopesInfo = require("../utils/chineseHoroscopeInfo.json");
   const signInfo = HoroscopesInfo[signStandard.toLocaleLowerCase()];
@@ -116,7 +167,7 @@ function HoroscopeChinesePage(data: any) {
       <HomeLink to="/">
         <Illustration />
       </HomeLink>
-      <h1>{sign}</h1>
+      <TitleAzi>{sign}</TitleAzi>
       <Row>
         <LeftSide>
           <IntervalHolder ref={dailyHoroscopeRef}>
@@ -124,7 +175,6 @@ function HoroscopeChinesePage(data: any) {
               <p>{description}</p>
             </ContentBox>
           </IntervalHolder>
-          <RowHoroscopes></RowHoroscopes>
           <ContentBox>
             <div>
               <span>Element: </span>
@@ -153,67 +203,97 @@ function HoroscopeChinesePage(data: any) {
         </LeftSide>
         <RightSide>
           {sign === "Șobolan" && (
-            <IconWrapper fill={true}>
+            <IconWrapperChinese fill={true}>
               <Rat />
-            </IconWrapper>
+            </IconWrapperChinese>
           )}
           {sign === "Bivol" && (
-            <IconWrapper fill={true}>
+            <IconWrapperChinese fill={true}>
               <Ox />
-            </IconWrapper>
+            </IconWrapperChinese>
           )}
           {sign === "Tigru" && (
-            <IconWrapper fill={true}>
+            <IconWrapperChinese fill={true}>
               <Tiger />
-            </IconWrapper>
+            </IconWrapperChinese>
           )}
           {sign === "Iepure" && (
-            <IconWrapper fill={true}>
+            <IconWrapperChinese fill={true}>
               <Rabbit />
-            </IconWrapper>
+            </IconWrapperChinese>
           )}
           {sign === "Dragon" && (
-            <IconWrapper stroke={true}>
+            <IconWrapperChinese stroke={true}>
               <Dragon />
-            </IconWrapper>
+            </IconWrapperChinese>
           )}
           {sign === "Șarpe" && (
-            <IconWrapper fill={true}>
+            <IconWrapperChinese fill={true}>
               <Snake />
-            </IconWrapper>
+            </IconWrapperChinese>
           )}
           {sign === "Cal" && (
-            <IconWrapper fill={true}>
+            <IconWrapperChinese fill={true}>
               <Horse />
-            </IconWrapper>
+            </IconWrapperChinese>
           )}
           {sign === "Oaie" && (
-            <IconWrapper stroke={true}>
+            <IconWrapperChinese stroke={true}>
               <Goat />
-            </IconWrapper>
+            </IconWrapperChinese>
           )}
           {sign === "Maimuță" && (
-            <IconWrapper stroke={true}>
+            <IconWrapperChinese stroke={true}>
               <Monkey />
-            </IconWrapper>
+            </IconWrapperChinese>
           )}
           {sign === "Cocoș" && (
-            <IconWrapper fill={true}>
+            <IconWrapperChinese fill={true}>
               <Rooster />
-            </IconWrapper>
+            </IconWrapperChinese>
           )}
           {sign === "Câine" && (
-            <IconWrapper fill={true}>
+            <IconWrapperChinese fill={true}>
               <Dog />
-            </IconWrapper>
+            </IconWrapperChinese>
           )}
           {sign === "Porc" && (
-            <IconWrapper stroke={true}>
+            <IconWrapperChinese stroke={true}>
               <Pig />
-            </IconWrapper>
+            </IconWrapperChinese>
           )}
         </RightSide>
       </Row>
+      <br />
+      <RowAzi>
+        <LeftSide>
+          <ParagraphAzi>
+            <h2>Compatibilitate</h2>
+            <p>{compatibility}</p>
+          </ParagraphAzi>
+        </LeftSide>
+        <RightSideIcon className="hide">
+          <IconWrapperIcon>
+            <Affiliation className="special" />
+          </IconWrapperIcon>
+        </RightSideIcon>
+      </RowAzi>
+      <RowAzi>
+        <RightSideIcon className="hide">
+          <IconWrapperIcon>
+            <Improvement />
+          </IconWrapperIcon>
+        </RightSideIcon>
+        <LeftSide>
+          <ParagraphAzi>
+            <h2>Afirmări</h2>
+
+            {affirmationList.map((affirmation, index) => (
+              <p key={index}>{affirmation}</p>
+            ))}
+          </ParagraphAzi>
+        </LeftSide>
+      </RowAzi>
       <br />
       <Row>
         <Button message="Mai Multe Horoscoape" link={`/horoscop`} />

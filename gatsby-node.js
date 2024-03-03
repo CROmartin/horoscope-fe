@@ -23,21 +23,29 @@ exports.createPages = async ({ graphql, actions }) => {
       horoscop {
         getAllHoroscopeDaily {
           description
+          compatibility
+          affirmations
           name
           date
         }
         getAllHoroscopeWeekly {
           description
+          compatibility
+          affirmations
           name
           date
         }
         getAllHoroscopeYearly {
           description
+          compatibility
+          affirmations
           name
           date
         }
         getAllHoroscopeDailyChinese {
           description
+          compatibility
+          affirmations
           name
           date
         }
@@ -54,6 +62,8 @@ exports.createPages = async ({ graphql, actions }) => {
   };
 
   const template = path.resolve("./src/templates/horoscopePage.tsx");
+  const templateAzi = path.resolve("./src/templates/horoscopePageAzi.tsx");
+
   const templateChinese = path.resolve(
     "./src/templates/horoscopeChinesePage.tsx"
   );
@@ -65,7 +75,24 @@ exports.createPages = async ({ graphql, actions }) => {
       context: {
         sign: item.name,
         description: item.description,
+        compatibility: item.compatibility,
+        affirmations: item.affirmations,
         interval: "zilnic",
+        date: item.date,
+      },
+    });
+  });
+
+  result.data.horoscop.getAllHoroscopeDaily.forEach((item) => {
+    createPage({
+      path: `/horoscop-azi-${replaceChars(item.name.toLowerCase())}`,
+      component: templateAzi,
+      context: {
+        sign: item.name,
+        description: item.description,
+        compatibility: item.compatibility,
+        affirmations: item.affirmations,
+        interval: "azi",
         date: item.date,
       },
     });
@@ -78,6 +105,8 @@ exports.createPages = async ({ graphql, actions }) => {
       context: {
         sign: item.name,
         description: item.description,
+        compatibility: item.compatibility,
+        affirmations: item.affirmations,
         interval: "saptamanal",
         date: item.date,
       },
@@ -92,6 +121,8 @@ exports.createPages = async ({ graphql, actions }) => {
         sign: item.name,
         signStandard: replaceChars(item.name.toLowerCase()),
         description: item.description,
+        compatibility: item.compatibility,
+        affirmations: item.affirmations,
         interval: "anual",
         date: item.date,
       },
@@ -106,6 +137,8 @@ exports.createPages = async ({ graphql, actions }) => {
         sign: item.name,
         signStandard: replaceChars(item.name.toLowerCase()),
         description: item.description,
+        compatibility: item.compatibility,
+        affirmations: item.affirmations,
         interval: "zilnic",
         date: item.date,
       },
