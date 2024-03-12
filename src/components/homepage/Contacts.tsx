@@ -117,7 +117,7 @@ function Contacts() {
     setLoading(true);
 
     try {
-      const response = await fetch(`${process.env.URL}/email`, {
+      const response = await fetch(`${process.env.PAYMENT_URL}/email`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
