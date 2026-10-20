@@ -77,6 +77,11 @@ const Select = styled.select`
   border-bottom: 2px solid #ffffff;
   font: inherit;
   padding: 8px;
+
+  &:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 3px;
+  }
 `;
 
 const Check = styled.label`
@@ -133,6 +138,13 @@ const Form = styled.form`
 
 const Label = styled.label`
   width: 100%;
+`;
+
+const FieldLabel = styled.span`
+  width: 100%;
+  display: block;
+  margin-bottom: 4px;
+  color: #d7be8a;
 `;
 
 const Note = styled.p`
@@ -205,14 +217,15 @@ function Contacts() {
               României, când livrarea de email este conectată. Până atunci nu trimitem nimic.
             </Copy>
           ) : (
-            <Form onSubmit={onSubmit}>
+            <Form onSubmit={onSubmit} aria-describedby={error ? "digest-error" : undefined}>
               <Label htmlFor="digest-email">
+                <FieldLabel>E-mail</FieldLabel>
                 <Field
                   id="digest-email"
                   type="email"
                   required
                   autoComplete="email"
-                  placeholder="E-mail"
+                  placeholder="nume@exemplu.ro"
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
                   onFocus={() => {
@@ -223,6 +236,7 @@ function Contacts() {
                 />
               </Label>
               <Label htmlFor="digest-sign">
+                <FieldLabel>Zodia</FieldLabel>
                 <Select
                   id="digest-sign"
                   required
@@ -249,7 +263,11 @@ function Contacts() {
                   horoscopul zilnic pentru zodia aleasă. Mă pot opri din linkul de pe această pagină.
                 </span>
               </Check>
-              {error ? <Note>{error}</Note> : null}
+              {error ? (
+                <Note id="digest-error" role="alert">
+                  {error}
+                </Note>
+              ) : null}
               <Submit type="submit" disabled={loading}>
                 {loading ? "Se salvează" : "Vreau emailul zilnic"}
               </Submit>

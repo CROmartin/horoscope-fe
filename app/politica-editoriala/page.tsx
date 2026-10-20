@@ -21,10 +21,11 @@ export default function Page() {
         </p>
         <p>
           Data afișată pe pagină este data la care a fost publicată previziunea,
-          calculată pentru fusul orar al României. Un set nou înlocuiește textul
-          deja publicat doar când conține toate cele 12 zodii, cu previziune,
-          compatibilitate, afirmații și aceeași dată. Un set incomplet nu
-          înlocuiește nimic.
+          calculată pentru fusul orar al României. Un set nou este păstrat ca
+          ciornă doar când conține toate cele 12 zodii, cu previziune,
+          compatibilitate, afirmații și aceeași dată. Înlocuiește textul deja
+          publicat doar după o aprobare separată. Un set incomplet nu schimbă
+          nici ciorna, nici textul publicat.
         </p>
         <p>
           Cât timp setul zilei nu este gata, rămâne ultima previziune publicată,
