@@ -169,7 +169,7 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Divertisment și Joi</SubTitle>
+          <SubTitle>Un moment de voie bună</SubTitle>
           <p>
             Pe lângă aspectele lor profunde, horoscoapele pot fi, de asemenea, o
             formă plăcută de divertisment. Ele pot adăuga un strop de bucurie la

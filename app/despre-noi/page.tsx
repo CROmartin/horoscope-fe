@@ -2,8 +2,8 @@ import View from "@/views/despre-noi";
 import JsonLd from "@/components/seo/JsonLd";
 import { pageMetadata } from "@/lib/metadata";
 
-const title = "Horoscop AI: Perspective Personalizate";
-const description = "Descoperă perspective astrologice fără egal cu Horoscopul nostru AI avansat. Predicții precise și personalizate despre carieră, dragoste și viață, pe o platformă ușor de utilizat.";
+const title = "Despre Horoscopzodii: horoscop zilnic, săptămânal și chinezesc";
+const description = "Horoscopzodii publică horoscopul zilei, al săptămânii și zodiacul chinezesc în română, cu compatibilitate și afirmații pentru fiecare zodie.";
 const path = "/despre-noi";
 
 export const metadata = pageMetadata(title, description, path);

@@ -1,183 +1,89 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import styled from "styled-components";
-
 import Button from "../shared/Button";
 
-const Holder = styled.div`
+const Holder = styled.section`
+  box-sizing: border-box;
   width: 100%;
-  max-width: 100vw;
+  max-width: 820px;
+  min-width: 0;
+  margin: 64px auto 0;
   display: flex;
-  gap: 64px;
-  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
 
-  margin-top: 96px;
   @media (max-width: 860px) {
-    flex-direction: column;
-    .costumer {
-      width: 100%;
-    }
-  }
-
-  @media (max-width: 485px) {
     margin-top: 32px;
   }
-  @media (max-width: 400px) {
-    padding: 0 5%;
+`;
 
-    margin-top: 32px;
-  }
-  .costumer {
-    max-height: 500px;
-    border: 1px solid #d7be8a;
-    @media (max-width: 485px) {
-      max-height: 400px;
-    }
-    @media (max-width: 400px) {
-      max-height: 300px;
-    }
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: fill;
-      /* object-size */
-      object-position: left 20%;
+const Title = styled.h1`
+  margin: 0;
+  text-align: left;
+`;
 
-      @media (max-width: 485px) {
-        object-position: center;
-      }
-    }
+const Lead = styled.p`
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.35;
+  color: #d7be8a;
+
+  @media (max-width: 760px) {
+    font-size: 18px;
   }
 `;
 
 const Paragraph = styled.div`
   width: 100%;
-  max-width: 800px;
   text-align: left;
-  line-height: 22px;
+  line-height: 1.55;
 
-  @media (max-width: 760px) {
-    font-size: 14px;
-    text-align: left;
+  p {
+    margin: 0 0 16px;
   }
-  b {
-    font-weight: 800;
+
+  ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  li {
+    margin-bottom: 8px;
   }
 `;
 
-const Title = styled.h1`
-  text-align: center;
-`;
-
-const Column = styled.div`
+const Actions = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 24px;
-  align-items: flex-start;
-  @media (max-width: 860px) {
-    width: 100%;
-  }
+  flex-wrap: wrap;
+  gap: 16px;
+  max-width: 100%;
 `;
 
 function AboutUs() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    const playVideoOnInteraction = () => {
-      // Attempt to play the video
-      if (videoRef.current) {
-        videoRef.current
-          .play()
-          .then(() => {
-            console.log("Video playback started successfully.");
-            document.removeEventListener("click", playVideoOnInteraction);
-            document.removeEventListener("touchstart", playVideoOnInteraction);
-            document.removeEventListener("keydown", playVideoOnInteraction);
-            document.removeEventListener("mousedown", playVideoOnInteraction);
-
-            document.removeEventListener("mousemove", playVideoOnInteraction);
-          })
-          .catch((e) => {
-            console.error("Error attempting to play video:", e);
-            // Handle playback failure here
-          });
-      }
-    };
-
-    // Add event listeners to the document for various user interactions
-    document.addEventListener("click", playVideoOnInteraction);
-    document.addEventListener("touchstart", playVideoOnInteraction);
-    document.addEventListener("keydown", playVideoOnInteraction);
-    document.addEventListener("mousedown", playVideoOnInteraction);
-
-    document.addEventListener("mousemove", playVideoOnInteraction);
-
-    return () => {
-      // Cleanup the event listeners on component unmount
-      document.removeEventListener("click", playVideoOnInteraction);
-      document.removeEventListener("touchstart", playVideoOnInteraction);
-      document.removeEventListener("keydown", playVideoOnInteraction);
-      document.removeEventListener("mousedown", playVideoOnInteraction);
-
-      document.removeEventListener("mousemove", playVideoOnInteraction);
-    };
-  }, []);
-
   return (
     <Holder>
-      <Column>
-        <Title>Despre noi</Title>
-        <Paragraph>
-          Plonjează în universul astrologiei personalizate cu Horoscopul nostru
-          AI! Serviciul nostru combină algoritmi AI avansați cu astrologia
-          pentru a-ți oferi predicții profund personalizate și precise.
-          Acoperind toate aspectele vieții tale, de la carieră la relații, îți
-          oferim perspective detaliate și de calitate.
-          <ul>
-            <li>
-              <b>Personalizat pentru Tine</b>: Primește predicții care rezonă cu
-              ritmul unic al vieții tale.
-            </li>
-            <li>
-              <b>Perspective de Calitate</b>: Bucură-te de lecturi cuprinzătoare
-              și insightful.
-            </li>
-            <li>
-              <b>Mereu Actualizat</b> : Rămâi în ton cu cele mai recente
-              perspective cosmice.
-            </li>
-            <li>
-              <b>Ușor de Utilizat</b>: Experimentează astrologia cu ușurință și
-              plăcere.
-            </li>
-          </ul>
-          Începe astăzi călătoria ta de descoperire cosmică și
-          autoconștientizare cu Horoscopul nostru AI!
-          <br />
-          <br />
-          <br />
-          <Button
-            message="Citește horoscopul
-"
-            link="/horoscop"
-          />
-        </Paragraph>
-      </Column>
-      <video
-        controls
-        className="costumer"
-        autoPlay
-        style={{
-          maxWidth: "100%",
-          maxHeight: "500px",
-          border: "1px solid #d7be8a",
-        }}
-        ref={videoRef}
-        // preload="metadata" // This helps in loading the video metadata in advance
-      >
-        <source src="/videos/romanian.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
+      <Title>Despre noi</Title>
+      <Lead>Horoscopul zilei, al săptămânii și zodiacul chinezesc, în română.</Lead>
+      <Paragraph>
+        <p>
+          Horoscopzodii este locul unde îți citești horoscopul înainte de cafea.
+          Fiecare zodie are previziunea zilei, compatibilitatea și afirmațiile,
+          plus horoscopul săptămânii și semnul din zodiacul chinezesc. Textele
+          se schimbă odată cu ziua.
+        </p>
+        <ul>
+          <li>Horoscop zilnic pentru toate cele 12 zodii</li>
+          <li>Horoscop săptămânal, ca să știi ce te așteaptă</li>
+          <li>Zodiac chinezesc, zilnic și pe tot anul</li>
+          <li>Compatibilitate și afirmații, nu doar un paragraf general</li>
+        </ul>
+      </Paragraph>
+      <Actions>
+        <Button message="Horoscopul de azi" link="/horoscop-zilnic" />
+        <Button message="Horoscopul săptămânii" link="/horoscop-saptamanal" />
+        <Button message="Zodiacul chinezesc" link="/horoscop-chinezesc" />
+      </Actions>
     </Holder>
   );
 }

@@ -77,7 +77,7 @@ function HoroscopeTypes() {
   return (
     <section>
       <Line />
-      <TittleH2>LUȚI-ȚI HOROSCOPUL</TittleH2>
+      <TittleH2>ALEGE-ȚI HOROSCOPUL</TittleH2>
       <HoroscopeTypesWrapper>
         <TypeHolder>
           <Star />
