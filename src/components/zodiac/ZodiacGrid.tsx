@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import { dailyHoroscopePath, homepageSignLinks, signBySlug, type ZodiacSlug } from "@/lib/zodiacSigns";
+import { zodiacSelectHit } from "@/lib/analytics";
 import { clearSavedSign, readSavedSign, writeSavedSign } from "@/lib/savedSign";
 import { SIGN_ICONS } from "./signIcons";
 
@@ -208,6 +209,8 @@ function ZodiacGrid() {
                 onClick={() => {
                   writeSavedSign(window.localStorage, sign.slug);
                   setSaved(sign.slug);
+                  const hit = zodiacSelectHit(sign.slug);
+                  if (hit) window.gtag?.("event", hit.name, hit.params);
                 }}
               >
                 <IconWrap aria-hidden="true">

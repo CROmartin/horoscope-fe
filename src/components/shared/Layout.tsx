@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import Header from "./Header";
 import PopupResolver from "./PopupResolver";
 import SiteFooter from "./SiteFooter";
+import { AnalyticsConsent, useAnalyticsConsent } from "./AnalyticsConsent";
 type LayoutProps = {
   children: React.ReactNode;
 };
@@ -28,7 +29,17 @@ function Layout(props: LayoutProps) {
   }, []);
 
   return (
-    <main>
+    <AnalyticsConsent>
+      <LayoutFrame>{props.children}</LayoutFrame>
+    </AnalyticsConsent>
+  );
+}
+
+function LayoutFrame(props: LayoutProps) {
+  const { ready, consent } = useAnalyticsConsent();
+
+  return (
+    <main style={ready && consent === null ? { paddingBottom: 220 } : undefined}>
       <Header />
       <PopupResolver />
       {props.children}

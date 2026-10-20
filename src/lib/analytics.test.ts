@@ -1,0 +1,72 @@
+import assert from "node:assert/strict";
+import test from "node:test";
+import { CHINESE_SLUGS } from "./horoscopes";
+import {
+  ANALYTICS_CONSENT_KEY,
+  hitsForPath,
+  MEASURED_CHINESE_SLUGS,
+  readAnalyticsConsent,
+  writeAnalyticsConsent,
+  zodiacSelectHit,
+} from "./analytics";
+
+function memoryStorage(initial: Record<string, string> = {}) {
+  const data = { ...initial };
+  return {
+    getItem(key: string) {
+      return Object.prototype.hasOwnProperty.call(data, key) ? data[key] : null;
+    },
+    setItem(key: string, value: string) {
+      data[key] = value;
+    },
+  };
+}
+
+test("analytics consent ignores anything other than granted or denied", () => {
+  const storage = memoryStorage({ [ANALYTICS_CONSENT_KEY]: "maybe" });
+  assert.equal(readAnalyticsConsent(storage), null);
+  writeAnalyticsConsent(storage, "granted");
+  assert.equal(readAnalyticsConsent(storage), "granted");
+  writeAnalyticsConsent(storage, "denied");
+  assert.equal(readAnalyticsConsent(storage), "denied");
+  assert.equal(readAnalyticsConsent({ getItem() { throw new Error("blocked"); } }), null);
+});
+
+test("measured chinese signs stay aligned with published horoscope slugs", () => {
+  assert.deepEqual([...MEASURED_CHINESE_SLUGS], CHINESE_SLUGS);
+});
+
+test("homepage and horoscope paths emit the product events", () => {
+  assert.deepEqual(hitsForPath("/"), [
+    { name: "page_view", params: { page_path: "/" } },
+    { name: "home_view" },
+  ]);
+  assert.deepEqual(hitsForPath("/horoscop-zilnic-berbec"), [
+    { name: "page_view", params: { page_path: "/horoscop-zilnic-berbec" } },
+    { name: "horoscope_view", params: { sign: "berbec", period: "day" } },
+  ]);
+  assert.deepEqual(hitsForPath("/horoscop-azi-taur"), [
+    { name: "page_view", params: { page_path: "/horoscop-azi-taur" } },
+    { name: "horoscope_view", params: { sign: "taur", period: "day" } },
+  ]);
+  assert.deepEqual(hitsForPath("/horoscop-saptamanal-leu"), [
+    { name: "page_view", params: { page_path: "/horoscop-saptamanal-leu" } },
+    { name: "horoscope_view", params: { sign: "leu", period: "week" } },
+  ]);
+  assert.deepEqual(hitsForPath("/horoscop-anual-dragon"), [
+    { name: "page_view", params: { page_path: "/horoscop-anual-dragon" } },
+    { name: "horoscope_view", params: { sign: "dragon", period: "year" } },
+  ]);
+  assert.deepEqual(hitsForPath("/horoscop-zilnic-tigru"), [
+    { name: "page_view", params: { page_path: "/horoscop-zilnic-tigru" } },
+    { name: "horoscope_view", params: { sign: "tigru", period: "day" } },
+  ]);
+});
+
+test("hubs and unknown signs do not emit a horoscope event", () => {
+  for (const path of ["/horoscop-zilnic", "/despre-noi", "/horoscop-anual-berbec", "/horoscop-saptamanal-tigru"]) {
+    assert.deepEqual(hitsForPath(path), [{ name: "page_view", params: { page_path: path } }]);
+  }
+  assert.equal(zodiacSelectHit("berbec")?.name, "zodiac_select");
+  assert.equal(zodiacSelectHit("tigru"), null);
+});
