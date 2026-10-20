@@ -7,10 +7,10 @@ import HoroscopeTypes from "../components/homepage/HoroscopeTypes";
 import Reviews from "../components/homepage/Reviews";
 import Contacts from "../components/homepage/Contacts";
 
-const IndexPage = () => {
+const IndexPage = ({ todayLabel, todayIso }: { todayLabel: string; todayIso: string }) => {
   return (
     <AlignWrapper>
-      <Hero />
+      <Hero todayLabel={todayLabel} todayIso={todayIso} />
       <HoroscopeTypes />
 
       <Reviews />

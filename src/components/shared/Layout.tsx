@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
+import Header from "./Header";
 import PopupResolver from "./PopupResolver";
 type LayoutProps = {
   children: React.ReactNode;
@@ -27,6 +28,7 @@ function Layout(props: LayoutProps) {
 
   return (
     <main>
+      <Header />
       <PopupResolver />
       {props.children}
     </main>

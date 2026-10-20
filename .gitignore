@@ -9,6 +9,7 @@ dist/
 .cache/
 .cache/*
 .next/
+*.tsbuildinfo
 *.cache
 .env*
 # Compiled Java class files

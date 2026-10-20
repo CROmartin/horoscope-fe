@@ -12,7 +12,8 @@
     "develop": "next dev",
     "start": "next start",
     "build": "next build",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test src/lib/*.test.ts"
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^2.4.0",
@@ -29,6 +30,7 @@
     "@types/node": "^18.15.11",
     "@types/react": "^18.0.31",
     "@types/react-dom": "^18.0.11",
+    "tsx": "^4.23.15",
     "typescript": "^5.0.3"
   }
 }

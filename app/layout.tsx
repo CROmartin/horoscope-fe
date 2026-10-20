@@ -44,8 +44,10 @@ export default function RootLayout({
           `}
         </Script>
         <StyledComponentsRegistry>
-          <RouteActivity />
-          <Layout>{children}</Layout>
+          <>
+            <RouteActivity />
+            <Layout>{children}</Layout>
+          </>
         </StyledComponentsRegistry>
       </body>
     </html>

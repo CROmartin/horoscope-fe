@@ -1,3 +1,5 @@
+import { WESTERN_SIGNS } from "./zodiacSigns";
+
 export const REVALIDATE_SECONDS = 60 * 60;
 
 export type Horoscope = {
@@ -19,20 +21,9 @@ export type HoroscopePageData = {
   signStandard: string;
 };
 
-const WESTERN: Record<string, string> = {
-  berbec: "Berbec",
-  taur: "Taur",
-  gemeni: "Gemeni",
-  rac: "Rac",
-  leu: "Leu",
-  fecioara: "Fecioară",
-  balanta: "Balanță",
-  scorpion: "Scorpion",
-  sagetator: "Săgetător",
-  capricorn: "Capricorn",
-  varsator: "Vărsător",
-  pesti: "Pești",
-};
+const WESTERN: Record<string, string> = Object.fromEntries(
+  WESTERN_SIGNS.map((sign) => [sign.slug, sign.name])
+);
 
 const CHINESE: Record<string, string> = {
   sobolan: "Șobolan",
