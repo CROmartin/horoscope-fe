@@ -128,7 +128,7 @@ export default function CheckoutForm() {
   };
 
   const paymentElementOptions = {
-    layout: "tabs",
+    layout: "tabs" as const,
   };
 
   return (

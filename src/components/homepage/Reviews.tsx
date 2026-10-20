@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import ArrowButton from "../shared/ArrowButton";
-import { StaticImage } from "gatsby-plugin-image";
+import Image from "next/image";
+import review2 from "../../images/review2.webp";
+import review3 from "../../images/review3.png";
+import review1 from "../../images/review1.png";
 import { TittleH3 } from "../styles/styles.styled";
-import { ReactComponent as Star } from "./Icons/star.svg";
+import Star from "./Icons/star.svg";
 
 const ReviewHolder = styled.div`
   display: flex;
@@ -77,7 +80,7 @@ const ImageFramer = styled.div<any>`
   height: 526px;
 
   overflow: hidden;
-  .gatsby-image-wrapper {
+  img {
     width: 100%;
   }
 
@@ -139,15 +142,9 @@ function Reviews() {
       <ReviewHolder>
         <Box>
           <ImageFramer>
-            {picked == 0 && (
-              <StaticImage src="../../images/review2.webp" alt="angel" />
-            )}
-            {picked == 1 && (
-              <StaticImage src="../../images/review3.png" alt="angel" />
-            )}
-            {picked == 2 && (
-              <StaticImage src="../../images/review1.png" alt="angel" />
-            )}
+            {picked == 0 && <Image src={review2} alt="angel" />}
+            {picked == 1 && <Image src={review3} alt="angel" />}
+            {picked == 2 && <Image src={review1} alt="angel" />}
           </ImageFramer>
         </Box>
 

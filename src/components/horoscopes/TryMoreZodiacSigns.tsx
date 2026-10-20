@@ -1,19 +1,19 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { ReactComponent as Aries } from "./Icons/aries.svg";
-import { ReactComponent as Taurus } from "./Icons/taurus.svg";
-import { ReactComponent as Gemini } from "./Icons/gemini.svg";
-import { ReactComponent as Cancer } from "./Icons/cancer.svg";
-import { ReactComponent as Leo } from "./Icons/leo.svg";
-import { ReactComponent as Virgo } from "./Icons/virgo.svg";
-import { ReactComponent as Libra } from "./Icons/libra.svg";
-import { ReactComponent as Scorpio } from "./Icons/scorpio.svg";
-import { ReactComponent as Sagittarius } from "./Icons/sagittarius.svg";
-import { ReactComponent as Capricorn } from "./Icons/capricorn.svg";
-import { ReactComponent as Aquarius } from "./Icons/aquarius.svg";
-import { ReactComponent as Pisces } from "./Icons/pisces.svg";
+import Aries from "./Icons/aries.svg";
+import Taurus from "./Icons/taurus.svg";
+import Gemini from "./Icons/gemini.svg";
+import Cancer from "./Icons/cancer.svg";
+import Leo from "./Icons/leo.svg";
+import Virgo from "./Icons/virgo.svg";
+import Libra from "./Icons/libra.svg";
+import Scorpio from "./Icons/scorpio.svg";
+import Sagittarius from "./Icons/sagittarius.svg";
+import Capricorn from "./Icons/capricorn.svg";
+import Aquarius from "./Icons/aquarius.svg";
+import Pisces from "./Icons/pisces.svg";
 
-import { Link } from "gatsby";
+import Link from "next/link";
 const Holder = styled.div`
   width: 100%;
   max-width: 100vw;
@@ -125,19 +125,19 @@ function TryMoreZodiacSigns() {
         <h2>Sunteți interesat de alte zodii chinezești?</h2>
       </TextHolder>
       <Zodiacs>
-        <ZodiacHolder to={`/berbec`}>
+        <ZodiacHolder href={`/berbec`}>
           <Aries />
 
           <ZodiacName>Berbec</ZodiacName>
           <ZodiacCaracteristics>Lider, Energetic, Curajos</ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/taur`}>
+        <ZodiacHolder href={`/taur`}>
           <Taurus />
 
           <ZodiacName>Taur</ZodiacName>
           <ZodiacCaracteristics>Stabil, Senzual, Practic</ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/gemeni`}>
+        <ZodiacHolder href={`/gemeni`}>
           <Gemini />
 
           <ZodiacName>Gemeni</ZodiacName>
@@ -145,7 +145,7 @@ function TryMoreZodiacSigns() {
             Comunicativ, Adaptabil, Curios
           </ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/rac`}>
+        <ZodiacHolder href={`/rac`}>
           <Cancer />
 
           <ZodiacName>Rac</ZodiacName>
@@ -153,7 +153,7 @@ function TryMoreZodiacSigns() {
             Sensibil, Protector, Hrănitor
           </ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/leu`}>
+        <ZodiacHolder href={`/leu`}>
           <Leo />
 
           <ZodiacName>Leu</ZodiacName>
@@ -161,13 +161,13 @@ function TryMoreZodiacSigns() {
             Carismatic, Mândru, Încrezător
           </ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/fecioara`}>
+        <ZodiacHolder href={`/fecioara`}>
           <Virgo />
 
           <ZodiacName>Fecioară</ZodiacName>
           <ZodiacCaracteristics>Metodic, Analitic, Modest</ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/balanta`}>
+        <ZodiacHolder href={`/balanta`}>
           <Libra />
 
           <ZodiacName>Balanță</ZodiacName>
@@ -175,7 +175,7 @@ function TryMoreZodiacSigns() {
             Echilibrat, Social, Corect
           </ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/scorpion`}>
+        <ZodiacHolder href={`/scorpion`}>
           <Scorpio />
 
           <ZodiacName>Scorpion</ZodiacName>
@@ -183,7 +183,7 @@ function TryMoreZodiacSigns() {
             Intens, Misterios, Pasionat
           </ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/sagetator`}>
+        <ZodiacHolder href={`/sagetator`}>
           <Sagittarius />
 
           <ZodiacName>Săgetător</ZodiacName>
@@ -191,7 +191,7 @@ function TryMoreZodiacSigns() {
             Optimist, Aventuros, Filozofic
           </ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/capricorn`}>
+        <ZodiacHolder href={`/capricorn`}>
           <Capricorn />
 
           <ZodiacName>Capricorn</ZodiacName>
@@ -199,7 +199,7 @@ function TryMoreZodiacSigns() {
             Disciplinat, Ambițios, Pricăjit
           </ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/varsator`}>
+        <ZodiacHolder href={`/varsator`}>
           <Aquarius />
 
           <ZodiacName>Vărsător</ZodiacName>
@@ -207,7 +207,7 @@ function TryMoreZodiacSigns() {
             Inovativ, Umanitar, Neconvențional
           </ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/pesti`}>
+        <ZodiacHolder href={`/pesti`}>
           <Pisces />
 
           <ZodiacName>Pești</ZodiacName>

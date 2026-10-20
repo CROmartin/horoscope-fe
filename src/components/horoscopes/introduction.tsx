@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 // import Background from "./images/ZodiacWheel.webp";
-import { StaticImage } from "gatsby-plugin-image";
+import Image from "next/image";
+import zodiacWheel from "./images/ZodiacWheel.webp";
 
 const Holder = styled.div`
   width: 100%;
@@ -80,13 +81,9 @@ function Introduction() {
   return (
     <Holder>
       <DarkenBackground />
-      <StaticImage
-        src="./images/ZodiacWheel.webp"
-        alt="Zodiac Wheel"
-        placeholder="blurred"
-        layout="constrained"
-        className="zodiac-wheel"
-      />
+      <div className="zodiac-wheel">
+        <Image src={zodiacWheel} alt="Zodiac Wheel" fill />
+      </div>
       <Title>Introducere în Horoscoape: Ghidul tău Cosmic</Title>
       <Paragraph>
         <b>

@@ -15,7 +15,7 @@ import Sagittarius from "../../Icons/Sagittarius";
 import Capricorn from "../../Icons/Capricorn";
 import Aquarius from "../../Icons/Aquarius";
 import Pisces from "../../Icons/Pisces";
-import { Link } from "gatsby";
+import Link from "next/link";
 import { TittleH1 } from "../styles/styles.styled";
 
 const SvgWrapper = styled.div`
@@ -129,73 +129,73 @@ function HeroSaptamal() {
       <TittleH1>Horoscop</TittleH1>
       <Line></Line>
       <InfoLine>
-        <SignHolder to="/horoscop-saptamanal-berbec">
+        <SignHolder href="/horoscop-saptamanal-berbec">
           <IconWrapper>
             <Aries />
           </IconWrapper>
           <SignName>Berbec</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-saptamanal-taur">
+        <SignHolder href="/horoscop-saptamanal-taur">
           <IconWrapper>
             <Taurus />
           </IconWrapper>
           <SignName>Taur</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-saptamanal-gemeni">
+        <SignHolder href="/horoscop-saptamanal-gemeni">
           <IconWrapper>
             <Gemini />
           </IconWrapper>
           <SignName>Gemeni</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-saptamanal-rac">
+        <SignHolder href="/horoscop-saptamanal-rac">
           <IconWrapper>
             <Cancer />
           </IconWrapper>
           <SignName>Rac</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-saptamanal-leu">
+        <SignHolder href="/horoscop-saptamanal-leu">
           <IconWrapper>
             <Leo />
           </IconWrapper>
           <SignName>Leu</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-saptamanal-fecioara">
+        <SignHolder href="/horoscop-saptamanal-fecioara">
           <IconWrapper>
             <Virgo />
           </IconWrapper>
           <SignName>Fecioară</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-saptamanal-balanta">
+        <SignHolder href="/horoscop-saptamanal-balanta">
           <IconWrapper>
             <Libra />
           </IconWrapper>
           <SignName>Balanță</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-saptamanal-scorpion">
+        <SignHolder href="/horoscop-saptamanal-scorpion">
           <IconWrapper>
             <Scorpio />
           </IconWrapper>
           <SignName>Scorpion</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-saptamanal-sagetator">
+        <SignHolder href="/horoscop-saptamanal-sagetator">
           <IconWrapper>
             <Sagittarius />
           </IconWrapper>
           <SignName>Săgetător</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-saptamanal-capricorn">
+        <SignHolder href="/horoscop-saptamanal-capricorn">
           <IconWrapper>
             <Capricorn />
           </IconWrapper>
           <SignName>Capricorn</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-saptamanal-varsator">
+        <SignHolder href="/horoscop-saptamanal-varsator">
           <IconWrapper>
             <Aquarius />
           </IconWrapper>
           <SignName>Vărsător</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-saptamanal-pesti">
+        <SignHolder href="/horoscop-saptamanal-pesti">
           <IconWrapper>
             <Pisces />
           </IconWrapper>

@@ -5,9 +5,9 @@ import styled from "styled-components";
 import Loader from "./Loader";
 import useSubscriptionStore from "../../Zustand/SubscriptionStore";
 import Button from "./Button";
-import { ReactComponent as Exit } from "./Icons/exit.svg";
-import { ReactComponent as Star } from "./Icons/star.svg";
-import { navigate } from "gatsby";
+import Exit from "./Icons/exit.svg";
+import Star from "./Icons/star.svg";
+import { useRouter } from "next/navigation";
 
 const PopupBackground = styled.div`
   background-color: rgba(0, 0, 0, 0.7);
@@ -150,23 +150,20 @@ const StarRow = styled.div`
   }
 `;
 
-const Key =
-  process.env.GATSBY_STRIPE_KEY ||
-  "pk_test_51N0jBmL9u6AFblMaCZGUXqdMgDAPgA9MV5vBI4WT6eblRG5QXLCMH9A3LuWigi76aC70nLGGfXA8IiWtwoOya9he00CluBiOZS";
-const stripePromise = loadStripe(Key);
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY || "");
 
 function CheckoutPopupHolder({ children, setIsPopupOpen }: any) {
+  const router = useRouter();
   const [clientSecret, setClientSecret] = useState("");
   const [price, setPrice] = useState(0);
 
   const { purchased } = useSubscriptionStore();
 
   useEffect(() => {
-    console.log("Key", process.env.GATSBY_STRIPE_KEY);
     let getPrice = parseInt(localStorage.getItem("priceHoroscope") || "1000");
     setPrice(getPrice / 100);
     // Create PaymentIntent as soon as the page loads
-    fetch(`${process.env.PAYMENT_URL}/create-payment-intent`, {
+    fetch(`${process.env.NEXT_PUBLIC_PAYMENT_URL}/create-payment-intent`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ price: getPrice }),
@@ -176,7 +173,7 @@ function CheckoutPopupHolder({ children, setIsPopupOpen }: any) {
   }, []);
 
   const appearance = {
-    theme: "night",
+    theme: "night" as const,
   };
 
   const options = {
@@ -203,7 +200,7 @@ function CheckoutPopupHolder({ children, setIsPopupOpen }: any) {
                   message="Explorați Horoscop"
                   onClick={() => {
                     if (window?.location?.pathname.includes("about-us")) {
-                      navigate("/");
+                      router.push("/");
                     } else {
                       setIsPopupOpen(false);
                     }

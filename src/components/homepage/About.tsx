@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Button from "../shared/Button";
 import { TittleH2 } from "../styles/styles.styled";
-import { StaticImage } from "gatsby-plugin-image";
+import Image from "next/image";
 import Circle from "../../images/angel.png";
 const Wrapper = styled.div`
   display: flex;
@@ -122,7 +122,7 @@ function About() {
         </Section>
         <Section image={true}>
           <ImageFramer>
-            <StaticImage src="../../images/angel.png" alt="angel" />
+            <Image src={Circle} alt="angel" />
           </ImageFramer>
         </Section>
       </Wrapper>

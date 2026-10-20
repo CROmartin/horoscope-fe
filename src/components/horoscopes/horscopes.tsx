@@ -1,19 +1,19 @@
 import React from "react";
 import styled from "styled-components";
-import { ReactComponent as Aquarius } from "./Icons/aquariusBig.svg";
-import { ReactComponent as Aries } from "./Icons/ariesBig.svg";
-import { ReactComponent as Cancer } from "./Icons/cancerBig.svg";
-import { ReactComponent as Capricorn } from "./Icons/capricornBig.svg";
-import { ReactComponent as Gemini } from "./Icons/geminiBig.svg";
-import { ReactComponent as Leo } from "./Icons/leoBig.svg";
-import { ReactComponent as Libra } from "./Icons/libraBig.svg";
-import { ReactComponent as Pisces } from "./Icons/piscesBig.svg";
-import { ReactComponent as Sagittarius } from "./Icons/sagittariusBig.svg";
-import { ReactComponent as Scorpio } from "./Icons/scorpioBig.svg";
-import { ReactComponent as Taurus } from "./Icons/taurusBig.svg";
-import { ReactComponent as Virgo } from "./Icons/virgoBig.svg";
+import Aquarius from "./Icons/aquariusBig.svg";
+import Aries from "./Icons/ariesBig.svg";
+import Cancer from "./Icons/cancerBig.svg";
+import Capricorn from "./Icons/capricornBig.svg";
+import Gemini from "./Icons/geminiBig.svg";
+import Leo from "./Icons/leoBig.svg";
+import Libra from "./Icons/libraBig.svg";
+import Pisces from "./Icons/piscesBig.svg";
+import Sagittarius from "./Icons/sagittariusBig.svg";
+import Scorpio from "./Icons/scorpioBig.svg";
+import Taurus from "./Icons/taurusBig.svg";
+import Virgo from "./Icons/virgoBig.svg";
 
-import { Link } from "gatsby";
+import Link from "next/link";
 
 const HeroWrapper = styled.div`
   display: flex;
@@ -81,42 +81,42 @@ function Horoscopes() {
   return (
     <HeroWrapper>
       <Holder>
-        <IconWrapper to="/berbec">
+        <IconWrapper href="/berbec">
           <Aries />
         </IconWrapper>
-        <IconWrapper to="/taur">
+        <IconWrapper href="/taur">
           <Taurus />
         </IconWrapper>
-        <IconWrapper to="/gemeni">
+        <IconWrapper href="/gemeni">
           <Gemini />
         </IconWrapper>
-        <IconWrapper to="/rac">
+        <IconWrapper href="/rac">
           <Cancer />
         </IconWrapper>
-        <IconWrapper to="/leu">
+        <IconWrapper href="/leu">
           <Leo />
         </IconWrapper>
 
-        <IconWrapper to="/fecioara">
+        <IconWrapper href="/fecioara">
           <Aquarius />
         </IconWrapper>
 
-        <IconWrapper to="/balanta">
+        <IconWrapper href="/balanta">
           <Libra />
         </IconWrapper>
-        <IconWrapper to="/scorpion">
+        <IconWrapper href="/scorpion">
           <Scorpio />
         </IconWrapper>
-        <IconWrapper to="/sagetator">
+        <IconWrapper href="/sagetator">
           <Sagittarius />
         </IconWrapper>
-        <IconWrapper to="/capricorn">
+        <IconWrapper href="/capricorn">
           <Capricorn />
         </IconWrapper>
-        <IconWrapper to="/varsator">
+        <IconWrapper href="/varsator">
           <Virgo />
         </IconWrapper>
-        <IconWrapper to="/pesti">
+        <IconWrapper href="/pesti">
           <Pisces />
         </IconWrapper>
       </Holder>

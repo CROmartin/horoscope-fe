@@ -14,14 +14,19 @@ import Sagittarius from "../../Icons/Sagittarius";
 import Capricorn from "../../Icons/Capricorn";
 import Aquarius from "../../Icons/Aquarius";
 import Pisces from "../../Icons/Pisces";
-import { Link } from "gatsby";
+import Link from "next/link";
 import { TittleH1 } from "../styles/styles.styled";
 
 const SvgWrapper = styled.div`
+  display: flex;
   width: 100%;
   svg {
     width: 100%;
     height: max-content;
+
+    @media (max-width: 800px) {
+      max-height: 30vw;
+    }
   }
 `;
 
@@ -128,73 +133,73 @@ function Hero() {
       <TittleH1>Horoscop</TittleH1>
       <Line></Line>
       <InfoLine>
-        <SignHolder to="/berbec">
+        <SignHolder href="/berbec">
           <IconWrapper>
             <Aries />
           </IconWrapper>
           <SignName>Berbec</SignName>
         </SignHolder>
-        <SignHolder to="/taur">
+        <SignHolder href="/taur">
           <IconWrapper>
             <Taurus />
           </IconWrapper>
           <SignName>Taur</SignName>
         </SignHolder>
-        <SignHolder to="/gemeni">
+        <SignHolder href="/gemeni">
           <IconWrapper>
             <Gemini />
           </IconWrapper>
           <SignName>Gemeni</SignName>
         </SignHolder>
-        <SignHolder to="/rac">
+        <SignHolder href="/rac">
           <IconWrapper>
             <Cancer />
           </IconWrapper>
           <SignName>Rac</SignName>
         </SignHolder>
-        <SignHolder to="/leu">
+        <SignHolder href="/leu">
           <IconWrapper>
             <Leo />
           </IconWrapper>
           <SignName>Leu</SignName>
         </SignHolder>
-        <SignHolder to="/fecioara">
+        <SignHolder href="/fecioara">
           <IconWrapper>
             <Virgo />
           </IconWrapper>
           <SignName>Fecioară</SignName>
         </SignHolder>
-        <SignHolder to="/balanta">
+        <SignHolder href="/balanta">
           <IconWrapper>
             <Libra />
           </IconWrapper>
           <SignName>Balanță</SignName>
         </SignHolder>
-        <SignHolder to="/scorpion">
+        <SignHolder href="/scorpion">
           <IconWrapper>
             <Scorpio />
           </IconWrapper>
           <SignName>Scorpion</SignName>
         </SignHolder>
-        <SignHolder to="/sagetator">
+        <SignHolder href="/sagetator">
           <IconWrapper>
             <Sagittarius />
           </IconWrapper>
           <SignName>Săgetător</SignName>
         </SignHolder>
-        <SignHolder to="/capricorn">
+        <SignHolder href="/capricorn">
           <IconWrapper>
             <Capricorn />
           </IconWrapper>
           <SignName>Capricorn</SignName>
         </SignHolder>
-        <SignHolder to="/varsator">
+        <SignHolder href="/varsator">
           <IconWrapper>
             <Aquarius />
           </IconWrapper>
           <SignName>Vărsător</SignName>
         </SignHolder>
-        <SignHolder to="/pesti">
+        <SignHolder href="/pesti">
           <IconWrapper>
             <Pisces />
           </IconWrapper>

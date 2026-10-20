@@ -1,4 +1,5 @@
-import { StaticImage } from "gatsby-plugin-image";
+import Image from "next/image";
+import happyCustomer from "../images/HappyCostumer.webp";
 import React from "react";
 import styled from "styled-components";
 import Button from "../../shared/Button";
@@ -81,13 +82,9 @@ const Column = styled.div`
 function WhyHoroscope() {
   return (
     <Holder>
-      <StaticImage
-        src="../images/HappyCostumer.webp"
-        alt="Happy Costumer Interested in Horoscopes"
-        placeholder="blurred"
-        layout="constrained"
-        className="costumer"
-      ></StaticImage>
+      <div className="costumer">
+        <Image src={happyCustomer} alt="Happy Costumer Interested in Horoscopes" />
+      </div>
       <Column>
         <Title>Pasiunea pentru horoscoape: De ce ne fascinează?</Title>
         <Paragraph>

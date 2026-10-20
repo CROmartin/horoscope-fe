@@ -14,7 +14,7 @@ import Sagittarius from "../../Icons/Sagittarius";
 import Capricorn from "../../Icons/Capricorn";
 import Aquarius from "../../Icons/Aquarius";
 import Pisces from "../../Icons/Pisces";
-import { Link } from "gatsby";
+import Link from "next/link";
 import { TittleH1 } from "../styles/styles.styled";
 
 const SvgWrapper = styled.div`
@@ -128,73 +128,73 @@ function HeroAzi() {
       <TittleH1>Horoscop</TittleH1>
       <Line></Line>
       <InfoLine>
-        <SignHolder to="/horoscop-azi-berbec">
+        <SignHolder href="/horoscop-azi-berbec">
           <IconWrapper>
             <Aries />
           </IconWrapper>
           <SignName>Berbec</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-azi-taur">
+        <SignHolder href="/horoscop-azi-taur">
           <IconWrapper>
             <Taurus />
           </IconWrapper>
           <SignName>Taur</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-azi-gemeni">
+        <SignHolder href="/horoscop-azi-gemeni">
           <IconWrapper>
             <Gemini />
           </IconWrapper>
           <SignName>Gemeni</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-azi-rac">
+        <SignHolder href="/horoscop-azi-rac">
           <IconWrapper>
             <Cancer />
           </IconWrapper>
           <SignName>Rac</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-azi-leu">
+        <SignHolder href="/horoscop-azi-leu">
           <IconWrapper>
             <Leo />
           </IconWrapper>
           <SignName>Leu</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-azi-fecioara">
+        <SignHolder href="/horoscop-azi-fecioara">
           <IconWrapper>
             <Virgo />
           </IconWrapper>
           <SignName>Fecioară</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-azi-balanta">
+        <SignHolder href="/horoscop-azi-balanta">
           <IconWrapper>
             <Libra />
           </IconWrapper>
           <SignName>Balanță</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-azi-scorpion">
+        <SignHolder href="/horoscop-azi-scorpion">
           <IconWrapper>
             <Scorpio />
           </IconWrapper>
           <SignName>Scorpion</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-azi-sagetator">
+        <SignHolder href="/horoscop-azi-sagetator">
           <IconWrapper>
             <Sagittarius />
           </IconWrapper>
           <SignName>Săgetător</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-azi-capricorn">
+        <SignHolder href="/horoscop-azi-capricorn">
           <IconWrapper>
             <Capricorn />
           </IconWrapper>
           <SignName>Capricorn</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-azi-varsator">
+        <SignHolder href="/horoscop-azi-varsator">
           <IconWrapper>
             <Aquarius />
           </IconWrapper>
           <SignName>Vărsător</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-azi-pesti">
+        <SignHolder href="/horoscop-azi-pesti">
           <IconWrapper>
             <Pisces />
           </IconWrapper>

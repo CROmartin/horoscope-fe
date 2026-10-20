@@ -12,10 +12,10 @@ function Star() {
       <path
         d="M31 0.999999C31 36.0522 29.4219 38.0008 1 38.0008C29.4219 38.0008 31 39.9462 31 75C31 39.9462 32.5796 38.0008 61 38.0008C32.5796 38.0008 31 36.0522 31 0.999999Z"
         stroke="#D7BE8A"
-        stroke-width="2"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

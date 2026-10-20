@@ -1,19 +1,19 @@
 import React from "react";
 import styled from "styled-components";
-import { ReactComponent as Tiger } from "./Icons/Tiger.svg";
-import { ReactComponent as Snake } from "./Icons/Snake.svg";
-import { ReactComponent as Dragon } from "./Icons/Dragon.svg";
-import { ReactComponent as Dog } from "./Icons/Dog.svg";
-import { ReactComponent as Horse } from "./Icons/Horse.svg";
-import { ReactComponent as Goat } from "./Icons/Goat.svg";
-import { ReactComponent as Ox } from "./Icons/Ox.svg";
-import { ReactComponent as Monkey } from "./Icons/Monkey.svg";
-import { ReactComponent as Rabbit } from "./Icons/Rabbit.svg";
-import { ReactComponent as Rat } from "./Icons/Rat.svg";
-import { ReactComponent as Rooster } from "./Icons/Rooster.svg";
-import { ReactComponent as Pig } from "./Icons/Pig.svg";
+import Tiger from "./Icons/Tiger.svg";
+import Snake from "./Icons/Snake.svg";
+import Dragon from "./Icons/Dragon.svg";
+import Dog from "./Icons/Dog.svg";
+import Horse from "./Icons/Horse.svg";
+import Goat from "./Icons/Goat.svg";
+import Ox from "./Icons/Ox.svg";
+import Monkey from "./Icons/Monkey.svg";
+import Rabbit from "./Icons/Rabbit.svg";
+import Rat from "./Icons/Rat.svg";
+import Rooster from "./Icons/Rooster.svg";
+import Pig from "./Icons/Pig.svg";
 
-import { Link } from "gatsby";
+import Link from "next/link";
 
 const HeroWrapper = styled.div`
   display: flex;
@@ -93,42 +93,42 @@ function HoroscopesChinezesc() {
   return (
     <HeroWrapper>
       <Holder>
-        <IconWrapper to="/horoscop-anual-sobolan/" fill={true}>
+        <IconWrapper href="/horoscop-anual-sobolan/" fill={true}>
           <Rat />
         </IconWrapper>
-        <IconWrapper to="/horoscop-anual-bivol" fill={true}>
+        <IconWrapper href="/horoscop-anual-bivol" fill={true}>
           <Ox />
         </IconWrapper>
-        <IconWrapper to="/horoscop-anual-tigru" fill={true}>
+        <IconWrapper href="/horoscop-anual-tigru" fill={true}>
           <Tiger />
         </IconWrapper>
-        <IconWrapper to="/horoscop-anual-iepure" fill={true}>
+        <IconWrapper href="/horoscop-anual-iepure" fill={true}>
           <Rabbit />
         </IconWrapper>
-        <IconWrapper to="/horoscop-anual-dragon" stroke={true}>
+        <IconWrapper href="/horoscop-anual-dragon" stroke={true}>
           <Dragon />
         </IconWrapper>
 
-        <IconWrapper to="/horoscop-anual-sarpe" fill={true}>
+        <IconWrapper href="/horoscop-anual-sarpe" fill={true}>
           <Snake />
         </IconWrapper>
 
-        <IconWrapper to="/horoscop-anual-cal" fill={true}>
+        <IconWrapper href="/horoscop-anual-cal" fill={true}>
           <Horse />
         </IconWrapper>
-        <IconWrapper to="/horoscop-anual-oaie" stroke={true}>
+        <IconWrapper href="/horoscop-anual-oaie" stroke={true}>
           <Goat />
         </IconWrapper>
-        <IconWrapper to="/horoscop-anual-maimuta" stroke={true}>
+        <IconWrapper href="/horoscop-anual-maimuta" stroke={true}>
           <Monkey />
         </IconWrapper>
-        <IconWrapper to="/horoscop-anual-cocos" fill={true}>
+        <IconWrapper href="/horoscop-anual-cocos" fill={true}>
           <Rooster />
         </IconWrapper>
-        <IconWrapper to="/horoscop-anual-caine" fill={true}>
+        <IconWrapper href="/horoscop-anual-caine" fill={true}>
           <Dog />
         </IconWrapper>
-        <IconWrapper to="/horoscop-anual-porc" stroke={true}>
+        <IconWrapper href="/horoscop-anual-porc" stroke={true}>
           <Pig />
         </IconWrapper>
       </Holder>

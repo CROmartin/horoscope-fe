@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "gatsby";
+import Link from "next/link";
 
 const HeaderWrapper = styled.div`
   width: 100%;
@@ -28,9 +28,9 @@ const HeaderWrapper = styled.div`
 function Header() {
   return (
     <HeaderWrapper>
-      <Link to="/">Pagina Principala</Link>
-      <Link to="/horoscop-saptamanal">Saptamanal</Link>
-      <Link to="/horoscop-zilnic">Zilnic</Link>
+      <Link href="/">Pagina Principala</Link>
+      <Link href="/horoscop-saptamanal">Saptamanal</Link>
+      <Link href="/horoscop-zilnic">Zilnic</Link>
     </HeaderWrapper>
   );
 }

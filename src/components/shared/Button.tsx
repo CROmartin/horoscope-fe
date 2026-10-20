@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import ArrowUpRight from "../../Icons/ArrowUpRight";
 
-import { Link } from "gatsby";
+import Link from "next/link";
 
 interface ButtonWrapperProps {
   small?: boolean;
@@ -70,7 +70,7 @@ function Button({ message, link, onClick, small }: ButtonProps) {
   return (
     <>
       {link && (
-        <ButtonWrapper to={link ? link : ""} small={small}>
+        <ButtonWrapper href={link ? link : ""} small={small}>
           <MessageHolder small={small}>{message}</MessageHolder>
           <SvgWrapper small={small}>
             <ArrowUpRight />

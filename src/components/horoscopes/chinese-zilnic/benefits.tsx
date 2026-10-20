@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { ReactComponent as Star } from "../Icons/star.svg";
+import Star from "../Icons/star.svg";
 
 const Holder = styled.div`
   width: 100%;

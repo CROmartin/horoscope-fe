@@ -2,12 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import ArrowUpRight from "../../Icons/ArrowUpRight";
 import Loader from "./Loader";
-import { Link } from "gatsby";
+import Link from "next/link";
 
 interface ButtonWrapperProps {
   small?: boolean;
 }
-const ButtonWrapper = styled(Link)<ButtonWrapperProps>`
+const ButtonWrapper = styled(Link)`
   all: unset;
   display: flex;
   background: #060709;
@@ -71,12 +71,12 @@ function ButtonAction({ message, link, onClick, small, loading }: ButtonProps) {
   return (
     <>
       {link && (
-        <ButtonWrapper to={link ? link : ""} small={small}>
+        <ButtonWrapper href={link ? link : ""}>
           <MessageHolder small={small}>{message}</MessageHolder>
         </ButtonWrapper>
       )}
       {onClick && (
-        <ButtonWrapper as={"a"} onClick={onClick} small={small}>
+        <ButtonWrapper as={"a"} onClick={onClick}>
           {loading ? (
             <Loader />
           ) : (

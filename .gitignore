@@ -7,8 +7,8 @@
 node_modules/
 dist/
 .cache/
-public/
 .cache/*
+.next/
 *.cache
 .env*
 # Compiled Java class files

@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useRef } from "react";
 
 import AlignWrapper from "../components/shared/AlignWrapper";
@@ -19,26 +20,24 @@ import Halfmoon from "../Icons/Halfmoon";
 import Illustration from "../components/horoscopes/Icons/illustration";
 import Star from "../Icons/Star";
 
-import { ReactComponent as Tiger } from "../components/horoscopes/Icons/Tiger.svg";
-import { ReactComponent as Snake } from "../components/horoscopes/Icons/Snake.svg";
-import { ReactComponent as Dragon } from "../components/horoscopes/Icons/Dragon.svg";
-import { ReactComponent as Dog } from "../components/horoscopes/Icons/Dog.svg";
-import { ReactComponent as Horse } from "../components/horoscopes/Icons/Horse.svg";
-import { ReactComponent as Goat } from "../components/horoscopes/Icons/Goat.svg";
-import { ReactComponent as Ox } from "../components/horoscopes/Icons/Ox.svg";
-import { ReactComponent as Monkey } from "../components/horoscopes/Icons/Monkey.svg";
-import { ReactComponent as Rabbit } from "../components/horoscopes/Icons/Rabbit.svg";
-import { ReactComponent as Rat } from "../components/horoscopes/Icons/Rat.svg";
-import { ReactComponent as Rooster } from "../components/horoscopes/Icons/Rooster.svg";
-import { ReactComponent as Pig } from "../components/horoscopes/Icons/Pig.svg";
-import { ReactComponent as Improvement } from "../components/horoscopes/Icons/improvement.svg";
-import { ReactComponent as Affiliation } from "../components/horoscopes/Icons/affiliation.svg";
+import Tiger from "../components/horoscopes/Icons/Tiger.svg";
+import Snake from "../components/horoscopes/Icons/Snake.svg";
+import Dragon from "../components/horoscopes/Icons/Dragon.svg";
+import Dog from "../components/horoscopes/Icons/Dog.svg";
+import Horse from "../components/horoscopes/Icons/Horse.svg";
+import Goat from "../components/horoscopes/Icons/Goat.svg";
+import Ox from "../components/horoscopes/Icons/Ox.svg";
+import Monkey from "../components/horoscopes/Icons/Monkey.svg";
+import Rabbit from "../components/horoscopes/Icons/Rabbit.svg";
+import Rat from "../components/horoscopes/Icons/Rat.svg";
+import Rooster from "../components/horoscopes/Icons/Rooster.svg";
+import Pig from "../components/horoscopes/Icons/Pig.svg";
+import Improvement from "../components/horoscopes/Icons/improvement.svg";
+import Affiliation from "../components/horoscopes/Icons/affiliation.svg";
 
-import { HeadFC } from "gatsby";
-import SeoHeader from "../components/shared/SeoHeader";
 import TryMoreChineseSigns from "../components/horoscopes/TryMoreChineseSigns";
 
-import { Link } from "gatsby";
+import Link from "next/link";
 import Button from "../components/shared/Button";
 import styled from "styled-components";
 import { renderAffirmations } from "../utils/helpers";
@@ -136,10 +135,19 @@ const TitleAzi = styled(Title)`
 const RightSideIcon = styled(RightSide)`
   justify-content: center;
 `;
-function HoroscopeChinesePage(data: any) {
-  console.log(data);
-  const { description, sign, compatibility, affirmations, signStandard } =
-    data.pageContext;
+function HoroscopeChinesePage({
+  description,
+  sign,
+  compatibility,
+  affirmations,
+  signStandard,
+}: {
+  description: string;
+  sign: string;
+  compatibility: string;
+  affirmations: string;
+  signStandard: string;
+}) {
   const affirmationList = renderAffirmations(affirmations);
 
   const HoroscopesInfo = require("../utils/chineseHoroscopeInfo.json");
@@ -164,7 +172,7 @@ function HoroscopeChinesePage(data: any) {
 
   return (
     <AlignWrapper>
-      <HomeLink to="/">
+      <HomeLink href="/">
         <Illustration />
       </HomeLink>
       <TitleAzi>{sign}</TitleAzi>
@@ -304,13 +312,3 @@ function HoroscopeChinesePage(data: any) {
 }
 
 export default HoroscopeChinesePage;
-
-export const Head: HeadFC = (data: any) => {
-  const { sign, interval } = data.pageContext;
-  return (
-    <SeoHeader
-      title={`Horoscop ${interval} ${sign}: Esența Ta Cosmică ${interval}`}
-      description={`Ești ${sign} și ești curios să afli ce îți rezervă stelele pentru ${interval} aceasta? Explorează previziunile noastre ${interval}, care reflectă caracteristicile și energiile specifice zodiei tale, dezvăluind oportunitățile și provocările ce se profilază. Pregătește-te pentru o ${interval} sub influența semnului tău astral.`}
-    />
-  );
-};

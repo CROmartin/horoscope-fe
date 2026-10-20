@@ -1,20 +1,20 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { ReactComponent as Tiger } from "../Icons/chinese/TigerSmall.svg";
-import { ReactComponent as Snake } from "../Icons/chinese/SnakeSmall.svg";
-import { ReactComponent as Dragon } from "../Icons/chinese/DragonSmall.svg";
-import { ReactComponent as Dog } from "../Icons/chinese/DogSmall.svg";
-import { ReactComponent as Horse } from "../Icons/chinese/HorseSmall.svg";
-import { ReactComponent as Goat } from "../Icons/chinese/GoatSmall.svg";
-import { ReactComponent as Ox } from "../Icons/chinese/OxSmall.svg";
-import { ReactComponent as Monkey } from "../Icons/chinese/MonkeySmall.svg";
+import Tiger from "../Icons/chinese/TigerSmall.svg";
+import Snake from "../Icons/chinese/SnakeSmall.svg";
+import Dragon from "../Icons/chinese/DragonSmall.svg";
+import Dog from "../Icons/chinese/DogSmall.svg";
+import Horse from "../Icons/chinese/HorseSmall.svg";
+import Goat from "../Icons/chinese/GoatSmall.svg";
+import Ox from "../Icons/chinese/OxSmall.svg";
+import Monkey from "../Icons/chinese/MonkeySmall.svg";
 
-import { ReactComponent as Rabbit } from "../Icons/chinese/RabbitSmall.svg";
-import { ReactComponent as Rat } from "../Icons/chinese/RatSmall.svg";
-import { ReactComponent as Rooster } from "../Icons/chinese/RoosterSmall.svg";
-import { ReactComponent as Pig } from "../Icons/chinese/PigSmall.svg";
+import Rabbit from "../Icons/chinese/RabbitSmall.svg";
+import Rat from "../Icons/chinese/RatSmall.svg";
+import Rooster from "../Icons/chinese/RoosterSmall.svg";
+import Pig from "../Icons/chinese/PigSmall.svg";
 
-import { Link } from "gatsby";
+import Link from "next/link";
 const Holder = styled.div`
   width: 100%;
   max-width: 100vw;
@@ -186,7 +186,7 @@ function ZodiacChineseCircle() {
         viață cu sfaturile sale ancestrale.
       </TextHolder>
       <Zodiacs>
-        <ZodiacHolder to={`/horoscop-${interval}-sobolan`}>
+        <ZodiacHolder href={`/horoscop-${interval}-sobolan`}>
           <IconWrapper fill={true}>
             <Rat />
           </IconWrapper>
@@ -195,7 +195,7 @@ function ZodiacChineseCircle() {
             Ingenios, isteț, fermecător
           </ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/horoscop-${interval}-bivol`}>
+        <ZodiacHolder href={`/horoscop-${interval}-bivol`}>
           <IconWrapper fill={true}>
             <Ox />
           </IconWrapper>
@@ -203,7 +203,7 @@ function ZodiacChineseCircle() {
           <ZodiacName>Bivol</ZodiacName>
           <ZodiacCaracteristics>Stabil, loial, hotărât</ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/horoscop-${interval}-tigru`}>
+        <ZodiacHolder href={`/horoscop-${interval}-tigru`}>
           <IconWrapper fill={true}>
             <Tiger />
           </IconWrapper>
@@ -213,7 +213,7 @@ function ZodiacChineseCircle() {
             Curajos, încrezător, competitiv
           </ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/horoscop-${interval}-iepure`}>
+        <ZodiacHolder href={`/horoscop-${interval}-iepure`}>
           <IconWrapper fill={true}>
             <Rabbit />
           </IconWrapper>
@@ -223,7 +223,7 @@ function ZodiacChineseCircle() {
             Compasiv, tacticos, prudent
           </ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/horoscop-${interval}-dragon`}>
+        <ZodiacHolder href={`/horoscop-${interval}-dragon`}>
           <IconWrapper stroke={true}>
             <Dragon className="dragon" />
           </IconWrapper>
@@ -233,7 +233,7 @@ function ZodiacChineseCircle() {
             Carismatic, încrezător, puternic
           </ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/horoscop-${interval}-sarpe`}>
+        <ZodiacHolder href={`/horoscop-${interval}-sarpe`}>
           <IconWrapper fill={true}>
             <Snake />
           </IconWrapper>
@@ -243,7 +243,7 @@ function ZodiacChineseCircle() {
             Înțelept, grațios, simpatic
           </ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/horoscop-${interval}-cal`}>
+        <ZodiacHolder href={`/horoscop-${interval}-cal`}>
           <IconWrapper fill={true}>
             <Horse />
           </IconWrapper>
@@ -253,7 +253,7 @@ function ZodiacChineseCircle() {
             Energetic, independent, nerăbdător
           </ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/horoscop-${interval}-oaie`}>
+        <ZodiacHolder href={`/horoscop-${interval}-oaie`}>
           <IconWrapper stroke={true}>
             <Goat />
           </IconWrapper>
@@ -261,14 +261,14 @@ function ZodiacChineseCircle() {
           <ZodiacName>Oaie</ZodiacName>
           <ZodiacCaracteristics>Creativ, blând, gânditor</ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/horoscop-${interval}-maimuta`}>
+        <ZodiacHolder href={`/horoscop-${interval}-maimuta`}>
           <IconWrapper fill={true}>
             <Monkey />
           </IconWrapper>
           <ZodiacName>Maimuță</ZodiacName>
           <ZodiacCaracteristics>Deștept, curios, jucăuș</ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/horoscop-${interval}-cocos`}>
+        <ZodiacHolder href={`/horoscop-${interval}-cocos`}>
           <IconWrapper fill={true}>
             <Rooster />
           </IconWrapper>
@@ -278,7 +278,7 @@ function ZodiacChineseCircle() {
             Observator, muncitor, curajos
           </ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/horoscop-${interval}-caine`}>
+        <ZodiacHolder href={`/horoscop-${interval}-caine`}>
           <IconWrapper fill={true}>
             <Dog />
           </IconWrapper>
@@ -288,7 +288,7 @@ function ZodiacChineseCircle() {
             Loial, sincer, de încredere
           </ZodiacCaracteristics>
         </ZodiacHolder>
-        <ZodiacHolder to={`/horoscop-${interval}-porc`}>
+        <ZodiacHolder href={`/horoscop-${interval}-porc`}>
           <IconWrapper stroke={true}>
             <Pig />
           </IconWrapper>

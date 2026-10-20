@@ -1,5 +1,6 @@
+"use client";
+
 import React, { useEffect } from "react";
-import "./layout.css";
 import PopupResolver from "./PopupResolver";
 type LayoutProps = {
   children: React.ReactNode;

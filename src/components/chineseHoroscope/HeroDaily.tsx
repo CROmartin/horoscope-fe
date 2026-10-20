@@ -2,20 +2,20 @@ import React from "react";
 import styled from "styled-components";
 import Illustration from "../../Icons/illustration";
 import Button from "../shared/Button";
-import { ReactComponent as Tiger } from "../horoscopes/Icons/chinese/TigerSmall.svg";
-import { ReactComponent as Snake } from "../horoscopes/Icons/chinese/SnakeSmall.svg";
-import { ReactComponent as Dragon } from "../horoscopes/Icons/chinese/DragonSmall.svg";
-import { ReactComponent as Dog } from "../horoscopes/Icons/chinese/DogSmall.svg";
-import { ReactComponent as Horse } from "../horoscopes/Icons/chinese/HorseSmall.svg";
-import { ReactComponent as Goat } from "../horoscopes/Icons/chinese/GoatSmall.svg";
-import { ReactComponent as Ox } from "../horoscopes/Icons/chinese/OxSmall.svg";
-import { ReactComponent as Monkey } from "../horoscopes/Icons/chinese/MonkeySmall.svg";
+import Tiger from "../horoscopes/Icons/chinese/TigerSmall.svg";
+import Snake from "../horoscopes/Icons/chinese/SnakeSmall.svg";
+import Dragon from "../horoscopes/Icons/chinese/DragonSmall.svg";
+import Dog from "../horoscopes/Icons/chinese/DogSmall.svg";
+import Horse from "../horoscopes/Icons/chinese/HorseSmall.svg";
+import Goat from "../horoscopes/Icons/chinese/GoatSmall.svg";
+import Ox from "../horoscopes/Icons/chinese/OxSmall.svg";
+import Monkey from "../horoscopes/Icons/chinese/MonkeySmall.svg";
 
-import { ReactComponent as Rabbit } from "../horoscopes/Icons/chinese/RabbitSmall.svg";
-import { ReactComponent as Rat } from "../horoscopes/Icons/chinese/RatSmall.svg";
-import { ReactComponent as Rooster } from "../horoscopes/Icons/chinese/RoosterSmall.svg";
-import { ReactComponent as Pig } from "../horoscopes/Icons/chinese/PigSmall.svg";
-import { Link } from "gatsby";
+import Rabbit from "../horoscopes/Icons/chinese/RabbitSmall.svg";
+import Rat from "../horoscopes/Icons/chinese/RatSmall.svg";
+import Rooster from "../horoscopes/Icons/chinese/RoosterSmall.svg";
+import Pig from "../horoscopes/Icons/chinese/PigSmall.svg";
+import Link from "next/link";
 import { TittleH1 } from "../styles/styles.styled";
 
 const SvgWrapper = styled.div`
@@ -156,73 +156,73 @@ function HeroDaily() {
       <TittleH1>Horoscop</TittleH1>
       <Line></Line>
       <InfoLine>
-        <SignHolder to="/horoscop-zilnic-sobolan">
+        <SignHolder href="/horoscop-zilnic-sobolan">
           <IconWrapper fill={true}>
             <Rat />
           </IconWrapper>
           <SignName>Șobolan</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-zilnic-bivol">
+        <SignHolder href="/horoscop-zilnic-bivol">
           <IconWrapper fill={true}>
             <Ox />
           </IconWrapper>
           <SignName>Bivol</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-zilnic-tigru">
+        <SignHolder href="/horoscop-zilnic-tigru">
           <IconWrapper fill={true}>
             <Tiger />
           </IconWrapper>
           <SignName>Tigru</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-zilnic-iepure">
+        <SignHolder href="/horoscop-zilnic-iepure">
           <IconWrapper fill={true}>
             <Rabbit />
           </IconWrapper>
           <SignName>Iepure</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-zilnic-dragon">
+        <SignHolder href="/horoscop-zilnic-dragon">
           <IconWrapper stroke={true}>
             <Dragon className="dragon" />
           </IconWrapper>
           <SignName>Dragon</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-zilnic-sarpe">
+        <SignHolder href="/horoscop-zilnic-sarpe">
           <IconWrapper fill={true}>
             <Snake />
           </IconWrapper>
           <SignName>Șarpe</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-zilnic-cal">
+        <SignHolder href="/horoscop-zilnic-cal">
           <IconWrapper fill={true}>
             <Horse />
           </IconWrapper>
           <SignName>Cal</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-zilnic-oaie">
+        <SignHolder href="/horoscop-zilnic-oaie">
           <IconWrapper stroke={true}>
             <Goat className="boldSvg" />
           </IconWrapper>
           <SignName>Oaie</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-zilnic-maimuta">
+        <SignHolder href="/horoscop-zilnic-maimuta">
           <IconWrapper fill={true}>
             <Monkey />
           </IconWrapper>
           <SignName>Maimuță</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-zilnic-cocos">
+        <SignHolder href="/horoscop-zilnic-cocos">
           <IconWrapper fill={true}>
             <Rooster />
           </IconWrapper>
           <SignName>Cocoș</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-zilnic-caine">
+        <SignHolder href="/horoscop-zilnic-caine">
           <IconWrapper fill={true}>
             <Dog />
           </IconWrapper>
           <SignName>Câine</SignName>
         </SignHolder>
-        <SignHolder to="/horoscop-zilnic-porc">
+        <SignHolder href="/horoscop-zilnic-porc">
           <IconWrapper stroke={true}>
             <Pig className="boldSvg" />
           </IconWrapper>

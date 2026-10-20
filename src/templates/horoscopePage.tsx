@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useRef } from "react";
 
 import Illustration from "../components/horoscopes/Icons/illustration";
@@ -11,26 +12,24 @@ import {
   IconWrapper,
   Title,
 } from "../components/horoscope/HoroscopePageStyled";
-import { ReactComponent as Aquarius } from "../components/horoscopes/Icons/aquariusBig.svg";
-import { ReactComponent as Aries } from "../components/horoscopes/Icons/ariesBig.svg";
-import { ReactComponent as Cancer } from "../components/horoscopes/Icons/cancerBig.svg";
-import { ReactComponent as Capricorn } from "../components/horoscopes/Icons/capricornBig.svg";
-import { ReactComponent as Gemini } from "../components/horoscopes/Icons/geminiBig.svg";
-import { ReactComponent as Leo } from "../components/horoscopes/Icons/leoBig.svg";
-import { ReactComponent as Libra } from "../components/horoscopes/Icons/libraBig.svg";
-import { ReactComponent as Pisces } from "../components/horoscopes/Icons/piscesBig.svg";
-import { ReactComponent as Sagittarius } from "../components/horoscopes/Icons/sagittariusBig.svg";
-import { ReactComponent as Scorpio } from "../components/horoscopes/Icons/scorpioBig.svg";
-import { ReactComponent as Taurus } from "../components/horoscopes/Icons/taurusBig.svg";
-import { ReactComponent as Virgo } from "../components/horoscopes/Icons/virgoBig.svg";
+import Aquarius from "../components/horoscopes/Icons/aquariusBig.svg";
+import Aries from "../components/horoscopes/Icons/ariesBig.svg";
+import Cancer from "../components/horoscopes/Icons/cancerBig.svg";
+import Capricorn from "../components/horoscopes/Icons/capricornBig.svg";
+import Gemini from "../components/horoscopes/Icons/geminiBig.svg";
+import Leo from "../components/horoscopes/Icons/leoBig.svg";
+import Libra from "../components/horoscopes/Icons/libraBig.svg";
+import Pisces from "../components/horoscopes/Icons/piscesBig.svg";
+import Sagittarius from "../components/horoscopes/Icons/sagittariusBig.svg";
+import Scorpio from "../components/horoscopes/Icons/scorpioBig.svg";
+import Taurus from "../components/horoscopes/Icons/taurusBig.svg";
+import Virgo from "../components/horoscopes/Icons/virgoBig.svg";
 
-import { ReactComponent as Improvement } from "../components/horoscopes/Icons/improvement.svg";
-import { ReactComponent as Affiliation } from "../components/horoscopes/Icons/affiliation.svg";
+import Improvement from "../components/horoscopes/Icons/improvement.svg";
+import Affiliation from "../components/horoscopes/Icons/affiliation.svg";
 
-import { HeadFC } from "gatsby";
-import SeoHeader from "../components/shared/SeoHeader";
 import TryMoreZodiacSigns from "../components/horoscopes/TryMoreZodiacSigns";
-import { Link } from "gatsby";
+import Link from "next/link";
 import styled from "styled-components";
 import { renderAffirmations } from "../utils/helpers";
 
@@ -80,10 +79,19 @@ const TitleAzi = styled(Title)`
   margin-bottom: 32px;
 `;
 
-function HoroscopePage(data: any) {
-  console.log(data);
-  const { description, compatibility, affirmations, sign, interval } =
-    data.pageContext;
+function HoroscopePage({
+  description,
+  compatibility,
+  affirmations,
+  sign,
+  interval,
+}: {
+  description: string;
+  compatibility: string;
+  affirmations: string;
+  sign: string;
+  interval: string;
+}) {
   const dailyHoroscopeRef = useRef<HTMLDivElement>(null);
   const affirmationList = renderAffirmations(affirmations);
 
@@ -104,7 +112,7 @@ function HoroscopePage(data: any) {
   }, []);
   return (
     <AlignWrapper>
-      <HomeLink to="/">
+      <HomeLink href="/">
         <Illustration />
       </HomeLink>
       <TitleAzi>
@@ -170,13 +178,3 @@ function HoroscopePage(data: any) {
 }
 
 export default HoroscopePage;
-
-export const Head: HeadFC = (data: any) => {
-  const { sign, interval } = data.pageContext;
-  return (
-    <SeoHeader
-      title={`Horoscop ${interval} ${sign}: Esența Ta Cosmică ${interval}`}
-      description={`Ești ${sign} și ești curios să afli ce îți rezervă stelele pentru ${interval} aceasta? Explorează previziunile noastre ${interval}, care reflectă caracteristicile și energiile specifice zodiei tale, dezvăluind oportunitățile și provocările ce se profilază. Pregătește-te pentru o ${interval} sub influența semnului tău astral.`}
-    />
-  );
-};
