@@ -1,16 +1,29 @@
+export type HoroscopeInterval = "zilnic" | "azi" | "saptamanal" | "anual";
+
+export function samePeriodPath(interval: HoroscopeInterval, signSlug: string) {
+  return `/horoscop-${interval}-${signSlug}`;
+}
+
 export function relatedHoroscopeLinks(input: {
   variant: "standard" | "azi" | "chinese";
-  interval: "zilnic" | "azi" | "saptamanal" | "anual";
+  interval: HoroscopeInterval;
   signSlug: string;
 }) {
   const { variant, interval, signSlug } = input;
-  if (variant === "chinese") {
-    return interval === "anual"
-      ? [{ href: `/horoscop-zilnic-${signSlug}`, label: "Horoscopul zilnic" }]
-      : [{ href: `/horoscop-anual-${signSlug}`, label: "Horoscopul anual" }];
+  const links =
+    variant === "chinese"
+      ? interval === "anual"
+        ? [{ href: samePeriodPath("zilnic", signSlug), label: "Horoscopul zilnic" }]
+        : [{ href: samePeriodPath("anual", signSlug), label: "Horoscopul anual" }]
+      : interval === "saptamanal"
+        ? [{ href: samePeriodPath("zilnic", signSlug), label: "Horoscopul de azi" }]
+        : [{ href: samePeriodPath("saptamanal", signSlug), label: "Horoscopul săptămânii" }];
+
+  if (variant !== "chinese") {
+    links.push(
+      { href: `/${signSlug}`, label: "Profilul zodiei" },
+      { href: `/compatibilitate?a=${signSlug}`, label: "Compatibilitate" }
+    );
   }
-  if (interval === "saptamanal") {
-    return [{ href: `/horoscop-zilnic-${signSlug}`, label: "Horoscopul de azi" }];
-  }
-  return [{ href: `/horoscop-saptamanal-${signSlug}`, label: "Horoscopul săptămânii" }];
+  return links;
 }

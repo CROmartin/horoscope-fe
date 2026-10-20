@@ -32,6 +32,7 @@ import Link from "next/link";
 import styled from "styled-components";
 import { renderAffirmations } from "../utils/helpers";
 import ReadingStatus from "../components/horoscope/ReadingStatus";
+import type { Crumb } from "../lib/breadcrumbs";
 import type { ReadingFreshness } from "../lib/readingDate";
 
 const HomeLink = styled(Link)`
@@ -84,6 +85,8 @@ function HoroscopePage({
   heading,
   freshness,
   links,
+  crumbs,
+  period,
 }: {
   description: string;
   compatibility: string;
@@ -92,6 +95,8 @@ function HoroscopePage({
   heading: string;
   freshness: ReadingFreshness;
   links: { href: string; label: string }[];
+  crumbs: Crumb[];
+  period: "zilnic" | "saptamanal";
 }) {
   const affirmationList = renderAffirmations(affirmations);
 
@@ -100,7 +105,7 @@ function HoroscopePage({
       <HomeLink href="/">
         <Illustration />
       </HomeLink>
-      <ReadingStatus heading={heading} freshness={freshness} links={links} />
+      <ReadingStatus heading={heading} freshness={freshness} links={links} crumbs={crumbs} />
       <RowAzi>
         <RightSide>
           <ContentBox>
@@ -155,7 +160,7 @@ function HoroscopePage({
           </IconWrapperIcon>
         </LeftSide>
       </RowAzi>
-      <TryMoreZodiacSigns />
+      <TryMoreZodiacSigns period={period} />
     </AlignWrapper>
   );
 }

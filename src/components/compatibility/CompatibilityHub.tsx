@@ -4,6 +4,7 @@ import React from "react";
 import styled from "styled-components";
 import PairForm from "@/components/compatibility/PairForm";
 import AlignWrapper from "@/components/shared/AlignWrapper";
+import type { ZodiacSlug } from "@/lib/zodiacSigns";
 
 const Article = styled.article`
   width: 100%;
@@ -32,7 +33,13 @@ const Alert = styled.p`
   color: #d7be8a;
 `;
 
-function CompatibilityHub({ invalid }: { invalid: boolean }) {
+function CompatibilityHub({
+  invalid,
+  initialSign = "",
+}: {
+  invalid: boolean;
+  initialSign?: ZodiacSlug | "";
+}) {
   return (
     <AlignWrapper>
       <Article>
@@ -42,7 +49,7 @@ function CompatibilityHub({ invalid }: { invalid: boolean }) {
           același link, indiferent de ordinea aleasă.
         </p>
         {invalid && <Alert role="alert">Alege două zodii din listă.</Alert>}
-        <PairForm />
+        <PairForm initialA={initialSign} />
       </Article>
     </AlignWrapper>
   );

@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { relatedHoroscopeLinks } from "./horoscopeLinks";
+import { relatedHoroscopeLinks, samePeriodPath } from "./horoscopeLinks";
 import { formatCalendarDate, horoscopeTitle, isoWeekKey, readingFreshness } from "./readingDate";
 
 const stale = new Date("2026-10-19T21:30:00.000Z");
@@ -60,11 +60,19 @@ test("yearly freshness follows the Bucharest calendar year", () => {
 test("related links stay on the existing horoscope URLs", () => {
   assert.deepEqual(
     relatedHoroscopeLinks({ variant: "standard", interval: "zilnic", signSlug: "berbec" }),
-    [{ href: "/horoscop-saptamanal-berbec", label: "Horoscopul săptămânii" }]
+    [
+      { href: "/horoscop-saptamanal-berbec", label: "Horoscopul săptămânii" },
+      { href: "/berbec", label: "Profilul zodiei" },
+      { href: "/compatibilitate?a=berbec", label: "Compatibilitate" },
+    ]
   );
   assert.deepEqual(
     relatedHoroscopeLinks({ variant: "standard", interval: "saptamanal", signSlug: "leu" }),
-    [{ href: "/horoscop-zilnic-leu", label: "Horoscopul de azi" }]
+    [
+      { href: "/horoscop-zilnic-leu", label: "Horoscopul de azi" },
+      { href: "/leu", label: "Profilul zodiei" },
+      { href: "/compatibilitate?a=leu", label: "Compatibilitate" },
+    ]
   );
   assert.deepEqual(
     relatedHoroscopeLinks({ variant: "chinese", interval: "zilnic", signSlug: "tigru" }),
@@ -74,4 +82,6 @@ test("related links stay on the existing horoscope URLs", () => {
     relatedHoroscopeLinks({ variant: "chinese", interval: "anual", signSlug: "dragon" }),
     [{ href: "/horoscop-zilnic-dragon", label: "Horoscopul zilnic" }]
   );
+  assert.equal(samePeriodPath("azi", "berbec"), "/horoscop-azi-berbec");
+  assert.equal(samePeriodPath("anual", "dragon"), "/horoscop-anual-dragon");
 });

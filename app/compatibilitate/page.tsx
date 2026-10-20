@@ -2,6 +2,7 @@ import CompatibilityHub from "@/components/compatibility/CompatibilityHub";
 import JsonLd from "@/components/seo/JsonLd";
 import { canonicalPairSlug } from "@/lib/compatibility";
 import { pageMetadata } from "@/lib/metadata";
+import { isZodiacSlug, type ZodiacSlug } from "@/lib/zodiacSigns";
 import { permanentRedirect } from "next/navigation";
 
 const title = "Compatibilitate zodii";
@@ -29,10 +30,13 @@ export default async function Page({ searchParams }: HubProps) {
     if (canonical) permanentRedirect(`/compatibilitate/${canonical}`);
   }
 
+  const preset: ZodiacSlug | undefined =
+    a && !b && isZodiacSlug(a) ? a : b && !a && isZodiacSlug(b) ? b : undefined;
+
   return (
     <>
       <JsonLd title={title} description={description} path={path} />
-      <CompatibilityHub invalid={Boolean(a || b)} />
+      <CompatibilityHub invalid={Boolean((a || b) && !preset)} initialSign={preset} />
     </>
   );
 }

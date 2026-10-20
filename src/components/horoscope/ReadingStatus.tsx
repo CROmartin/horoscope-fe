@@ -1,6 +1,8 @@
 import React from "react";
 import Link from "next/link";
 import styled from "styled-components";
+import Breadcrumbs from "@/components/seo/Breadcrumbs";
+import type { Crumb } from "@/lib/breadcrumbs";
 import type { ReadingFreshness } from "@/lib/readingDate";
 
 const Block = styled.div`
@@ -81,15 +83,18 @@ function ReadingStatus({
   heading,
   freshness,
   links,
+  crumbs = [],
 }: {
   heading: string;
   freshness: ReadingFreshness;
   links: { href: string; label: string }[];
+  crumbs?: Crumb[];
 }) {
   const message = note(freshness);
 
   return (
     <Block>
+      <Breadcrumbs items={crumbs} />
       <Heading>{heading}</Heading>
       {message && <Note>{message}</Note>}
       <Note>
@@ -99,7 +104,7 @@ function ReadingStatus({
         <Link href="/politica-editoriala">Politica editorială</Link>
       </Note>
       {links.length > 0 && (
-        <Related aria-label="Alte perioade pentru aceeași zodie">
+        <Related aria-label="Alte pagini pentru aceeași zodie">
           {links.map((link) => (
             <Link key={link.href} href={link.href}>
               {link.label}

@@ -1,26 +1,6 @@
+import { breadcrumbTrail } from "@/lib/breadcrumbs";
+
 const SITE = "https://horoscopzodii.ro";
-
-type Crumb = { name: string; path: string };
-
-function breadcrumbs(path: string, currentTitle: string): Crumb[] {
-  const items: Crumb[] = [{ name: "Acasă", path: "/" }];
-
-  if (path.startsWith("/horoscop-azi-")) {
-    items.push({ name: "Horoscop azi", path: "/horoscop-azi" });
-  } else if (path.startsWith("/horoscop-saptamanal-")) {
-    items.push({ name: "Horoscop săptămânal", path: "/horoscop-saptamanal" });
-  } else if (path.startsWith("/horoscop-anual-")) {
-    items.push({ name: "Horoscop chinezesc", path: "/horoscop-chinezesc" });
-  } else if (path.startsWith("/horoscop-zilnic-")) {
-    const parent = currentTitle.startsWith("Horoscop chinezesc")
-      ? { name: "Horoscop chinezesc zilnic", path: "/horoscop-zilnic-chinezesc" }
-      : { name: "Horoscop zilnic", path: "/horoscop-zilnic" };
-    items.push(parent);
-  }
-
-  if (path !== "/") items.push({ name: currentTitle, path });
-  return items;
-}
 
 export default function JsonLd({
   title,
@@ -94,7 +74,7 @@ export default function JsonLd({
     });
   }
 
-  const crumbs = breadcrumbs(path, title);
+  const crumbs = breadcrumbTrail(path, title);
   if (crumbs.length > 1) {
     graph.push({
       "@type": "BreadcrumbList",

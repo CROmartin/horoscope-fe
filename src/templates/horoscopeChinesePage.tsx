@@ -41,6 +41,7 @@ import Button from "../components/shared/Button";
 import styled from "styled-components";
 import { renderAffirmations } from "../utils/helpers";
 import ReadingStatus from "../components/horoscope/ReadingStatus";
+import type { Crumb } from "../lib/breadcrumbs";
 import type { ReadingFreshness } from "../lib/readingDate";
 
 interface IconWrapperProps {
@@ -141,6 +142,8 @@ function HoroscopeChinesePage({
   heading,
   freshness,
   links,
+  crumbs,
+  period,
 }: {
   description: string;
   sign: string;
@@ -150,6 +153,8 @@ function HoroscopeChinesePage({
   heading: string;
   freshness: ReadingFreshness;
   links: { href: string; label: string }[];
+  crumbs: Crumb[];
+  period: "zilnic" | "anual";
 }) {
   const affirmationList = renderAffirmations(affirmations);
 
@@ -161,7 +166,7 @@ function HoroscopeChinesePage({
       <HomeLink href="/">
         <Illustration />
       </HomeLink>
-      <ReadingStatus heading={heading} freshness={freshness} links={links} />
+      <ReadingStatus heading={heading} freshness={freshness} links={links} crumbs={crumbs} />
       <Row>
         <LeftSide>
           <IntervalHolder>
@@ -292,7 +297,7 @@ function HoroscopeChinesePage({
       <Row>
         <Button message="Mai Multe Horoscoape" link={`/horoscop`} />
       </Row>
-      <TryMoreChineseSigns />
+      <TryMoreChineseSigns period={period} />
     </AlignWrapper>
   );
 }

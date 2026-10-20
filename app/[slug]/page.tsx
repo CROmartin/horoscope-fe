@@ -5,6 +5,7 @@ import HoroscopeChinesePage from "@/templates/horoscopeChinesePage";
 import HoroscopePage from "@/templates/horoscopePage";
 import HoroscopePageAzi from "@/templates/horoscopePageAzi";
 import { horoscopeDescription, horoscopeHeading, isoDate } from "@/lib/horoscopeCopy";
+import { breadcrumbTrail } from "@/lib/breadcrumbs";
 import { relatedHoroscopeLinks } from "@/lib/horoscopeLinks";
 import { getHoroscopeBySlug } from "@/lib/horoscopes";
 import { pageMetadata } from "@/lib/metadata";
@@ -56,6 +57,7 @@ export default async function HoroscopeRoute({ params }: PageProps) {
     interval: horoscope.interval,
     signSlug: horoscope.signStandard,
   });
+  const crumbs = breadcrumbTrail(path, title);
 
   const page =
     horoscope.variant === "chinese" ? (
@@ -68,6 +70,8 @@ export default async function HoroscopeRoute({ params }: PageProps) {
         heading={title}
         freshness={freshness}
         links={links}
+        crumbs={crumbs}
+        period={horoscope.interval === "anual" ? "anual" : "zilnic"}
       />
     ) : horoscope.variant === "azi" ? (
       <HoroscopePageAzi
@@ -78,6 +82,7 @@ export default async function HoroscopeRoute({ params }: PageProps) {
         heading={title}
         freshness={freshness}
         links={links}
+        crumbs={crumbs}
       />
     ) : (
       <HoroscopePage
@@ -88,6 +93,8 @@ export default async function HoroscopeRoute({ params }: PageProps) {
         heading={title}
         freshness={freshness}
         links={links}
+        crumbs={crumbs}
+        period={horoscope.interval === "saptamanal" ? "saptamanal" : "zilnic"}
       />
     );
 
