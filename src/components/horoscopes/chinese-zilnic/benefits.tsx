@@ -84,12 +84,10 @@ function Benefits() {
   return (
     <Holder>
       <Box>
-        <h2>Beneficiile Explorării Horoscopului Chinezesc</h2>
+        <h2>Ce publicăm pentru zodiacul chinezesc</h2>
         <p>
-          Horoscopul chinezesc, cu rădăcini adânci în filozofia și astrologia
-          străveche, a ghidat drumurile individuale și colective pentru milenii.
-          Dar de ce sunt oamenii atrași de aceste înțelepciuni ancestrale?
-          Motivele sunt la fel de diverse și colorate ca și zodiacul însuși.
+          Fiecare semn are un singur text. Zodiacul chinezesc este separat de
+          cel occidental și nu este calculat după ora nașterii.
         </p>
       </Box>
       <Row>
@@ -100,12 +98,10 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Luarea Deciziilor</SubTitle>
+          <SubTitle>Un text pe semn</SubTitle>
           <p>
-            Confruntându-ne cu complexitățile vieții moderne, alegerea corectă
-            poate părea uneori un labirint. Horoscopul chinezesc funcționează ca
-            un ghid spiritual, oferind claritate și încredere prin înțelepciunea
-            sa milenară.
+            Șobolanul, Bivolul și celelalte semne au previziuni diferite. Doi
+            cititori ai aceluiași semn văd același horoscop.
           </p>
         </Column>
       </Row>
@@ -117,12 +113,10 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Insight-uri Asupra Relațiilor</SubTitle>
+          <SubTitle>Rubrici</SubTitle>
           <p>
-            De la dinamici romantice la relații familiale și prietenii,
-            horoscopul chinezesc poate lumina căile interpersonale. Cunoașterea
-            trăsăturilor specific fiecărui semn zodiacal chinezesc îmbunătățește
-            comunicarea și întelegearea reciprocă.
+            Pagina unui semn include previziunea, compatibilitatea și
+            afirmațiile publicate pentru el.
           </p>
         </Column>
       </Row>
@@ -134,29 +128,10 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Orientare Profesională</SubTitle>
+          <SubTitle>Data publicării</SubTitle>
           <p>
-            Ai îndoieli despre cariera ta sau te confrunți cu dileme la locul de
-            muncă? Horoscopul chinezesc poate deschide perspective asupra
-            parcursului profesional, conducându-te spre succes și evitând
-            obstacolele.
-          </p>
-        </Column>
-      </Row>
-      <Row>
-        <Column>
-          <IconHolder>
-            <Star />
-          </IconHolder>
-          <Line />
-        </Column>
-        <Column>
-          <SubTitle>Auto-descoperire</SubTitle>
-          <p>
-            Jurneul de autodescoperire este o aventură continuă, iar horoscopul
-            chinezesc oferă o prismă fascinantă pentru auto-reflecție. Acesta
-            relevă talente neștiute, puncte de lucru și direcții pentru
-            dezvoltare personală.
+            Pe pagină apare data la care a fost publicat textul, după ora
+            României. Dacă setul zilei lipsește, rămâne ultima previziune.
           </p>
         </Column>
       </Row>
@@ -170,15 +145,23 @@ function Benefits() {
         <Column>
           <SubTitle>Divertisment</SubTitle>
           <p>
-            Pe lângă profunzimea sa spirituală, horoscopul chinezesc servește și
-            ca o formă de divertisment captivantă. Poate fi o modalitate plăcută
-            de a începe ziua, un punct de discuție intrigant sau chiar un hobby
-            relaxant.
+            Horoscopul este un text de citit, nu un sfat pentru bani, sănătate
+            sau relații.
           </p>
+        </Column>
+      </Row>
+      <Row>
+        <Column>
+          <IconHolder>
+            <Star />
+          </IconHolder>
+          <Line />
+        </Column>
+        <Column>
+          <SubTitle>Alte semne</SubTitle>
           <p>
-            În esență, fie că ești în căutare de ghidare, consolare sau doar un
-            moment de evadare, horoscopul chinezesc oferă perspective și
-            înțelepciune pentru toți.
+            De pe pagina unui semn poți deschide horoscopul celorlalte semne
+            chinezești, pentru aceeași perioadă.
           </p>
         </Column>
       </Row>

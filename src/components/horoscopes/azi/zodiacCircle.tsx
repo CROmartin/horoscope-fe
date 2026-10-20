@@ -121,14 +121,11 @@ function ZodiacCircle() {
   return (
     <Holder>
       <TextHolder>
-        <h2>Cercul Zodiacal: O Odisee Cosmică a Caracterelor</h2>
+        <h2>Cele 12 zodii</h2>
         <div>
-          Zodiacul se dezvăluie ca o impresionantă roată celestială, un
-          spectacol cosmic alcătuit din 12 semne zodiacale distincte, fiecare
-          purtând în sine un mozaic de caracteristici, sentimente și moduri de
-          acțiune unice. De la vibranta energie a Berbecului la profundele taine
-          ale Peștilor, zodiacul țese o diversitate fascinantă de identități,
-          unite sub măreția astrală.
+          Alege un semn pentru profilul lui, cu horoscopul zilnic și
+          săptămânal. Trăsăturile de pe card sunt o descriere generală a
+          semnului.
         </div>
       </TextHolder>
       <Zodiacs>
@@ -203,7 +200,7 @@ function ZodiacCircle() {
 
           <ZodiacName>Capricorn</ZodiacName>
           <ZodiacCaracteristics>
-            Disciplinat, Ambițios, Pricăjit
+            Disciplinat, Ambițios, Precaut
           </ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/varsator`}>

@@ -84,12 +84,10 @@ function Benefits() {
   return (
     <Holder>
       <Box>
-        <h2>Avantajele Consultării Horoscopului Personal</h2>
+        <h2>Ce publicăm</h2>
         <p>
-          Horoscoapele sunt un ghid valoros în călătoria de autodescoperire și
-          anticipare a viitorului, utilizate de-a lungul generațiilor. Dar ce îi
-          determină pe oameni să se îndrepte spre aceste sfaturi astrologice?
-          Motivele sunt la fel de diverse ca și constelațiile pe cer.
+          Fiecare zodie are un singur text. Nu calculăm un horoscop după data
+          de naștere și nu spunem ce decizie să iei.
         </p>
       </Box>
       <Row>
@@ -100,12 +98,10 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Facilitarea Deciziilor</SubTitle>
+          <SubTitle>Un text pe zodie</SubTitle>
           <p>
-            Într-o eră a complexității crescute, fiecare decizie, de la cele
-            simple la cele care transformă viața, poate fi intimidantă.
-            Horoscoapele pot acționa ca o busolă spirituală, oferindu-ți
-            asistență pentru a face alegeri cu claritate și încredere sporită.
+            Semnele au previziuni diferite. Doi cititori ai aceleiași zodii văd
+            același horoscop.
           </p>
         </Column>
       </Row>
@@ -117,13 +113,10 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Insight-uri în Relații</SubTitle>
+          <SubTitle>Rubrici</SubTitle>
           <p>
-            Indiferent că e vorba de relații romantice, prietenii sau dinamici
-            familiale complexe, horoscoapele pot oferi perspective detaliate
-            asupra interacțiunilor tale personale. Cunoașterea trăsăturilor
-            specifice diferitelor semne zodiacale poate îmbunătăți conexiunile
-            emoționale și facilita o comunicare mai eficientă.
+            O pagină de horoscop include previziunea, compatibilitatea și
+            afirmațiile publicate pentru acel semn.
           </p>
         </Column>
       </Row>
@@ -135,12 +128,11 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Orientare în Carieră</SubTitle>
+          <SubTitle>Data publicării</SubTitle>
           <p>
-            Te întrebi dacă ești pe calea profesională corectă sau cum să
-            abordezi provocările din mediul de lucru? Horoscoapele pot oferi
-            perspectivă și îndrumare asupra parcursului tău profesional,
-            conducându-te spre oportunități și ajutându-te să eviți obstacolele.
+            Data de pe pagină este ziua în care a fost publicat textul, după ora
+            României. Un set nou rămâne ciornă până este aprobat. Un set
+            incomplet nu schimbă textul publicat.
           </p>
         </Column>
       </Row>
@@ -152,12 +144,10 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Explorarea Sinelui</SubTitle>
+          <SubTitle>Divertisment</SubTitle>
           <p>
-            Drumul către autodescoperire este unul continuu, iar horoscoapele
-            pot servi drept un instrument de reflectare personală. Ele
-            evidențiază talente neștiute, subliniază aspecte de îmbunătățit și
-            oferă orientări pentru dezvoltarea personală.
+            Horoscopul este un text de citit, nu un sfat pentru bani, sănătate
+            sau relații.
           </p>
         </Column>
       </Row>
@@ -169,17 +159,10 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Un moment de voie bună</SubTitle>
+          <SubTitle>Cum te oprești</SubTitle>
           <p>
-            Pe lângă aspectele lor profunde, horoscoapele pot fi, de asemenea, o
-            formă plăcută de divertisment. Ele pot adăuga un strop de bucurie la
-            începutul zilei, servi drept subiect de conversație captivant sau
-            chiar oferi o pauză relaxantă.
-          </p>
-          <p>
-            În concluzie, fie că îți dorești sfaturi practice, sprijin emoțional
-            sau pur și simplu o scurtă evadare din cotidian, horoscoapele au
-            multe de oferit.
+            Emailul zilnic pleacă doar dacă îl ceri explicit. Îl poți opri din
+            linkul primit sau scriind la sprijin@horoscopzodii.ro.
           </p>
         </Column>
       </Row>

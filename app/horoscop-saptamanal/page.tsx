@@ -3,7 +3,7 @@ import JsonLd from "@/components/seo/JsonLd";
 import { pageMetadata } from "@/lib/metadata";
 
 const title = "Horoscop Săptămânal: Previziunile Tale Astrale pentru Săptămâna";
-const description = "Descoperă tendințele și influențele astrale pentru săptămâna ce vine. Horoscopul nostru săptămânal îți oferă o privire detaliată asupra a ceea ce poți aștepta, permitându-ți să planifici și să acționezi cu înțelepciune și încredere.";
+const description = "Horoscopul săptămânii pentru cele 12 zodii, în română. Fiecare zodie are propriul text, de divertisment.";
 const path = "/horoscop-saptamanal";
 
 export const metadata = pageMetadata(title, description, path);

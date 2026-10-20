@@ -3,7 +3,7 @@ import JsonLd from "@/components/seo/JsonLd";
 import { pageMetadata } from "@/lib/metadata";
 
 const title = "Horoscop Rac Zilnic și Săptămânal: Emoția Ta Astrală";
-const description = "Ești Rac și îți dorești să cunoști vibrațiile astrale pentru zilele și săptămâna ce se apropie? Descoperă previziunile noastre zilnice și săptămânale, adaptate sensibilității și intuiției tale, oferindu-ți claritate și confort în lumea stelelor.";
+const description = "Horoscopul zilnic și săptămânal pentru Rac, în română. Toți cititorii din zodia Rac văd același text, de divertisment.";
 const path = "/rac";
 
 export const metadata = pageMetadata(title, description, path);

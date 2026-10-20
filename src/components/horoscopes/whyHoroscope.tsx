@@ -91,9 +91,9 @@ function WhyHoroscope() {
           diverse aspecte ale vieții, de la dragoste și carieră până la
           deciziile de zi cu zi. De ce să citești horoscopul? Pentru mulți, este
           o sursă de îndrumare zilnică, oferind o perspectivă unică asupra
-          provocărilor și oportunităților vieții. Descoperă semnul tău zodiacal
-          pentru a explora previziuni și percepții personalizate. Harta ta
-          cosmică este la doar un clic distanță.
+          provocărilor și oportunităților vieții. Alege semnul și citește
+          horoscopul scris pentru el. Toți cititorii aceluiași semn văd același
+          text.
         </Paragraph>
         <Button message={"Află mai multe"} link="/despre-noi" />
       </Column>

@@ -98,11 +98,9 @@ function WhyHoroscope() {
           posibilităților vieții.
         </Paragraph>
         <Paragraph>
-          Oamenii sunt atrași de horoscoape din curiozitate și dorința de
-          auto-cunoaștere. Această practică milenară oferă nu doar previziuni,
-          ci și introspecții asupra caracterului și destinului, facilitând o mai
-          bună înțelegere de sine și a celor din jur. Explorarea astrologiei
-          poate fi o călătorie personală spre înțelepciune și claritate.
+          Oamenii citesc horoscopul din curiozitate. Textul de pe acest site este
+          același pentru toți cititorii unui semn și este de divertisment, nu o
+          descriere a destinului personal.
         </Paragraph>
         <Button message={"Explorează mai mult"} link="/despre-noi" />
       </Column>

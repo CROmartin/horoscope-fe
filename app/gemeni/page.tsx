@@ -3,7 +3,7 @@ import JsonLd from "@/components/seo/JsonLd";
 import { pageMetadata } from "@/lib/metadata";
 
 const title = "Horoscop Gemeni Zilnic și Săptămânal: Ghidul Tău Astral";
-const description = "Ești Gemeni și vrei să știi ce îți rezervă zilele și săptămâna? Explorează previziunile noastre astrale zilnice și săptămânale special create pentru tine, pentru a naviga cu încredere și a te alinia cu energiile universului.";
+const description = "Horoscopul zilnic și săptămânal pentru Gemeni, în română. Toți cititorii din zodia Gemeni văd același text, de divertisment.";
 const path = "/gemeni";
 
 export const metadata = pageMetadata(title, description, path);

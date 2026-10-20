@@ -3,7 +3,7 @@ import JsonLd from "@/components/seo/JsonLd";
 import { pageMetadata } from "@/lib/metadata";
 
 const title = "Horoscop Taur Zilnic și Săptămânal: Steaua Ta Ghidătoare";
-const description = "Ești Taur și te interesează influențele astrale ale zilelor și săptămânii? Explorează previziunile noastre zilnice și săptămânale, realizate pentru tenacitatea și determinarea ta, pentru a te îndruma cu înțelepciune și a te alinia la vibrațiile cosmosului.";
+const description = "Horoscopul zilnic și săptămânal pentru Taur, în română. Toți cititorii din zodia Taur văd același text, de divertisment.";
 const path = "/taur";
 
 export const metadata = pageMetadata(title, description, path);

@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/metadata";
 
 const title = "Horoscop Zilnic, Săptămânal și Chinezesc: Ghidul Tău Celest";
 const description =
-  "Navighează prin cele mai precise previziuni cu Horoscopul Zilnic, Săptămânal și Chinezesc. Rămâi la curent cu influențele astrale care îți modelează zilele și descoperă secretele destinului tău în ghidul nostru celestial complet.";
+  "Horoscopul zilei, al săptămânii și zodiacul chinezesc, în română. Fiecare zodie are propriul text, de divertisment.";
 const path = "/";
 
 export const metadata = pageMetadata(title, description, path);

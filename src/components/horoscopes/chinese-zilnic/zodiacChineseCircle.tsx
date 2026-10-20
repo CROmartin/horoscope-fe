@@ -176,14 +176,10 @@ function ZodiacChineseCircle() {
   return (
     <Holder>
       <TextHolder>
-        <h2>Horoscopul Chinezesc: Un Mosaic al Destinului</h2>
-        Horoscopul Chinezesc este un calendar spiritual străvechi, un ciclu
-        divin împărțit în 12 semne zodiacale, fiecare asociat cu un anumit
-        animal. Fiecare semn reprezintă o constelație de trăsături, destin și
-        perspective, de la curajul și determinarea Dragonului până la
-        înțelepciunea și prudența Șobolanului. Este o hartă a destinului, țesută
-        din înțelepciunea milenară a astrologiei chinezești, ghidându-ne prin
-        viață cu sfaturile sale ancestrale.
+        <h2>Horoscopul chinezesc zilnic</h2>
+        Alege unul dintre cele 12 semne. Fiecare are propriul text, același
+        pentru toți cititorii acelui semn. Zodiacul chinezesc este prezentat
+        separat de cel occidental.
       </TextHolder>
       <Zodiacs>
         <ZodiacHolder href={`/horoscop-${interval}-sobolan`}>

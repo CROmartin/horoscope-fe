@@ -84,13 +84,10 @@ function Benefits() {
   return (
     <Holder>
       <Box>
-        <h2>Explorând Beneficiile Lecturii Horoscopului Personal</h2>
+        <h2>Ce găsești în horoscopul de azi</h2>
         <p>
-          Horoscoapele constituie un ghid ancestral în călătoria
-          autodescoperirii și anticipării viitorului, traversând generații. Ce
-          îi determină pe oameni să se orienteze spre aceste lumini ghidate de
-          stele? Motivațiile sunt la fel de diverse și infinit de fascinante
-          precum constelațiile cerului.
+          Fiecare zodie are un singur text pentru ziua publicată. Nu este
+          calculat după data ta de naștere și nu spune ce decizie să iei.
         </p>
       </Box>
       <Row>
@@ -101,12 +98,10 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Claritate în Decizii</SubTitle>
+          <SubTitle>Un text pe zodie</SubTitle>
           <p>
-            În labirintul complexității vieții moderne, alegerea drumului
-            potrivit, fie el cotidian sau decisiv pentru viitor, poate fi
-            intimidantă. Horoscoapele oferă o lumină ghid, furnizând claritate
-            și încredere în procesul decizional.
+            Berbecul, Taurul și celelalte semne au previziuni diferite. Doi
+            cititori din aceeași zodie văd același horoscop.
           </p>
         </Column>
       </Row>
@@ -118,13 +113,10 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Insight-uri în Relații</SubTitle>
+          <SubTitle>Rubrici</SubTitle>
           <p>
-            Indiferent dacă este vorba despre romantism, prietenie sau legături
-            familiale complexe, horoscoapele pot lumina dinamica interpersonala
-            cu înțelepciune și nuanță. Aprofundarea cunoașterii
-            caracteristicilor zodiacale îmbunătățește conexiunile și
-            comunicarea.
+            Pagina unei zodii include previziunea, o notă de compatibilitate și
+            afirmațiile publicate pentru acel semn.
           </p>
         </Column>
       </Row>
@@ -136,12 +128,11 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Orientare Profesională</SubTitle>
+          <SubTitle>Data publicării</SubTitle>
           <p>
-            Te întrebi dacă cariera ta actuală este cea destinată sau cum să
-            navighezi provocările profesionale? Horoscoapele pot dezvălui
-            perspective valoroase asupra parcursului tău profesional,
-            îndrumându-te spre succes și evitând obstacolele.
+            Pe pagină apare data la care a fost publicat textul, după ora
+            României. Dacă setul zilei lipsește, rămâne ultima previziune și
+            pagina spune acest lucru.
           </p>
         </Column>
       </Row>
@@ -153,11 +144,10 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Iluminare Personală</SubTitle>
+          <SubTitle>Divertisment</SubTitle>
           <p>
-            Căutarea de sine este o odisee continuă, iar horoscoapele reprezintă
-            o fereastră către sufletul nostru. Ele evidențiază talente neștiute,
-            dezvăluie vulnerabilități și îndrumă spre evoluția personală.
+            Horoscopul este un text de citit, nu un sfat pentru bani, sănătate
+            sau relații. Detaliile sunt în avertisment.
           </p>
         </Column>
       </Row>
@@ -169,17 +159,10 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Plăcerea Lecturii</SubTitle>
+          <SubTitle>Alte zodii</SubTitle>
           <p>
-            Pe lângă profunzimea și înțelepciunea pe care o aduc, horoscoapele
-            constituie și o sursă de bucurie și divertisment. Ele sunt un
-            preludiu pozitiv al zilei, un punct de conversație captivant sau pur
-            și simplu un moment de relaxare.
-          </p>
-          <p>
-            Fie că ești în căutarea de îndrumări concrete, confort emoțional sau
-            o scurtă pauză de la cotidian, horoscoapele oferă o varietate de
-            beneficii valoroase pentru fiecare.
+            De pe pagina unui semn poți deschide horoscopul celorlalte zodii,
+            pentru aceeași perioadă.
           </p>
         </Column>
       </Row>

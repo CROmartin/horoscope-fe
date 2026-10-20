@@ -104,17 +104,10 @@ function About() {
           <LeftSide>
             <TittleH2> DESPRE NOI</TittleH2>
             <Paragraph>
-              Am reinventat modul în care sunt create horoscoapele. Mergând
-              dincolo de tradiționalele metode astrologice, ne mândrim cu
-              utilizarea tehnologiei de ultimă generație pentru a genera
-              previziuni stelare. Prin combinarea algoritmilor avansați cu
-              datele astrologice, ne asigurăm că fiecare horoscop este
-              personalizat și adaptat realității individuale a fiecărui
-              utilizator. Pasiunea noastră pentru inovație ne pune în avangarda
-              astrologiei moderne. Misiunea noastră? Să oferim perspective
-              astrale precise, relevante și actualizate în era digitală.
-              Descoperă puterea combinației dintre tradiție și tehnologie cu
-              horoscoapele noastre revoluționare.
+              Horoscopzodii publică horoscopul zilei, al săptămânii și zodiacul
+              chinezesc, în română. Fiecare zodie are un singur text, același
+              pentru toți cititorii născuți sub semnul ei. Nu calculăm un
+              horoscop după data de naștere. Textele sunt de divertisment.
             </Paragraph>
 
             <Button message={"Află mai multe"} link="/despre-noi" />

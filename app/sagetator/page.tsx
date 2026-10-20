@@ -3,7 +3,7 @@ import JsonLd from "@/components/seo/JsonLd";
 import { pageMetadata } from "@/lib/metadata";
 
 const title = "Horoscop Săgetător Zilnic și Săptămânal: Călătoria Ta Astrală";
-const description = "Ești Săgetător și te atrage descoperirea orientărilor astrale pentru zilele și săptămâna care vine? Consultă previziunile noastre zilnice și săptămânale, create pentru spiritul tău aventuros, iluminând drumul tău cu perspectivă și inspirație cosmică.";
+const description = "Horoscopul zilnic și săptămânal pentru Săgetător, în română. Toți cititorii din zodia Săgetător văd același text, de divertisment.";
 const path = "/sagetator";
 
 export const metadata = pageMetadata(title, description, path);

@@ -91,16 +91,15 @@ function Introduction() {
       <Paragraph>
         <b>
           Bine ați venit în universul horoscopului chinezesc, o tradiție
-          ancestrală care a orientat destinele oamenilor de mii de ani.
+          prezentată separat de zodiacul occidental.
         </b>
         Inspirat de ciclul lunar și de legendele animalelor zodiacale,
         horoscopul chinezesc dezvăluie secretele caracterului, compatibilității
         și perspectivelor de viitor. De ce să explorezi horoscopul chinezesc?
         Pentru mulți, reprezintă o fereastră către auto-cunoaștere și armonie,
-        oferind o înțelegere profundă asupra căilor vieții. Află care este
-        animalul tău protector și ce înseamnă acesta pentru călătoria ta
-        personală și spirituală. Descoperirea ta astrală este acum mai
-        accesibilă ca niciodată.
+        oferind o înțelegere asupra tradiției. Alege semnul anului și citește
+        textul scris pentru el. Toți cititorii aceluiași semn văd același
+        horoscop.
       </Paragraph>
     </Holder>
   );

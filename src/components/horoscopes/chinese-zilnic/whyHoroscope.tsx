@@ -92,9 +92,9 @@ function WhyHoroscope() {
           la relații și carieră, până la evoluția personală. De ce să ne
           îndreptăm atenția spre horoscopul chinezesc? Pentru mulți, este un
           ghid spiritual care oferă perspective unice asupra vieții, ajutând la
-          navigarea prin dificultăți și la maximizarea oportunităților.
-          Identifică-ți animalul zodiacal și descoperă ce mesaje și lecții îți
-          transmite. Descoperirea ta astrală este mai aproape decât crezi.
+          navigarea prin textul zilei. Identifică semnul anului și citește
+          horoscopul scris pentru el. Același text este pentru toți cititorii
+          acelui semn.
         </Paragraph>
 
         <Button message={"Află mai multe"} link="/despre-noi" />

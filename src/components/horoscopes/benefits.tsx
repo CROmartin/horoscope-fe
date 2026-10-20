@@ -84,12 +84,10 @@ function Benefits() {
   return (
     <Holder>
       <Box>
-        <h2>Beneficiile Citirii Horoscopului Tău</h2>
+        <h2>Ce publicăm</h2>
         <p>
-          Horoscoapele au fost un punct de referință în domeniul
-          autodescoperirii și proiecției viitoare pentru generații. Dar de ce se
-          îndreaptă oamenii către aceste îndrumări cerești? Motivele sunt la fel
-          de variate ca stelele însăși.
+          Fiecare semn are un singur text pentru perioada publicată. Nu este
+          calculat după data de naștere și nu spune ce decizie să iei.
         </p>
       </Box>
       <Row>
@@ -100,12 +98,10 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Luarea Deciziilor</SubTitle>
+          <SubTitle>Un text pe semn</SubTitle>
           <p>
-            Într-o lume din ce în ce mai complexă, luarea deciziilor, fie
-            minore, fie care îți schimbă viața, poate fi copleșitoare.
-            Horoscoapele pot servi drept o busolă spirituală, ajutându-te să
-            navighezi alegerile cu încredere și claritate.
+            Semnele au previziuni diferite. Doi cititori ai aceluiași semn văd
+            același horoscop.
           </p>
         </Column>
       </Row>
@@ -117,13 +113,10 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Perspective Asupra Relațiilor</SubTitle>
+          <SubTitle>Rubrici</SubTitle>
           <p>
-            Fie că este vorba de o legătură romantică, o prietenie sau o
-            dinamică familială dificilă, horoscoapele pot oferi perspective
-            nuanțate asupra relațiilor interpersonale. Înțelegerea
-            caracteristicilor și tendințelor diferitelor semne zodiacale poate
-            adânci conexiunile emoționale și îmbunătăți comunicarea.
+            Pagina unui semn include previziunea, o notă de compatibilitate și
+            afirmațiile publicate pentru el.
           </p>
         </Column>
       </Row>
@@ -135,29 +128,11 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Calea Profesională</SubTitle>
+          <SubTitle>Data publicării</SubTitle>
           <p>
-            Te-ai întrebat vreodată dacă ești în domeniul de muncă potrivit sau
-            cum să navighezi politicile de birou? Horoscoapele pot oferi
-            perspective asupra vieții tale profesionale, îndrumându-te către
-            oportunități și departe de potențialele capcane.
-          </p>
-        </Column>
-      </Row>
-      <Row>
-        <Column>
-          <IconHolder>
-            <Star />
-          </IconHolder>
-          <Line />
-        </Column>
-        <Column>
-          <SubTitle>Auto-Cunoaștere</SubTitle>
-          <p>
-            Călătoria către autodescoperire este nesfârșită, iar horoscoapele
-            oferă o lentilă unică prin care să ne vedem. Ele pot scoate în
-            evidență puncte forte ascunse, dezvălui puncte slabe și oferi
-            îndrumări pentru creșterea personală.
+            Pe pagină apare data la care a fost publicat textul, după ora
+            României. Dacă setul perioadei lipsește, rămâne ultima previziune și
+            pagina spune acest lucru.
           </p>
         </Column>
       </Row>
@@ -171,16 +146,23 @@ function Benefits() {
         <Column>
           <SubTitle>Divertisment</SubTitle>
           <p>
-            Dincolo de implicațiile lor profunde, horoscoapele sunt, de
-            asemenea, o sursă de divertisment pentru mulți. Ele pot fi un mod
-            distractiv de a începe ziua, un subiect de conversație interesant
-            sau chiar o distracție ușoară.
+            Horoscopul este un text de citit, nu un sfat pentru bani, sănătate
+            sau relații. Detaliile sunt în avertisment.
           </p>
+        </Column>
+      </Row>
+      <Row>
+        <Column>
+          <IconHolder>
+            <Star />
+          </IconHolder>
+          <Line />
+        </Column>
+        <Column>
+          <SubTitle>Alte semne</SubTitle>
           <p>
-            În rezumat, indiferent dacă ești în căutarea unor sfaturi practice,
-            a asigurărilor emoționale sau pur și simplu a unei evadări
-            momentane, nu se poate nega că horoscoapele au ceva valoros de
-            oferit.
+            De pe pagina unui semn poți deschide horoscopul celorlalte semne,
+            pentru aceeași perioadă.
           </p>
         </Column>
       </Row>
