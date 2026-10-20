@@ -3,6 +3,7 @@
 import React, { useEffect } from "react";
 import Header from "./Header";
 import PopupResolver from "./PopupResolver";
+import SiteFooter from "./SiteFooter";
 type LayoutProps = {
   children: React.ReactNode;
 };
@@ -31,6 +32,7 @@ function Layout(props: LayoutProps) {
       <Header />
       <PopupResolver />
       {props.children}
+      <SiteFooter />
     </main>
   );
 }

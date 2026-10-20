@@ -26,6 +26,10 @@ const Note = styled.p`
   text-align: center;
   color: #d7be8a;
   line-height: 1.45;
+
+  a {
+    color: #ffffff;
+  }
 `;
 
 const Related = styled.nav`
@@ -88,6 +92,12 @@ function ReadingStatus({
     <Block>
       <Heading>{heading}</Heading>
       {message && <Note>{message}</Note>}
+      <Note>
+        Text de divertisment, nu un sfat profesional.{" "}
+        <Link href="/avertisment">Avertisment</Link>
+        {" · "}
+        <Link href="/politica-editoriala">Politica editorială</Link>
+      </Note>
       {links.length > 0 && (
         <Related aria-label="Alte perioade pentru aceeași zodie">
           {links.map((link) => (

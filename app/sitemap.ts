@@ -12,6 +12,9 @@ const STATIC_PATHS = [
   "/horoscop-chinezesc",
   "/horoscop-zilnic-chinezesc",
   "/despre-noi",
+  "/politica-editoriala",
+  "/avertisment",
+  "/confidentialitate",
   ...WESTERN_SLUGS.map((slug) => `/${slug}`),
 ];
 

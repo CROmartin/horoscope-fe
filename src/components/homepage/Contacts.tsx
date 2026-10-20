@@ -139,7 +139,7 @@ function Contacts() {
   };
 
   return (
-    <section>
+    <section id="contact">
       <Line />
       <TittleH2>CONTACTE</TittleH2>
       <FormHolder>
