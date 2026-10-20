@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/metadata";
 
 const title = "Confidențialitate";
 const description =
-  "Ce date păstrează Horoscopzodii: zodia aleasă în browser, mesajele trimise prin formular și măsurarea vizitelor doar după accept.";
+  "Ce date păstrează Horoscopzodii: zodia aleasă în browser, emailul zilnic doar cu acord și măsurarea vizitelor doar după accept.";
 const path = "/confidentialitate";
 
 export const metadata = pageMetadata(title, description, path);
@@ -25,8 +25,9 @@ export default function Page() {
             de pe prima pagină sau o poți șterge cu „Șterge zodia”.
           </li>
           <li>
-            Formularul de contact trimite numele și adresa de e-mail către
-            serverul nostru, ca să putem răspunde. Lista nu este publică.
+            Emailul zilnic se trimite doar dacă bifezi acordul. Păstrăm adresa, zodia aleasă și
+            momentul acordului. Poți opri emailul din linkul primit după înscriere sau scriindu-ne.
+            Lista nu este publică.
           </li>
           <li>
             Google Analytics pornește doar după ce apeși Acceptă. Adresa IP este
