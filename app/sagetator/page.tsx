@@ -1,8 +1,8 @@
-import View from "@/views/sagetator";
+import SignProfile from "@/components/zodiac/SignProfile";
 import JsonLd from "@/components/seo/JsonLd";
 import { pageMetadata } from "@/lib/metadata";
 
-const title = "Horoscop Săgetător Zilnic și Săptămânal: Călătoria Ta Astrală";
+const title = "Horoscop Săgetător: zilnic și săptămânal";
 const description = "Horoscopul zilnic și săptămânal pentru Săgetător, în română. Toți cititorii din zodia Săgetător văd același text, de divertisment.";
 const path = "/sagetator";
 
@@ -12,7 +12,7 @@ export default function Page() {
   return (
     <>
       <JsonLd title={title} description={description} path={path} />
-      <View />
+      <SignProfile slug="sagetator" />
     </>
   );
 }

@@ -2,7 +2,7 @@ import View from "@/views/horoscop-chinezesc";
 import JsonLd from "@/components/seo/JsonLd";
 import { pageMetadata } from "@/lib/metadata";
 
-const title = "Horoscop Chinezesc: Secretele Zodiacului Oriental";
+const title = "Horoscop chinezesc";
 const description = "Zodiacul chinezesc, cu horoscopul anual și zilnic, în română. Fiecare semn are propriul text.";
 const path = "/horoscop-chinezesc";
 

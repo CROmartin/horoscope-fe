@@ -77,14 +77,14 @@ function HoroscopeTypes() {
   return (
     <section>
       <Line />
-      <TittleH2>ALEGE-ȚI HOROSCOPUL</TittleH2>
+      <TittleH2>Alege horoscopul</TittleH2>
       <HoroscopeTypesWrapper>
         <TypeHolder>
           <Star />
           <TitleSub>Horoscop zilnic</TitleSub>
           <Paragraph>
-            Iată unde poți afla HOROSCOPUL TĂU ZILNIC! Haide, descoperă ce îți
-            rezervă astrele astăzi!
+            Textul zilei pentru fiecare zodie. Cititorii aceluiași semn văd același
+            horoscop.
           </Paragraph>
           <Button
             small={true}
@@ -96,8 +96,8 @@ function HoroscopeTypes() {
           <Fullmoon />
           <TitleSub>Horoscop zilnic chinezesc</TitleSub>
           <Paragraph>
-            Iată unde poți afla HOROSCOPUL TĂU CHINEZESC! Haide, descoperă ce
-            secrete îți dezvăluie zodiacul chinezesc!
+            Textul zilei pentru fiecare semn din zodiacul chinezesc, separat de
+            zodiacul occidental.
           </Paragraph>
           <Button
             small={true}
@@ -109,8 +109,8 @@ function HoroscopeTypes() {
           <Halfmoon />
           <TitleSub>Horoscop săptămânal</TitleSub>
           <Paragraph>
-            Iată unde poți afla HOROSCOPUL TĂU SĂPTĂMÂNAL! Haide, vezi ce
-            surprize îți pregătesc astrele săptămâna aceasta!
+            Textul săptămânii pentru fiecare zodie, același pentru toți cititorii
+            semnului.
           </Paragraph>
           <Button
             small={true}
@@ -122,8 +122,7 @@ function HoroscopeTypes() {
           <Fullmoon />
           <TitleSub>Horoscop chinezesc</TitleSub>
           <Paragraph>
-            Iată unde poți afla HOROSCOPUL TĂU CHINEZESC! Haide, descoperă ce
-            secrete îți dezvăluie zodiacul chinezesc!
+            Horoscopul anual și zilnic pentru cele 12 semne chinezești.
           </Paragraph>
           <Button
             small={true}

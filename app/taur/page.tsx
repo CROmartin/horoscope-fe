@@ -1,8 +1,8 @@
-import View from "@/views/taur";
+import SignProfile from "@/components/zodiac/SignProfile";
 import JsonLd from "@/components/seo/JsonLd";
 import { pageMetadata } from "@/lib/metadata";
 
-const title = "Horoscop Taur Zilnic și Săptămânal: Steaua Ta Ghidătoare";
+const title = "Horoscop Taur: zilnic și săptămânal";
 const description = "Horoscopul zilnic și săptămânal pentru Taur, în română. Toți cititorii din zodia Taur văd același text, de divertisment.";
 const path = "/taur";
 
@@ -12,7 +12,7 @@ export default function Page() {
   return (
     <>
       <JsonLd title={title} description={description} path={path} />
-      <View />
+      <SignProfile slug="taur" />
     </>
   );
 }

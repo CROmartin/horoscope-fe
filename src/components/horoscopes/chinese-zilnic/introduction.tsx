@@ -84,22 +84,11 @@ function Introduction() {
       <div className="zodiac-wheel">
         <Image src={zodiacWheel} alt="Zodiac Wheel" fill />
       </div>
-      <Title>
-        Introducere în Horoscopul Chinezesc: O Călătorie în Înțelepciunea
-        Ancestrală
-      </Title>
+      <Title>Horoscopul chinezesc, separat de cel occidental</Title>
       <Paragraph>
-        <b>
-          Bine ați venit în universul horoscopului chinezesc, o tradiție
-          prezentată separat de zodiacul occidental.
-        </b>
-        Inspirat de ciclul lunar și de legendele animalelor zodiacale,
-        horoscopul chinezesc dezvăluie secretele caracterului, compatibilității
-        și perspectivelor de viitor. De ce să explorezi horoscopul chinezesc?
-        Pentru mulți, reprezintă o fereastră către auto-cunoaștere și armonie,
-        oferind o înțelegere asupra tradiției. Alege semnul anului și citește
-        textul scris pentru el. Toți cititorii aceluiași semn văd același
-        horoscop.
+        Cele 12 semne ale anului au fiecare un text propriu. Horoscopul
+        chinezesc de pe acest site este de divertisment și este același pentru
+        toți cititorii unui semn.
       </Paragraph>
     </Holder>
   );

@@ -85,16 +85,9 @@ function WhyHoroscope() {
       <Column>
         <Title>De ce sunt fascinați oamenii de horoscopul chinezesc?</Title>
         <Paragraph>
-          Bine ați venit în universul horoscopului chinezesc, o tradiție
-          profundă care a orientat viețile oamenilor de milenii. Inspirat de
-          ciclurile lunare și de zodiacul animalic, horoscopul chinezesc oferă
-          înțelepciune și previziuni despre aspecte esențiale ale existenței, de
-          la relații și carieră, până la evoluția personală. De ce să ne
-          îndreptăm atenția spre horoscopul chinezesc? Pentru mulți, este un
-          ghid spiritual care oferă perspective unice asupra vieții, ajutând la
-          navigarea prin textul zilei. Identifică semnul anului și citește
-          horoscopul scris pentru el. Același text este pentru toți cititorii
-          acelui semn.
+          Horoscopul chinezesc de aici este un text de divertisment pentru
+          semnul anului. Nu este un ghid pentru relații, carieră sau evoluție
+          personală. Cititorii aceluiași semn văd același text.
         </Paragraph>
 
         <Button message={"Află mai multe"} link="/despre-noi" />

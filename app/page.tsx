@@ -3,7 +3,7 @@ import JsonLd from "@/components/seo/JsonLd";
 import { bucharestISODate, formatBucharestDate } from "@/lib/bucharestDate";
 import { pageMetadata } from "@/lib/metadata";
 
-const title = "Horoscop Zilnic, Săptămânal și Chinezesc: Ghidul Tău Celest";
+const title = "Horoscop zilnic, săptămânal și chinezesc";
 const description =
   "Horoscopul zilei, al săptămânii și zodiacul chinezesc, în română. Fiecare zodie are propriul text, de divertisment.";
 const path = "/";

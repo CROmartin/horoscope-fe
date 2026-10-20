@@ -67,14 +67,13 @@ function AboutUs() {
       <Lead>Horoscopul zilei, al săptămânii și zodiacul chinezesc, în română.</Lead>
       <Paragraph>
         <p>
-          Horoscopzodii este locul unde îți citești horoscopul înainte de cafea.
-          Fiecare zodie are previziunea zilei, compatibilitatea și afirmațiile,
-          plus horoscopul săptămânii și semnul din zodiacul chinezesc. Textele
-          se schimbă odată cu ziua.
+          Horoscopzodii publică un text pentru fiecare zodie: previziunea zilei,
+          compatibilitatea, afirmațiile, horoscopul săptămânii și semnul din
+          zodiacul chinezesc. Cititorii aceluiași semn văd același text.
         </p>
         <ul>
           <li>Horoscop zilnic pentru toate cele 12 zodii</li>
-          <li>Horoscop săptămânal, ca să știi ce te așteaptă</li>
+          <li>Horoscop săptămânal pentru fiecare zodie</li>
           <li>Zodiac chinezesc, zilnic și pe tot anul</li>
           <li>Compatibilitate și afirmații, nu doar un paragraf general</li>
         </ul>

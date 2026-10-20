@@ -2,7 +2,7 @@ import View from "@/views/horoscop-azi";
 import JsonLd from "@/components/seo/JsonLd";
 import { pageMetadata } from "@/lib/metadata";
 
-const title = "Horoscop Azi: Ghidul Tău Astral";
+const title = "Horoscop de azi";
 const description = "Horoscopul de azi pentru cele 12 zodii, în română. Fiecare zodie are propriul text, de divertisment.";
 const path = "/horoscop-azi";
 

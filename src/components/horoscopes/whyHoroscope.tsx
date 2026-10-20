@@ -85,15 +85,10 @@ function WhyHoroscope() {
       <Column>
         <Title>De ce citesc oamenii horoscoape?</Title>
         <Paragraph>
-          Bine ați venit în lumea horoscoapelor, o practică înrădăcinată în
-          tradiție care a ghidat oamenii de-a lungul secolelor. Bazate pe
-          modelele cerești, horoscoapele oferă informații neprețuite despre
-          diverse aspecte ale vieții, de la dragoste și carieră până la
-          deciziile de zi cu zi. De ce să citești horoscopul? Pentru mulți, este
-          o sursă de îndrumare zilnică, oferind o perspectivă unică asupra
-          provocărilor și oportunităților vieții. Alege semnul și citește
-          horoscopul scris pentru el. Toți cititorii aceluiași semn văd același
-          text.
+          Oamenii citesc horoscopul din curiozitate. Pe acest site, fiecare zodie
+          are un singur text, același pentru toți cititorii semnului. Este de
+          divertisment, nu un sfat pentru dragoste, carieră sau deciziile de zi
+          cu zi.
         </Paragraph>
         <Button message={"Află mai multe"} link="/despre-noi" />
       </Column>

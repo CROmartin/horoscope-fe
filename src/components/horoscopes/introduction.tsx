@@ -84,19 +84,11 @@ function Introduction() {
       <div className="zodiac-wheel">
         <Image src={zodiacWheel} alt="Zodiac Wheel" fill />
       </div>
-      <Title>Introducere în Horoscoape: Ghidul tău Cosmic</Title>
+      <Title>Horoscopul zilei, pentru fiecare zodie</Title>
       <Paragraph>
-        <b>
-          Bine ați venit în lumea horoscoapelor, o practică înrădăcinată în
-          tradiție care a ghidat oamenii de-a lungul secolelor.{" "}
-        </b>{" "}
-        Bazate pe modelele cerești, horoscoapele oferă informații neprețuite
-        despre diverse aspecte ale vieții, de la dragoste și carieră până la
-        deciziile de zi cu zi. De ce să citești horoscopul? Pentru mulți, este o
-        sursă de îndrumare zilnică, oferind o perspectivă unică asupra
-        provocărilor și oportunităților vieții. Alege semnul și citește
-        horoscopul scris pentru el. Toți cititorii aceluiași semn văd același
-        text.
+        Fiecare dintre cele 12 zodii are un text propriu, în română. Doi
+        cititori ai aceleiași zodii văd același horoscop. Textul este de
+        divertisment.
       </Paragraph>
     </Holder>
   );

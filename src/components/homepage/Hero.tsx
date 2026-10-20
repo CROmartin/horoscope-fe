@@ -46,7 +46,7 @@ function Hero({ todayLabel, todayIso }: { todayLabel: string; todayIso: string }
       <SvgWrapper>
         <Illustration />
       </SvgWrapper>
-      <Headline>Ce îți rezervă astrele astăzi?</Headline>
+      <Headline>Horoscopul de azi, pentru fiecare zodie</Headline>
       <Today>
         <time dateTime={todayIso}>{todayLabel}</time>
       </Today>

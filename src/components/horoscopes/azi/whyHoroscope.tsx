@@ -88,16 +88,6 @@ function WhyHoroscope() {
       <Column>
         <Title>Pasiunea pentru horoscoape: De ce ne fascinează?</Title>
         <Paragraph>
-          Descoperă fascinația lumii astrologice, o artă veche ce ne-a luminat
-          calea prin istorie. Inspirându-se din constelațiile celeste,
-          horoscoapele ne furnizează înțelepciune despre variatele dimensiuni
-          ale vieții, de la relațiile personale la evoluția profesională,
-          influențând chiar și cele mai mici decizii de zi cu zi. Ce ne atrage
-          spre horoscop? Pentru unii, reprezintă o fântână de inspirație
-          zilnică, oferind perspective noi asupra dificultăților și
-          posibilităților vieții.
-        </Paragraph>
-        <Paragraph>
           Oamenii citesc horoscopul din curiozitate. Textul de pe acest site este
           același pentru toți cititorii unui semn și este de divertisment, nu o
           descriere a destinului personal.
