@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React from "react";
 
 import Illustration from "../components/horoscopes/Icons/illustration";
 import AlignWrapper from "../components/shared/AlignWrapper";
@@ -10,7 +10,6 @@ import {
   ContentBox,
   RightSide,
   IconWrapper,
-  Title,
 } from "../components/horoscope/HoroscopePageStyled";
 import Aquarius from "../components/horoscopes/Icons/aquariusBig.svg";
 import Aries from "../components/horoscopes/Icons/ariesBig.svg";
@@ -32,7 +31,8 @@ import TryMoreZodiacSigns from "../components/horoscopes/TryMoreZodiacSigns";
 import Link from "next/link";
 import styled from "styled-components";
 import { renderAffirmations } from "../utils/helpers";
-import { horoscopeHeading } from "../lib/horoscopeCopy";
+import ReadingStatus from "../components/horoscope/ReadingStatus";
+import type { ReadingFreshness } from "../lib/readingDate";
 
 const HomeLink = styled(Link)`
   :hover {
@@ -76,52 +76,34 @@ const IconWrapperIcon = styled(IconWrapper)`
   }
 `;
 
-const TitleAzi = styled(Title)`
-  margin-bottom: 32px;
-`;
-
 function HoroscopePage({
   description,
   compatibility,
   affirmations,
   sign,
-  interval,
+  heading,
+  freshness,
+  links,
 }: {
   description: string;
   compatibility: string;
   affirmations: string;
   sign: string;
-  interval: "zilnic" | "saptamanal";
+  heading: string;
+  freshness: ReadingFreshness;
+  links: { href: string; label: string }[];
 }) {
-  const dailyHoroscopeRef = useRef<HTMLDivElement>(null);
   const affirmationList = renderAffirmations(affirmations);
 
-  console.log("Horoscope sign: ", sign);
-  useEffect(() => {
-    const isMobile = window.innerWidth <= 768; // or any other width you consider as mobile
-    if (isMobile && dailyHoroscopeRef.current) {
-      const offset = 150; // Adjust this value to control how far above the element you want to stop
-      const elementPosition =
-        dailyHoroscopeRef.current.getBoundingClientRect().top + window.scrollY;
-      const offsetPosition = elementPosition - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-    }
-  }, []);
   return (
     <AlignWrapper>
       <HomeLink href="/">
         <Illustration />
       </HomeLink>
-      <TitleAzi>
-        {horoscopeHeading({ sign, interval, variant: "standard" })}
-      </TitleAzi>
+      <ReadingStatus heading={heading} freshness={freshness} links={links} />
       <RowAzi>
         <RightSide>
-          <ContentBox ref={dailyHoroscopeRef}>
+          <ContentBox>
             <p>{description}</p>
           </ContentBox>
         </RightSide>

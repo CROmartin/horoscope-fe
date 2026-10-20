@@ -5,8 +5,10 @@ import HoroscopeChinesePage from "@/templates/horoscopeChinesePage";
 import HoroscopePage from "@/templates/horoscopePage";
 import HoroscopePageAzi from "@/templates/horoscopePageAzi";
 import { horoscopeDescription, horoscopeHeading, isoDate } from "@/lib/horoscopeCopy";
+import { relatedHoroscopeLinks } from "@/lib/horoscopeLinks";
 import { getHoroscopeBySlug } from "@/lib/horoscopes";
 import { pageMetadata } from "@/lib/metadata";
+import { horoscopeTitle, readingFreshness, type ReadingPeriod } from "@/lib/readingDate";
 
 export const revalidate = 3600;
 export const dynamicParams = true;
@@ -25,7 +27,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!horoscope) {
     return { title: "Horoscop", robots: { index: false, follow: false } };
   }
-  const title = horoscopeHeading(horoscope);
+  const freshness = readingFreshness({
+    contentDate: horoscope.date,
+    period: readingPeriod(horoscope.interval),
+  });
+  const title = horoscopeTitle(horoscopeHeading(horoscope), freshness);
   const description = horoscopeDescription(horoscope);
   return pageMetadata(title, description, `/${slug}`, {
     type: "article",
@@ -38,9 +44,18 @@ export default async function HoroscopeRoute({ params }: PageProps) {
   const horoscope = await getHoroscopeBySlug(slug);
   if (!horoscope) notFound();
 
-  const title = horoscopeHeading(horoscope);
+  const freshness = readingFreshness({
+    contentDate: horoscope.date,
+    period: readingPeriod(horoscope.interval),
+  });
+  const title = horoscopeTitle(horoscopeHeading(horoscope), freshness);
   const description = horoscopeDescription(horoscope);
   const path = `/${slug}`;
+  const links = relatedHoroscopeLinks({
+    variant: horoscope.variant,
+    interval: horoscope.interval,
+    signSlug: horoscope.signStandard,
+  });
 
   const page =
     horoscope.variant === "chinese" ? (
@@ -50,7 +65,9 @@ export default async function HoroscopeRoute({ params }: PageProps) {
         compatibility={horoscope.compatibility}
         affirmations={horoscope.affirmations}
         signStandard={horoscope.signStandard}
-        interval={horoscope.interval === "anual" ? "anual" : "zilnic"}
+        heading={title}
+        freshness={freshness}
+        links={links}
       />
     ) : horoscope.variant === "azi" ? (
       <HoroscopePageAzi
@@ -58,7 +75,9 @@ export default async function HoroscopeRoute({ params }: PageProps) {
         description={horoscope.description}
         compatibility={horoscope.compatibility}
         affirmations={horoscope.affirmations}
-        interval={horoscope.interval}
+        heading={title}
+        freshness={freshness}
+        links={links}
       />
     ) : (
       <HoroscopePage
@@ -66,7 +85,9 @@ export default async function HoroscopeRoute({ params }: PageProps) {
         description={horoscope.description}
         compatibility={horoscope.compatibility}
         affirmations={horoscope.affirmations}
-        interval={horoscope.interval === "saptamanal" ? "saptamanal" : "zilnic"}
+        heading={title}
+        freshness={freshness}
+        links={links}
       />
     );
 
@@ -82,4 +103,10 @@ export default async function HoroscopeRoute({ params }: PageProps) {
       {page}
     </>
   );
+}
+
+function readingPeriod(interval: "zilnic" | "azi" | "saptamanal" | "anual"): ReadingPeriod {
+  if (interval === "saptamanal") return "week";
+  if (interval === "anual") return "year";
+  return "day";
 }

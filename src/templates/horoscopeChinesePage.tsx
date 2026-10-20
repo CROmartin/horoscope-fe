@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React from "react";
 
 import AlignWrapper from "../components/shared/AlignWrapper";
 
@@ -12,7 +12,6 @@ import {
   RowHoroscopes,
 } from "../components/horoscope/HoroscopeStyled";
 import {
-  Title,
   IconWrapper,
 } from "../components/horoscope/HoroscopePageStyled";
 
@@ -41,7 +40,8 @@ import Link from "next/link";
 import Button from "../components/shared/Button";
 import styled from "styled-components";
 import { renderAffirmations } from "../utils/helpers";
-import { horoscopeHeading } from "../lib/horoscopeCopy";
+import ReadingStatus from "../components/horoscope/ReadingStatus";
+import type { ReadingFreshness } from "../lib/readingDate";
 
 interface IconWrapperProps {
   fill?: boolean;
@@ -129,10 +129,6 @@ const IconWrapperIcon = styled(IconWrapper)`
   }
 `;
 
-const TitleAzi = styled(Title)`
-  margin-bottom: 32px;
-`;
-
 const RightSideIcon = styled(RightSide)`
   justify-content: center;
 `;
@@ -142,48 +138,33 @@ function HoroscopeChinesePage({
   compatibility,
   affirmations,
   signStandard,
-  interval,
+  heading,
+  freshness,
+  links,
 }: {
   description: string;
   sign: string;
   compatibility: string;
   affirmations: string;
   signStandard: string;
-  interval: "zilnic" | "anual";
+  heading: string;
+  freshness: ReadingFreshness;
+  links: { href: string; label: string }[];
 }) {
   const affirmationList = renderAffirmations(affirmations);
 
   const HoroscopesInfo = require("../utils/chineseHoroscopeInfo.json");
   const signInfo = HoroscopesInfo[signStandard.toLocaleLowerCase()];
 
-  const dailyHoroscopeRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const isMobile = window.innerWidth <= 768; // or any other width you consider as mobile
-    if (isMobile && dailyHoroscopeRef.current) {
-      const offset = 150; // Adjust this value to control how far above the element you want to stop
-      const elementPosition =
-        dailyHoroscopeRef.current.getBoundingClientRect().top + window.scrollY;
-      const offsetPosition = elementPosition - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-    }
-  }, []);
-
   return (
     <AlignWrapper>
       <HomeLink href="/">
         <Illustration />
       </HomeLink>
-      <TitleAzi>
-        {horoscopeHeading({ sign, interval, variant: "chinese" })}
-      </TitleAzi>
+      <ReadingStatus heading={heading} freshness={freshness} links={links} />
       <Row>
         <LeftSide>
-          <IntervalHolder ref={dailyHoroscopeRef}>
+          <IntervalHolder>
             <ContentBox>
               <p>{description}</p>
             </ContentBox>
