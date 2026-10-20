@@ -214,7 +214,7 @@ function Contacts() {
           {success ? (
             <Copy>
               Înscrierea pentru {signName} este salvată. Mesajul pleacă în jurul orei 7:00, ora
-              României, când livrarea de email este conectată. Până atunci nu trimitem nimic.
+              României, cu horoscopul publicat pentru ziua respectivă.
             </Copy>
           ) : (
             <Form onSubmit={onSubmit} aria-describedby={error ? "digest-error" : undefined}>
@@ -284,7 +284,7 @@ function Contacts() {
         <Column>
           <Copy>
             Un singur horoscop pe zi, pentru zodia aleasă, din textul deja publicat. Fără oferte și
-            fără alte mesaje. Trimiterea pornește când livrarea de email este conectată.
+            fără alte mesaje. Dacă horoscopul zilei nu este publicat, emailul din acea zi nu pleacă.
           </Copy>
           <Copy>
             Contact:{" "}
