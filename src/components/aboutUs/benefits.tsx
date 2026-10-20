@@ -131,8 +131,7 @@ function Benefits() {
           <SubTitle>Data publicării</SubTitle>
           <p>
             Data de pe pagină este ziua în care a fost publicat textul, după ora
-            României. Un set nou rămâne ciornă până este aprobat. Un set
-            incomplet nu schimbă textul publicat.
+            României. Un set incomplet nu schimbă textul publicat.
           </p>
         </Column>
       </Row>
