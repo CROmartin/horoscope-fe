@@ -161,15 +161,61 @@ export async function getHoroscopeBySlug(
   return null;
 }
 
-export function horoscopeTitle(data: HoroscopePageData) {
-  if (data.variant === "azi") {
-    return `Horoscop ${data.sign} ${data.interval}: Esența Ta Cosmică ${data.interval}`;
-  }
-  return `Horoscop ${data.interval} ${data.sign}: Esența Ta Cosmică ${data.interval}`;
+const NAME_TO_SLUG = new Map<string, string>(
+  [...Object.entries(WESTERN), ...Object.entries(CHINESE)].map(([slug, name]) => [
+    name.toLowerCase(),
+    slug,
+  ])
+);
+
+export async function horoscopeLastMods(): Promise<Record<string, string>> {
+  const groups: Array<{
+    field: string;
+    prefixes: string[];
+  }> = [
+    { field: "getAllHoroscopeDaily", prefixes: ["horoscop-zilnic-", "horoscop-azi-"] },
+    { field: "getAllHoroscopeWeekly", prefixes: ["horoscop-saptamanal-"] },
+    { field: "getAllHoroscopeYearly", prefixes: ["horoscop-anual-"] },
+    { field: "getAllHoroscopeDailyChinese", prefixes: ["horoscop-zilnic-"] },
+  ];
+  const mods: Record<string, string> = {};
+
+  await Promise.all(
+    groups.map(async ({ field, prefixes }) => {
+      const list = await fetchList(field);
+      for (const item of list) {
+        const match = item.date?.match(/\d{4}-\d{2}-\d{2}/);
+        const slug = NAME_TO_SLUG.get(item.name.toLowerCase());
+        if (!match || !slug) continue;
+        for (const prefix of prefixes) {
+          mods[`/${prefix}${slug}`] = match[0];
+        }
+      }
+    })
+  );
+
+  return mods;
 }
 
-export function horoscopeDescription(data: HoroscopePageData) {
-  return `Ești ${data.sign} și ești curios să afli ce îți rezervă stelele pentru ${data.interval} aceasta? Explorează previziunile noastre ${data.interval}, care reflectă caracteristicile și energiile specifice zodiei tale, dezvăluind oportunitățile și provocările ce se profilază. Pregătește-te pentru o ${data.interval} sub influența semnului tău astral.`;
+async function fetchList(field: string): Promise<Horoscope[]> {
+  const base = process.env.URL;
+  if (!base) return [];
+
+  try {
+    const response = await fetch(`${base}/graphql`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        query: `query { ${field} { name date } }`,
+      }),
+      next: { revalidate: REVALIDATE_SECONDS },
+    });
+    if (!response.ok) return [];
+    const json = await response.json();
+    return (json?.data?.[field] as Horoscope[]) ?? [];
+  } catch {
+    return [];
+  }
 }
 
 export const WESTERN_SLUGS = Object.keys(WESTERN);

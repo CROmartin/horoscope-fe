@@ -122,7 +122,7 @@ function TryMoreZodiacSigns() {
   return (
     <Holder>
       <TextHolder>
-        <h2>Sunteți interesat de alte zodii chinezești?</h2>
+        <h2>Sunteți interesat de alte zodii?</h2>
       </TextHolder>
       <Zodiacs>
         <ZodiacHolder href={`/berbec`}>

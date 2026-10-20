@@ -41,6 +41,7 @@ import Link from "next/link";
 import Button from "../components/shared/Button";
 import styled from "styled-components";
 import { renderAffirmations } from "../utils/helpers";
+import { horoscopeHeading } from "../lib/horoscopeCopy";
 
 interface IconWrapperProps {
   fill?: boolean;
@@ -141,12 +142,14 @@ function HoroscopeChinesePage({
   compatibility,
   affirmations,
   signStandard,
+  interval,
 }: {
   description: string;
   sign: string;
   compatibility: string;
   affirmations: string;
   signStandard: string;
+  interval: "zilnic" | "anual";
 }) {
   const affirmationList = renderAffirmations(affirmations);
 
@@ -175,7 +178,9 @@ function HoroscopeChinesePage({
       <HomeLink href="/">
         <Illustration />
       </HomeLink>
-      <TitleAzi>{sign}</TitleAzi>
+      <TitleAzi>
+        {horoscopeHeading({ sign, interval, variant: "chinese" })}
+      </TitleAzi>
       <Row>
         <LeftSide>
           <IntervalHolder ref={dailyHoroscopeRef}>

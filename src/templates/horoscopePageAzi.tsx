@@ -32,6 +32,7 @@ import TryMoreZodiacSigns from "../components/horoscopes/TryMoreZodiacSigns";
 import Link from "next/link";
 import styled from "styled-components";
 import { renderAffirmations } from "../utils/helpers";
+import { horoscopeHeading } from "../lib/horoscopeCopy";
 
 const HomeLink = styled(Link)`
   :hover {
@@ -116,9 +117,7 @@ function HoroscopePage({
       <HomeLink href="/">
         <Illustration />
       </HomeLink>
-      <TitleAzi>
-        Horoscop {interval} {sign}
-      </TitleAzi>
+      <TitleAzi>{horoscopeHeading({ sign, interval: "azi", variant: "azi" })}</TitleAzi>
       <RowAzi>
         <RightSide>
           <ContentBox ref={dailyHoroscopeRef}>

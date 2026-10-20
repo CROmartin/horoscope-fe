@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { CHINESE_SLUGS, WESTERN_SLUGS } from "@/lib/horoscopes";
+import { CHINESE_SLUGS, WESTERN_SLUGS, horoscopeLastMods } from "@/lib/horoscopes";
 
 const SITE = "https://horoscopzodii.ro";
 
@@ -15,7 +15,7 @@ const STATIC_PATHS = [
   ...WESTERN_SLUGS.map((slug) => `/${slug}`),
 ];
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const generated = [
     ...WESTERN_SLUGS.flatMap((slug) => [
       `/horoscop-zilnic-${slug}`,
@@ -28,7 +28,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ]),
   ];
 
+  const lastMods = await horoscopeLastMods();
+
   return [...STATIC_PATHS, ...generated].map((path) => ({
     url: `${SITE}${path}`,
+    lastModified: lastMods[path] ? new Date(lastMods[path]) : undefined,
+    changeFrequency: path.includes("-zilnic-") || path.includes("-azi-") ? "daily" : "weekly",
   }));
 }

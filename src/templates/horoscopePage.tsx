@@ -32,6 +32,7 @@ import TryMoreZodiacSigns from "../components/horoscopes/TryMoreZodiacSigns";
 import Link from "next/link";
 import styled from "styled-components";
 import { renderAffirmations } from "../utils/helpers";
+import { horoscopeHeading } from "../lib/horoscopeCopy";
 
 const HomeLink = styled(Link)`
   :hover {
@@ -90,7 +91,7 @@ function HoroscopePage({
   compatibility: string;
   affirmations: string;
   sign: string;
-  interval: string;
+  interval: "zilnic" | "saptamanal";
 }) {
   const dailyHoroscopeRef = useRef<HTMLDivElement>(null);
   const affirmationList = renderAffirmations(affirmations);
@@ -116,7 +117,7 @@ function HoroscopePage({
         <Illustration />
       </HomeLink>
       <TitleAzi>
-        Horoscop {interval} {sign}
+        {horoscopeHeading({ sign, interval, variant: "standard" })}
       </TitleAzi>
       <RowAzi>
         <RightSide>

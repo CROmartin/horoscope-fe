@@ -7,10 +7,20 @@ import "@/components/shared/layout.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://horoscopzodii.ro"),
-  title: "Horoscop",
+  title: {
+    default: "Horoscop zilnic, săptămânal și chinezesc | Horoscopzodii.ro",
+    template: "%s | Horoscopzodii.ro",
+  },
   description:
-    "Horoscop zilnic, săptămânal și chinezesc pe horoscopzodii.ro.",
+    "Horoscop zilnic, săptămânal și chinezesc. Previziuni astrale, compatibilitate și afirmații pentru fiecare zodie.",
+  applicationName: "Horoscopzodii.ro",
+  authors: [{ name: "Horoscopzodii.ro", url: "https://horoscopzodii.ro" }],
   icons: { icon: "/logo-seo.png" },
+  openGraph: {
+    siteName: "Horoscopzodii.ro",
+    locale: "ro_RO",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
