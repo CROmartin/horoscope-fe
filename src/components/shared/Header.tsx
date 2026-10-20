@@ -57,9 +57,18 @@ const LINKS = [
   { href: "/", label: "Acasă" },
   { href: "/horoscop-zilnic", label: "Horoscop azi" },
   { href: "/horoscop-saptamanal", label: "Săptămânal" },
+  { href: "/compatibilitate", label: "Compatibilitate" },
   { href: "/horoscop", label: "Zodii" },
   { href: "/horoscop-chinezesc", label: "Zodiac chinezesc" },
 ];
+
+function isCurrent(pathname: string, href: string) {
+  if (href === "/") return pathname === "/";
+  if (href === "/compatibilitate") {
+    return pathname === href || pathname.startsWith("/compatibilitate/");
+  }
+  return pathname === href;
+}
 
 function Header() {
   const pathname = usePathname();
@@ -68,7 +77,7 @@ function Header() {
     <HeaderWrapper>
       <Nav aria-label="Secțiuni">
         {LINKS.map((item) => (
-          <Link key={item.href} href={item.href} aria-current={pathname === item.href ? "page" : undefined}>
+          <Link key={item.href} href={item.href} aria-current={isCurrent(pathname, item.href) ? "page" : undefined}>
             {item.label}
           </Link>
         ))}

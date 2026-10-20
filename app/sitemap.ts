@@ -15,6 +15,7 @@ const STATIC_PATHS = [
   "/politica-editoriala",
   "/avertisment",
   "/confidentialitate",
+  "/compatibilitate",
   ...WESTERN_SLUGS.map((slug) => `/${slug}`),
 ];
 

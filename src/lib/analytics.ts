@@ -1,4 +1,5 @@
 import { WESTERN_SIGNS } from "./zodiacSigns";
+import { pairFromPath } from "./compatibility";
 
 declare global {
   interface Window {
@@ -74,6 +75,18 @@ export function hitsForPath(pathname: string): AnalyticsHit[] {
   const hits: AnalyticsHit[] = [{ name: "page_view", params: { page_path: pathname } }];
   if (pathname === "/") {
     hits.push({ name: "home_view" });
+    return hits;
+  }
+  if (pathname === "/compatibilitate") {
+    hits.push({ name: "compatibility_started" });
+    return hits;
+  }
+  const pair = pairFromPath(pathname);
+  if (pair) {
+    hits.push({
+      name: "compatibility_completed",
+      params: { sign_a: pair.first, sign_b: pair.second },
+    });
     return hits;
   }
   for (const route of READING_ROUTES) {

@@ -69,4 +69,15 @@ test("hubs and unknown signs do not emit a horoscope event", () => {
   }
   assert.equal(zodiacSelectHit("berbec")?.name, "zodiac_select");
   assert.equal(zodiacSelectHit("tigru"), null);
+  assert.deepEqual(hitsForPath("/compatibilitate"), [
+    { name: "page_view", params: { page_path: "/compatibilitate" } },
+    { name: "compatibility_started" },
+  ]);
+  assert.deepEqual(hitsForPath("/compatibilitate/berbec-leu"), [
+    { name: "page_view", params: { page_path: "/compatibilitate/berbec-leu" } },
+    { name: "compatibility_completed", params: { sign_a: "berbec", sign_b: "leu" } },
+  ]);
+  assert.deepEqual(hitsForPath("/compatibilitate/leu-berbec"), [
+    { name: "page_view", params: { page_path: "/compatibilitate/leu-berbec" } },
+  ]);
 });

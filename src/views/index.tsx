@@ -6,11 +6,13 @@ import About from "../components/homepage/About";
 import HoroscopeTypes from "../components/homepage/HoroscopeTypes";
 import Reviews from "../components/homepage/Reviews";
 import Contacts from "../components/homepage/Contacts";
+import CompatibilityCard from "../components/compatibility/CompatibilityCard";
 
 const IndexPage = ({ todayLabel, todayIso }: { todayLabel: string; todayIso: string }) => {
   return (
     <AlignWrapper>
       <Hero todayLabel={todayLabel} todayIso={todayIso} />
+      <CompatibilityCard />
       <HoroscopeTypes />
 
       <Reviews />

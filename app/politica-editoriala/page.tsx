@@ -28,8 +28,11 @@ export default function Page() {
         </p>
         <p>
           Cât timp setul zilei nu este gata, rămâne ultima previziune publicată,
-          iar pagina spune acest lucru. Horoscopul este un text de divertisment.
-          Detaliile sunt în <Link href="/avertisment">avertisment</Link>.
+          iar pagina spune acest lucru. Pagina de compatibilitate păstrează un
+          link stabil pentru fiecare pereche. Textul acelei perechi este publicat
+          doar când este scris pentru ea; până atunci pagina nu este indexată.
+          Horoscopul este un text de divertisment. Detaliile sunt în{" "}
+          <Link href="/avertisment">avertisment</Link>.
         </p>
       </InfoPage>
     </>
