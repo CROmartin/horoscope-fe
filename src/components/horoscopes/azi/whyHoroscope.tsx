@@ -83,7 +83,7 @@ function WhyHoroscope() {
   return (
     <Holder>
       <div className="costumer">
-        <Image src={happyCustomer} alt="Happy Costumer Interested in Horoscopes" />
+        <Image src={happyCustomer} alt="Femeie care citește o carte la masă, lângă o cană" />
       </div>
       <Column>
         <Title>Pasiunea pentru horoscoape: De ce ne fascinează?</Title>

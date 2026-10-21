@@ -93,7 +93,7 @@ function WhyHoroscope() {
         <Button message={"Află mai multe"} link="/despre-noi" />
       </Column>
       <div className="costumer">
-        <Image src={happyCustomer} alt="Happy Costumer Interested in Horoscopes" />
+        <Image src={happyCustomer} alt="Femeie care citește o carte la masă, lângă o cană" />
       </div>
     </Holder>
   );

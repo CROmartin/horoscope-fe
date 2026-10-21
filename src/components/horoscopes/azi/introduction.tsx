@@ -89,7 +89,7 @@ function Introduction() {
     <Holder>
       <DarkenBackground />
       <div className="zodiac-wheel">
-        <Image src={zodiacWheel} alt="Zodiac Wheel" fill />
+        <Image src={zodiacWheel} alt="Roată zodiacală aurie pe fundal înstelat" fill />
       </div>
       <Title>Explorarea horoscopului</Title>
       <Row>

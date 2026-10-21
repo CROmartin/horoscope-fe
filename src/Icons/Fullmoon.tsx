@@ -8,8 +8,10 @@ function Fullmoon() {
       viewBox="0 0 70 70"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      focusable="false"
     >
-      <circle cx="35" cy="35" r="34" stroke="#D7BE8A" stroke-width="2" />
+      <circle cx="35" cy="35" r="34" stroke="#D7BE8A" strokeWidth="2" />
     </svg>
   );
 }

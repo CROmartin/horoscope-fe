@@ -14,6 +14,12 @@ const ButtonWrapper = styled(Link)<ButtonWrapperProps>`
   cursor: pointer;
   width: max-content;
   text-decoration: none;
+  box-sizing: border-box;
+
+  &:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 3px;
+  }
 `;
 
 const MessageHolder = styled.div<ButtonWrapperProps>`
@@ -21,6 +27,8 @@ const MessageHolder = styled.div<ButtonWrapperProps>`
   justify-content: center;
   align-items: center;
   border: 1px solid #d7be8a;
+  box-sizing: border-box;
+  min-height: 44px;
   padding: 20px 40px;
   font-weight: 500;
   font-size: 16px;
@@ -46,6 +54,8 @@ const SvgWrapper = styled.div<ButtonWrapperProps>`
   display: flex;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
+  min-height: 44px;
   padding: 20px;
 
   ${(props) => props.small && "padding: 10px;"}
@@ -78,7 +88,7 @@ function Button({ message, link, onClick, small }: ButtonProps) {
         </ButtonWrapper>
       )}
       {onClick && (
-        <ButtonWrapper as={"a"} onClick={onClick} small={small}>
+        <ButtonWrapper as="button" type="button" onClick={onClick} small={small}>
           <MessageHolder small={small}>{message}</MessageHolder>
           <SvgWrapper small={small}>
             <ArrowUpRight />
