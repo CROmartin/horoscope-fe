@@ -4,7 +4,9 @@ import CompatibilityResult from "@/components/compatibility/CompatibilityResult"
 import JsonLd from "@/components/seo/JsonLd";
 import { allCanonicalPairs, parsePairParam } from "@/lib/compatibility";
 import { pageMetadata } from "@/lib/metadata";
-import { signBySlug } from "@/lib/zodiacSigns";
+import { signDisplay, type ZodiacSlug } from "@/lib/zodiacSigns";
+import { currentLocale } from "@/lib/localeServer";
+import { copy } from "@/lib/messages";
 
 export function generateStaticParams() {
   return allCanonicalPairs().map((pair) => ({ pair }));
@@ -16,23 +18,29 @@ type PageProps = {
   params: Promise<{ pair: string }>;
 };
 
+async function pairText(first: ZodiacSlug, second: ZodiacSlug) {
+  const locale = await currentLocale();
+  const text = copy(locale);
+  const firstName = signDisplay(first, locale)?.name || first;
+  const secondName = signDisplay(second, locale)?.name || second;
+  const names = first === second ? firstName : `${firstName} ${text.pairJoin} ${secondName}`;
+  return {
+    locale,
+    title: `${text.pairHeading} ${names}`,
+    description: first === second ? text.pairUnpublishedSame : text.pairUnpublished,
+  };
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { pair } = await params;
   const parsed = parsePairParam(pair);
   if (!parsed || pair !== parsed.canonical) {
     return { title: "Compatibilitate", robots: { index: false, follow: false } };
   }
-  const first = signBySlug(parsed.first);
-  const second = signBySlug(parsed.second);
-  const names =
-    parsed.first === parsed.second
-      ? first?.name
-      : `${first?.name} și ${second?.name}`;
-  const title = `Compatibilitate ${names}`;
-  const description = `Pagina perechii ${names}. Textul de compatibilitate nu este încă publicat. Citește horoscopul de azi pentru fiecare zodie.`;
+  const text = await pairText(parsed.first, parsed.second);
   const path = `/compatibilitate/${parsed.canonical}`;
   return {
-    ...pageMetadata(title, description, path),
+    ...pageMetadata(text.title, text.description, path, { locale: text.locale }),
     robots: { index: false, follow: true },
   };
 }
@@ -44,19 +52,12 @@ export default async function Page({ params }: PageProps) {
   if (pair !== parsed.canonical) {
     permanentRedirect(`/compatibilitate/${parsed.canonical}`);
   }
-  const first = signBySlug(parsed.first);
-  const second = signBySlug(parsed.second);
-  const names =
-    parsed.first === parsed.second
-      ? first?.name
-      : `${first?.name} și ${second?.name}`;
-  const title = `Compatibilitate ${names}`;
-  const description = `Pagina perechii ${names}. Textul de compatibilitate nu este încă publicat.`;
+  const text = await pairText(parsed.first, parsed.second);
   const path = `/compatibilitate/${parsed.canonical}`;
 
   return (
     <>
-      <JsonLd title={title} description={description} path={path} />
+      <JsonLd title={text.title} description={text.description} path={path} />
       <CompatibilityResult first={parsed.first} second={parsed.second} />
     </>
   );

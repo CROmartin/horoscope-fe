@@ -3,6 +3,8 @@
 import React from "react";
 import Link from "next/link";
 import styled from "styled-components";
+import { copy } from "@/lib/messages";
+import { useLocale } from "./LocaleProvider";
 
 const Footer = styled.footer`
   width: 100%;
@@ -31,19 +33,21 @@ const Footer = styled.footer`
 `;
 
 const LINKS = [
-  { href: "/despre-noi", label: "Despre noi" },
-  { href: "/politica-editoriala", label: "Politica editorială" },
-  { href: "/avertisment", label: "Avertisment" },
-  { href: "/confidentialitate", label: "Confidențialitate" },
-  { href: "/#contact", label: "Contact" },
-];
+  { href: "/despre-noi", key: "about" },
+  { href: "/politica-editoriala", key: "editorial" },
+  { href: "/avertisment", key: "disclaimer" },
+  { href: "/confidentialitate", key: "privacy" },
+  { href: "/#contact", key: "contact" },
+] as const;
 
 function SiteFooter() {
+  const text = copy(useLocale());
+
   return (
     <Footer>
       {LINKS.map((item) => (
         <Link key={item.href} href={item.href}>
-          {item.label}
+          {text[item.key]}
         </Link>
       ))}
     </Footer>

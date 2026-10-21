@@ -1,4 +1,8 @@
+"use client";
+
 import React from "react";
+import { copy } from "@/lib/messages";
+import { useLocale } from "../shared/LocaleProvider";
 import styled from "styled-components";
 import { TittleH3 } from "../styles/styles.styled";
 
@@ -15,13 +19,13 @@ const Note = styled.p`
 `;
 
 function Reviews() {
+  const text = copy(useLocale());
+
   return (
     <section>
-      <TittleH3>FEEDBACK-uri</TittleH3>
+      <TittleH3>{text.feedback}</TittleH3>
       <Note>
-        Nu publicăm păreri care spun că horoscopul a descris viața cuiva. Textul
-        este același pentru toți cititorii unei zodii și este de divertisment.
-        Poți scrie la <a href="mailto:sprijin@horoscopzodii.ro">sprijin@horoscopzodii.ro</a>.
+        {text.feedbackBody} <a href="mailto:sprijin@horoscopzodii.ro">sprijin@horoscopzodii.ro</a>.
       </Note>
     </section>
   );

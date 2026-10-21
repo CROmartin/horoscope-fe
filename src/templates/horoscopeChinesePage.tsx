@@ -43,6 +43,8 @@ import { renderAffirmations } from "../utils/helpers";
 import ReadingStatus from "../components/horoscope/ReadingStatus";
 import type { Crumb } from "../lib/breadcrumbs";
 import type { ReadingFreshness } from "../lib/readingDate";
+import { copy } from "@/lib/messages";
+import { useLocale } from "@/components/shared/LocaleProvider";
 
 interface IconWrapperProps {
   fill?: boolean;
@@ -156,6 +158,7 @@ function HoroscopeChinesePage({
   crumbs: Crumb[];
   period: "zilnic" | "anual";
 }) {
+  const text = copy(useLocale());
   const affirmationList = renderAffirmations(affirmations);
 
   const HoroscopesInfo = require("../utils/chineseHoroscopeInfo.json");
@@ -171,6 +174,7 @@ function HoroscopeChinesePage({
         <LeftSide>
           <IntervalHolder>
             <ContentBox>
+              {text.readingNote ? <p>{text.readingNote}</p> : null}
               <p>{description}</p>
             </ContentBox>
           </IntervalHolder>
@@ -267,7 +271,7 @@ function HoroscopeChinesePage({
       <RowAzi>
         <LeftSide>
           <ParagraphAzi>
-            <h2>Compatibilitate</h2>
+            <h2>{text.compatibilityHeading}</h2>
             <p>{compatibility}</p>
           </ParagraphAzi>
         </LeftSide>
@@ -285,7 +289,7 @@ function HoroscopeChinesePage({
         </RightSideIcon>
         <LeftSide>
           <ParagraphAzi>
-            <h2>Afirmări</h2>
+            <h2>{text.affirmationsHeading}</h2>
 
             {affirmationList.map((affirmation, index) => (
               <p key={index}>{affirmation}</p>

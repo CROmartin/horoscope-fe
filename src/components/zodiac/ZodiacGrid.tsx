@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import { dailyHoroscopePath, homepageSignLinks, signBySlug, type ZodiacSlug } from "@/lib/zodiacSigns";
+import { copy } from "@/lib/messages";
+import { useLocale } from "@/components/shared/LocaleProvider";
 import { zodiacSelectHit } from "@/lib/analytics";
 import { clearSavedSign, readSavedSign, writeSavedSign } from "@/lib/savedSign";
 import { SIGN_ICONS } from "./signIcons";
@@ -166,8 +168,10 @@ const SavedLabel = styled.span`
 `;
 
 function ZodiacGrid() {
+  const locale = useLocale();
+  const text = copy(locale);
   const [saved, setSaved] = useState<ZodiacSlug | null>(null);
-  const links = homepageSignLinks();
+  const links = homepageSignLinks(locale);
   const savedSign = saved ? signBySlug(saved) : undefined;
 
   useEffect(() => {
@@ -179,10 +183,10 @@ function ZodiacGrid() {
       {savedSign && (
         <Banner>
           <BannerCopy>
-            Zodia ta salvată este <strong>{savedSign.name}</strong>.
+            {text.savedSign} <strong>{links.find((item) => item.slug === savedSign.slug)?.name}</strong>.
           </BannerCopy>
           <BannerActions>
-            <TextLink href={dailyHoroscopePath(savedSign.slug)}>Citește horoscopul de azi</TextLink>
+            <TextLink href={dailyHoroscopePath(savedSign.slug)}>{text.readToday}</TextLink>
             <ClearButton
               type="button"
               onClick={() => {
@@ -190,12 +194,12 @@ function ZodiacGrid() {
                 setSaved(null);
               }}
             >
-              Șterge zodia
+              {text.clearSign}
             </ClearButton>
           </BannerActions>
         </Banner>
       )}
-      <SignNav aria-label="Alege zodia pentru horoscopul de azi">
+      <SignNav aria-label={text.gridLabel}>
       <Grid>
         {links.map((sign) => {
           const Icon = SIGN_ICONS[sign.slug];
@@ -205,7 +209,7 @@ function ZodiacGrid() {
               <SignLink
                 href={sign.href}
                 $saved={isSaved}
-                aria-label={`${sign.name}, ${sign.dates}, horoscop zilnic${isSaved ? ", zodia ta salvată" : ""}`}
+                aria-label={`${sign.name}, ${sign.dates}, ${text.dailyReading}${isSaved ? `, ${text.yourSign}` : ""}`}
                 onClick={() => {
                   writeSavedSign(window.localStorage, sign.slug);
                   setSaved(sign.slug);
@@ -218,7 +222,7 @@ function ZodiacGrid() {
                 </IconWrap>
                 <SignName>{sign.name}</SignName>
                 <SignDates>{sign.dates}</SignDates>
-                {isSaved && <SavedLabel>Zodia ta</SavedLabel>}
+                {isSaved && <SavedLabel>{text.yourSign}</SavedLabel>}
               </SignLink>
             </Item>
           );

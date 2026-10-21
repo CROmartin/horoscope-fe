@@ -10,6 +10,7 @@ import { relatedHoroscopeLinks } from "@/lib/horoscopeLinks";
 import { getHoroscopeBySlug } from "@/lib/horoscopes";
 import { pageMetadata } from "@/lib/metadata";
 import { horoscopeTitle, readingFreshness, type ReadingPeriod } from "@/lib/readingDate";
+import { currentLocale } from "@/lib/localeServer";
 
 export const revalidate = 3600;
 export const dynamicParams = true;
@@ -24,6 +25,7 @@ type PageProps = {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
+  const locale = await currentLocale();
   const horoscope = await getHoroscopeBySlug(slug);
   if (!horoscope) {
     return { title: "Horoscop", robots: { index: false, follow: false } };
@@ -31,33 +33,38 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const freshness = readingFreshness({
     contentDate: horoscope.date,
     period: readingPeriod(horoscope.interval),
+    locale,
   });
-  const title = horoscopeTitle(horoscopeHeading(horoscope), freshness);
-  const description = horoscopeDescription(horoscope);
+  const title = horoscopeTitle(horoscopeHeading(horoscope, locale), freshness);
+  const description = horoscopeDescription(horoscope, locale);
   return pageMetadata(title, description, `/${slug}`, {
     type: "article",
     publishedTime: isoDate(horoscope.date),
+    locale,
   });
 }
 
 export default async function HoroscopeRoute({ params }: PageProps) {
   const { slug } = await params;
+  const locale = await currentLocale();
   const horoscope = await getHoroscopeBySlug(slug);
   if (!horoscope) notFound();
 
   const freshness = readingFreshness({
     contentDate: horoscope.date,
     period: readingPeriod(horoscope.interval),
+    locale,
   });
-  const title = horoscopeTitle(horoscopeHeading(horoscope), freshness);
-  const description = horoscopeDescription(horoscope);
+  const title = horoscopeTitle(horoscopeHeading(horoscope, locale), freshness);
+  const description = horoscopeDescription(horoscope, locale);
   const path = `/${slug}`;
   const links = relatedHoroscopeLinks({
     variant: horoscope.variant,
     interval: horoscope.interval,
     signSlug: horoscope.signStandard,
+    locale,
   });
-  const crumbs = breadcrumbTrail(path, title);
+  const crumbs = breadcrumbTrail(path, title, locale);
 
   const page =
     horoscope.variant === "chinese" ? (

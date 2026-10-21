@@ -1,4 +1,8 @@
+"use client";
+
 import React from "react";
+import { copy } from "@/lib/messages";
+import { useLocale } from "@/components/shared/LocaleProvider";
 import Link from "next/link";
 import styled from "styled-components";
 import Breadcrumbs from "@/components/seo/Breadcrumbs";
@@ -56,27 +60,27 @@ const Related = styled.nav`
   }
 `;
 
-function note(freshness: ReadingFreshness) {
+function note(freshness: ReadingFreshness, text: ReturnType<typeof copy>) {
   if (!freshness.label || !freshness.iso) {
-    return "Data acestei previziuni nu este publicată.";
+    return text.freshMissing;
   }
   const when = <time dateTime={freshness.iso}>{freshness.label}</time>;
   if (freshness.current && freshness.period === "day") return null;
-  if (freshness.current && freshness.period === "week") return <>Săptămâna din {when}.</>;
+  if (freshness.current && freshness.period === "week") return <>{text.freshWeek} {when}.</>;
   if (freshness.current && freshness.period === "year") {
-    return <>Previziune pentru anul {freshness.iso.slice(0, 4)}.</>;
+    return <>{text.freshYear} {freshness.iso.slice(0, 4)}.</>;
   }
   if (freshness.period === "day") {
     return (
       <>
-        Ultima previziune publicată este din {when}. Horoscopul de azi nu a fost încă actualizat.
+        {text.freshStaleDayLead} {when}. {text.freshStaleDay}
       </>
     );
   }
   if (freshness.period === "week") {
-    return <>Ultima previziune săptămânală publicată este din {when}.</>;
+    return <>{text.freshStaleWeek} {when}.</>;
   }
-  return <>Ultima previziune anuală publicată este din {when}.</>;
+  return <>{text.freshStaleYear} {when}.</>;
 }
 
 function ReadingStatus({
@@ -90,7 +94,9 @@ function ReadingStatus({
   links: { href: string; label: string }[];
   crumbs?: Crumb[];
 }) {
-  const message = note(freshness);
+  const locale = useLocale();
+  const text = copy(locale);
+  const message = note(freshness, text);
 
   return (
     <Block>
@@ -98,13 +104,13 @@ function ReadingStatus({
       <Heading>{heading}</Heading>
       {message && <Note>{message}</Note>}
       <Note>
-        Text de divertisment, nu un sfat profesional.{" "}
-        <Link href="/avertisment">Avertisment</Link>
+        {locale === "en" ? "Entertainment text, not professional advice." : "Text de divertisment, nu un sfat profesional."}{" "}
+        <Link href="/avertisment">{text.disclaimer}</Link>
         {" · "}
-        <Link href="/politica-editoriala">Politica editorială</Link>
+        <Link href="/politica-editoriala">{text.editorial}</Link>
       </Note>
       {links.length > 0 && (
-        <Related aria-label="Alte pagini pentru aceeași zodie">
+        <Related aria-label={locale === "en" ? "Other pages for the same sign" : "Alte pagini pentru aceeași zodie"}>
           {links.map((link) => (
             <Link key={link.href} href={link.href}>
               {link.label}

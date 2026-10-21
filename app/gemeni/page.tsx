@@ -1,17 +1,18 @@
 import SignProfile from "@/components/zodiac/SignProfile";
 import JsonLd from "@/components/seo/JsonLd";
 import { pageMetadata } from "@/lib/metadata";
+import { signPageMeta } from "@/lib/signPage";
 
-const title = "Horoscop Gemeni: zilnic și săptămânal";
-const description = "Horoscopul zilnic și săptămânal pentru Gemeni, în română. Toți cititorii din zodia Gemeni văd același text, de divertisment.";
-const path = "/gemeni";
+export async function generateMetadata() {
+  const meta = await signPageMeta("gemeni");
+  return pageMetadata(meta.title, meta.description, meta.path, { locale: meta.locale });
+}
 
-export const metadata = pageMetadata(title, description, path);
-
-export default function Page() {
+export default async function Page() {
+  const meta = await signPageMeta("gemeni");
   return (
     <>
-      <JsonLd title={title} description={description} path={path} />
+      <JsonLd title={meta.title} description={meta.description} path={meta.path} />
       <SignProfile slug="gemeni" />
     </>
   );

@@ -3,6 +3,8 @@
 import React from "react";
 import Link from "next/link";
 import styled from "styled-components";
+import { copy } from "@/lib/messages";
+import { useLocale } from "../shared/LocaleProvider";
 
 const Card = styled(Link)`
   width: 100%;
@@ -33,10 +35,12 @@ const Card = styled(Link)`
 `;
 
 function CompatibilityCard() {
+  const text = copy(useLocale());
+
   return (
     <Card href="/compatibilitate">
-      <strong>Verifică compatibilitatea</strong>
-      <span>Alege două zodii și păstrează linkul perechii.</span>
+      <strong>{text.checkCompatibility}</strong>
+      <span>{text.keepPairLink}</span>
     </Card>
   );
 }

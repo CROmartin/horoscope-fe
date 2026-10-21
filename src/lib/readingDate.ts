@@ -1,4 +1,5 @@
 import { bucharestISODate } from "./bucharestDate";
+import { localeTag, type Locale } from "./locale";
 
 export type ReadingPeriod = "day" | "week" | "year";
 
@@ -9,7 +10,7 @@ export type ReadingFreshness = {
   current: boolean;
 };
 
-export function formatCalendarDate(iso: string) {
+export function formatCalendarDate(iso: string, locale: Locale = "ro") {
   const match = iso.match(/^(\d{4})-(\d{2})-(\d{2})$/);
   if (!match) return undefined;
   const year = Number(match[1]);
@@ -24,12 +25,27 @@ export function formatCalendarDate(iso: string) {
     return undefined;
   }
 
-  return new Intl.DateTimeFormat("ro-RO", {
+  return new Intl.DateTimeFormat(localeTag(locale), {
     timeZone: "UTC",
     day: "numeric",
     month: "long",
     year: "numeric",
   }).format(date);
+}
+
+export function formatLongDate(iso: string, locale: Locale = "ro") {
+  const match = iso.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match || !formatCalendarDate(iso, locale)) return undefined;
+  const date = new Date(Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3]), 12));
+  const tag = localeTag(locale);
+  const formatted = new Intl.DateTimeFormat(tag, {
+    timeZone: "UTC",
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).format(date);
+  return formatted.charAt(0).toLocaleUpperCase(tag) + formatted.slice(1);
 }
 
 export function isoWeekKey(iso: string) {
@@ -47,13 +63,15 @@ export function readingFreshness({
   contentDate,
   period,
   now = new Date(),
+  locale = "ro",
 }: {
   contentDate?: string;
   period: ReadingPeriod;
   now?: Date;
+  locale?: Locale;
 }): ReadingFreshness {
   const iso = contentDate?.match(/\d{4}-\d{2}-\d{2}/)?.[0];
-  const label = iso ? formatCalendarDate(iso) : undefined;
+  const label = iso ? formatCalendarDate(iso, locale) : undefined;
   if (!iso || !label) return { period, current: false };
 
   const today = bucharestISODate(now);

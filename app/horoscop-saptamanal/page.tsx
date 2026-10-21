@@ -1,17 +1,28 @@
 import View from "@/views/horoscop-saptamanal";
 import JsonLd from "@/components/seo/JsonLd";
-import { pageMetadata } from "@/lib/metadata";
+import { localizedPage } from "@/lib/localizedPage";
 
-const title = "Horoscop săptămânal";
-const description = "Horoscopul săptămânii pentru cele 12 zodii, în română. Fiecare zodie are propriul text, de divertisment.";
 const path = "/horoscop-saptamanal";
+const text = {
+  ro: {
+    title: "Horoscop săptămânal",
+    description: "Horoscopul săptămânii pentru cele 12 zodii, în română. Fiecare zodie are propriul text, de divertisment.",
+  },
+  en: {
+    title: "Weekly horoscope",
+    description: "This week's horoscope for the 12 signs. Each sign has its own entertainment text, published in Romanian.",
+  },
+};
 
-export const metadata = pageMetadata(title, description, path);
+export async function generateMetadata() {
+  return (await localizedPage(text, path)).metadata;
+}
 
-export default function Page() {
+export default async function Page() {
+  const meta = await localizedPage(text, path);
   return (
     <>
-      <JsonLd title={title} description={description} path={path} />
+      <JsonLd title={meta.title} description={meta.description} path={path} />
       <View />
     </>
   );

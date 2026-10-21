@@ -30,7 +30,9 @@ import Capricorn from "@/components/horoscopes/Icons/capricornBig.svg";
 import Aquarius from "@/components/horoscopes/Icons/aquariusBig.svg";
 import Pisces from "@/components/horoscopes/Icons/piscesBig.svg";
 import { signProfile } from "@/lib/signProfiles";
-import { signBySlug, type ZodiacSlug } from "@/lib/zodiacSigns";
+import { signDisplay, type ZodiacSlug } from "@/lib/zodiacSigns";
+import { copy } from "@/lib/messages";
+import { useLocale } from "@/components/shared/LocaleProvider";
 
 const ICONS: Record<ZodiacSlug, ComponentType> = {
   berbec: Aries,
@@ -47,11 +49,35 @@ const ICONS: Record<ZodiacSlug, ComponentType> = {
   pesti: Pisces,
 };
 
+const ELEMENTS: Record<string, string> = {
+  Foc: "Fire",
+  Pământ: "Earth",
+  Aer: "Air",
+  Apă: "Water",
+};
+
+const RULERS: Record<string, string> = {
+  Marte: "Mars",
+  Venus: "Venus",
+  Mercur: "Mercury",
+  Lună: "Moon",
+  Soare: "Sun",
+  "Pluto, Marte": "Pluto, Mars",
+  Jupiter: "Jupiter",
+  Saturn: "Saturn",
+  "Uranus, Saturn": "Uranus, Saturn",
+  "Neptun, Jupiter": "Neptune, Jupiter",
+};
+
 function SignProfile({ slug }: { slug: ZodiacSlug }) {
-  const sign = signBySlug(slug);
+  const locale = useLocale();
+  const text = copy(locale);
+  const sign = signDisplay(slug, locale);
   const profile = signProfile(slug);
   if (!sign || !profile) return null;
   const Icon = ICONS[slug];
+  const element = locale === "en" ? ELEMENTS[profile.element] || profile.element : profile.element;
+  const ruler = locale === "en" ? RULERS[profile.ruler] || profile.ruler : profile.ruler;
 
   return (
     <AlignWrapper>
@@ -64,43 +90,50 @@ function SignProfile({ slug }: { slug: ZodiacSlug }) {
           <IntervalHolder>
             <IntervalBox>
               <Star />
-              <h2>HOROSCOP ZILNIC</h2>
-              <div>Textul zilei pentru acest semn</div>
-              <Button message="AFLĂ MAI MULTE" link={`/horoscop-zilnic-${slug}`} />
+              <h2>{text.profileDaily}</h2>
+              <div>{text.profileDailyNote}</div>
+              <Button message={text.readMore} link={`/horoscop-zilnic-${slug}`} />
             </IntervalBox>
             <IntervalBox>
               <Halfmoon />
-              <h2>HOROSCOP SĂPTĂMÂNAL</h2>
-              <div>Textul săptămânii pentru acest semn</div>
-              <Button message="AFLĂ MAI MULTE" link={`/horoscop-saptamanal-${slug}`} />
+              <h2>{text.profileWeekly}</h2>
+              <div>{text.profileWeeklyNote}</div>
+              <Button message={text.readMore} link={`/horoscop-saptamanal-${slug}`} />
             </IntervalBox>
           </IntervalHolder>
           <RowHoroscopes>
-            <Button message="Horoscopul chinezesc" link="/horoscop-chinezesc" />
+            <Button message={text.profileChinese} link="/horoscop-chinezesc" />
           </RowHoroscopes>
           <ContentBox>
             <div>
-              <span>Element: </span>
-              {profile.element}
+              <span>{text.element}: </span>
+              {element}
             </div>
             <div>
-              <span>Guvernator: </span>
-              {profile.ruler}
+              <span>{text.ruler}: </span>
+              {ruler}
             </div>
             <div>
-              <span>Date: </span> {profile.dates}
+              <span>{text.dates}: </span> {sign.dates}
             </div>
+            {text.traitsNote ? <p>{text.traitsNote}</p> : null}
             <p>
-              <span>Puncte forte: </span> {profile.strengths}
+              <span>{text.strengths}: </span> {profile.strengths}
             </p>
             <p>
-              <span>Puncte slabe: </span> {profile.weaknesses}
+              <span>{text.weaknesses}: </span> {profile.weaknesses}
             </p>
             <p>
-              <span>Ce îi place {profile.likeOf}: </span> {profile.likes}
+              <span>
+                {locale === "en" ? text.likes : `Ce îi place ${profile.likeOf}`}:{" "}
+              </span>{" "}
+              {profile.likes}
             </p>
             <p>
-              <span>Ce nu îi place {profile.likeOf}: </span> {profile.dislikes}
+              <span>
+                {locale === "en" ? text.dislikes : `Ce nu îi place ${profile.likeOf}`}:{" "}
+              </span>{" "}
+              {profile.dislikes}
             </p>
           </ContentBox>
         </LeftSide>

@@ -1,4 +1,8 @@
+"use client";
+
 import React from "react";
+import { copy } from "@/lib/messages";
+import { useLocale } from "../shared/LocaleProvider";
 import styled from "styled-components";
 import Aries from "./Icons/aries.svg";
 import Taurus from "./Icons/taurus.svg";
@@ -15,6 +19,7 @@ import Pisces from "./Icons/pisces.svg";
 
 import Link from "next/link";
 import { samePeriodPath } from "@/lib/horoscopeLinks";
+import { signDisplay } from "@/lib/zodiacSigns";
 const Holder = styled.div`
   width: 100%;
   max-width: 100vw;
@@ -115,28 +120,29 @@ const TextHolder = styled.div`
   margin-bottom: 32px;
 `;
 function TryMoreZodiacSigns({ period }: { period: "zilnic" | "azi" | "saptamanal" }) {
+  const locale = useLocale();
   return (
     <Holder>
       <TextHolder>
-        <h2>Sunteți interesat de alte zodii?</h2>
+        <h2>{copy(locale).tryMore}</h2>
       </TextHolder>
       <Zodiacs>
         <ZodiacHolder href={samePeriodPath(period, "berbec")}>
           <Aries />
 
-          <ZodiacName>Berbec</ZodiacName>
+          <ZodiacName>{signDisplay("berbec", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>Lider, Energetic, Curajos</ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={samePeriodPath(period, "taur")}>
           <Taurus />
 
-          <ZodiacName>Taur</ZodiacName>
+          <ZodiacName>{signDisplay("taur", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>Stabil, Senzual, Practic</ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={samePeriodPath(period, "gemeni")}>
           <Gemini />
 
-          <ZodiacName>Gemeni</ZodiacName>
+          <ZodiacName>{signDisplay("gemeni", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
             Comunicativ, Adaptabil, Curios
           </ZodiacCaracteristics>
@@ -144,7 +150,7 @@ function TryMoreZodiacSigns({ period }: { period: "zilnic" | "azi" | "saptamanal
         <ZodiacHolder href={samePeriodPath(period, "rac")}>
           <Cancer />
 
-          <ZodiacName>Rac</ZodiacName>
+          <ZodiacName>{signDisplay("rac", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
             Sensibil, Protector, Hrănitor
           </ZodiacCaracteristics>
@@ -152,7 +158,7 @@ function TryMoreZodiacSigns({ period }: { period: "zilnic" | "azi" | "saptamanal
         <ZodiacHolder href={samePeriodPath(period, "leu")}>
           <Leo />
 
-          <ZodiacName>Leu</ZodiacName>
+          <ZodiacName>{signDisplay("leu", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
             Carismatic, Mândru, Încrezător
           </ZodiacCaracteristics>
@@ -160,13 +166,13 @@ function TryMoreZodiacSigns({ period }: { period: "zilnic" | "azi" | "saptamanal
         <ZodiacHolder href={samePeriodPath(period, "fecioara")}>
           <Virgo />
 
-          <ZodiacName>Fecioară</ZodiacName>
+          <ZodiacName>{signDisplay("fecioara", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>Metodic, Analitic, Modest</ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={samePeriodPath(period, "balanta")}>
           <Libra />
 
-          <ZodiacName>Balanță</ZodiacName>
+          <ZodiacName>{signDisplay("balanta", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
             Echilibrat, Social, Corect
           </ZodiacCaracteristics>
@@ -174,7 +180,7 @@ function TryMoreZodiacSigns({ period }: { period: "zilnic" | "azi" | "saptamanal
         <ZodiacHolder href={samePeriodPath(period, "scorpion")}>
           <Scorpio />
 
-          <ZodiacName>Scorpion</ZodiacName>
+          <ZodiacName>{signDisplay("scorpion", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
             Intens, Misterios, Pasionat
           </ZodiacCaracteristics>
@@ -182,7 +188,7 @@ function TryMoreZodiacSigns({ period }: { period: "zilnic" | "azi" | "saptamanal
         <ZodiacHolder href={samePeriodPath(period, "sagetator")}>
           <Sagittarius />
 
-          <ZodiacName>Săgetător</ZodiacName>
+          <ZodiacName>{signDisplay("sagetator", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
             Optimist, Aventuros, Filozofic
           </ZodiacCaracteristics>
@@ -190,7 +196,7 @@ function TryMoreZodiacSigns({ period }: { period: "zilnic" | "azi" | "saptamanal
         <ZodiacHolder href={samePeriodPath(period, "capricorn")}>
           <Capricorn />
 
-          <ZodiacName>Capricorn</ZodiacName>
+          <ZodiacName>{signDisplay("capricorn", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
             Disciplinat, Ambițios, Precaut
           </ZodiacCaracteristics>
@@ -198,7 +204,7 @@ function TryMoreZodiacSigns({ period }: { period: "zilnic" | "azi" | "saptamanal
         <ZodiacHolder href={samePeriodPath(period, "varsator")}>
           <Aquarius />
 
-          <ZodiacName>Vărsător</ZodiacName>
+          <ZodiacName>{signDisplay("varsator", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
             Inovativ, Umanitar, Neconvențional
           </ZodiacCaracteristics>
@@ -206,7 +212,7 @@ function TryMoreZodiacSigns({ period }: { period: "zilnic" | "azi" | "saptamanal
         <ZodiacHolder href={samePeriodPath(period, "pesti")}>
           <Pisces />
 
-          <ZodiacName>Pești</ZodiacName>
+          <ZodiacName>{signDisplay("pesti", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
             Visător, Compasiv, Intuitiv
           </ZodiacCaracteristics>

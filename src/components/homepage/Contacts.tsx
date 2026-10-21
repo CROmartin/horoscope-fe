@@ -5,7 +5,9 @@ import Link from "next/link";
 import styled from "styled-components";
 import { TittleH2 } from "../styles/styles.styled";
 import { readSavedSign } from "@/lib/savedSign";
-import { signBySlug, WESTERN_SIGNS, type ZodiacSlug } from "@/lib/zodiacSigns";
+import { signDisplay, WESTERN_SIGNS, type ZodiacSlug } from "@/lib/zodiacSigns";
+import { copy } from "@/lib/messages";
+import { useLocale } from "../shared/LocaleProvider";
 
 const Line = styled.div`
   width: 100%;
@@ -161,6 +163,8 @@ const Note = styled.p`
 type Success = { unsubscribePath: string; preferencesPath: string; sign: ZodiacSlug };
 
 function Contacts() {
+  const locale = useLocale();
+  const text = copy(locale);
   const [email, setEmail] = useState("");
   const [sign, setSign] = useState<ZodiacSlug | "">("");
   const [consent, setConsent] = useState(false);
@@ -187,7 +191,7 @@ function Contacts() {
       const body = await response.json().catch(() => ({}));
       if (!response.ok || !body.subscribed) {
         const errors = Array.isArray(body.errors) ? body.errors.join(" ") : body.error;
-        setError(errors || "Înscrierea nu a putut fi salvată. Încearcă din nou.");
+        setError(errors || text.emailError);
         return;
       }
       window.gtag?.("event", "email_signup_completed", { sign: body.sign });
@@ -197,29 +201,28 @@ function Contacts() {
         sign: body.sign,
       });
     } catch {
-      setError("Înscrierea nu a putut fi salvată. Încearcă din nou.");
+      setError(text.emailError);
     } finally {
       setLoading(false);
     }
   }
 
-  const signName = success ? signBySlug(success.sign)?.name : "";
+  const signName = success ? signDisplay(success.sign, locale)?.name : "";
 
   return (
     <section id="contact">
       <Line />
-      <TittleH2>Email zilnic</TittleH2>
+      <TittleH2>{text.emailTitle}</TittleH2>
       <FormHolder>
         <Column>
           {success ? (
             <Copy>
-              Înscrierea pentru {signName} este salvată. Mesajul pleacă în jurul orei 7:00, ora
-              României, cu horoscopul publicat pentru ziua respectivă.
+              {text.emailFor} {signName} {text.emailSaved}
             </Copy>
           ) : (
             <Form onSubmit={onSubmit} aria-describedby={error ? "digest-error" : undefined}>
               <Label htmlFor="digest-email">
-                <FieldLabel>E-mail</FieldLabel>
+                <FieldLabel>{text.emailLabel}</FieldLabel>
                 <Field
                   id="digest-email"
                   type="email"
@@ -236,17 +239,17 @@ function Contacts() {
                 />
               </Label>
               <Label htmlFor="digest-sign">
-                <FieldLabel>Zodia</FieldLabel>
+                <FieldLabel>{text.signLabel}</FieldLabel>
                 <Select
                   id="digest-sign"
                   required
                   value={sign}
                   onChange={(event) => setSign(event.target.value as ZodiacSlug)}
                 >
-                  <option value="">Alege zodia</option>
+                  <option value="">{text.chooseSign}</option>
                   {WESTERN_SIGNS.map((item) => (
                     <option key={item.slug} value={item.slug}>
-                      {item.name}
+                      {signDisplay(item.slug, locale)?.name}
                     </option>
                   ))}
                 </Select>
@@ -258,10 +261,7 @@ function Contacts() {
                   onChange={(event) => setConsent(event.target.checked)}
                   required
                 />
-                <span>
-                  Sunt de acord să primesc un email pe zi, în jurul orei 7:00 (ora României), cu
-                  horoscopul zilnic pentru zodia aleasă. Mă pot opri din linkul de pe această pagină.
-                </span>
+                <span>{text.emailConsent}</span>
               </Check>
               {error ? (
                 <Note id="digest-error" role="alert">
@@ -269,25 +269,22 @@ function Contacts() {
                 </Note>
               ) : null}
               <Submit type="submit" disabled={loading}>
-                {loading ? "Se salvează" : "Vreau emailul zilnic"}
+                {loading ? text.emailSaving : text.emailSubmit}
               </Submit>
             </Form>
           )}
           {success ? (
             <Note>
-              <Link href={success.unsubscribePath}>Oprește emailul</Link>
+              <Link href={success.unsubscribePath}>{text.emailStop}</Link>
               {" · "}
-              <Link href={success.preferencesPath}>Schimbă zodia</Link>
+              <Link href={success.preferencesPath}>{text.emailChange}</Link>
             </Note>
           ) : null}
         </Column>
         <Column>
+          <Copy>{text.emailSide}</Copy>
           <Copy>
-            Un singur horoscop pe zi, pentru zodia aleasă, din textul deja publicat. Fără oferte și
-            fără alte mesaje. Dacă horoscopul zilei nu este publicat, emailul din acea zi nu pleacă.
-          </Copy>
-          <Copy>
-            Contact:{" "}
+            {text.contact}:{" "}
             <a href="mailto:sprijin@horoscopzodii.ro" style={{ color: "#d7be8a" }}>
               sprijin@horoscopzodii.ro
             </a>

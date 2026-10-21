@@ -1,4 +1,9 @@
+"use client";
+
 import React from "react";
+import { copy } from "@/lib/messages";
+import { useLocale } from "../shared/LocaleProvider";
+import { displayStoredName } from "@/lib/zodiacSigns";
 import styled from "styled-components";
 import Tiger from "./Icons/chinese/TigerSmall.svg";
 import Snake from "./Icons/chinese/SnakeSmall.svg";
@@ -166,18 +171,19 @@ const IconWrapper = styled.span<IconWrapperProps>`
 `;
 
 function TryMoreChineseSigns({ period }: { period: "zilnic" | "anual" }) {
+  const locale = useLocale();
   const href = (slug: string) => samePeriodPath(period, slug);
   return (
     <Holder>
       <TextHolder>
-        <h2>Ești interesat de alte semne zodiacale?</h2>
+        <h2>{copy(locale).tryMoreChinese}</h2>
       </TextHolder>
       <Zodiacs>
         <ZodiacHolder href={href("sobolan")}>
           <IconWrapper fill={true}>
             <Rat />
           </IconWrapper>
-          <ZodiacName>Șobolan</ZodiacName>
+          <ZodiacName>{displayStoredName("Șobolan", locale)}</ZodiacName>
           <ZodiacCaracteristics>
             Ingenios, isteț, fermecător
           </ZodiacCaracteristics>
@@ -187,7 +193,7 @@ function TryMoreChineseSigns({ period }: { period: "zilnic" | "anual" }) {
             <Ox />
           </IconWrapper>
 
-          <ZodiacName>Bivol</ZodiacName>
+          <ZodiacName>{displayStoredName("Bivol", locale)}</ZodiacName>
           <ZodiacCaracteristics>Stabil, loial, hotărât</ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={href("tigru")}>
@@ -195,7 +201,7 @@ function TryMoreChineseSigns({ period }: { period: "zilnic" | "anual" }) {
             <Tiger />
           </IconWrapper>
 
-          <ZodiacName>Tigru</ZodiacName>
+          <ZodiacName>{displayStoredName("Tigru", locale)}</ZodiacName>
           <ZodiacCaracteristics>
             Curajos, încrezător, competitiv
           </ZodiacCaracteristics>
@@ -205,7 +211,7 @@ function TryMoreChineseSigns({ period }: { period: "zilnic" | "anual" }) {
             <Rabbit />
           </IconWrapper>
 
-          <ZodiacName>Iepure</ZodiacName>
+          <ZodiacName>{displayStoredName("Iepure", locale)}</ZodiacName>
           <ZodiacCaracteristics>
             Compasiv, tacticos, prudent
           </ZodiacCaracteristics>
@@ -215,7 +221,7 @@ function TryMoreChineseSigns({ period }: { period: "zilnic" | "anual" }) {
             <Dragon className="dragon" />
           </IconWrapper>
 
-          <ZodiacName>Dragon</ZodiacName>
+          <ZodiacName>{displayStoredName("Dragon", locale)}</ZodiacName>
           <ZodiacCaracteristics>
             Carismatic, încrezător, puternic
           </ZodiacCaracteristics>
@@ -225,7 +231,7 @@ function TryMoreChineseSigns({ period }: { period: "zilnic" | "anual" }) {
             <Snake />
           </IconWrapper>
 
-          <ZodiacName>Șarpe</ZodiacName>
+          <ZodiacName>{displayStoredName("Șarpe", locale)}</ZodiacName>
           <ZodiacCaracteristics>
             Înțelept, grațios, simpatic
           </ZodiacCaracteristics>
@@ -235,7 +241,7 @@ function TryMoreChineseSigns({ period }: { period: "zilnic" | "anual" }) {
             <Horse />
           </IconWrapper>
 
-          <ZodiacName>Cal</ZodiacName>
+          <ZodiacName>{displayStoredName("Cal", locale)}</ZodiacName>
           <ZodiacCaracteristics>
             Energetic, independent, nerăbdător
           </ZodiacCaracteristics>
@@ -245,14 +251,14 @@ function TryMoreChineseSigns({ period }: { period: "zilnic" | "anual" }) {
             <Goat />
           </IconWrapper>
 
-          <ZodiacName>Oaie</ZodiacName>
+          <ZodiacName>{displayStoredName("Oaie", locale)}</ZodiacName>
           <ZodiacCaracteristics>Creativ, blând, gânditor</ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={href("maimuta")}>
           <IconWrapper fill={true}>
             <Monkey />
           </IconWrapper>
-          <ZodiacName>Maimuță</ZodiacName>
+          <ZodiacName>{displayStoredName("Maimuță", locale)}</ZodiacName>
           <ZodiacCaracteristics>Deștept, curios, jucăuș</ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={href("cocos")}>
@@ -260,7 +266,7 @@ function TryMoreChineseSigns({ period }: { period: "zilnic" | "anual" }) {
             <Rooster />
           </IconWrapper>
 
-          <ZodiacName>Cocoș</ZodiacName>
+          <ZodiacName>{displayStoredName("Cocoș", locale)}</ZodiacName>
           <ZodiacCaracteristics>
             Observator, muncitor, curajos
           </ZodiacCaracteristics>
@@ -270,7 +276,7 @@ function TryMoreChineseSigns({ period }: { period: "zilnic" | "anual" }) {
             <Dog />
           </IconWrapper>
 
-          <ZodiacName>Câine</ZodiacName>
+          <ZodiacName>{displayStoredName("Câine", locale)}</ZodiacName>
           <ZodiacCaracteristics>
             Loial, sincer, de încredere
           </ZodiacCaracteristics>
@@ -280,7 +286,7 @@ function TryMoreChineseSigns({ period }: { period: "zilnic" | "anual" }) {
             <Pig />
           </IconWrapper>
 
-          <ZodiacName>Porc</ZodiacName>
+          <ZodiacName>{displayStoredName("Porc", locale)}</ZodiacName>
           <ZodiacCaracteristics>
             Generos, sârguincios, compasiv
           </ZodiacCaracteristics>

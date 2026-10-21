@@ -34,6 +34,8 @@ import { renderAffirmations } from "../utils/helpers";
 import ReadingStatus from "../components/horoscope/ReadingStatus";
 import type { Crumb } from "../lib/breadcrumbs";
 import type { ReadingFreshness } from "../lib/readingDate";
+import { copy } from "@/lib/messages";
+import { useLocale } from "@/components/shared/LocaleProvider";
 
 const HomeLink = styled(Link)`
   :hover {
@@ -98,6 +100,7 @@ function HoroscopePage({
   crumbs: Crumb[];
   period: "zilnic" | "saptamanal";
 }) {
+  const text = copy(useLocale());
   const affirmationList = renderAffirmations(affirmations);
 
   return (
@@ -109,6 +112,7 @@ function HoroscopePage({
       <RowAzi>
         <RightSide>
           <ContentBox>
+            {text.readingNote ? <p>{text.readingNote}</p> : null}
             <p>{description}</p>
           </ContentBox>
         </RightSide>
@@ -139,7 +143,7 @@ function HoroscopePage({
         </LeftSide>
         <RightSide>
           <ParagraphAzi>
-            <h2>Compatibilitate</h2>
+            <h2>{text.compatibilityHeading}</h2>
             <p>{compatibility}</p>
           </ParagraphAzi>
         </RightSide>
@@ -147,7 +151,7 @@ function HoroscopePage({
       <RowAzi>
         <RightSide>
           <ParagraphAzi>
-            <h2>Afirmări</h2>
+            <h2>{text.affirmationsHeading}</h2>
 
             {affirmationList.map((affirmation, index) => (
               <p key={index}>{affirmation}</p>

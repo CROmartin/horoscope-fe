@@ -1,4 +1,8 @@
+"use client";
+
 import React from "react";
+import { copy } from "@/lib/messages";
+import { useLocale } from "../shared/LocaleProvider";
 import styled from "styled-components";
 import Halfmoon from "../../Icons/Halfmoon";
 import Fullmoon from "../../Icons/Fullmoon";
@@ -74,59 +78,50 @@ const Paragraph = styled.div`
 `;
 
 function HoroscopeTypes() {
+  const text = copy(useLocale());
+
   return (
     <section>
       <Line />
-      <TittleH2>Alege horoscopul</TittleH2>
+      <TittleH2>{text.chooseHoroscope}</TittleH2>
       <HoroscopeTypesWrapper>
         <TypeHolder>
           <Star />
-          <TitleSub>Horoscop zilnic</TitleSub>
-          <Paragraph>
-            Textul zilei pentru fiecare zodie. Cititorii aceluiași semn văd același
-            horoscop.
-          </Paragraph>
+          <TitleSub>{text.cardDailyTitle}</TitleSub>
+          <Paragraph>{text.cardDailyBody}</Paragraph>
           <Button
             small={true}
-            message="Află mai multe"
+            message={text.readMore}
             link="horoscop-zilnic"
           />
         </TypeHolder>
         <TypeHolder>
           <Fullmoon />
-          <TitleSub>Horoscop zilnic chinezesc</TitleSub>
-          <Paragraph>
-            Textul zilei pentru fiecare semn din zodiacul chinezesc, separat de
-            zodiacul occidental.
-          </Paragraph>
+          <TitleSub>{text.cardChineseDailyTitle}</TitleSub>
+          <Paragraph>{text.cardChineseDailyBody}</Paragraph>
           <Button
             small={true}
-            message="Află mai multe"
+            message={text.readMore}
             link="horoscop-zilnic-chinezesc"
           />
         </TypeHolder>
         <TypeHolder>
           <Halfmoon />
-          <TitleSub>Horoscop săptămânal</TitleSub>
-          <Paragraph>
-            Textul săptămânii pentru fiecare zodie, același pentru toți cititorii
-            semnului.
-          </Paragraph>
+          <TitleSub>{text.cardWeeklyTitle}</TitleSub>
+          <Paragraph>{text.cardWeeklyBody}</Paragraph>
           <Button
             small={true}
-            message="Află mai multe"
+            message={text.readMore}
             link="horoscop-saptamanal"
           />
         </TypeHolder>
         <TypeHolder>
           <Fullmoon />
-          <TitleSub>Horoscop chinezesc</TitleSub>
-          <Paragraph>
-            Horoscopul anual și zilnic pentru cele 12 semne chinezești.
-          </Paragraph>
+          <TitleSub>{text.cardChineseTitle}</TitleSub>
+          <Paragraph>{text.cardChineseBody}</Paragraph>
           <Button
             small={true}
-            message="Află mai multe"
+            message={text.readMore}
             link="horoscop-chinezesc"
           />
         </TypeHolder>

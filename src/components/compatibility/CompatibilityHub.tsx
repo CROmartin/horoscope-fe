@@ -5,6 +5,8 @@ import styled from "styled-components";
 import PairForm from "@/components/compatibility/PairForm";
 import AlignWrapper from "@/components/shared/AlignWrapper";
 import type { ZodiacSlug } from "@/lib/zodiacSigns";
+import { copy } from "@/lib/messages";
+import { useLocale } from "../shared/LocaleProvider";
 
 const Article = styled.article`
   width: 100%;
@@ -40,15 +42,14 @@ function CompatibilityHub({
   invalid: boolean;
   initialSign?: ZodiacSlug | "";
 }) {
+  const text = copy(useLocale());
+
   return (
     <AlignWrapper>
       <Article>
-        <h1>Compatibilitate zodii</h1>
-        <p>
-          Alege două zodii din zodiacul occidental. Pagina perechii rămâne la
-          același link, indiferent de ordinea aleasă.
-        </p>
-        {invalid && <Alert role="alert">Alege două zodii din listă.</Alert>}
+        <h1>{text.pairTitle}</h1>
+        <p>{text.pairBody}</p>
+        {invalid && <Alert role="alert">{text.pairInvalid}</Alert>}
         <PairForm initialA={initialSign} />
       </Article>
     </AlignWrapper>

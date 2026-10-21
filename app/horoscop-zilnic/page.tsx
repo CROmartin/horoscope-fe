@@ -1,17 +1,28 @@
 import View from "@/views/horoscop-zilnic";
 import JsonLd from "@/components/seo/JsonLd";
-import { pageMetadata } from "@/lib/metadata";
+import { localizedPage } from "@/lib/localizedPage";
 
-const title = "Horoscop zilnic";
-const description = "Horoscopul zilei pentru cele 12 zodii, în română. Fiecare zodie are propriul text, de divertisment.";
 const path = "/horoscop-zilnic";
+const text = {
+  ro: {
+    title: "Horoscop zilnic",
+    description: "Horoscopul zilei pentru cele 12 zodii, în română. Fiecare zodie are propriul text, de divertisment.",
+  },
+  en: {
+    title: "Daily horoscope",
+    description: "Today's horoscope for the 12 signs. Each sign has its own entertainment text, published in Romanian.",
+  },
+};
 
-export const metadata = pageMetadata(title, description, path);
+export async function generateMetadata() {
+  return (await localizedPage(text, path)).metadata;
+}
 
-export default function Page() {
+export default async function Page() {
+  const meta = await localizedPage(text, path);
   return (
     <>
-      <JsonLd title={title} description={description} path={path} />
+      <JsonLd title={meta.title} description={meta.description} path={path} />
       <View />
     </>
   );

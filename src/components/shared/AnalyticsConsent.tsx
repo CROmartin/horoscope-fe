@@ -5,6 +5,8 @@ import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styled from "styled-components";
+import { copy } from "@/lib/messages";
+import { useLocale } from "./LocaleProvider";
 import {
   type AnalyticsConsent,
   type AnalyticsHit,
@@ -167,20 +169,19 @@ const Refuse = styled.button`
 `;
 
 function ConsentBanner({ onChoose }: { onChoose: (value: AnalyticsConsent) => void }) {
+  const text = copy(useLocale());
   if (typeof document === "undefined") return null;
   return createPortal(
-    <Bar aria-label="Măsurarea vizitelor">
+    <Bar aria-label={text.consentRegion}>
       <Copy>
-        Putem măsura ce pagini de horoscop sunt citite. Google Analytics pornește doar
-        după accept, cu adresa IP anonimizată. Poți refuza și citi tot site-ul.{" "}
-        <Link href="/confidentialitate">Confidențialitate</Link>
+        {text.consentBody} <Link href="/confidentialitate">{text.privacy}</Link>
       </Copy>
       <Actions>
         <Accept type="button" onClick={() => onChoose("granted")}>
-          Acceptă
+          {text.accept}
         </Accept>
         <Refuse type="button" onClick={() => onChoose("denied")}>
-          Refuză
+          {text.refuse}
         </Refuse>
       </Actions>
     </Bar>,

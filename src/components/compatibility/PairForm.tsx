@@ -3,7 +3,9 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { readSavedSign } from "@/lib/savedSign";
-import { WESTERN_SIGNS, type ZodiacSlug } from "@/lib/zodiacSigns";
+import { signDisplay, WESTERN_SIGNS, type ZodiacSlug } from "@/lib/zodiacSigns";
+import { copy } from "@/lib/messages";
+import { useLocale } from "../shared/LocaleProvider";
 
 const Form = styled.form`
   width: 100%;
@@ -63,6 +65,8 @@ function PairForm({
   initialA?: ZodiacSlug | "";
   initialB?: ZodiacSlug | "";
 }) {
+  const locale = useLocale();
+  const text = copy(locale);
   const [first, setFirst] = useState(initialA);
   const [second, setSecond] = useState(initialB);
 
@@ -75,7 +79,7 @@ function PairForm({
   return (
     <Form action="/compatibilitate" method="get">
       <Field htmlFor="pair-a">
-        Prima zodie
+        {text.firstSign}
         <Select
           id="pair-a"
           name="a"
@@ -83,16 +87,16 @@ function PairForm({
           required
           onChange={(event) => setFirst(event.target.value as ZodiacSlug | "")}
         >
-          <option value="">Alege zodia</option>
+          <option value="">{text.chooseSign}</option>
           {WESTERN_SIGNS.map((sign) => (
             <option key={sign.slug} value={sign.slug}>
-              {sign.name}
+              {signDisplay(sign.slug, locale)?.name}
             </option>
           ))}
         </Select>
       </Field>
       <Field htmlFor="pair-b">
-        A doua zodie
+        {text.secondSign}
         <Select
           id="pair-b"
           name="b"
@@ -100,15 +104,15 @@ function PairForm({
           required
           onChange={(event) => setSecond(event.target.value as ZodiacSlug | "")}
         >
-          <option value="">Alege zodia</option>
+          <option value="">{text.chooseSign}</option>
           {WESTERN_SIGNS.map((sign) => (
             <option key={sign.slug} value={sign.slug}>
-              {sign.name}
+              {signDisplay(sign.slug, locale)?.name}
             </option>
           ))}
         </Select>
       </Field>
-      <Submit type="submit">Vezi compatibilitatea</Submit>
+      <Submit type="submit">{text.seeCompatibility}</Submit>
     </Form>
   );
 }

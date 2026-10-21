@@ -1,4 +1,8 @@
+"use client";
+
 import React from "react";
+import { copy } from "@/lib/messages";
+import { useLocale } from "../shared/LocaleProvider";
 import styled from "styled-components";
 // import Background from "./images/ZodiacWheel.webp";
 import Image from "next/image";
@@ -78,18 +82,16 @@ const Title = styled.h2`
   text-align: center;
 `;
 function Introduction() {
+  const text = copy(useLocale());
+
   return (
     <Holder>
       <DarkenBackground />
       <div className="zodiac-wheel">
-        <Image src={zodiacWheel} alt="Zodiac Wheel" fill />
+        <Image src={zodiacWheel} alt={text.wheelAlt} fill />
       </div>
-      <Title>Horoscopul zilei, pentru fiecare zodie</Title>
-      <Paragraph>
-        Fiecare dintre cele 12 zodii are un text propriu, în română. Doi
-        cititori ai aceleiași zodii văd același horoscop. Textul este de
-        divertisment.
-      </Paragraph>
+      <Title>{text.introTitle}</Title>
+      <Paragraph>{text.introBody}</Paragraph>
     </Holder>
   );
 }

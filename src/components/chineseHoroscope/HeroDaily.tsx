@@ -1,4 +1,9 @@
+"use client";
+
 import React from "react";
+import { copy } from "@/lib/messages";
+import { useLocale } from "../shared/LocaleProvider";
+import { displayStoredName } from "@/lib/zodiacSigns";
 import styled from "styled-components";
 import Illustration from "../../Icons/illustration";
 import Button from "../shared/Button";
@@ -148,85 +153,86 @@ const SignName = styled.div`
 `;
 
 function HeroDaily() {
+  const locale = useLocale();
   return (
     <section>
       <SvgWrapper>
         <Illustration />
       </SvgWrapper>
-      <TittleH1>Horoscop</TittleH1>
+      <TittleH1>{copy(locale).horoscope}</TittleH1>
       <Line></Line>
       <InfoLine>
         <SignHolder href="/horoscop-zilnic-sobolan">
           <IconWrapper fill={true}>
             <Rat />
           </IconWrapper>
-          <SignName>Șobolan</SignName>
+          <SignName>{displayStoredName("Șobolan", locale)}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-zilnic-bivol">
           <IconWrapper fill={true}>
             <Ox />
           </IconWrapper>
-          <SignName>Bivol</SignName>
+          <SignName>{displayStoredName("Bivol", locale)}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-zilnic-tigru">
           <IconWrapper fill={true}>
             <Tiger />
           </IconWrapper>
-          <SignName>Tigru</SignName>
+          <SignName>{displayStoredName("Tigru", locale)}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-zilnic-iepure">
           <IconWrapper fill={true}>
             <Rabbit />
           </IconWrapper>
-          <SignName>Iepure</SignName>
+          <SignName>{displayStoredName("Iepure", locale)}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-zilnic-dragon">
           <IconWrapper stroke={true}>
             <Dragon className="dragon" />
           </IconWrapper>
-          <SignName>Dragon</SignName>
+          <SignName>{displayStoredName("Dragon", locale)}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-zilnic-sarpe">
           <IconWrapper fill={true}>
             <Snake />
           </IconWrapper>
-          <SignName>Șarpe</SignName>
+          <SignName>{displayStoredName("Șarpe", locale)}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-zilnic-cal">
           <IconWrapper fill={true}>
             <Horse />
           </IconWrapper>
-          <SignName>Cal</SignName>
+          <SignName>{displayStoredName("Cal", locale)}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-zilnic-oaie">
           <IconWrapper stroke={true}>
             <Goat className="boldSvg" />
           </IconWrapper>
-          <SignName>Oaie</SignName>
+          <SignName>{displayStoredName("Oaie", locale)}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-zilnic-maimuta">
           <IconWrapper fill={true}>
             <Monkey />
           </IconWrapper>
-          <SignName>Maimuță</SignName>
+          <SignName>{displayStoredName("Maimuță", locale)}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-zilnic-cocos">
           <IconWrapper fill={true}>
             <Rooster />
           </IconWrapper>
-          <SignName>Cocoș</SignName>
+          <SignName>{displayStoredName("Cocoș", locale)}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-zilnic-caine">
           <IconWrapper fill={true}>
             <Dog />
           </IconWrapper>
-          <SignName>Câine</SignName>
+          <SignName>{displayStoredName("Câine", locale)}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-zilnic-porc">
           <IconWrapper stroke={true}>
             <Pig className="boldSvg" />
           </IconWrapper>
-          <SignName>Porc</SignName>
+          <SignName>{displayStoredName("Porc", locale)}</SignName>
         </SignHolder>
 
         {/* <Paragraph>

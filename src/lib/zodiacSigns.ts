@@ -1,3 +1,5 @@
+import type { Locale } from "./locale";
+
 export const WESTERN_SIGNS = [
   { slug: "berbec", name: "Berbec", symbol: "♈", dates: "21 martie – 19 aprilie" },
   { slug: "taur", name: "Taur", symbol: "♉", dates: "20 aprilie – 20 mai" },
@@ -16,6 +18,48 @@ export const WESTERN_SIGNS = [
 export type ZodiacSign = (typeof WESTERN_SIGNS)[number];
 export type ZodiacSlug = ZodiacSign["slug"];
 
+const ENGLISH_SIGNS: Record<ZodiacSlug, { name: string; dates: string }> = {
+  berbec: { name: "Aries", dates: "21 March – 19 April" },
+  taur: { name: "Taurus", dates: "20 April – 20 May" },
+  gemeni: { name: "Gemini", dates: "21 May – 20 June" },
+  rac: { name: "Cancer", dates: "21 June – 22 July" },
+  leu: { name: "Leo", dates: "23 July – 22 August" },
+  fecioara: { name: "Virgo", dates: "23 August – 22 September" },
+  balanta: { name: "Libra", dates: "23 September – 22 October" },
+  scorpion: { name: "Scorpio", dates: "23 October – 21 November" },
+  sagetator: { name: "Sagittarius", dates: "22 November – 21 December" },
+  capricorn: { name: "Capricorn", dates: "22 December – 19 January" },
+  varsator: { name: "Aquarius", dates: "20 January – 18 February" },
+  pesti: { name: "Pisces", dates: "19 February – 20 March" },
+};
+
+const STORED_EN: Record<string, string> = {
+  Berbec: "Aries",
+  Taur: "Taurus",
+  Gemeni: "Gemini",
+  Rac: "Cancer",
+  Leu: "Leo",
+  Fecioară: "Virgo",
+  Balanță: "Libra",
+  Scorpion: "Scorpio",
+  Săgetător: "Sagittarius",
+  Capricorn: "Capricorn",
+  Vărsător: "Aquarius",
+  Pești: "Pisces",
+  Șobolan: "Rat",
+  Bivol: "Ox",
+  Tigru: "Tiger",
+  Iepure: "Rabbit",
+  Dragon: "Dragon",
+  Șarpe: "Snake",
+  Cal: "Horse",
+  Oaie: "Goat",
+  Maimuță: "Monkey",
+  Cocoș: "Rooster",
+  Câine: "Dog",
+  Porc: "Pig",
+};
+
 const BY_SLUG = new Map<string, ZodiacSign>(WESTERN_SIGNS.map((sign) => [sign.slug, sign]));
 
 export function isZodiacSlug(value: string | null | undefined): value is ZodiacSlug {
@@ -30,12 +74,27 @@ export function dailyHoroscopePath(slug: ZodiacSlug) {
   return `/horoscop-zilnic-${slug}`;
 }
 
-export function homepageSignLinks() {
-  return WESTERN_SIGNS.map((sign) => ({
-    slug: sign.slug,
-    name: sign.name,
-    symbol: sign.symbol,
-    dates: sign.dates,
-    href: dailyHoroscopePath(sign.slug),
-  }));
+export function signDisplay(slug: ZodiacSlug, locale: Locale = "ro") {
+  const sign = BY_SLUG.get(slug);
+  if (!sign) return undefined;
+  if (locale === "ro") return { name: sign.name, dates: sign.dates };
+  return ENGLISH_SIGNS[slug];
+}
+
+export function displayStoredName(name: string, locale: Locale = "ro") {
+  if (locale === "ro") return name;
+  return STORED_EN[name] || name;
+}
+
+export function homepageSignLinks(locale: Locale = "ro") {
+  return WESTERN_SIGNS.map((sign) => {
+    const display = signDisplay(sign.slug, locale) || sign;
+    return {
+      slug: sign.slug,
+      name: display.name,
+      symbol: sign.symbol,
+      dates: display.dates,
+      href: dailyHoroscopePath(sign.slug),
+    };
+  });
 }

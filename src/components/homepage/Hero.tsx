@@ -1,7 +1,12 @@
+"use client";
+
 import React from "react";
 import styled from "styled-components";
 import Illustration from "../../Icons/illustration";
 import ZodiacGrid from "../zodiac/ZodiacGrid";
+import { formatLongDate } from "@/lib/readingDate";
+import { copy } from "@/lib/messages";
+import { useLocale } from "../shared/LocaleProvider";
 
 const SvgWrapper = styled.div`
   display: flex;
@@ -40,13 +45,17 @@ const Today = styled.p`
   line-height: 1.4;
 `;
 
-function Hero({ todayLabel, todayIso }: { todayLabel: string; todayIso: string }) {
+function Hero({ todayIso }: { todayIso: string }) {
+  const locale = useLocale();
+  const text = copy(locale);
+  const todayLabel = formatLongDate(todayIso, locale);
+
   return (
     <section>
       <SvgWrapper>
         <Illustration />
       </SvgWrapper>
-      <Headline>Horoscopul de azi, pentru fiecare zodie</Headline>
+      <Headline>{text.hero}</Headline>
       <Today>
         <time dateTime={todayIso}>{todayLabel}</time>
       </Today>

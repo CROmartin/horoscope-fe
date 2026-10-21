@@ -1,16 +1,27 @@
 import CompatibilityHub from "@/components/compatibility/CompatibilityHub";
 import JsonLd from "@/components/seo/JsonLd";
 import { canonicalPairSlug } from "@/lib/compatibility";
-import { pageMetadata } from "@/lib/metadata";
+import { localizedPage } from "@/lib/localizedPage";
 import { isZodiacSlug, type ZodiacSlug } from "@/lib/zodiacSigns";
 import { permanentRedirect } from "next/navigation";
 
-const title = "Compatibilitate zodii";
-const description =
-  "Alege două zodii și deschide pagina lor. Fiecare pereche are un link stabil, pe care îl poți trimite mai departe.";
 const path = "/compatibilitate";
+const text = {
+  ro: {
+    title: "Compatibilitate zodii",
+    description:
+      "Alege două zodii și deschide pagina lor. Fiecare pereche are un link stabil, pe care îl poți trimite mai departe.",
+  },
+  en: {
+    title: "Zodiac compatibility",
+    description:
+      "Choose two signs and open their page. Each pair has a stable link you can send to someone else.",
+  },
+};
 
-export const metadata = pageMetadata(title, description, path);
+export async function generateMetadata() {
+  return (await localizedPage(text, path)).metadata;
+}
 
 type HubProps = {
   searchParams: Promise<{ a?: string | string[]; b?: string | string[] }>;
@@ -32,10 +43,11 @@ export default async function Page({ searchParams }: HubProps) {
 
   const preset: ZodiacSlug | undefined =
     a && !b && isZodiacSlug(a) ? a : b && !a && isZodiacSlug(b) ? b : undefined;
+  const meta = await localizedPage(text, path);
 
   return (
     <>
-      <JsonLd title={title} description={description} path={path} />
+      <JsonLd title={meta.title} description={meta.description} path={path} />
       <CompatibilityHub invalid={Boolean((a || b) && !preset)} initialSign={preset} />
     </>
   );

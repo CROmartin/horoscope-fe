@@ -1,4 +1,9 @@
+"use client";
+
 import React, { useEffect } from "react";
+import { copy } from "@/lib/messages";
+import { useLocale } from "../../shared/LocaleProvider";
+import { displayStoredName } from "@/lib/zodiacSigns";
 import styled from "styled-components";
 import Tiger from "../Icons/chinese/TigerSmall.svg";
 import Snake from "../Icons/chinese/SnakeSmall.svg";
@@ -160,6 +165,8 @@ const IconWrapper = styled.a<IconWrapperProps>`
 `;
 
 function ZodiacChineseCircle() {
+  const locale = useLocale();
+  const text = copy(locale);
   const [interval, setInterval] = React.useState("zilnic");
 
   useEffect(() => {
@@ -176,17 +183,15 @@ function ZodiacChineseCircle() {
   return (
     <Holder>
       <TextHolder>
-        <h2>Horoscopul chinezesc zilnic</h2>
-        Alege unul dintre cele 12 semne. Fiecare are propriul text, același
-        pentru toți cititorii acelui semn. Zodiacul chinezesc este prezentat
-        separat de cel occidental.
+        <h2>{text.chineseCircleTitle}</h2>
+        {text.chineseCircleLead}
       </TextHolder>
       <Zodiacs>
         <ZodiacHolder href={`/horoscop-${interval}-sobolan`}>
           <IconWrapper fill={true}>
             <Rat />
           </IconWrapper>
-          <ZodiacName>Șobolan</ZodiacName>
+          <ZodiacName>{displayStoredName("Șobolan", locale)}</ZodiacName>
           <ZodiacCaracteristics>
             Ingenios, isteț, fermecător
           </ZodiacCaracteristics>
@@ -196,7 +201,7 @@ function ZodiacChineseCircle() {
             <Ox />
           </IconWrapper>
 
-          <ZodiacName>Bivol</ZodiacName>
+          <ZodiacName>{displayStoredName("Bivol", locale)}</ZodiacName>
           <ZodiacCaracteristics>Stabil, loial, hotărât</ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/horoscop-${interval}-tigru`}>
@@ -204,7 +209,7 @@ function ZodiacChineseCircle() {
             <Tiger />
           </IconWrapper>
 
-          <ZodiacName>Tigru</ZodiacName>
+          <ZodiacName>{displayStoredName("Tigru", locale)}</ZodiacName>
           <ZodiacCaracteristics>
             Curajos, încrezător, competitiv
           </ZodiacCaracteristics>
@@ -214,7 +219,7 @@ function ZodiacChineseCircle() {
             <Rabbit />
           </IconWrapper>
 
-          <ZodiacName>Iepure</ZodiacName>
+          <ZodiacName>{displayStoredName("Iepure", locale)}</ZodiacName>
           <ZodiacCaracteristics>
             Compasiv, tacticos, prudent
           </ZodiacCaracteristics>
@@ -224,7 +229,7 @@ function ZodiacChineseCircle() {
             <Dragon className="dragon" />
           </IconWrapper>
 
-          <ZodiacName>Dragon</ZodiacName>
+          <ZodiacName>{displayStoredName("Dragon", locale)}</ZodiacName>
           <ZodiacCaracteristics>
             Carismatic, încrezător, puternic
           </ZodiacCaracteristics>
@@ -234,7 +239,7 @@ function ZodiacChineseCircle() {
             <Snake />
           </IconWrapper>
 
-          <ZodiacName>Șarpe</ZodiacName>
+          <ZodiacName>{displayStoredName("Șarpe", locale)}</ZodiacName>
           <ZodiacCaracteristics>
             Înțelept, grațios, simpatic
           </ZodiacCaracteristics>
@@ -244,7 +249,7 @@ function ZodiacChineseCircle() {
             <Horse />
           </IconWrapper>
 
-          <ZodiacName>Cal</ZodiacName>
+          <ZodiacName>{displayStoredName("Cal", locale)}</ZodiacName>
           <ZodiacCaracteristics>
             Energetic, independent, nerăbdător
           </ZodiacCaracteristics>
@@ -254,14 +259,14 @@ function ZodiacChineseCircle() {
             <Goat />
           </IconWrapper>
 
-          <ZodiacName>Oaie</ZodiacName>
+          <ZodiacName>{displayStoredName("Oaie", locale)}</ZodiacName>
           <ZodiacCaracteristics>Creativ, blând, gânditor</ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/horoscop-${interval}-maimuta`}>
           <IconWrapper fill={true}>
             <Monkey />
           </IconWrapper>
-          <ZodiacName>Maimuță</ZodiacName>
+          <ZodiacName>{displayStoredName("Maimuță", locale)}</ZodiacName>
           <ZodiacCaracteristics>Deștept, curios, jucăuș</ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/horoscop-${interval}-cocos`}>
@@ -269,7 +274,7 @@ function ZodiacChineseCircle() {
             <Rooster />
           </IconWrapper>
 
-          <ZodiacName>Cocoș</ZodiacName>
+          <ZodiacName>{displayStoredName("Cocoș", locale)}</ZodiacName>
           <ZodiacCaracteristics>
             Observator, muncitor, curajos
           </ZodiacCaracteristics>
@@ -279,7 +284,7 @@ function ZodiacChineseCircle() {
             <Dog />
           </IconWrapper>
 
-          <ZodiacName>Câine</ZodiacName>
+          <ZodiacName>{displayStoredName("Câine", locale)}</ZodiacName>
           <ZodiacCaracteristics>
             Loial, sincer, de încredere
           </ZodiacCaracteristics>
@@ -289,7 +294,7 @@ function ZodiacChineseCircle() {
             <Pig />
           </IconWrapper>
 
-          <ZodiacName>Porc</ZodiacName>
+          <ZodiacName>{displayStoredName("Porc", locale)}</ZodiacName>
           <ZodiacCaracteristics>
             Generos, sârguincios, compasiv
           </ZodiacCaracteristics>

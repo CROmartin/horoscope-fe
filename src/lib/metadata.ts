@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { Locale } from "./locale";
 
 const SITE_NAME = "Horoscopzodii.ro";
 const DESCRIPTION_LIMIT = 160;
@@ -7,7 +8,7 @@ export function pageMetadata(
   title: string,
   description: string,
   path: string,
-  extra?: { type?: "website" | "article"; publishedTime?: string }
+  extra?: { type?: "website" | "article"; publishedTime?: string; locale?: Locale }
 ): Metadata {
   const capitalized = title.charAt(0).toUpperCase() + title.slice(1);
   const fullTitle = `${capitalized} | ${SITE_NAME}`;
@@ -36,7 +37,7 @@ export function pageMetadata(
       description: summary,
       url: path,
       siteName: SITE_NAME,
-      locale: "ro_RO",
+      locale: extra?.locale === "en" ? "en_GB" : "ro_RO",
       type: isArticle ? "article" : "website",
       ...(isArticle && extra?.publishedTime
         ? { publishedTime: extra.publishedTime }

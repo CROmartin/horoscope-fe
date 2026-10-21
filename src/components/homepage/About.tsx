@@ -1,4 +1,8 @@
+"use client";
+
 import React from "react";
+import { copy } from "@/lib/messages";
+import { useLocale } from "../shared/LocaleProvider";
 import styled from "styled-components";
 import Button from "../shared/Button";
 import { TittleH2 } from "../styles/styles.styled";
@@ -97,25 +101,22 @@ const ImageFramer = styled.div<any>`
 `;
 
 function About() {
+  const text = copy(useLocale());
+
   return (
     <section>
       <Wrapper>
         <Section>
           <LeftSide>
-            <TittleH2> DESPRE NOI</TittleH2>
-            <Paragraph>
-              Horoscopzodii publică horoscopul zilei, al săptămânii și zodiacul
-              chinezesc, în română. Fiecare zodie are un singur text, același
-              pentru toți cititorii născuți sub semnul ei. Nu calculăm un
-              horoscop după data de naștere. Textele sunt de divertisment.
-            </Paragraph>
+            <TittleH2> {text.about}</TittleH2>
+            <Paragraph>{text.aboutLead}</Paragraph>
 
-            <Button message={"Află mai multe"} link="/despre-noi" />
+            <Button message={text.readMore} link="/despre-noi" />
           </LeftSide>
         </Section>
         <Section image={true}>
           <ImageFramer>
-            <Image src={Circle} alt="angel" />
+            <Image src={Circle} alt={text.portraitAlt} />
           </ImageFramer>
         </Section>
       </Wrapper>

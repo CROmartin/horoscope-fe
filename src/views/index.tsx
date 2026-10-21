@@ -8,10 +8,10 @@ import Reviews from "../components/homepage/Reviews";
 import Contacts from "../components/homepage/Contacts";
 import CompatibilityCard from "../components/compatibility/CompatibilityCard";
 
-const IndexPage = ({ todayLabel, todayIso }: { todayLabel: string; todayIso: string }) => {
+const IndexPage = ({ todayIso }: { todayIso: string }) => {
   return (
     <AlignWrapper>
-      <Hero todayLabel={todayLabel} todayIso={todayIso} />
+      <Hero todayIso={todayIso} />
       <CompatibilityCard />
       <HoroscopeTypes />
 

@@ -1,17 +1,18 @@
 import SignProfile from "@/components/zodiac/SignProfile";
 import JsonLd from "@/components/seo/JsonLd";
 import { pageMetadata } from "@/lib/metadata";
+import { signPageMeta } from "@/lib/signPage";
 
-const title = "Horoscop Vărsător: zilnic și săptămânal";
-const description = "Horoscopul zilnic și săptămânal pentru Vărsător, în română. Toți cititorii din zodia Vărsător văd același text, de divertisment.";
-const path = "/varsator";
+export async function generateMetadata() {
+  const meta = await signPageMeta("varsator");
+  return pageMetadata(meta.title, meta.description, meta.path, { locale: meta.locale });
+}
 
-export const metadata = pageMetadata(title, description, path);
-
-export default function Page() {
+export default async function Page() {
+  const meta = await signPageMeta("varsator");
   return (
     <>
-      <JsonLd title={title} description={description} path={path} />
+      <JsonLd title={meta.title} description={meta.description} path={meta.path} />
       <SignProfile slug="varsator" />
     </>
   );

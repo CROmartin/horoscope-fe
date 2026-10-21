@@ -4,6 +4,9 @@ import React from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import type { Locale } from "@/lib/locale";
+import { copy } from "@/lib/messages";
+import { useLocale, useSetLocale } from "./LocaleProvider";
 
 const HeaderWrapper = styled.header`
   width: 100%;
@@ -53,14 +56,42 @@ const Nav = styled.nav`
   }
 `;
 
-const LINKS = [
-  { href: "/", label: "Acasă" },
-  { href: "/horoscop-zilnic", label: "Horoscop azi" },
-  { href: "/horoscop-saptamanal", label: "Săptămânal" },
-  { href: "/compatibilitate", label: "Compatibilitate" },
-  { href: "/horoscop", label: "Zodii" },
-  { href: "/horoscop-chinezesc", label: "Zodiac chinezesc" },
-];
+const Language = styled.div`
+  margin-left: auto;
+  display: flex;
+  gap: 4px;
+
+  button {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 8px 12px;
+    background: transparent;
+    color: #d7be8a;
+    border: none;
+    font: inherit;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  button[aria-pressed="true"] {
+    color: #ffffff;
+  }
+
+  button:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 3px;
+  }
+`;
+
+const LINK_KEYS = [
+  { href: "/", key: "home" },
+  { href: "/horoscop-zilnic", key: "today" },
+  { href: "/horoscop-saptamanal", key: "weekly" },
+  { href: "/compatibilitate", key: "compatibility" },
+  { href: "/horoscop", key: "signs" },
+  { href: "/horoscop-chinezesc", key: "chinese" },
+] as const;
 
 function isCurrent(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
@@ -72,15 +103,30 @@ function isCurrent(pathname: string, href: string) {
 
 function Header() {
   const pathname = usePathname();
+  const locale = useLocale();
+  const setLocale = useSetLocale();
+  const text = copy(locale);
 
   return (
     <HeaderWrapper>
-      <Nav aria-label="Secțiuni">
-        {LINKS.map((item) => (
+      <Nav aria-label={text.navLabel}>
+        {LINK_KEYS.map((item) => (
           <Link key={item.href} href={item.href} aria-current={isCurrent(pathname, item.href) ? "page" : undefined}>
-            {item.label}
+            {text[item.key]}
           </Link>
         ))}
+        <Language role="group" aria-label={text.language}>
+          {(["ro", "en"] as Locale[]).map((item) => (
+            <button
+              key={item}
+              type="button"
+              aria-pressed={locale === item}
+              onClick={() => setLocale(item)}
+            >
+              {item.toUpperCase()}
+            </button>
+          ))}
+        </Language>
       </Nav>
     </HeaderWrapper>
   );

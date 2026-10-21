@@ -6,7 +6,10 @@ import styled from "styled-components";
 import PairForm from "@/components/compatibility/PairForm";
 import { SIGN_ICONS } from "@/components/zodiac/signIcons";
 import AlignWrapper from "@/components/shared/AlignWrapper";
-import { dailyHoroscopePath, signBySlug, type ZodiacSlug } from "@/lib/zodiacSigns";
+import { dailyHoroscopePath, signDisplay, type ZodiacSlug } from "@/lib/zodiacSigns";
+import { copy } from "@/lib/messages";
+import { useLocale } from "../shared/LocaleProvider";
+import type { Locale } from "@/lib/locale";
 
 const Article = styled.article`
   width: 100%;
@@ -111,6 +114,7 @@ function SharePair({
   signA: ZodiacSlug;
   signB: ZodiacSlug;
 }) {
+  const text = copy(useLocale());
   const [canShare, setCanShare] = useState(false);
   const [note, setNote] = useState("");
 
@@ -131,27 +135,27 @@ function SharePair({
     }
     try {
       await navigator.clipboard.writeText(url);
-      setNote("Linkul a fost copiat.");
+      setNote(text.pairCopied);
     } catch {
-      setNote("Selectează linkul de mai sus și copiază-l.");
+      setNote(text.pairCopyFailed);
     }
   }
 
   return (
     <ShareBox>
       <p>
-        Link stabil: <Link href={path}>{path}</Link>
+        {text.pairStable}: <Link href={path}>{path}</Link>
       </p>
       <ShareButton type="button" onClick={onShare}>
-        {canShare ? "Distribuie" : "Copiază linkul"}
+        {canShare ? text.pairShare : text.pairCopyLink}
       </ShareButton>
       {note ? <p>{note}</p> : null}
     </ShareBox>
   );
 }
 
-function signCard(slug: ZodiacSlug) {
-  const sign = signBySlug(slug);
+function signCard(slug: ZodiacSlug, locale: Locale, today: string) {
+  const sign = signDisplay(slug, locale);
   if (!sign) return null;
   const Icon = SIGN_ICONS[slug];
   return (
@@ -160,7 +164,7 @@ function signCard(slug: ZodiacSlug) {
       <SignCopy>
         <strong>{sign.name}</strong>
         <span>{sign.dates}</span>
-        <span>Horoscopul de azi</span>
+        <span>{today}</span>
       </SignCopy>
     </SignLink>
   );
@@ -173,25 +177,30 @@ function CompatibilityResult({
   first: ZodiacSlug;
   second: ZodiacSlug;
 }) {
-  const a = signBySlug(first);
-  const b = signBySlug(second);
+  const locale = useLocale();
+  const text = copy(locale);
+  const a = signDisplay(first, locale);
+  const b = signDisplay(second, locale);
   if (!a || !b) return null;
-  const same = a.slug === b.slug;
-  const title = same ? `Compatibilitate ${a.name}` : `Compatibilitate ${a.name} și ${b.name}`;
-  const path = `/compatibilitate/${a.slug}-${b.slug}`;
+  const same = first === second;
+  const title = same
+    ? `${text.pairHeading} ${a.name}`
+    : `${text.pairHeading} ${a.name} ${text.pairJoin} ${b.name}`;
+  const path = `/compatibilitate/${first}-${second}`;
 
   return (
     <AlignWrapper>
       <Article>
         <h1>{title}</h1>
-        <p>
-          Textul dedicat acestei perechi nu este încă publicat. Până atunci poți citi
-          horoscopul de azi pentru {same ? "această zodie" : "fiecare zodie"}.
-        </p>
-        <Signs>{same ? signCard(a.slug) : [signCard(a.slug), signCard(b.slug)]}</Signs>
-        <SharePair path={path} title={title} signA={a.slug} signB={b.slug} />
-        <h2>Altă pereche</h2>
-        <PairForm initialA={a.slug} initialB={b.slug} />
+        <p>{same ? text.pairUnpublishedSame : text.pairUnpublished}</p>
+        <Signs>
+          {same
+            ? signCard(first, locale, text.linkToday)
+            : [signCard(first, locale, text.linkToday), signCard(second, locale, text.linkToday)]}
+        </Signs>
+        <SharePair path={path} title={title} signA={first} signB={second} />
+        <h2>{text.pairAnother}</h2>
+        <PairForm initialA={first} initialB={second} />
       </Article>
     </AlignWrapper>
   );

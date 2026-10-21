@@ -1,4 +1,9 @@
+"use client";
+
 import React, { useEffect } from "react";
+import { copy } from "@/lib/messages";
+import { useLocale } from "../shared/LocaleProvider";
+import { signDisplay } from "@/lib/zodiacSigns";
 import styled from "styled-components";
 import Aries from "./Icons/aries.svg";
 import Taurus from "./Icons/taurus.svg";
@@ -108,6 +113,8 @@ const TextHolder = styled.div`
   margin-bottom: 32px;
 `;
 function ZodiacCircle() {
+  const locale = useLocale();
+  const text = copy(locale);
   const [interval, setInterval] = React.useState("zilnic");
 
   useEffect(() => {
@@ -121,30 +128,26 @@ function ZodiacCircle() {
   return (
     <Holder>
       <TextHolder>
-        <h2>Cele 12 zodii</h2>
-        <div>
-          Alege un semn pentru profilul lui, cu horoscopul zilnic și
-          săptămânal. Trăsăturile de pe card sunt o descriere generală a
-          semnului.
-        </div>
+        <h2>{text.signsHeading}</h2>
+        <div>{text.signsLead}</div>
       </TextHolder>
       <Zodiacs>
         <ZodiacHolder href={`/berbec`}>
           <Aries />
 
-          <ZodiacName>Berbec</ZodiacName>
+          <ZodiacName>{signDisplay("berbec", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>Lider, Energetic, Curajos</ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/taur`}>
           <Taurus />
 
-          <ZodiacName>Taur</ZodiacName>
+          <ZodiacName>{signDisplay("taur", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>Stabil, Senzual, Practic</ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/gemeni`}>
           <Gemini />
 
-          <ZodiacName>Gemeni</ZodiacName>
+          <ZodiacName>{signDisplay("gemeni", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
             Comunicativ, Adaptabil, Curios
           </ZodiacCaracteristics>
@@ -152,7 +155,7 @@ function ZodiacCircle() {
         <ZodiacHolder href={`/rac`}>
           <Cancer />
 
-          <ZodiacName>Rac</ZodiacName>
+          <ZodiacName>{signDisplay("rac", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
             Sensibil, Protector, Hrănitor
           </ZodiacCaracteristics>
@@ -160,7 +163,7 @@ function ZodiacCircle() {
         <ZodiacHolder href={`/leu`}>
           <Leo />
 
-          <ZodiacName>Leu</ZodiacName>
+          <ZodiacName>{signDisplay("leu", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
             Carismatic, Mândru, Încrezător
           </ZodiacCaracteristics>
@@ -168,13 +171,13 @@ function ZodiacCircle() {
         <ZodiacHolder href={`/fecioara`}>
           <Virgo />
 
-          <ZodiacName>Fecioară</ZodiacName>
+          <ZodiacName>{signDisplay("fecioara", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>Metodic, Analitic, Modest</ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/balanta`}>
           <Libra />
 
-          <ZodiacName>Balanță</ZodiacName>
+          <ZodiacName>{signDisplay("balanta", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
             Echilibrat, Social, Corect
           </ZodiacCaracteristics>
@@ -182,7 +185,7 @@ function ZodiacCircle() {
         <ZodiacHolder href={`/scorpion`}>
           <Scorpio />
 
-          <ZodiacName>Scorpion</ZodiacName>
+          <ZodiacName>{signDisplay("scorpion", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
             Intens, Misterios, Pasionat
           </ZodiacCaracteristics>
@@ -190,7 +193,7 @@ function ZodiacCircle() {
         <ZodiacHolder href={`/sagetator`}>
           <Sagittarius />
 
-          <ZodiacName>Săgetător</ZodiacName>
+          <ZodiacName>{signDisplay("sagetator", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
             Optimist, Aventuros, Filozofic
           </ZodiacCaracteristics>
@@ -198,7 +201,7 @@ function ZodiacCircle() {
         <ZodiacHolder href={`/capricorn`}>
           <Capricorn />
 
-          <ZodiacName>Capricorn</ZodiacName>
+          <ZodiacName>{signDisplay("capricorn", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
             Disciplinat, Ambițios, Precaut
           </ZodiacCaracteristics>
@@ -206,7 +209,7 @@ function ZodiacCircle() {
         <ZodiacHolder href={`/varsator`}>
           <Aquarius />
 
-          <ZodiacName>Vărsător</ZodiacName>
+          <ZodiacName>{signDisplay("varsator", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
             Inovativ, Umanitar, Neconvențional
           </ZodiacCaracteristics>
@@ -214,24 +217,15 @@ function ZodiacCircle() {
         <ZodiacHolder href={`/pesti`}>
           <Pisces />
 
-          <ZodiacName>Pești</ZodiacName>
+          <ZodiacName>{signDisplay("pesti", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
             Visător, Compasiv, Intuitiv
           </ZodiacCaracteristics>
         </ZodiacHolder>
       </Zodiacs>
       <TextHolder>
-        <span>
-          {" "}
-          Fie că ești un adevărat cunoscător al astrologiei sau un nou venit
-          curios, există o mulțime de informații care te așteaptă. Înțelegerea
-          semnului tău zodiacal poate oferi perspective neprețuite asupra
-          personalității, relațiilor, carierei și multe altele.
-        </span>
-        <span>
-          Curios să afli mai multe? Fă clic pe semnul tău zodiacal pentru o
-          privire detaliată asupra proiectului tău cosmic unic.
-        </span>
+        <span>{text.signsBody}</span>
+        <span>{text.signsMore}</span>
       </TextHolder>
     </Holder>
   );

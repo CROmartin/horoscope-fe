@@ -1,6 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import styled from "styled-components";
 import type { Crumb } from "@/lib/breadcrumbs";
+import { copy } from "@/lib/messages";
+import { useLocale } from "../shared/LocaleProvider";
 
 const Nav = styled.nav`
   width: 100%;
@@ -49,7 +53,7 @@ function Breadcrumbs({ items }: { items: Crumb[] }) {
   if (items.length < 2) return null;
 
   return (
-    <Nav aria-label="Traseu">
+    <Nav aria-label={copy(useLocale()).trail}>
       <List>
         {items.map((item, index) => {
           const last = index === items.length - 1;

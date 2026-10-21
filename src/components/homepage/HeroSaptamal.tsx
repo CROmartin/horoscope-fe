@@ -1,4 +1,9 @@
+"use client";
+
 import React from "react";
+import { copy } from "@/lib/messages";
+import { useLocale } from "../shared/LocaleProvider";
+import { signDisplay } from "@/lib/zodiacSigns";
 import styled from "styled-components";
 import Illustration from "../../Icons/illustration";
 import Button from "../shared/Button";
@@ -121,85 +126,86 @@ const SignName = styled.div`
 `;
 
 function HeroSaptamal() {
+  const locale = useLocale();
   return (
     <section>
       <SvgWrapper>
         <Illustration />
       </SvgWrapper>
-      <TittleH1>Horoscop</TittleH1>
+      <TittleH1>{copy(locale).horoscope}</TittleH1>
       <Line></Line>
       <InfoLine>
         <SignHolder href="/horoscop-saptamanal-berbec">
           <IconWrapper>
             <Aries />
           </IconWrapper>
-          <SignName>Berbec</SignName>
+          <SignName>{signDisplay("berbec", locale)?.name}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-saptamanal-taur">
           <IconWrapper>
             <Taurus />
           </IconWrapper>
-          <SignName>Taur</SignName>
+          <SignName>{signDisplay("taur", locale)?.name}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-saptamanal-gemeni">
           <IconWrapper>
             <Gemini />
           </IconWrapper>
-          <SignName>Gemeni</SignName>
+          <SignName>{signDisplay("gemeni", locale)?.name}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-saptamanal-rac">
           <IconWrapper>
             <Cancer />
           </IconWrapper>
-          <SignName>Rac</SignName>
+          <SignName>{signDisplay("rac", locale)?.name}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-saptamanal-leu">
           <IconWrapper>
             <Leo />
           </IconWrapper>
-          <SignName>Leu</SignName>
+          <SignName>{signDisplay("leu", locale)?.name}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-saptamanal-fecioara">
           <IconWrapper>
             <Virgo />
           </IconWrapper>
-          <SignName>Fecioară</SignName>
+          <SignName>{signDisplay("fecioara", locale)?.name}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-saptamanal-balanta">
           <IconWrapper>
             <Libra />
           </IconWrapper>
-          <SignName>Balanță</SignName>
+          <SignName>{signDisplay("balanta", locale)?.name}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-saptamanal-scorpion">
           <IconWrapper>
             <Scorpio />
           </IconWrapper>
-          <SignName>Scorpion</SignName>
+          <SignName>{signDisplay("scorpion", locale)?.name}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-saptamanal-sagetator">
           <IconWrapper>
             <Sagittarius />
           </IconWrapper>
-          <SignName>Săgetător</SignName>
+          <SignName>{signDisplay("sagetator", locale)?.name}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-saptamanal-capricorn">
           <IconWrapper>
             <Capricorn />
           </IconWrapper>
-          <SignName>Capricorn</SignName>
+          <SignName>{signDisplay("capricorn", locale)?.name}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-saptamanal-varsator">
           <IconWrapper>
             <Aquarius />
           </IconWrapper>
-          <SignName>Vărsător</SignName>
+          <SignName>{signDisplay("varsator", locale)?.name}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-saptamanal-pesti">
           <IconWrapper>
             <Pisces />
           </IconWrapper>
-          <SignName>Pești</SignName>
+          <SignName>{signDisplay("pesti", locale)?.name}</SignName>
         </SignHolder>
 
         {/* <Paragraph>

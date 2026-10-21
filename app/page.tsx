@@ -1,20 +1,25 @@
 import IndexPage from "@/views/index";
 import JsonLd from "@/components/seo/JsonLd";
-import { bucharestISODate, formatBucharestDate } from "@/lib/bucharestDate";
+import { bucharestISODate } from "@/lib/bucharestDate";
+import { currentLocale } from "@/lib/localeServer";
 import { pageMetadata } from "@/lib/metadata";
+import { copy } from "@/lib/messages";
 
-const title = "Horoscop zilnic, săptămânal și chinezesc";
-const description =
-  "Horoscopul zilei, al săptămânii și zodiacul chinezesc, în română. Fiecare zodie are propriul text, de divertisment.";
 const path = "/";
 
-export const metadata = pageMetadata(title, description, path);
+export async function generateMetadata() {
+  const locale = await currentLocale();
+  const text = copy(locale);
+  return pageMetadata(text.homeTitle, text.homeDescription, path, { locale });
+}
 
-export default function Page() {
+export default async function Page() {
+  const locale = await currentLocale();
+  const text = copy(locale);
   return (
     <>
-      <JsonLd kind="home" title={title} description={description} path={path} />
-      <IndexPage todayIso={bucharestISODate()} todayLabel={formatBucharestDate()} />
+      <JsonLd kind="home" title={text.homeTitle} description={text.homeDescription} path={path} />
+      <IndexPage todayIso={bucharestISODate()} />
     </>
   );
 }

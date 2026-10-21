@@ -1,4 +1,8 @@
+"use client";
+
 import React from "react";
+import { copy } from "@/lib/messages";
+import { useLocale } from "../shared/LocaleProvider";
 import styled from "styled-components";
 import Star from "./Icons/star.svg";
 
@@ -81,14 +85,13 @@ const Box = styled.div`
   margin-bottom: 64px;
 `;
 function Benefits() {
+  const text = copy(useLocale());
+
   return (
     <Holder>
       <Box>
-        <h2>Ce publicăm</h2>
-        <p>
-          Fiecare semn are un singur text pentru perioada publicată. Nu este
-          calculat după data de naștere și nu spune ce decizie să iei.
-        </p>
+        <h2>{text.publishTitle}</h2>
+        <p>{text.publishLead}</p>
       </Box>
       <Row>
         <Column>
@@ -98,11 +101,8 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Un text pe semn</SubTitle>
-          <p>
-            Semnele au previziuni diferite. Doi cititori ai aceluiași semn văd
-            același horoscop.
-          </p>
+          <SubTitle>{text.oneText}</SubTitle>
+          <p>{text.oneTextBody}</p>
         </Column>
       </Row>
       <Row>
@@ -113,11 +113,8 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Rubrici</SubTitle>
-          <p>
-            Pagina unui semn include previziunea, o notă de compatibilitate și
-            afirmațiile publicate pentru el.
-          </p>
+          <SubTitle>{text.sections}</SubTitle>
+          <p>{text.sectionsBody}</p>
         </Column>
       </Row>
       <Row>
@@ -128,12 +125,8 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Data publicării</SubTitle>
-          <p>
-            Pe pagină apare data la care a fost publicat textul, după ora
-            României. Dacă setul perioadei lipsește, rămâne ultima previziune și
-            pagina spune acest lucru.
-          </p>
+          <SubTitle>{text.publishedOn}</SubTitle>
+          <p>{text.publishedOnBody}</p>
         </Column>
       </Row>
       <Row>
@@ -144,11 +137,8 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Divertisment</SubTitle>
-          <p>
-            Horoscopul este un text de citit, nu un sfat pentru bani, sănătate
-            sau relații. Detaliile sunt în avertisment.
-          </p>
+          <SubTitle>{text.entertainment}</SubTitle>
+          <p>{text.entertainmentBody}</p>
         </Column>
       </Row>
       <Row>
@@ -159,11 +149,8 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Alte semne</SubTitle>
-          <p>
-            De pe pagina unui semn poți deschide horoscopul celorlalte semne,
-            pentru aceeași perioadă.
-          </p>
+          <SubTitle>{text.otherSigns}</SubTitle>
+          <p>{text.otherSignsBody}</p>
         </Column>
       </Row>
     </Holder>
