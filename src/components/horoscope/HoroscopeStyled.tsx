@@ -14,10 +14,16 @@ export const IntervalHolder = styled.div`
 
 export const RowHoroscopes = styled.div`
   display: flex;
-
+  flex-wrap: wrap;
+  gap: 12px;
   justify-content: flex-start;
-
   width: 100%;
+`;
+
+export const ProfileSummary = styled.p`
+  margin: 0 0 16px;
+  font-weight: 500;
+  line-height: 1.5;
 `;
 
 export const IntervalBox = styled.div`

@@ -20,6 +20,8 @@ test("every western sign has one profile and the original trait text", () => {
     assert.ok(profile.weaknesses.length > 5);
     assert.ok(profile.likes.length > 5);
     assert.ok(profile.dislikes.length > 5);
+    assert.ok(profile.summary.length > 60);
+    assert.equal(profile.summary.includes("astăzi"), false);
     assert.equal(profile.likeOf.includes(" "), false);
   }
 });

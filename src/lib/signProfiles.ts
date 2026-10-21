@@ -10,6 +10,7 @@ export type SignProfile = {
   likes: string;
   dislikes: string;
   likeOf: string;
+  summary: string;
 };
 
 export const SIGN_PROFILES: SignProfile[] = [
@@ -23,6 +24,8 @@ export const SIGN_PROFILES: SignProfile[] = [
     likes: "Haine confortabile, să preia roluri de conducere, provocări fizice, sporturi individuale",
     dislikes: "Inactivitate, întârzieri, munci care nu îi folosesc talentele",
     likeOf: "Berbecului",
+    summary:
+      "Berbecul deschide zodiacul. Este un semn de foc condus de Marte, cunoscut pentru curaj și inițiativă, iar nerăbdarea apare când lucrurile se mișcă încet.",
   },
   {
     slug: "taur",
@@ -34,6 +37,8 @@ export const SIGN_PROFILES: SignProfile[] = [
     likes: "Grădinărit, gătit, muzică, romantism, haine de calitate înaltă, să lucreze cu mâinile",
     dislikes: "Schimbări bruste, complicații, insecuritate de orice fel, țesături sintetice",
     likeOf: "Taurului",
+    summary:
+      "Taurul este un semn de pământ condus de Venus. Caută stabilitate și lucruri bine făcute, iar schimbările bruște îl scot din ritm.",
   },
   {
     slug: "gemeni",
@@ -45,6 +50,8 @@ export const SIGN_PROFILES: SignProfile[] = [
     likes: "Muzică, cărți, reviste, discuții cu aproape oricine, excursii scurte prin oraș",
     dislikes: "Să fie singuri, să fie confinați, repetiția și rutina",
     likeOf: "Gemenilor",
+    summary:
+      "Gemenii sunt un semn de aer condus de Mercur. Învață repede și le place conversația, iar rutina lungă îi obosește.",
   },
   {
     slug: "rac",
@@ -56,6 +63,8 @@ export const SIGN_PROFILES: SignProfile[] = [
     likes: "Arta, hobby-uri bazate pe casă, să se relaxeze lângă sau în apă, să ajute persoanele dragi, o masă bună cu prietenii",
     dislikes: "Străini, orice critică la adresa mamei, dezvăluirea vieții personale",
     likeOf: "Racului",
+    summary:
+      "Racul este un semn de apă condus de Lună. Ține la casa lui și la oamenii apropiați, iar critica la adresa familiei îl atinge tare.",
   },
   {
     slug: "leu",
@@ -67,6 +76,8 @@ export const SIGN_PROFILES: SignProfile[] = [
     likes: "Teatru, a lua vacanțe, a fi admirat, lucruri scumpe, culori vii, distracție cu prietenii",
     dislikes: "A fi ignorat, a se confrunta cu realități dificile, a nu fi tratat ca un rege sau o regină",
     likeOf: "Leului",
+    summary:
+      "Leul este un semn de foc condus de Soare. Este generos și creativ, îi place să fie văzut, iar indiferența îl rănește.",
   },
   {
     slug: "fecioara",
@@ -78,6 +89,8 @@ export const SIGN_PROFILES: SignProfile[] = [
     likes: "Animale, mâncare sănătoasă, cărți, natură, curățenie",
     dislikes: "Nepolitețe, a cere ajutor, a fi în centrul atenției",
     likeOf: "Fecioarei",
+    summary:
+      "Fecioara este un semn de pământ condus de Mercur. Observă detaliile și lucrează metodic, iar grija excesivă o poate face prea critică.",
   },
   {
     slug: "balanta",
@@ -89,6 +102,8 @@ export const SIGN_PROFILES: SignProfile[] = [
     likes: "Armonia, blândețea, a împărți cu alții, aerul liber",
     dislikes: "Violența, injustiția, persoanele gălăgioase, conformismul",
     likeOf: "Balanței",
+    summary:
+      "Balanța este un semn de aer condus de Venus. Caută echilibrul în relații și evită conflictul deschis, iar deciziile îi iau timp.",
   },
   {
     slug: "scorpion",
@@ -100,6 +115,8 @@ export const SIGN_PROFILES: SignProfile[] = [
     likes: "Adevărul, faptele, a avea dreptate, talentele, a glumi, pasiunea",
     dislikes: "Necinstea, divulgarea secretelor, superficialitatea, discuții banale",
     likeOf: "Scorpionului",
+    summary:
+      "Scorpionul este un semn de apă condus de Pluto și Marte. Merge în profunzime și ține la încredere, iar superficialitatea sau secretul trădat îl îndepărtează.",
   },
   {
     slug: "sagetator",
@@ -111,6 +128,8 @@ export const SIGN_PROFILES: SignProfile[] = [
     likes: "Libertatea, călătoriile, filozofia, a fi în aer liber",
     dislikes: "Persoanele lipicioase, a fi constrâns, teorii nefondate, detaliile",
     likeOf: "Săgetătorului",
+    summary:
+      "Săgetătorul este un semn de foc condus de Jupiter. Îl atrag drumul, ideile mari și libertatea, iar constrângerea îl irită.",
   },
   {
     slug: "capricorn",
@@ -122,6 +141,8 @@ export const SIGN_PROFILES: SignProfile[] = [
     likes: "Familia, tradiția, muzica, statutul subestimat, meșteșugul de calitate",
     dislikes: "Aproape orice, la un moment dat",
     likeOf: "Capricornului",
+    summary:
+      "Capricornul este un semn de pământ condus de Saturn. Construiește pe termen lung, cu disciplină, și ține la tradiție și la rezultatul concret.",
   },
   {
     slug: "varsator",
@@ -133,6 +154,8 @@ export const SIGN_PROFILES: SignProfile[] = [
     likes: "Distracție cu prietenii, afaceri riscante, luptă pentru cauze, conversații intelectuale",
     dislikes: "Limitări, promisiuni nerespectate, a fi singur, situații plictisitoare sau monotone",
     likeOf: "Vărsătorului",
+    summary:
+      "Vărsătorul este un semn de aer condus de Uranus și Saturn. Gândește independent și se atașează de prieteni și de cauze, iar limitele rigide îl îndepărtează.",
   },
   {
     slug: "pesti",
@@ -144,6 +167,8 @@ export const SIGN_PROFILES: SignProfile[] = [
     likes: "A fi singur, dragostea, dormitul, muzica, romantismul, înotul, temele spirituale",
     dislikes: "Oameni care se cred deștepți, a fi criticat, trecutul care revine să bântuie, cruzimea de orice fel",
     likeOf: "Peștilor",
+    summary:
+      "Peștii închid zodiacul. Sunt un semn de apă condus de Neptun și Jupiter, cu imaginație și compasiune, și caută liniște când lumea devine prea dură.",
   },
 ];
 

@@ -10,6 +10,7 @@ import AlignWrapper from "@/components/shared/AlignWrapper";
 import {
   ContentBox,
   IconWrapper,
+  ProfileSummary,
   IntervalBox,
   IntervalHolder,
   LeftSide,
@@ -74,7 +75,7 @@ function SignProfile({
   traits,
 }: {
   slug: ZodiacSlug;
-  traits?: { strengths: string; weaknesses: string; likes: string; dislikes: string };
+  traits?: { summary: string; strengths: string; weaknesses: string; likes: string; dislikes: string };
 }) {
   const locale = useLocale();
   const text = copy(locale);
@@ -108,9 +109,11 @@ function SignProfile({
             </IntervalBox>
           </IntervalHolder>
           <RowHoroscopes>
+            <Button message={text.compatibility} link={`/compatibilitate?a=${slug}`} />
             <Button message={text.profileChinese} link="/horoscop-chinezesc" />
           </RowHoroscopes>
           <ContentBox>
+            <ProfileSummary>{traits?.summary || profile.summary}</ProfileSummary>
             <div>
               <span>{text.element}: </span>
               {element}

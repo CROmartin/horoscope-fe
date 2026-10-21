@@ -76,11 +76,17 @@ test("related links stay on the existing horoscope URLs", () => {
   );
   assert.deepEqual(
     relatedHoroscopeLinks({ variant: "chinese", interval: "zilnic", signSlug: "tigru" }),
-    [{ href: "/horoscop-anual-tigru", label: "Horoscopul anual" }]
+    [
+      { href: "/horoscop-anual-tigru", label: "Horoscopul anual" },
+      { href: "/horoscop-zilnic-chinezesc", label: "Alte semne" },
+    ]
   );
   assert.deepEqual(
     relatedHoroscopeLinks({ variant: "chinese", interval: "anual", signSlug: "dragon" }),
-    [{ href: "/horoscop-zilnic-dragon", label: "Horoscopul zilnic" }]
+    [
+      { href: "/horoscop-zilnic-dragon", label: "Horoscopul zilnic" },
+      { href: "/horoscop-chinezesc", label: "Alte semne" },
+    ]
   );
   assert.equal(samePeriodPath("azi", "berbec"), "/horoscop-azi-berbec");
   assert.equal(samePeriodPath("anual", "dragon"), "/horoscop-anual-dragon");

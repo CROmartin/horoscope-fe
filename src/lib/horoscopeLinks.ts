@@ -24,6 +24,13 @@ export function relatedHoroscopeLinks(input: {
         ? [{ href: samePeriodPath("zilnic", signSlug), label: text.linkToday }]
         : [{ href: samePeriodPath("saptamanal", signSlug), label: text.linkWeek }];
 
+  if (variant === "chinese") {
+    links.push({
+      href: interval === "anual" ? "/horoscop-chinezesc" : "/horoscop-zilnic-chinezesc",
+      label: text.otherSigns,
+    });
+  }
+
   if (variant !== "chinese") {
     links.push(
       { href: `/${signSlug}`, label: text.linkProfile },

@@ -8,11 +8,14 @@ import type { ZodiacSlug } from "@/lib/zodiacSigns";
 export async function localizedSignProfile(slug: ZodiacSlug) {
   const locale = await currentLocale();
   const profile = signProfile(slug);
-  let traits: { strengths: string; weaknesses: string; likes: string; dislikes: string } | undefined;
+  let traits:
+    | { summary: string; strengths: string; weaknesses: string; likes: string; dislikes: string }
+    | undefined;
   if (locale === "en" && profile) {
     try {
       traits = await translateFields(
         {
+          summary: profile.summary,
           strengths: profile.strengths,
           weaknesses: profile.weaknesses,
           likes: profile.likes,
