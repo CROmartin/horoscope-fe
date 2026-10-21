@@ -3,7 +3,9 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import styled from "styled-components";
-import { WESTERN_SIGNS } from "@/lib/zodiacSigns";
+import { copy } from "@/lib/messages";
+import { signDisplay, WESTERN_SIGNS, type ZodiacSlug } from "@/lib/zodiacSigns";
+import { useLocale } from "../shared/LocaleProvider";
 
 const Box = styled.div`
   width: 100%;
@@ -52,6 +54,7 @@ const Select = styled.select`
 `;
 
 export function UnsubscribePanel({ token }: { token: string }) {
+  const text = copy(useLocale());
   const [state, setState] = useState<"ready" | "done" | "error">("ready");
   const [message, setMessage] = useState("");
 
@@ -64,36 +67,34 @@ export function UnsubscribePanel({ token }: { token: string }) {
     const body = await response.json().catch(() => ({}));
     if (!response.ok) {
       setState("error");
-      setMessage(body.error || "Dezabonarea nu a putut fi salvată.");
+      setMessage(text.unsubFail);
       return;
     }
     window.gtag?.("event", "email_unsubscribed");
     setState("done");
-    setMessage(
-      body.already
-        ? "Emailul zilnic era deja oprit."
-        : "Emailul zilnic este oprit. Nu mai primești horoscopul pe această adresă."
-    );
+    setMessage(body.already ? text.unsubAlready : text.unsubDone);
   }
 
   return (
     <Box>
       {state === "ready" ? (
         <>
-          <p>Oprești emailul zilnic pentru această înscriere. Poți reveni oricând din formularul de pe prima pagină.</p>
+          <p>{text.unsubLead}</p>
           <Button type="button" onClick={stop}>
-            Oprește emailul
+            {text.unsubButton}
           </Button>
         </>
       ) : (
         <p>{message}</p>
       )}
-      <Link href="/">Înapoi acasă</Link>
+      <Link href="/">{text.backHome}</Link>
     </Box>
   );
 }
 
 export function PreferencesPanel({ token }: { token: string }) {
+  const locale = useLocale();
+  const text = copy(locale);
   const [sign, setSign] = useState("");
   const [status, setStatus] = useState("");
   const [message, setMessage] = useState("");
@@ -106,7 +107,7 @@ export function PreferencesPanel({ token }: { token: string }) {
         const body = await response.json().catch(() => ({}));
         if (cancelled) return;
         if (!response.ok) {
-          setMessage(body.error || "Linkul nu este valid.");
+          setMessage(text.prefInvalid);
           return;
         }
         setSign(body.sign || "");
@@ -114,12 +115,16 @@ export function PreferencesPanel({ token }: { token: string }) {
         setReady(true);
       })
       .catch(() => {
-        if (!cancelled) setMessage("Nu am putut citi înscrierea.");
+        if (!cancelled) setMessage(text.prefReadFail);
       });
     return () => {
       cancelled = true;
     };
-  }, [token]);
+  }, [token, text.prefInvalid, text.prefReadFail]);
+
+  function chosenName(slug: string) {
+    return signDisplay(slug as ZodiacSlug, locale)?.name || text.prefChosen;
+  }
 
   async function save(event: React.FormEvent) {
     event.preventDefault();
@@ -130,37 +135,37 @@ export function PreferencesPanel({ token }: { token: string }) {
     });
     const body = await response.json().catch(() => ({}));
     if (!response.ok) {
-      setMessage(body.error || "Zodia nu a putut fi schimbată.");
+      setMessage(text.prefFail);
       return;
     }
-    setMessage(`Emailul zilnic rămâne pentru ${WESTERN_SIGNS.find((item) => item.slug === body.sign)?.name || "zodia aleasă"}.`);
+    setMessage(`${text.prefSaved} ${chosenName(String(body.sign || sign))}.`);
   }
 
-  if (!ready) return <Box><p>{message || "Se încarcă înscrierea."}</p></Box>;
+  if (!ready) return <Box><p>{message || text.prefLoading}</p></Box>;
   if (status !== "active") {
     return (
       <Box>
-        <p>Înscrierea este oprită.</p>
-        <Link href="/#contact">Înapoi la formular</Link>
+        <p>{text.prefStopped}</p>
+        <Link href="/#contact">{text.prefBack}</Link>
       </Box>
     );
   }
 
   return (
     <Box>
-      <p>Alege zodia pentru emailul de la 7:00, ora României.</p>
+      <p>{text.prefLead}</p>
       <form onSubmit={save} style={{ width: "100%" }}>
-        <Select value={sign} onChange={(event) => setSign(event.target.value)} aria-label="Zodia">
+        <Select value={sign} onChange={(event) => setSign(event.target.value)} aria-label={text.signLabel}>
           {WESTERN_SIGNS.map((item) => (
             <option key={item.slug} value={item.slug}>
-              {item.name}
+              {signDisplay(item.slug, locale)?.name || item.name}
             </option>
           ))}
         </Select>
-        <Button type="submit">Salvează zodia</Button>
+        <Button type="submit">{text.prefSave}</Button>
       </form>
       {message ? <p>{message}</p> : null}
-      <Link href={`/dezabonare/${token}`}>Oprește emailul</Link>
+      <Link href={`/dezabonare/${token}`}>{text.unsubButton}</Link>
     </Box>
   );
 }

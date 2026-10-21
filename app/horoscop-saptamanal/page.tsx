@@ -10,7 +10,7 @@ const text = {
   },
   en: {
     title: "Weekly horoscope",
-    description: "This week's horoscope for the 12 signs. Each sign has its own entertainment text, published in Romanian.",
+    description: "This week's horoscope for the 12 signs. Each sign has its own entertainment text, English follows the Romanian horoscope.",
   },
 };
 

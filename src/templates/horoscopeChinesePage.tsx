@@ -47,10 +47,10 @@ import { copy } from "@/lib/messages";
 import { useLocale } from "@/components/shared/LocaleProvider";
 
 interface IconWrapperProps {
-  fill?: boolean;
-  stroke?: boolean;
+  $fill?: boolean;
+  $stroke?: boolean;
 }
-const IconWrapperChinese = styled.a<IconWrapperProps>`
+const IconWrapperChinese = styled.span<IconWrapperProps>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -61,8 +61,8 @@ const IconWrapperChinese = styled.a<IconWrapperProps>`
   svg {
     width: 100%;
     path {
-      ${(props) => props.fill && `fill: #d7be8a;`}
-      ${(props) => props.stroke && `stroke: #d7be8a;`}
+      ${(props) => props.$fill && `fill: #d7be8a;`}
+      ${(props) => props.$stroke && `stroke: #d7be8a;`}
     }
   }
   @media (max-width: 760px) {
@@ -146,6 +146,8 @@ function HoroscopeChinesePage({
   links,
   crumbs,
   period,
+  translated,
+  facts,
 }: {
   description: string;
   sign: string;
@@ -157,12 +159,20 @@ function HoroscopeChinesePage({
   links: { href: string; label: string }[];
   crumbs: Crumb[];
   period: "zilnic" | "anual";
+  translated?: boolean;
+  facts?: {
+    element: string;
+    ruler: string;
+    years: string;
+    strengths: string;
+    weaknesses: string;
+    likes: string;
+    dislikes: string;
+  };
 }) {
   const text = copy(useLocale());
   const affirmationList = renderAffirmations(affirmations);
-
-  const HoroscopesInfo = require("../utils/chineseHoroscopeInfo.json");
-  const signInfo = HoroscopesInfo[signStandard.toLocaleLowerCase()];
+  const signInfo = facts;
 
   return (
     <AlignWrapper>
@@ -174,94 +184,94 @@ function HoroscopeChinesePage({
         <LeftSide>
           <IntervalHolder>
             <ContentBox>
-              {text.readingNote ? <p>{text.readingNote}</p> : null}
+              {!translated && text.readingNote ? <p>{text.readingNote}</p> : null}
               <p>{description}</p>
             </ContentBox>
           </IntervalHolder>
           <ContentBox>
             <div>
-              <span>Element: </span>
+              <span>{text.element}: </span>
               {signInfo?.element}
             </div>
             <div>
-              <span>Guvernator: </span>
-              {signInfo?.guvernator}
+              <span>{text.ruler}: </span>
+              {signInfo?.ruler}
             </div>
             <div>
-              <span>Ani: </span> {signInfo?.ani}
+              <span>{text.years}: </span> {signInfo?.years}
             </div>
             <p>
-              <span>Puncte forte: </span> {signInfo?.forte}
+              <span>{text.strengths}: </span> {signInfo?.strengths}
             </p>
             <p>
-              <span>Puncte slabe: </span> {signInfo?.slabe}
+              <span>{text.weaknesses}: </span> {signInfo?.weaknesses}
             </p>
             <p>
-              <span>Îi place: </span> {signInfo?.likes}
+              <span>{text.likes}: </span> {signInfo?.likes}
             </p>
             <p>
-              <span>Nu îi place: </span> {signInfo?.dislikes}
+              <span>{text.dislikes}: </span> {signInfo?.dislikes}
             </p>
           </ContentBox>
         </LeftSide>
         <RightSide>
           {sign === "Șobolan" && (
-            <IconWrapperChinese fill={true}>
+            <IconWrapperChinese $fill>
               <Rat />
             </IconWrapperChinese>
           )}
           {sign === "Bivol" && (
-            <IconWrapperChinese fill={true}>
+            <IconWrapperChinese $fill>
               <Ox />
             </IconWrapperChinese>
           )}
           {sign === "Tigru" && (
-            <IconWrapperChinese fill={true}>
+            <IconWrapperChinese $fill>
               <Tiger />
             </IconWrapperChinese>
           )}
           {sign === "Iepure" && (
-            <IconWrapperChinese fill={true}>
+            <IconWrapperChinese $fill>
               <Rabbit />
             </IconWrapperChinese>
           )}
           {sign === "Dragon" && (
-            <IconWrapperChinese stroke={true}>
+            <IconWrapperChinese $stroke>
               <Dragon />
             </IconWrapperChinese>
           )}
           {sign === "Șarpe" && (
-            <IconWrapperChinese fill={true}>
+            <IconWrapperChinese $fill>
               <Snake />
             </IconWrapperChinese>
           )}
           {sign === "Cal" && (
-            <IconWrapperChinese fill={true}>
+            <IconWrapperChinese $fill>
               <Horse />
             </IconWrapperChinese>
           )}
           {sign === "Oaie" && (
-            <IconWrapperChinese stroke={true}>
+            <IconWrapperChinese $stroke>
               <Goat />
             </IconWrapperChinese>
           )}
           {sign === "Maimuță" && (
-            <IconWrapperChinese stroke={true}>
+            <IconWrapperChinese $stroke>
               <Monkey />
             </IconWrapperChinese>
           )}
           {sign === "Cocoș" && (
-            <IconWrapperChinese fill={true}>
+            <IconWrapperChinese $fill>
               <Rooster />
             </IconWrapperChinese>
           )}
           {sign === "Câine" && (
-            <IconWrapperChinese fill={true}>
+            <IconWrapperChinese $fill>
               <Dog />
             </IconWrapperChinese>
           )}
           {sign === "Porc" && (
-            <IconWrapperChinese stroke={true}>
+            <IconWrapperChinese $stroke>
               <Pig />
             </IconWrapperChinese>
           )}

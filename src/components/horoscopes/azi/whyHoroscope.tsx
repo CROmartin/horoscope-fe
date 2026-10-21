@@ -1,4 +1,8 @@
+"use client";
+
 import Image from "next/image";
+import { copy } from "@/lib/messages";
+import { useLocale } from "../../shared/LocaleProvider";
 import happyCustomer from "../images/HappyCostumer.webp";
 import React from "react";
 import styled from "styled-components";
@@ -80,19 +84,16 @@ const Column = styled.div`
   }
 `;
 function WhyHoroscope() {
+  const text = copy(useLocale());
   return (
     <Holder>
       <div className="costumer">
-        <Image src={happyCustomer} alt="Femeie care citește o carte la masă, lângă o cană" />
+        <Image src={happyCustomer} alt={text.readerAlt} />
       </div>
       <Column>
-        <Title>Pasiunea pentru horoscoape: De ce ne fascinează?</Title>
-        <Paragraph>
-          Oamenii citesc horoscopul din curiozitate. Textul de pe acest site este
-          același pentru toți cititorii unui semn și este de divertisment, nu o
-          descriere a destinului personal.
-        </Paragraph>
-        <Button message={"Explorează mai mult"} link="/despre-noi" />
+        <Title>{text.todayWhyTitle}</Title>
+        <Paragraph>{text.todayWhyBody}</Paragraph>
+        <Button message={text.exploreMore} link="/despre-noi" />
       </Column>
     </Holder>
   );

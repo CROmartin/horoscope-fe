@@ -1,28 +1,25 @@
 import InfoPage from "@/components/shared/InfoPage";
 import JsonLd from "@/components/seo/JsonLd";
+import { currentLocale } from "@/lib/localeServer";
+import { copy } from "@/lib/messages";
 import { pageMetadata } from "@/lib/metadata";
 
-const title = "Avertisment";
-const description =
-  "Horoscopurile de pe Horoscopzodii sunt texte de divertisment și reflecție, nu sfaturi medicale, financiare sau juridice.";
 const path = "/avertisment";
 
-export const metadata = pageMetadata(title, description, path);
+export async function generateMetadata() {
+  const locale = await currentLocale();
+  const text = copy(locale);
+  return pageMetadata(text.disclaimerTitle, text.disclaimerDescription, path, { locale });
+}
 
-export default function Page() {
+export default async function Page() {
+  const text = copy(await currentLocale());
   return (
     <>
-      <JsonLd title={title} description={description} path={path} />
-      <InfoPage title={title}>
-        <p>
-          Horoscopul de pe acest site este un text de divertisment și de
-          reflecție personală. Nu este o predicție științifică și nu înlocuiește
-          un sfat medical, juridic, financiar sau psihologic.
-        </p>
-        <p>
-          Nimic de aici nu garantează ce se întâmplă într-o relație, la serviciu
-          sau cu banii. Deciziile rămân ale tale.
-        </p>
+      <JsonLd title={text.disclaimerTitle} description={text.disclaimerDescription} path={path} />
+      <InfoPage title={text.disclaimerTitle}>
+        <p>{text.disclaimerP1}</p>
+        <p>{text.disclaimerP2}</p>
       </InfoPage>
     </>
   );

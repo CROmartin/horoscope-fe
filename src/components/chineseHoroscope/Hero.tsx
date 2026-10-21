@@ -59,8 +59,8 @@ const Paragraph = styled.div`
 `;
 
 interface IconWrapperProps {
-  fill?: boolean;
-  stroke?: boolean;
+  $fill?: boolean;
+  $stroke?: boolean;
 }
 
 const IconWrapper = styled.div<IconWrapperProps>`
@@ -97,8 +97,8 @@ const IconWrapper = styled.div<IconWrapperProps>`
   svg {
     width: 100%;
     path {
-      ${(props) => props.fill && `fill: #d7be8a;`}
-      ${(props) => props.stroke && `stroke: #d7be8a;`}
+      ${(props) => props.$fill && `fill: #d7be8a;`}
+      ${(props) => props.$stroke && `stroke: #d7be8a;`}
     }
     path {
       stroke: #d7be8a;
@@ -163,73 +163,73 @@ function Hero() {
       <Line></Line>
       <InfoLine>
         <SignHolder href="/horoscop-anual-sobolan">
-          <IconWrapper fill={true}>
+          <IconWrapper $fill>
             <Rat />
           </IconWrapper>
           <SignName>{displayStoredName("Șobolan", locale)}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-anual-bivol">
-          <IconWrapper fill={true}>
+          <IconWrapper $fill>
             <Ox />
           </IconWrapper>
           <SignName>{displayStoredName("Bivol", locale)}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-anual-tigru">
-          <IconWrapper fill={true}>
+          <IconWrapper $fill>
             <Tiger />
           </IconWrapper>
           <SignName>{displayStoredName("Tigru", locale)}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-anual-iepure">
-          <IconWrapper fill={true}>
+          <IconWrapper $fill>
             <Rabbit />
           </IconWrapper>
           <SignName>{displayStoredName("Iepure", locale)}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-anual-dragon">
-          <IconWrapper stroke={true}>
+          <IconWrapper $stroke>
             <Dragon className="dragon" />
           </IconWrapper>
           <SignName>{displayStoredName("Dragon", locale)}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-anual-sarpe">
-          <IconWrapper fill={true}>
+          <IconWrapper $fill>
             <Snake />
           </IconWrapper>
           <SignName>{displayStoredName("Șarpe", locale)}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-anual-cal">
-          <IconWrapper fill={true}>
+          <IconWrapper $fill>
             <Horse />
           </IconWrapper>
           <SignName>{displayStoredName("Cal", locale)}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-anual-oaie">
-          <IconWrapper stroke={true}>
+          <IconWrapper $stroke>
             <Goat className="boldSvg" />
           </IconWrapper>
           <SignName>{displayStoredName("Oaie", locale)}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-anual-maimuta">
-          <IconWrapper fill={true}>
+          <IconWrapper $fill>
             <Monkey />
           </IconWrapper>
           <SignName>{displayStoredName("Maimuță", locale)}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-anual-cocos">
-          <IconWrapper fill={true}>
+          <IconWrapper $fill>
             <Rooster />
           </IconWrapper>
           <SignName>{displayStoredName("Cocoș", locale)}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-anual-caine">
-          <IconWrapper fill={true}>
+          <IconWrapper $fill>
             <Dog />
           </IconWrapper>
           <SignName>{displayStoredName("Câine", locale)}</SignName>
         </SignHolder>
         <SignHolder href="/horoscop-anual-porc">
-          <IconWrapper stroke={true}>
+          <IconWrapper $stroke>
             <Pig className="boldSvg" />
           </IconWrapper>
           <SignName>{displayStoredName("Porc", locale)}</SignName>

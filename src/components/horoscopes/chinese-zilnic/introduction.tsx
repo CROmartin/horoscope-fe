@@ -1,4 +1,8 @@
+"use client";
+
 import React from "react";
+import { copy } from "@/lib/messages";
+import { useLocale } from "../../shared/LocaleProvider";
 import styled from "styled-components";
 
 import Image from "next/image";
@@ -78,18 +82,15 @@ const Title = styled.h2`
   text-align: center;
 `;
 function Introduction() {
+  const text = copy(useLocale());
   return (
     <Holder>
       <DarkenBackground />
       <div className="zodiac-wheel">
-        <Image src={zodiacWheel} alt="Roată zodiacală aurie pe fundal înstelat" fill />
+        <Image src={zodiacWheel} alt={text.wheelAlt} fill />
       </div>
-      <Title>Horoscopul chinezesc, separat de cel occidental</Title>
-      <Paragraph>
-        Cele 12 semne ale anului au fiecare un text propriu. Horoscopul
-        chinezesc de pe acest site este de divertisment și este același pentru
-        toți cititorii unui semn.
-      </Paragraph>
+      <Title>{text.chineseIntroTitle}</Title>
+      <Paragraph>{text.chineseIntroBody}</Paragraph>
     </Holder>
   );
 }

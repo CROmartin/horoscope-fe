@@ -1,4 +1,4 @@
-import SignProfile from "@/components/zodiac/SignProfile";
+import { localizedSignProfile } from "@/components/zodiac/LocalizedSignProfile";
 import JsonLd from "@/components/seo/JsonLd";
 import { pageMetadata } from "@/lib/metadata";
 import { signPageMeta } from "@/lib/signPage";
@@ -13,7 +13,7 @@ export default async function Page() {
   return (
     <>
       <JsonLd title={meta.title} description={meta.description} path={meta.path} />
-      <SignProfile slug="fecioara" />
+      {await localizedSignProfile("fecioara")}
     </>
   );
 }

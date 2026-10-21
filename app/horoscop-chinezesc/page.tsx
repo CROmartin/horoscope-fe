@@ -10,7 +10,7 @@ const text = {
   },
   en: {
     title: "Chinese horoscope",
-    description: "The Chinese zodiac, with the yearly and daily horoscope. Each sign has its own text, published in Romanian.",
+    description: "The Chinese zodiac, with the yearly and daily horoscope. Each sign has its own text, English follows the Romanian horoscope.",
   },
 };
 

@@ -1,4 +1,8 @@
+"use client";
+
 import Image from "next/image";
+import { copy } from "@/lib/messages";
+import { useLocale } from "../../shared/LocaleProvider";
 import happyCustomer from "../images/HappyCostumer.webp";
 import React from "react";
 import styled from "styled-components";
@@ -80,20 +84,17 @@ const Column = styled.div`
   }
 `;
 function WhyHoroscope() {
+  const text = copy(useLocale());
   return (
     <Holder>
       <Column>
-        <Title>De ce sunt fascinați oamenii de horoscopul chinezesc?</Title>
-        <Paragraph>
-          Horoscopul chinezesc de aici este un text de divertisment pentru
-          semnul anului. Nu este un ghid pentru relații, carieră sau evoluție
-          personală. Cititorii aceluiași semn văd același text.
-        </Paragraph>
+        <Title>{text.chineseWhyTitle}</Title>
+        <Paragraph>{text.chineseWhyBody}</Paragraph>
 
-        <Button message={"Află mai multe"} link="/despre-noi" />
+        <Button message={text.readMore} link="/despre-noi" />
       </Column>
       <div className="costumer">
-        <Image src={happyCustomer} alt="Femeie care citește o carte la masă, lângă o cană" />
+        <Image src={happyCustomer} alt={text.readerAlt} />
       </div>
     </Holder>
   );

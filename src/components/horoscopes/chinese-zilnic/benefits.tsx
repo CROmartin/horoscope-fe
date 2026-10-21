@@ -1,4 +1,8 @@
+"use client";
+
 import React from "react";
+import { copy } from "@/lib/messages";
+import { useLocale } from "../../shared/LocaleProvider";
 import styled from "styled-components";
 import Star from "../Icons/star.svg";
 
@@ -81,14 +85,12 @@ const Box = styled.div`
   margin-bottom: 64px;
 `;
 function Benefits() {
+  const text = copy(useLocale());
   return (
     <Holder>
       <Box>
-        <h2>Ce publicăm pentru zodiacul chinezesc</h2>
-        <p>
-          Fiecare semn are un singur text. Zodiacul chinezesc este separat de
-          cel occidental și nu este calculat după ora nașterii.
-        </p>
+        <h2>{text.chinesePublishTitle}</h2>
+        <p>{text.chinesePublishLead}</p>
       </Box>
       <Row>
         <Column>
@@ -98,11 +100,8 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Un text pe semn</SubTitle>
-          <p>
-            Șobolanul, Bivolul și celelalte semne au previziuni diferite. Doi
-            cititori ai aceluiași semn văd același horoscop.
-          </p>
+          <SubTitle>{text.oneChinese}</SubTitle>
+          <p>{text.oneChineseBody}</p>
         </Column>
       </Row>
       <Row>
@@ -113,11 +112,8 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Rubrici</SubTitle>
-          <p>
-            Pagina unui semn include previziunea, compatibilitatea și
-            afirmațiile publicate pentru el.
-          </p>
+          <SubTitle>{text.sections}</SubTitle>
+          <p>{text.chineseSectionsBody}</p>
         </Column>
       </Row>
       <Row>
@@ -128,11 +124,8 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Data publicării</SubTitle>
-          <p>
-            Pe pagină apare data la care a fost publicat textul, după ora
-            României. Dacă setul zilei lipsește, rămâne ultima previziune.
-          </p>
+          <SubTitle>{text.publishedOn}</SubTitle>
+          <p>{text.chinesePublishedBody}</p>
         </Column>
       </Row>
       <Row>
@@ -143,11 +136,8 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Divertisment</SubTitle>
-          <p>
-            Horoscopul este un text de citit, nu un sfat pentru bani, sănătate
-            sau relații.
-          </p>
+          <SubTitle>{text.entertainment}</SubTitle>
+          <p>{text.chineseEntertainmentBody}</p>
         </Column>
       </Row>
       <Row>
@@ -158,11 +148,8 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Alte semne</SubTitle>
-          <p>
-            De pe pagina unui semn poți deschide horoscopul celorlalte semne
-            chinezești, pentru aceeași perioadă.
-          </p>
+          <SubTitle>{text.otherSigns}</SubTitle>
+          <p>{text.chineseOtherBody}</p>
         </Column>
       </Row>
     </Holder>

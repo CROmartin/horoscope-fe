@@ -69,7 +69,13 @@ const RULERS: Record<string, string> = {
   "Neptun, Jupiter": "Neptune, Jupiter",
 };
 
-function SignProfile({ slug }: { slug: ZodiacSlug }) {
+function SignProfile({
+  slug,
+  traits,
+}: {
+  slug: ZodiacSlug;
+  traits?: { strengths: string; weaknesses: string; likes: string; dislikes: string };
+}) {
   const locale = useLocale();
   const text = copy(locale);
   const sign = signDisplay(slug, locale);
@@ -116,24 +122,24 @@ function SignProfile({ slug }: { slug: ZodiacSlug }) {
             <div>
               <span>{text.dates}: </span> {sign.dates}
             </div>
-            {text.traitsNote ? <p>{text.traitsNote}</p> : null}
+            {!traits && text.traitsNote ? <p>{text.traitsNote}</p> : null}
             <p>
-              <span>{text.strengths}: </span> {profile.strengths}
+              <span>{text.strengths}: </span> {traits?.strengths || profile.strengths}
             </p>
             <p>
-              <span>{text.weaknesses}: </span> {profile.weaknesses}
+              <span>{text.weaknesses}: </span> {traits?.weaknesses || profile.weaknesses}
             </p>
             <p>
               <span>
                 {locale === "en" ? text.likes : `Ce îi place ${profile.likeOf}`}:{" "}
               </span>{" "}
-              {profile.likes}
+              {traits?.likes || profile.likes}
             </p>
             <p>
               <span>
                 {locale === "en" ? text.dislikes : `Ce nu îi place ${profile.likeOf}`}:{" "}
               </span>{" "}
-              {profile.dislikes}
+              {traits?.dislikes || profile.dislikes}
             </p>
           </ContentBox>
         </LeftSide>

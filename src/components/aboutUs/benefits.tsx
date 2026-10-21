@@ -1,4 +1,8 @@
+"use client";
+
 import React from "react";
+import { copy } from "@/lib/messages";
+import { useLocale } from "../shared/LocaleProvider";
 import styled from "styled-components";
 import Star from "./Icons/star.svg";
 
@@ -81,14 +85,12 @@ const Box = styled.div`
   margin-bottom: 64px;
 `;
 function Benefits() {
+  const text = copy(useLocale());
   return (
     <Holder>
       <Box>
-        <h2>Ce publicăm</h2>
-        <p>
-          Fiecare zodie are un singur text. Nu calculăm un horoscop după data
-          de naștere și nu spunem ce decizie să iei.
-        </p>
+        <h2>{text.publishTitle}</h2>
+        <p>{text.aboutPublishLead}</p>
       </Box>
       <Row>
         <Column>
@@ -98,11 +100,8 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Un text pe zodie</SubTitle>
-          <p>
-            Semnele au previziuni diferite. Doi cititori ai aceleiași zodii văd
-            același horoscop.
-          </p>
+          <SubTitle>{text.oneSignToday}</SubTitle>
+          <p>{text.aboutOneBody}</p>
         </Column>
       </Row>
       <Row>
@@ -113,11 +112,8 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Rubrici</SubTitle>
-          <p>
-            O pagină de horoscop include previziunea, compatibilitatea și
-            afirmațiile publicate pentru acel semn.
-          </p>
+          <SubTitle>{text.sections}</SubTitle>
+          <p>{text.aboutSectionsBody}</p>
         </Column>
       </Row>
       <Row>
@@ -128,11 +124,8 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Data publicării</SubTitle>
-          <p>
-            Data de pe pagină este ziua în care a fost publicat textul, după ora
-            României. Un set incomplet nu schimbă textul publicat.
-          </p>
+          <SubTitle>{text.publishedOn}</SubTitle>
+          <p>{text.aboutPublishedBody}</p>
         </Column>
       </Row>
       <Row>
@@ -143,11 +136,8 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Divertisment</SubTitle>
-          <p>
-            Horoscopul este un text de citit, nu un sfat pentru bani, sănătate
-            sau relații.
-          </p>
+          <SubTitle>{text.entertainment}</SubTitle>
+          <p>{text.chineseEntertainmentBody}</p>
         </Column>
       </Row>
       <Row>
@@ -158,11 +148,8 @@ function Benefits() {
           <Line />
         </Column>
         <Column>
-          <SubTitle>Cum te oprești</SubTitle>
-          <p>
-            Emailul zilnic pleacă doar dacă îl ceri explicit. Îl poți opri din
-            linkul primit sau scriind la sprijin@horoscopzodii.ro.
-          </p>
+          <SubTitle>{text.aboutStopTitle}</SubTitle>
+          <p>{text.aboutStopBody}</p>
         </Column>
       </Row>
     </Holder>

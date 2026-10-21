@@ -11,6 +11,9 @@ import { getHoroscopeBySlug } from "@/lib/horoscopes";
 import { pageMetadata } from "@/lib/metadata";
 import { horoscopeTitle, readingFreshness, type ReadingPeriod } from "@/lib/readingDate";
 import { currentLocale } from "@/lib/localeServer";
+import { chineseFacts } from "@/lib/chineseFacts";
+import { romanianToEnglish } from "@/lib/romanianToEnglish";
+import { translateFields } from "@/lib/translateFields";
 
 export const revalidate = 3600;
 export const dynamicParams = true;
@@ -35,8 +38,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     period: readingPeriod(horoscope.interval),
     locale,
   });
+  const { reading } = await localizedReading(horoscope, locale);
   const title = horoscopeTitle(horoscopeHeading(horoscope, locale), freshness);
-  const description = horoscopeDescription(horoscope, locale);
+  const description = horoscopeDescription({ ...horoscope, description: reading.description }, locale);
   return pageMetadata(title, description, `/${slug}`, {
     type: "article",
     publishedTime: isoDate(horoscope.date),
@@ -55,8 +59,9 @@ export default async function HoroscopeRoute({ params }: PageProps) {
     period: readingPeriod(horoscope.interval),
     locale,
   });
+  const { reading, translated } = await localizedReading(horoscope, locale);
   const title = horoscopeTitle(horoscopeHeading(horoscope, locale), freshness);
-  const description = horoscopeDescription(horoscope, locale);
+  const description = horoscopeDescription({ ...horoscope, description: reading.description }, locale);
   const path = `/${slug}`;
   const links = relatedHoroscopeLinks({
     variant: horoscope.variant,
@@ -70,38 +75,42 @@ export default async function HoroscopeRoute({ params }: PageProps) {
     horoscope.variant === "chinese" ? (
       <HoroscopeChinesePage
         sign={horoscope.sign}
-        description={horoscope.description}
-        compatibility={horoscope.compatibility}
-        affirmations={horoscope.affirmations}
+        description={reading.description}
+        compatibility={reading.compatibility}
+        affirmations={reading.affirmations}
         signStandard={horoscope.signStandard}
         heading={title}
         freshness={freshness}
         links={links}
         crumbs={crumbs}
         period={horoscope.interval === "anual" ? "anual" : "zilnic"}
+        translated={translated}
+        facts={await localizedChineseFacts(horoscope.signStandard, locale)}
       />
     ) : horoscope.variant === "azi" ? (
       <HoroscopePageAzi
         sign={horoscope.sign}
-        description={horoscope.description}
-        compatibility={horoscope.compatibility}
-        affirmations={horoscope.affirmations}
+        description={reading.description}
+        compatibility={reading.compatibility}
+        affirmations={reading.affirmations}
         heading={title}
         freshness={freshness}
         links={links}
         crumbs={crumbs}
+        translated={translated}
       />
     ) : (
       <HoroscopePage
         sign={horoscope.sign}
-        description={horoscope.description}
-        compatibility={horoscope.compatibility}
-        affirmations={horoscope.affirmations}
+        description={reading.description}
+        compatibility={reading.compatibility}
+        affirmations={reading.affirmations}
         heading={title}
         freshness={freshness}
         links={links}
         crumbs={crumbs}
         period={horoscope.interval === "saptamanal" ? "saptamanal" : "zilnic"}
+        translated={translated}
       />
     );
 
@@ -117,6 +126,44 @@ export default async function HoroscopeRoute({ params }: PageProps) {
       {page}
     </>
   );
+}
+
+async function localizedReading(
+  horoscope: { description: string; compatibility: string; affirmations: string },
+  locale: "ro" | "en"
+) {
+  const reading = {
+    description: horoscope.description,
+    compatibility: horoscope.compatibility,
+    affirmations: horoscope.affirmations,
+  };
+  if (locale !== "en") return { reading, translated: false };
+  try {
+    return { reading: await translateFields(reading, romanianToEnglish), translated: true };
+  } catch (error) {
+    console.error("Horoscope translation failed", error instanceof Error ? error.message : error);
+    return { reading, translated: false };
+  }
+}
+
+async function localizedChineseFacts(slug: string, locale: "ro" | "en") {
+  const facts = chineseFacts(slug, locale);
+  if (!facts || locale !== "en") return facts;
+  try {
+    const traits = await translateFields(
+      {
+        strengths: facts.strengths,
+        weaknesses: facts.weaknesses,
+        likes: facts.likes,
+        dislikes: facts.dislikes,
+      },
+      romanianToEnglish
+    );
+    return { ...facts, ...traits };
+  } catch (error) {
+    console.error("Trait translation failed", error instanceof Error ? error.message : error);
+    return facts;
+  }
 }
 
 function readingPeriod(interval: "zilnic" | "azi" | "saptamanal" | "anual"): ReadingPeriod {

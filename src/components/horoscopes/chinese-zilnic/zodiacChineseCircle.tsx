@@ -2,6 +2,7 @@
 
 import React, { useEffect } from "react";
 import { copy } from "@/lib/messages";
+import { cardLine } from "@/lib/cardLines";
 import { useLocale } from "../../shared/LocaleProvider";
 import { displayStoredName } from "@/lib/zodiacSigns";
 import styled from "styled-components";
@@ -116,10 +117,10 @@ const TextHolder = styled.div`
 `;
 
 interface IconWrapperProps {
-  fill?: boolean;
-  stroke?: boolean;
+  $fill?: boolean;
+  $stroke?: boolean;
 }
-const IconWrapper = styled.a<IconWrapperProps>`
+const IconWrapper = styled.span<IconWrapperProps>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -130,8 +131,8 @@ const IconWrapper = styled.a<IconWrapperProps>`
   svg {
     width: 100%;
     path {
-      ${(props) => props.fill && `fill: #d7be8a;`}
-      ${(props) => props.stroke && `stroke: #d7be8a;`}
+      ${(props) => props.$fill && `fill: #d7be8a;`}
+      ${(props) => props.$stroke && `stroke: #d7be8a;`}
     }
   }
   .dragon {
@@ -188,115 +189,115 @@ function ZodiacChineseCircle() {
       </TextHolder>
       <Zodiacs>
         <ZodiacHolder href={`/horoscop-${interval}-sobolan`}>
-          <IconWrapper fill={true}>
+          <IconWrapper $fill>
             <Rat />
           </IconWrapper>
           <ZodiacName>{displayStoredName("Șobolan", locale)}</ZodiacName>
           <ZodiacCaracteristics>
-            Ingenios, isteț, fermecător
+            {cardLine("sobolan", locale)}
           </ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/horoscop-${interval}-bivol`}>
-          <IconWrapper fill={true}>
+          <IconWrapper $fill>
             <Ox />
           </IconWrapper>
 
           <ZodiacName>{displayStoredName("Bivol", locale)}</ZodiacName>
-          <ZodiacCaracteristics>Stabil, loial, hotărât</ZodiacCaracteristics>
+          <ZodiacCaracteristics>{cardLine("bivol", locale)}</ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/horoscop-${interval}-tigru`}>
-          <IconWrapper fill={true}>
+          <IconWrapper $fill>
             <Tiger />
           </IconWrapper>
 
           <ZodiacName>{displayStoredName("Tigru", locale)}</ZodiacName>
           <ZodiacCaracteristics>
-            Curajos, încrezător, competitiv
+            {cardLine("tigru", locale)}
           </ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/horoscop-${interval}-iepure`}>
-          <IconWrapper fill={true}>
+          <IconWrapper $fill>
             <Rabbit />
           </IconWrapper>
 
           <ZodiacName>{displayStoredName("Iepure", locale)}</ZodiacName>
           <ZodiacCaracteristics>
-            Compasiv, tacticos, prudent
+            {cardLine("iepure", locale)}
           </ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/horoscop-${interval}-dragon`}>
-          <IconWrapper stroke={true}>
+          <IconWrapper $stroke>
             <Dragon className="dragon" />
           </IconWrapper>
 
           <ZodiacName>{displayStoredName("Dragon", locale)}</ZodiacName>
           <ZodiacCaracteristics>
-            Carismatic, încrezător, puternic
+            {cardLine("dragon", locale)}
           </ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/horoscop-${interval}-sarpe`}>
-          <IconWrapper fill={true}>
+          <IconWrapper $fill>
             <Snake />
           </IconWrapper>
 
           <ZodiacName>{displayStoredName("Șarpe", locale)}</ZodiacName>
           <ZodiacCaracteristics>
-            Înțelept, grațios, simpatic
+            {cardLine("sarpe", locale)}
           </ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/horoscop-${interval}-cal`}>
-          <IconWrapper fill={true}>
+          <IconWrapper $fill>
             <Horse />
           </IconWrapper>
 
           <ZodiacName>{displayStoredName("Cal", locale)}</ZodiacName>
           <ZodiacCaracteristics>
-            Energetic, independent, nerăbdător
+            {cardLine("cal", locale)}
           </ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/horoscop-${interval}-oaie`}>
-          <IconWrapper stroke={true}>
+          <IconWrapper $stroke>
             <Goat />
           </IconWrapper>
 
           <ZodiacName>{displayStoredName("Oaie", locale)}</ZodiacName>
-          <ZodiacCaracteristics>Creativ, blând, gânditor</ZodiacCaracteristics>
+          <ZodiacCaracteristics>{cardLine("oaie", locale)}</ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/horoscop-${interval}-maimuta`}>
-          <IconWrapper fill={true}>
+          <IconWrapper $fill>
             <Monkey />
           </IconWrapper>
           <ZodiacName>{displayStoredName("Maimuță", locale)}</ZodiacName>
-          <ZodiacCaracteristics>Deștept, curios, jucăuș</ZodiacCaracteristics>
+          <ZodiacCaracteristics>{cardLine("maimuta", locale)}</ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/horoscop-${interval}-cocos`}>
-          <IconWrapper fill={true}>
+          <IconWrapper $fill>
             <Rooster />
           </IconWrapper>
 
           <ZodiacName>{displayStoredName("Cocoș", locale)}</ZodiacName>
           <ZodiacCaracteristics>
-            Observator, muncitor, curajos
+            {cardLine("cocos", locale)}
           </ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/horoscop-${interval}-caine`}>
-          <IconWrapper fill={true}>
+          <IconWrapper $fill>
             <Dog />
           </IconWrapper>
 
           <ZodiacName>{displayStoredName("Câine", locale)}</ZodiacName>
           <ZodiacCaracteristics>
-            Loial, sincer, de încredere
+            {cardLine("caine", locale)}
           </ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/horoscop-${interval}-porc`}>
-          <IconWrapper stroke={true}>
+          <IconWrapper $stroke>
             <Pig />
           </IconWrapper>
 
           <ZodiacName>{displayStoredName("Porc", locale)}</ZodiacName>
           <ZodiacCaracteristics>
-            Generos, sârguincios, compasiv
+            {cardLine("porc", locale)}
           </ZodiacCaracteristics>
         </ZodiacHolder>
       </Zodiacs>

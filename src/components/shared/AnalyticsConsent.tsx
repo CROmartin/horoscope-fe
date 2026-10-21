@@ -206,27 +206,25 @@ const ChoiceActions = styled.div`
 
 export function ConsentChoice() {
   const { consent, ready, choose } = useAnalyticsConsent();
+  const text = copy(useLocale());
   const status = !ready
-    ? "Se încarcă alegerea salvată în acest browser."
+    ? text.consentStatusLoading
     : consent === "granted"
-      ? "Măsurarea vizitelor este pornită în acest browser."
+      ? text.consentStatusOn
       : consent === "denied"
-        ? "Măsurarea vizitelor este oprită în acest browser."
-        : "Nu ai ales încă. Bara de jos rămâne până alegi.";
+        ? text.consentStatusOff
+        : text.consentStatusPending;
 
   return (
     <Choice>
       <p>{status}</p>
-      <p>
-        Oprirea blochează evenimentele noi. Dacă scriptul era deja pornit, reîncarcă
-        pagina ca să nu mai rămână în această vizită.
-      </p>
+      <p>{text.consentStopNote}</p>
       <ChoiceActions>
         <Accept type="button" onClick={() => choose("granted")}>
-          Acceptă măsurarea
+          {text.consentAcceptMeasure}
         </Accept>
         <Refuse type="button" onClick={() => choose("denied")}>
-          Oprește măsurarea
+          {text.consentStopMeasure}
         </Refuse>
       </ChoiceActions>
     </Choice>

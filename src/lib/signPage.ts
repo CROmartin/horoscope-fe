@@ -11,7 +11,7 @@ export async function signPageMeta(slug: ZodiacSlug) {
       : `Horoscop ${romanianName}: zilnic și săptămânal`;
   const description =
     locale === "en"
-      ? `Daily and weekly horoscope for ${name}. Every reader of this sign sees the same entertainment text, published in Romanian.`
+      ? `Daily and weekly horoscope for ${name}. Every reader of this sign sees the same entertainment text. English follows the Romanian horoscope.`
       : `Horoscopul zilnic și săptămânal pentru ${romanianName}, în română. Toți cititorii din zodia ${romanianName} văd același text, de divertisment.`;
   return { title, description, path: `/${slug}`, locale };
 }

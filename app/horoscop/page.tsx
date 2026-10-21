@@ -10,7 +10,7 @@ const text = {
   },
   en: {
     title: "Daily and weekly horoscope",
-    description: "The 12 signs, with the daily and weekly horoscope. Choose a sign and read its text, published in Romanian.",
+    description: "The 12 signs, with the daily and weekly horoscope. Choose a sign and read its text, English follows the Romanian horoscope.",
   },
 };
 

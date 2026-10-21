@@ -88,6 +88,7 @@ function HoroscopePage({
   freshness,
   links,
   crumbs,
+  translated,
 }: {
   description: string;
   compatibility: string;
@@ -97,6 +98,7 @@ function HoroscopePage({
   freshness: ReadingFreshness;
   links: { href: string; label: string }[];
   crumbs: Crumb[];
+  translated?: boolean;
 }) {
   const text = copy(useLocale());
   const affirmationList = renderAffirmations(affirmations);
@@ -110,7 +112,7 @@ function HoroscopePage({
       <RowAzi>
         <RightSide>
           <ContentBox>
-            {text.readingNote ? <p>{text.readingNote}</p> : null}
+            {!translated && text.readingNote ? <p>{text.readingNote}</p> : null}
             <p>{description}</p>
           </ContentBox>
         </RightSide>

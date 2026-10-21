@@ -1,4 +1,8 @@
+"use client";
+
 import React from "react";
+import { copy } from "@/lib/messages";
+import { useLocale } from "../shared/LocaleProvider";
 import styled from "styled-components";
 import Button from "../shared/Button";
 
@@ -61,27 +65,24 @@ const Actions = styled.div`
 `;
 
 function AboutUs() {
+  const text = copy(useLocale());
   return (
     <Holder>
-      <Title>Despre noi</Title>
-      <Lead>Horoscopul zilei, al săptămânii și zodiacul chinezesc, în română.</Lead>
+      <Title>{text.aboutPageTitle}</Title>
+      <Lead>{text.aboutPageLead}</Lead>
       <Paragraph>
-        <p>
-          Horoscopzodii publică un text pentru fiecare zodie: previziunea zilei,
-          compatibilitatea, afirmațiile, horoscopul săptămânii și semnul din
-          zodiacul chinezesc. Cititorii aceluiași semn văd același text.
-        </p>
+        <p>{text.aboutPageBody}</p>
         <ul>
-          <li>Horoscop zilnic pentru toate cele 12 zodii</li>
-          <li>Horoscop săptămânal pentru fiecare zodie</li>
-          <li>Zodiac chinezesc, zilnic și pe tot anul</li>
-          <li>Compatibilitate și afirmații, nu doar un paragraf general</li>
+          <li>{text.aboutItemDaily}</li>
+          <li>{text.aboutItemWeekly}</li>
+          <li>{text.aboutItemChinese}</li>
+          <li>{text.aboutItemPair}</li>
         </ul>
       </Paragraph>
       <Actions>
-        <Button message="Horoscopul de azi" link="/horoscop-zilnic" />
-        <Button message="Horoscopul săptămânii" link="/horoscop-saptamanal" />
-        <Button message="Zodiacul chinezesc" link="/horoscop-chinezesc" />
+        <Button message={text.linkToday} link="/horoscop-zilnic" />
+        <Button message={text.linkWeek} link="/horoscop-saptamanal" />
+        <Button message={text.chinese} link="/horoscop-chinezesc" />
       </Actions>
     </Holder>
   );

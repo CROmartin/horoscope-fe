@@ -10,7 +10,7 @@ const text = {
   },
   en: {
     title: "Daily Chinese horoscope",
-    description: "The daily horoscope for the 12 Chinese zodiac signs. Each sign has its own text, published in Romanian.",
+    description: "The daily horoscope for the 12 Chinese zodiac signs. Each sign has its own text, English follows the Romanian horoscope.",
   },
 };
 

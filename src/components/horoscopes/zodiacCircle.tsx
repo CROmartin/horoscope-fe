@@ -2,6 +2,7 @@
 
 import React, { useEffect } from "react";
 import { copy } from "@/lib/messages";
+import { cardLine } from "@/lib/cardLines";
 import { useLocale } from "../shared/LocaleProvider";
 import { signDisplay } from "@/lib/zodiacSigns";
 import styled from "styled-components";
@@ -136,20 +137,20 @@ function ZodiacCircle() {
           <Aries />
 
           <ZodiacName>{signDisplay("berbec", locale)?.name}</ZodiacName>
-          <ZodiacCaracteristics>Lider, Energetic, Curajos</ZodiacCaracteristics>
+          <ZodiacCaracteristics>{cardLine("berbec", locale)}</ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/taur`}>
           <Taurus />
 
           <ZodiacName>{signDisplay("taur", locale)?.name}</ZodiacName>
-          <ZodiacCaracteristics>Stabil, Senzual, Practic</ZodiacCaracteristics>
+          <ZodiacCaracteristics>{cardLine("taur", locale)}</ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/gemeni`}>
           <Gemini />
 
           <ZodiacName>{signDisplay("gemeni", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
-            Comunicativ, Adaptabil, Curios
+            {cardLine("gemeni", locale)}
           </ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/rac`}>
@@ -157,7 +158,7 @@ function ZodiacCircle() {
 
           <ZodiacName>{signDisplay("rac", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
-            Sensibil, Protector, Hrănitor
+            {cardLine("rac", locale)}
           </ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/leu`}>
@@ -165,21 +166,21 @@ function ZodiacCircle() {
 
           <ZodiacName>{signDisplay("leu", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
-            Carismatic, Mândru, Încrezător
+            {cardLine("leu", locale)}
           </ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/fecioara`}>
           <Virgo />
 
           <ZodiacName>{signDisplay("fecioara", locale)?.name}</ZodiacName>
-          <ZodiacCaracteristics>Metodic, Analitic, Modest</ZodiacCaracteristics>
+          <ZodiacCaracteristics>{cardLine("fecioara", locale)}</ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/balanta`}>
           <Libra />
 
           <ZodiacName>{signDisplay("balanta", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
-            Echilibrat, Social, Corect
+            {cardLine("balanta", locale)}
           </ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/scorpion`}>
@@ -187,7 +188,7 @@ function ZodiacCircle() {
 
           <ZodiacName>{signDisplay("scorpion", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
-            Intens, Misterios, Pasionat
+            {cardLine("scorpion", locale)}
           </ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/sagetator`}>
@@ -195,7 +196,7 @@ function ZodiacCircle() {
 
           <ZodiacName>{signDisplay("sagetator", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
-            Optimist, Aventuros, Filozofic
+            {cardLine("sagetator", locale)}
           </ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/capricorn`}>
@@ -203,7 +204,7 @@ function ZodiacCircle() {
 
           <ZodiacName>{signDisplay("capricorn", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
-            Disciplinat, Ambițios, Precaut
+            {cardLine("capricorn", locale)}
           </ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/varsator`}>
@@ -211,7 +212,7 @@ function ZodiacCircle() {
 
           <ZodiacName>{signDisplay("varsator", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
-            Inovativ, Umanitar, Neconvențional
+            {cardLine("varsator", locale)}
           </ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/pesti`}>
@@ -219,7 +220,7 @@ function ZodiacCircle() {
 
           <ZodiacName>{signDisplay("pesti", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
-            Visător, Compasiv, Intuitiv
+            {cardLine("pesti", locale)}
           </ZodiacCaracteristics>
         </ZodiacHolder>
       </Zodiacs>

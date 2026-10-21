@@ -5,7 +5,7 @@ import ArrowUpRight from "../../Icons/ArrowUpRight";
 import Link from "next/link";
 
 interface ButtonWrapperProps {
-  small?: boolean;
+  $small?: boolean;
 }
 const ButtonWrapper = styled(Link)<ButtonWrapperProps>`
   all: unset;
@@ -35,7 +35,7 @@ const MessageHolder = styled.div<ButtonWrapperProps>`
   line-height: 19px;
   text-transform: uppercase;
 
-  ${(props) => props.small && "padding: 10px 20px; font-size: 12px; "}
+  ${(props) => props.$small && "padding: 10px 20px; font-size: 12px; "}
 
   @media (max-width: 1285px) {
     padding: 20px 40px;
@@ -58,7 +58,7 @@ const SvgWrapper = styled.div<ButtonWrapperProps>`
   min-height: 44px;
   padding: 20px;
 
-  ${(props) => props.small && "padding: 10px;"}
+  ${(props) => props.$small && "padding: 10px;"}
 
   @media (max-width: 1285px) {
     padding: 20px;
@@ -80,17 +80,17 @@ function Button({ message, link, onClick, small }: ButtonProps) {
   return (
     <>
       {link && (
-        <ButtonWrapper href={link ? link : ""} small={small}>
-          <MessageHolder small={small}>{message}</MessageHolder>
-          <SvgWrapper small={small}>
+        <ButtonWrapper href={link ? link : ""} $small={small}>
+          <MessageHolder $small={small}>{message}</MessageHolder>
+          <SvgWrapper $small={small}>
             <ArrowUpRight />
           </SvgWrapper>
         </ButtonWrapper>
       )}
       {onClick && (
-        <ButtonWrapper as="button" type="button" onClick={onClick} small={small}>
-          <MessageHolder small={small}>{message}</MessageHolder>
-          <SvgWrapper small={small}>
+        <ButtonWrapper as="button" type="button" onClick={onClick} $small={small}>
+          <MessageHolder $small={small}>{message}</MessageHolder>
+          <SvgWrapper $small={small}>
             <ArrowUpRight />
           </SvgWrapper>
         </ButtonWrapper>

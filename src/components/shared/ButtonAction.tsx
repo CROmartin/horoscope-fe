@@ -5,7 +5,7 @@ import Loader from "./Loader";
 import Link from "next/link";
 
 interface ButtonWrapperProps {
-  small?: boolean;
+  $small?: boolean;
 }
 const ButtonWrapper = styled(Link)`
   all: unset;
@@ -27,7 +27,7 @@ const MessageHolder = styled.div<ButtonWrapperProps>`
   line-height: 19px;
   text-transform: uppercase;
 
-  ${(props) => props.small && "padding: 10px 20px; font-size: 12px; "}
+  ${(props) => props.$small && "padding: 10px 20px; font-size: 12px; "}
 
   @media (max-width: 1285px) {
     padding: 20px 40px;
@@ -48,7 +48,7 @@ const SvgWrapper = styled.div<ButtonWrapperProps>`
   align-items: center;
   padding: 20px;
 
-  ${(props) => props.small && "padding: 10px;"}
+  ${(props) => props.$small && "padding: 10px;"}
 
   @media (max-width: 1285px) {
     padding: 20px;
@@ -72,7 +72,7 @@ function ButtonAction({ message, link, onClick, small, loading }: ButtonProps) {
     <>
       {link && (
         <ButtonWrapper href={link ? link : ""}>
-          <MessageHolder small={small}>{message}</MessageHolder>
+          <MessageHolder $small={small}>{message}</MessageHolder>
         </ButtonWrapper>
       )}
       {onClick && (
@@ -80,7 +80,7 @@ function ButtonAction({ message, link, onClick, small, loading }: ButtonProps) {
           {loading ? (
             <Loader />
           ) : (
-            <MessageHolder small={small}>{message}</MessageHolder>
+            <MessageHolder $small={small}>{message}</MessageHolder>
           )}
         </ButtonWrapper>
       )}

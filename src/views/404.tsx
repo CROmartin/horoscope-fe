@@ -1,45 +1,39 @@
 "use client";
-import * as React from "react"
+
+import * as React from "react";
 import Link from "next/link";
+import { copy } from "@/lib/messages";
+import { useLocale } from "@/components/shared/LocaleProvider";
 
 const pageStyles = {
-  color: "#232129",
-  padding: "96px",
-  fontFamily: "-apple-system, Roboto, sans-serif, serif",
-}
+  color: "#ffffff",
+  padding: "96px 5vw",
+  fontFamily: "inherit",
+};
+
 const headingStyles = {
   marginTop: 0,
-  marginBottom: 64,
-  maxWidth: 320,
-}
+  marginBottom: 32,
+  maxWidth: 640,
+};
 
 const paragraphStyles = {
   marginBottom: 48,
-}
-const codeStyles = {
-  color: "#8A6534",
-  padding: 4,
-  backgroundColor: "#FFF4DB",
-  fontSize: "1.25rem",
-  borderRadius: 4,
-}
+  lineHeight: 1.5,
+};
 
 function NotFoundPage() {
+  const text = copy(useLocale());
+
+  React.useEffect(() => {
+    document.title = `${text.notFoundTitle} | Horoscopzodii.ro`;
+  }, [text.notFoundTitle]);
+
   return (
     <main style={pageStyles}>
-      <h1 style={headingStyles}>Page not found</h1>
+      <h1 style={headingStyles}>{text.notFoundTitle}</h1>
       <p style={paragraphStyles}>
-        Sorry 😔, we couldn’t find what you were looking for.
-        <br />
-        {process.env.NODE_ENV === "development" ? (
-          <>
-            <br />
-            Try creating a page in <code style={codeStyles}>src/pages/</code>.
-            <br />
-          </>
-        ) : null}
-        <br />
-        <Link href="/">Go home</Link>.
+        {text.notFoundBody} <Link href="/">{text.notFoundHome}</Link>
       </p>
     </main>
   );

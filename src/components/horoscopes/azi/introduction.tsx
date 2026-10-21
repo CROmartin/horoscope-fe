@@ -1,4 +1,8 @@
+"use client";
+
 import React from "react";
+import { copy } from "@/lib/messages";
+import { useLocale } from "../../shared/LocaleProvider";
 import styled from "styled-components";
 // import Background from "./images/ZodiacWheel.webp";
 import Image from "next/image";
@@ -85,19 +89,16 @@ const Row = styled.div`
   width: 100%;
 `;
 function Introduction() {
+  const text = copy(useLocale());
   return (
     <Holder>
       <DarkenBackground />
       <div className="zodiac-wheel">
-        <Image src={zodiacWheel} alt="Roată zodiacală aurie pe fundal înstelat" fill />
+        <Image src={zodiacWheel} alt={text.wheelAlt} fill />
       </div>
-      <Title>Explorarea horoscopului</Title>
+      <Title>{text.todayIntroTitle}</Title>
       <Row>
-        <Paragraph>
-          Alege una dintre cele 12 zodii și citește horoscopul de azi. Textul
-          este același pentru toți cititorii acelui semn și este de
-          divertisment, nu un sfat personal.
-        </Paragraph>
+        <Paragraph>{text.todayIntroBody}</Paragraph>
       </Row>
     </Holder>
   );

@@ -23,8 +23,8 @@ const HeroWrapper = styled.div`
 `;
 
 interface IconWrapperProps {
-  fill?: boolean;
-  stroke?: boolean;
+  $fill?: boolean;
+  $stroke?: boolean;
 }
 const IconWrapper = styled(Link)<IconWrapperProps>`
   display: flex;
@@ -37,8 +37,8 @@ const IconWrapper = styled(Link)<IconWrapperProps>`
   svg {
     width: 100%;
     path {
-      ${(props) => props.fill && `fill: #d7be8a;`}
-      ${(props) => props.stroke && `stroke: #d7be8a;`}
+      ${(props) => props.$fill && `fill: #d7be8a;`}
+      ${(props) => props.$stroke && `stroke: #d7be8a;`}
     }
   }
   @media (max-width: 760px) {
@@ -93,42 +93,42 @@ function HoroscopesChinezesc() {
   return (
     <HeroWrapper>
       <Holder>
-        <IconWrapper href="/horoscop-anual-sobolan/" fill={true}>
+        <IconWrapper href="/horoscop-anual-sobolan/" $fill>
           <Rat />
         </IconWrapper>
-        <IconWrapper href="/horoscop-anual-bivol" fill={true}>
+        <IconWrapper href="/horoscop-anual-bivol" $fill>
           <Ox />
         </IconWrapper>
-        <IconWrapper href="/horoscop-anual-tigru" fill={true}>
+        <IconWrapper href="/horoscop-anual-tigru" $fill>
           <Tiger />
         </IconWrapper>
-        <IconWrapper href="/horoscop-anual-iepure" fill={true}>
+        <IconWrapper href="/horoscop-anual-iepure" $fill>
           <Rabbit />
         </IconWrapper>
-        <IconWrapper href="/horoscop-anual-dragon" stroke={true}>
+        <IconWrapper href="/horoscop-anual-dragon" $stroke>
           <Dragon />
         </IconWrapper>
 
-        <IconWrapper href="/horoscop-anual-sarpe" fill={true}>
+        <IconWrapper href="/horoscop-anual-sarpe" $fill>
           <Snake />
         </IconWrapper>
 
-        <IconWrapper href="/horoscop-anual-cal" fill={true}>
+        <IconWrapper href="/horoscop-anual-cal" $fill>
           <Horse />
         </IconWrapper>
-        <IconWrapper href="/horoscop-anual-oaie" stroke={true}>
+        <IconWrapper href="/horoscop-anual-oaie" $stroke>
           <Goat />
         </IconWrapper>
-        <IconWrapper href="/horoscop-anual-maimuta" stroke={true}>
+        <IconWrapper href="/horoscop-anual-maimuta" $stroke>
           <Monkey />
         </IconWrapper>
-        <IconWrapper href="/horoscop-anual-cocos" fill={true}>
+        <IconWrapper href="/horoscop-anual-cocos" $fill>
           <Rooster />
         </IconWrapper>
-        <IconWrapper href="/horoscop-anual-caine" fill={true}>
+        <IconWrapper href="/horoscop-anual-caine" $fill>
           <Dog />
         </IconWrapper>
-        <IconWrapper href="/horoscop-anual-porc" stroke={true}>
+        <IconWrapper href="/horoscop-anual-porc" $stroke>
           <Pig />
         </IconWrapper>
       </Holder>
