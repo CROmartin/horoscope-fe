@@ -1,8 +1,13 @@
 import type { MetadataRoute } from "next";
+import { DISALLOWED_PREFIXES } from "@/lib/crawl";
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: { userAgent: "*", allow: "/" },
+    rules: {
+      userAgent: "*",
+      allow: "/",
+      disallow: DISALLOWED_PREFIXES,
+    },
     sitemap: "https://horoscopzodii.ro/sitemap.xml",
   };
 }
