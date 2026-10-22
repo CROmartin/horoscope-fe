@@ -55,7 +55,7 @@ async function fetchOne(field: string, name: string): Promise<Horoscope | null> 
       query: `query Horoscope($name: String) { ${field}(name: $name) { ${FIELDS} } }`,
       variables: { name },
     }),
-    next: { revalidate: REVALIDATE_SECONDS },
+    cache: "no-store",
   });
 
   if (!response.ok) {
