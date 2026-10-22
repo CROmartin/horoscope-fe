@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -13,14 +13,59 @@ const HeaderWrapper = styled.header`
   width: 100%;
   border: 2px solid #d7be8a;
   border-top: none;
-  background: rgba(0, 0, 0, 0.72);
+  background: rgba(0, 0, 0, 0.92);
   position: sticky;
   top: 0;
   z-index: 100;
   box-sizing: border-box;
 `;
 
-const Nav = styled.nav`
+const Bar = styled.div`
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px 4px 4px;
+
+  @media (max-width: 900px) {
+    display: flex;
+  }
+`;
+
+const MenuButton = styled.button`
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  background: transparent;
+  color: #d7be8a;
+  border: none;
+  font: inherit;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 3px;
+  }
+`;
+
+const Glyph = styled.span`
+  width: 18px;
+  height: 14px;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  span {
+    display: block;
+    height: 2px;
+    background: currentColor;
+  }
+`;
+
+const Nav = styled.nav<{ $open: boolean }>`
   width: 100%;
   display: flex;
   gap: 4px;
@@ -55,6 +100,23 @@ const Nav = styled.nav`
       transition: color 0.2s ease-in-out;
     }
   }
+
+  @media (max-width: 900px) {
+    display: ${(props) => (props.$open ? "flex" : "none")};
+    flex-direction: column;
+    gap: 0;
+    overflow: visible;
+    padding: 0 8px 8px;
+
+    a {
+      box-sizing: border-box;
+      width: 100%;
+      min-height: 48px;
+      padding: 8px 12px;
+      border-top: 1px solid rgba(215, 190, 138, 0.28);
+      white-space: normal;
+    }
+  }
 `;
 
 const Language = styled.div`
@@ -83,6 +145,18 @@ const Language = styled.div`
     outline: 2px solid #ffffff;
     outline-offset: 3px;
   }
+
+  @media (max-width: 900px) {
+    &.desktop-lang {
+      display: none;
+    }
+  }
+
+  @media (min-width: 901px) {
+    &.mobile-lang {
+      display: none;
+    }
+  }
 `;
 
 const LINK_KEYS = [
@@ -105,18 +179,50 @@ function isCurrent(pathname: string, href: string) {
 function Header() {
   const pathname = usePathname();
   const locale = useLocale();
-  const setLocale = useSetLocale();
   const text = copy(locale);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
 
   return (
     <HeaderWrapper>
-      <Nav aria-label={text.navLabel}>
+      <Bar>
+        <MenuButton
+          type="button"
+          aria-expanded={open}
+          aria-controls="site-sections"
+          onClick={() => setOpen((value) => !value)}
+        >
+          <Glyph aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </Glyph>
+          {text.menu}
+        </MenuButton>
+        <Language className="mobile-lang" role="group" aria-label={text.language}>
+          <LanguageButtons />
+        </Language>
+      </Bar>
+      <Nav id="site-sections" aria-label={text.navLabel} $open={open}>
         {LINK_KEYS.map((item) => (
           <Link
             key={item.href}
             href={item.href}
             aria-current={isCurrent(pathname, item.href) ? "page" : undefined}
             onClick={() => {
+              if (isCurrent(pathname, item.href)) setOpen(false);
               if (item.href === "/tarot/cartea-ta") {
                 trackEvent("feature_card_clicked", { feature: "tarot", location: "header" });
               }
@@ -125,20 +231,26 @@ function Header() {
             {text[item.key]}
           </Link>
         ))}
-        <Language role="group" aria-label={text.language}>
-          {(["ro", "en"] as Locale[]).map((item) => (
-            <button
-              key={item}
-              type="button"
-              aria-pressed={locale === item}
-              onClick={() => setLocale(item)}
-            >
-              {item.toUpperCase()}
-            </button>
-          ))}
+        <Language className="desktop-lang" role="group" aria-label={text.language}>
+          <LanguageButtons />
         </Language>
       </Nav>
     </HeaderWrapper>
+  );
+}
+
+function LanguageButtons() {
+  const locale = useLocale();
+  const setLocale = useSetLocale();
+
+  return (
+    <>
+      {(["ro", "en"] as Locale[]).map((item) => (
+        <button key={item} type="button" aria-pressed={locale === item} onClick={() => setLocale(item)}>
+          {item.toUpperCase()}
+        </button>
+      ))}
+    </>
   );
 }
 

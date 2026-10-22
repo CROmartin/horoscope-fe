@@ -3,6 +3,7 @@ import type { Locale } from "./locale";
 const ro = {
   language: "Limbă",
   navLabel: "Secțiuni",
+  menu: "Meniu",
   trail: "Traseu",
   home: "Acasă",
   today: "Horoscop azi",
@@ -239,6 +240,7 @@ const ro = {
 const en: { [K in keyof typeof ro]: string } = {
   language: "Language",
   navLabel: "Sections",
+  menu: "Menu",
   trail: "Breadcrumb",
   home: "Home",
   today: "Today's horoscope",
