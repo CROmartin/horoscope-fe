@@ -25,6 +25,8 @@ const Bar = styled.div`
   align-items: center;
   gap: 8px;
   padding: 4px 8px 4px 4px;
+  position: relative;
+  z-index: 2;
 
   @media (max-width: 900px) {
     display: flex;
@@ -103,10 +105,22 @@ const Nav = styled.nav<{ $open: boolean }>`
 
   @media (max-width: 900px) {
     display: ${(props) => (props.$open ? "flex" : "none")};
+    position: absolute;
+    z-index: 2;
+    left: -2px;
+    right: -2px;
+    top: 100%;
+    width: auto;
     flex-direction: column;
     gap: 0;
-    overflow: visible;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: calc(100dvh - 64px);
+    overscroll-behavior: contain;
     padding: 0 8px 8px;
+    background: #000000;
+    border: 2px solid #d7be8a;
+    border-top: none;
 
     a {
       box-sizing: border-box;
@@ -116,6 +130,21 @@ const Nav = styled.nav<{ $open: boolean }>`
       border-top: 1px solid rgba(215, 190, 138, 0.28);
       white-space: normal;
     }
+  }
+`;
+
+const Scrim = styled.div<{ $open: boolean }>`
+  display: none;
+
+  @media (max-width: 900px) {
+    display: ${(props) => (props.$open ? "block" : "none")};
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100dvh;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.45);
   }
 `;
 
@@ -197,6 +226,7 @@ function Header() {
 
   return (
     <HeaderWrapper>
+      <Scrim $open={open} onClick={() => setOpen(false)} />
       <Bar>
         <MenuButton
           type="button"
