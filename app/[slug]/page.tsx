@@ -15,6 +15,7 @@ import { chineseFacts } from "@/lib/chineseFacts";
 import { romanianToEnglish } from "@/lib/romanianToEnglish";
 import { translateFields } from "@/lib/translateFields";
 
+export const dynamic = "force-dynamic";
 export const dynamicParams = true;
 
 export function generateStaticParams() {
