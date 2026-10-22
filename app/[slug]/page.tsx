@@ -15,7 +15,6 @@ import { chineseFacts } from "@/lib/chineseFacts";
 import { romanianToEnglish } from "@/lib/romanianToEnglish";
 import { translateFields } from "@/lib/translateFields";
 
-export const revalidate = 3600;
 export const dynamicParams = true;
 
 export function generateStaticParams() {
