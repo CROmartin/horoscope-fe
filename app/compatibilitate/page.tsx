@@ -10,12 +10,12 @@ const text = {
   ro: {
     title: "Compatibilitate zodii",
     description:
-      "Alege două zodii și deschide pagina lor. Fiecare pereche are un link stabil, pe care îl poți trimite mai departe.",
+      "Alege două zodii și vezi cum se potrivesc.",
   },
   en: {
     title: "Zodiac compatibility",
     description:
-      "Choose two signs and open their page. Each pair has a stable link you can send to someone else.",
+      "Choose two signs and see how they match.",
   },
 };
 

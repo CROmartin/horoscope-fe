@@ -6,11 +6,11 @@ const path = "/horoscop-azi";
 const text = {
   ro: {
     title: "Horoscop de azi",
-    description: "Horoscopul de azi pentru cele 12 zodii, în română. Fiecare zodie are propriul text, de divertisment.",
+    description: "Horoscopul de azi pentru toate cele 12 zodii. Alege semnul și citește previziunea.",
   },
   en: {
     title: "Horoscope today",
-    description: "Today's horoscope for the 12 signs. Each sign has its own entertainment text, English follows the Romanian horoscope.",
+    description: "Today's horoscope for all 12 signs. Choose yours and read the forecast.",
   },
 };
 

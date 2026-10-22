@@ -6,11 +6,11 @@ const path = "/horoscop-chinezesc";
 const text = {
   ro: {
     title: "Horoscop chinezesc",
-    description: "Zodiacul chinezesc, cu horoscopul anual și zilnic, în română. Fiecare semn are propriul text.",
+    description: "Zodiacul chinezesc: horoscopul anului și al zilei pentru cele 12 semne. Alege semnul tău.",
   },
   en: {
     title: "Chinese horoscope",
-    description: "The Chinese zodiac, with the yearly and daily horoscope. Each sign has its own text, English follows the Romanian horoscope.",
+    description: "The Chinese zodiac: the yearly and daily horoscope for all 12 signs. Choose yours.",
   },
 };
 

@@ -6,11 +6,11 @@ const path = "/horoscop-zilnic-chinezesc";
 const text = {
   ro: {
     title: "Horoscop chinezesc zilnic",
-    description: "Horoscopul zilnic pentru cele 12 semne din zodiacul chinezesc, în română. Fiecare semn are propriul text.",
+    description: "Horoscopul zilnic chinezesc pentru cele 12 semne. Alege semnul anului tău.",
   },
   en: {
     title: "Daily Chinese horoscope",
-    description: "The daily horoscope for the 12 Chinese zodiac signs. Each sign has its own text, English follows the Romanian horoscope.",
+    description: "The daily Chinese horoscope for all 12 signs. Choose your year sign.",
   },
 };
 

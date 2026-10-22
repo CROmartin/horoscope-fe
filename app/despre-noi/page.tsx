@@ -12,7 +12,7 @@ const text = {
   en: {
     title: "About Horoscopzodii: daily, weekly and Chinese horoscope",
     description:
-      "Horoscopzodii publishes the daily horoscope, the weekly horoscope, and the Chinese zodiac, with compatibility and affirmations for each sign. English follows the Romanian horoscope.",
+      "The daily horoscope, the weekly horoscope, and the Chinese zodiac, with compatibility and affirmations for each sign.",
   },
 };
 

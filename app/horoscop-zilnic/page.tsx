@@ -6,11 +6,11 @@ const path = "/horoscop-zilnic";
 const text = {
   ro: {
     title: "Horoscop zilnic",
-    description: "Horoscopul zilei pentru cele 12 zodii, în română. Fiecare zodie are propriul text, de divertisment.",
+    description: "Horoscopul de azi pentru toate cele 12 zodii. Alege semnul și citește previziunea zilei.",
   },
   en: {
     title: "Daily horoscope",
-    description: "Today's horoscope for the 12 signs. Each sign has its own entertainment text, English follows the Romanian horoscope.",
+    description: "Today's horoscope for all 12 signs. Choose yours and read the day's forecast.",
   },
 };
 

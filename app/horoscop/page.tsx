@@ -6,11 +6,11 @@ const path = "/horoscop";
 const text = {
   ro: {
     title: "Horoscop zilnic și săptămânal",
-    description: "Cele 12 zodii, cu horoscopul zilnic și săptămânal, în română. Alege semnul și citește textul lui.",
+    description: "Cele 12 zodii. Alege semnul și intră în horoscopul de azi și în cel al săptămânii.",
   },
   en: {
     title: "Daily and weekly horoscope",
-    description: "The 12 signs, with the daily and weekly horoscope. Choose a sign and read its text, English follows the Romanian horoscope.",
+    description: "The 12 signs. Choose yours and open today's horoscope and this week's.",
   },
 };
 
