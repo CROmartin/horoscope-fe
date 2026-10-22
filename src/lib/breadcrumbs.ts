@@ -8,7 +8,9 @@ export function breadcrumbTrail(path: string, currentTitle: string, locale: Loca
   const text = copy(locale);
   const items: Crumb[] = [{ name: text.home, path: "/" }];
 
-  if (path.startsWith("/horoscop-azi-")) {
+  if (path.startsWith("/tarot/cartea-zilei/")) {
+    items.push({ name: text.tarotTitle, path: "/tarot/cartea-zilei" });
+  } else if (path.startsWith("/horoscop-azi-")) {
     items.push({ name: text.today, path: "/horoscop-azi" });
   } else if (path.startsWith("/horoscop-saptamanal-")) {
     items.push({ name: text.cardWeeklyTitle, path: "/horoscop-saptamanal" });

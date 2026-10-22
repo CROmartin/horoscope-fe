@@ -26,6 +26,7 @@ test("English related links use the same horoscope addresses", () => {
       { href: "/horoscop-saptamanal-berbec", label: "This week's horoscope" },
       { href: "/berbec", label: "Sign profile" },
       { href: "/compatibilitate?a=berbec", label: "Compatibility" },
+      { href: "/tarot/cartea-ta", label: "Your card" },
     ]
   );
   assert.match(formatLongDate("2026-10-20", "en") || "", /20 October 2026/);

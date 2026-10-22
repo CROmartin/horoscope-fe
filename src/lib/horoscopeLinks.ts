@@ -37,5 +37,8 @@ export function relatedHoroscopeLinks(input: {
       { href: `/compatibilitate?a=${signSlug}`, label: text.compatibility }
     );
   }
+  if (interval === "zilnic" || interval === "azi") {
+    links.push({ href: "/tarot/cartea-ta", label: text.tarotPersonalTitle });
+  }
   return links;
 }

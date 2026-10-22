@@ -99,6 +99,11 @@ export function hitsForPath(pathname: string): AnalyticsHit[] {
   return hits;
 }
 
+export function trackEvent(name: string, params?: Record<string, string>) {
+  if (typeof window === "undefined") return;
+  window.gtag?.("event", name, params);
+}
+
 export function zodiacSelectHit(sign: string): AnalyticsHit | null {
   if (!WESTERN.has(sign)) return null;
   return { name: "zodiac_select", params: { sign } };

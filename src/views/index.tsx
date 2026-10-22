@@ -7,11 +7,13 @@ import HoroscopeTypes from "../components/homepage/HoroscopeTypes";
 import Reviews from "../components/homepage/Reviews";
 import Contacts from "../components/homepage/Contacts";
 import CompatibilityCard from "../components/compatibility/CompatibilityCard";
+import TarotHomeCard from "../components/tarot/TarotHomeCard";
 
 const IndexPage = ({ todayIso }: { todayIso: string }) => {
   return (
     <AlignWrapper>
       <Hero todayIso={todayIso} />
+      <TarotHomeCard todayIso={todayIso} />
       <CompatibilityCard />
       <HoroscopeTypes />
 

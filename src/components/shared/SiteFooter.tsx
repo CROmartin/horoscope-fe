@@ -32,6 +32,25 @@ const Footer = styled.footer`
   }
 `;
 
+const Legal = styled.p`
+  width: 100%;
+  margin: 12px 0 0;
+  color: #8d8372;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+
+  a {
+    min-height: 0;
+    display: inline;
+    padding: 0 2px;
+    color: inherit;
+    font-size: 12px;
+    font-weight: 400;
+    text-decoration: underline;
+  }
+`;
+
 const LINKS = [
   { href: "/despre-noi", key: "about" },
   { href: "/politica-editoriala", key: "editorial" },
@@ -50,6 +69,11 @@ function SiteFooter() {
           {text[item.key]}
         </Link>
       ))}
+      <Legal>
+        {text.footerNotice} <Link href="/avertisment">{text.disclaimer}</Link>
+        {" · "}
+        <Link href="/politica-editoriala">{text.editorial}</Link>
+      </Legal>
     </Footer>
   );
 }

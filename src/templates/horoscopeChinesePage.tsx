@@ -42,7 +42,6 @@ import styled from "styled-components";
 import { renderAffirmations } from "../utils/helpers";
 import ReadingStatus from "../components/horoscope/ReadingStatus";
 import type { Crumb } from "../lib/breadcrumbs";
-import type { ReadingFreshness } from "../lib/readingDate";
 import { copy } from "@/lib/messages";
 import { useLocale } from "@/components/shared/LocaleProvider";
 
@@ -142,7 +141,6 @@ function HoroscopeChinesePage({
   affirmations,
   signStandard,
   heading,
-  freshness,
   links,
   crumbs,
   period,
@@ -155,7 +153,6 @@ function HoroscopeChinesePage({
   affirmations: string;
   signStandard: string;
   heading: string;
-  freshness: ReadingFreshness;
   links: { href: string; label: string }[];
   crumbs: Crumb[];
   period: "zilnic" | "anual";
@@ -179,7 +176,7 @@ function HoroscopeChinesePage({
       <HomeLink href="/">
         <Illustration />
       </HomeLink>
-      <ReadingStatus heading={heading} freshness={freshness} links={links} crumbs={crumbs} />
+      <ReadingStatus heading={heading} links={links} crumbs={crumbs} />
       <Row>
         <LeftSide>
           <IntervalHolder>

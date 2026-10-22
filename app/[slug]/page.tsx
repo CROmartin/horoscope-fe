@@ -80,7 +80,6 @@ export default async function HoroscopeRoute({ params }: PageProps) {
         affirmations={reading.affirmations}
         signStandard={horoscope.signStandard}
         heading={title}
-        freshness={freshness}
         links={links}
         crumbs={crumbs}
         period={horoscope.interval === "anual" ? "anual" : "zilnic"}
@@ -94,7 +93,6 @@ export default async function HoroscopeRoute({ params }: PageProps) {
         compatibility={reading.compatibility}
         affirmations={reading.affirmations}
         heading={title}
-        freshness={freshness}
         links={links}
         crumbs={crumbs}
         translated={translated}
@@ -106,7 +104,6 @@ export default async function HoroscopeRoute({ params }: PageProps) {
         compatibility={reading.compatibility}
         affirmations={reading.affirmations}
         heading={title}
-        freshness={freshness}
         links={links}
         crumbs={crumbs}
         period={horoscope.interval === "saptamanal" ? "saptamanal" : "zilnic"}

@@ -33,7 +33,6 @@ import styled from "styled-components";
 import { renderAffirmations } from "../utils/helpers";
 import ReadingStatus from "../components/horoscope/ReadingStatus";
 import type { Crumb } from "../lib/breadcrumbs";
-import type { ReadingFreshness } from "../lib/readingDate";
 import { copy } from "@/lib/messages";
 import { useLocale } from "@/components/shared/LocaleProvider";
 
@@ -85,7 +84,6 @@ function HoroscopePage({
   affirmations,
   sign,
   heading,
-  freshness,
   links,
   crumbs,
   translated,
@@ -95,7 +93,6 @@ function HoroscopePage({
   affirmations: string;
   sign: string;
   heading: string;
-  freshness: ReadingFreshness;
   links: { href: string; label: string }[];
   crumbs: Crumb[];
   translated?: boolean;
@@ -108,7 +105,7 @@ function HoroscopePage({
       <HomeLink href="/">
         <Illustration />
       </HomeLink>
-      <ReadingStatus heading={heading} freshness={freshness} links={links} crumbs={crumbs} />
+      <ReadingStatus heading={heading} links={links} crumbs={crumbs} />
       <RowAzi>
         <RightSide>
           <ContentBox>

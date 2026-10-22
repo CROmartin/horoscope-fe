@@ -13,6 +13,7 @@ const STATIC_PATHS = [
   "/avertisment",
   "/confidentialitate",
   "/compatibilitate",
+  "/tarot/cartea-zilei",
   ...WESTERN_SLUGS.map((slug) => `/${slug}`),
 ];
 

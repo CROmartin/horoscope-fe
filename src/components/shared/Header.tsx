@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { Locale } from "@/lib/locale";
+import { trackEvent } from "@/lib/analytics";
 import { copy } from "@/lib/messages";
 import { useLocale, useSetLocale } from "./LocaleProvider";
 
@@ -87,6 +88,7 @@ const Language = styled.div`
 const LINK_KEYS = [
   { href: "/", key: "home" },
   { href: "/horoscop-zilnic", key: "today" },
+  { href: "/tarot/cartea-ta", key: "tarot" },
   { href: "/horoscop-saptamanal", key: "weekly" },
   { href: "/compatibilitate", key: "compatibility" },
   { href: "/horoscop", key: "signs" },
@@ -95,9 +97,8 @@ const LINK_KEYS = [
 
 function isCurrent(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
-  if (href === "/compatibilitate") {
-    return pathname === href || pathname.startsWith("/compatibilitate/");
-  }
+  if (href === "/compatibilitate") return pathname === href || pathname.startsWith(`${href}/`);
+  if (href === "/tarot/cartea-ta") return pathname.startsWith("/tarot/");
   return pathname === href;
 }
 
@@ -111,7 +112,16 @@ function Header() {
     <HeaderWrapper>
       <Nav aria-label={text.navLabel}>
         {LINK_KEYS.map((item) => (
-          <Link key={item.href} href={item.href} aria-current={isCurrent(pathname, item.href) ? "page" : undefined}>
+          <Link
+            key={item.href}
+            href={item.href}
+            aria-current={isCurrent(pathname, item.href) ? "page" : undefined}
+            onClick={() => {
+              if (item.href === "/tarot/cartea-ta") {
+                trackEvent("feature_card_clicked", { feature: "tarot", location: "header" });
+              }
+            }}
+          >
             {text[item.key]}
           </Link>
         ))}

@@ -64,6 +64,7 @@ test("related links stay on the existing horoscope URLs", () => {
       { href: "/horoscop-saptamanal-berbec", label: "Horoscopul săptămânii" },
       { href: "/berbec", label: "Profilul zodiei" },
       { href: "/compatibilitate?a=berbec", label: "Compatibilitate" },
+      { href: "/tarot/cartea-ta", label: "Cartea ta" },
     ]
   );
   assert.deepEqual(
@@ -79,6 +80,7 @@ test("related links stay on the existing horoscope URLs", () => {
     [
       { href: "/horoscop-anual-tigru", label: "Horoscopul anual" },
       { href: "/horoscop-zilnic-chinezesc", label: "Alte semne" },
+      { href: "/tarot/cartea-ta", label: "Cartea ta" },
     ]
   );
   assert.deepEqual(
