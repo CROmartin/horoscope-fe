@@ -27,6 +27,11 @@ export function breadcrumbTrail(path: string, currentTitle: string, locale: Loca
     items.push(parent);
   }
 
+  if (path === "/horoscop-chinezesc") {
+    items.push({ name: text.cardChineseTitle, path });
+    return items;
+  }
+
   if (path !== "/") items.push({ name: currentTitle, path });
   return items;
 }

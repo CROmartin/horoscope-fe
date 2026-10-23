@@ -311,6 +311,13 @@ function HoroscopeChinesePage({
       </RowAzi>
       <br />
       <Row>
+        <ContentBox>
+          <p>
+            {text.chineseFind} <Link href="/horoscop-chinezesc">{text.chineseFindLink}</Link>
+          </p>
+        </ContentBox>
+      </Row>
+      <Row>
         <Button message={text.moreChinese} link="/horoscop-chinezesc" />
       </Row>
       <TryMoreChineseSigns period={period} currentSlug={signSlug} />

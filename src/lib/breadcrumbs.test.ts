@@ -30,6 +30,13 @@ test("a dated tarot card sits under the daily tarot page", () => {
   ]);
 });
 
+test("the Chinese hub breadcrumb names the calculator page", () => {
+  assert.deepEqual(breadcrumbTrail("/horoscop-chinezesc", "Zodiac chinezesc: află ce animal ești după data nașterii"), [
+    { name: "Acasă", path: "/" },
+    { name: "Zodiac chinezesc", path: "/horoscop-chinezesc" },
+  ]);
+});
+
 test("weekly, yearly, and today readings keep their existing hubs", () => {
   assert.equal(breadcrumbTrail("/horoscop-saptamanal-leu", "Leu")[1]?.path, "/horoscop-saptamanal");
   assert.equal(breadcrumbTrail("/horoscop-anual-dragon", "Dragon")[1]?.path, "/horoscop-chinezesc");
