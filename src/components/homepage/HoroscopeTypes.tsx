@@ -29,7 +29,7 @@ const TypeHolder = styled.div`
   flex-direction: column;
   justify-content: space-between;
   /* align-items: center; */
-  padding: 34px 60px;
+  padding: 34px 24px;
   border-right: 2px solid #d7be8a;
   width: 25%;
   min-height: 460px;

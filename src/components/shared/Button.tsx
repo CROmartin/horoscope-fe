@@ -13,6 +13,7 @@ const ButtonWrapper = styled(Link)<ButtonWrapperProps>`
   background: #060709;
   cursor: pointer;
   width: max-content;
+  max-width: 100%;
   text-decoration: none;
   box-sizing: border-box;
 
@@ -28,22 +29,28 @@ const MessageHolder = styled.div<ButtonWrapperProps>`
   align-items: center;
   border: 1px solid #d7be8a;
   box-sizing: border-box;
+  min-width: 0;
+  width: auto;
+  flex: 1 1 auto;
   min-height: 44px;
   padding: 20px 40px;
   font-weight: 500;
   font-size: 16px;
-  line-height: 19px;
+  line-height: 1.25;
+  text-align: center;
   text-transform: uppercase;
+  white-space: normal;
+  overflow-wrap: anywhere;
 
-  ${(props) => props.$small && "padding: 10px 20px; font-size: 12px; "}
+  ${(props) => props.$small && "padding: 10px 12px; font-size: 12px; "}
 
   @media (max-width: 1285px) {
-    padding: 20px 40px;
-    font-size: 16px;
+    padding: ${(props) => (props.$small ? "10px 12px" : "20px 40px")};
+    font-size: ${(props) => (props.$small ? "12px" : "16px")};
   }
 
   @media (max-width: 425px) {
-    padding: 10px 20px;
+    padding: 10px 16px;
     font-size: 12px;
   }
 `;
@@ -52,6 +59,8 @@ const SvgWrapper = styled.div<ButtonWrapperProps>`
   border: 1px solid #d7be8a;
   border-left: none;
   display: flex;
+  flex: 0 0 auto;
+  width: auto;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;

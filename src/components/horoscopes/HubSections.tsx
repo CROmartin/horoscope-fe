@@ -16,35 +16,44 @@ import { CHINESE_SIGNS, type ChineseSlug } from "@/lib/horoscopes";
 import { displayStoredName, signDisplay, type ZodiacSlug } from "@/lib/zodiacSigns";
 
 export const HubH1 = styled.h1`
+  align-self: flex-start;
   width: 100%;
   margin: 12px 0;
   font-size: clamp(32px, 5vw, 56px);
   line-height: 1.05;
+  text-align: left;
   text-wrap: balance;
 `;
 
 export const HubH2 = styled.h2`
+  align-self: flex-start;
   width: 100%;
   margin: 8px 0 0;
   font-size: clamp(24px, 3vw, 32px);
   line-height: 1.2;
+  text-align: left;
 `;
 
 export const HubLead = styled.p`
+  align-self: flex-start;
   width: 100%;
-  max-width: 760px;
+  max-width: 42rem;
   margin: 0 0 16px;
   font-size: 18px;
   line-height: 1.5;
+  text-align: left;
   text-transform: none;
 `;
 
 const Section = styled.section`
+  align-self: flex-start;
   width: 100%;
-  max-width: 760px;
-  margin: 8px auto 32px;
+  max-width: 42rem;
+  margin: 8px 0 32px;
   display: flex;
   flex-direction: column;
+  align-items: stretch;
+  text-align: left;
   gap: 12px;
 
   h2 {
