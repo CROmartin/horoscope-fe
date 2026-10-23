@@ -24,6 +24,7 @@ import {
   zodiacHeading,
   zodiacShareText,
 } from "@/lib/chineseZodiacCopy";
+import { displayStoredName } from "@/lib/zodiacSigns";
 import { trackEvent } from "@/lib/analytics";
 import Tiger from "../horoscopes/Icons/chinese/TigerSmall.svg";
 import Snake from "../horoscopes/Icons/chinese/SnakeSmall.svg";
@@ -38,7 +39,7 @@ import Rat from "../horoscopes/Icons/chinese/RatSmall.svg";
 import Rooster from "../horoscopes/Icons/chinese/RoosterSmall.svg";
 import Pig from "../horoscopes/Icons/chinese/PigSmall.svg";
 
-const ICONS: Record<string, React.ComponentType> = {
+const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   sobolan: Rat,
   bivol: Ox,
   tigru: Tiger,
@@ -52,6 +53,27 @@ const ICONS: Record<string, React.ComponentType> = {
   caine: Dog,
   porc: Pig,
 };
+
+const SIGN_MENU: Array<{
+  slug: string;
+  stored: string;
+  fill?: boolean;
+  stroke?: boolean;
+  iconClass?: string;
+}> = [
+  { slug: "sobolan", stored: "Șobolan", fill: true },
+  { slug: "bivol", stored: "Bivol", fill: true },
+  { slug: "tigru", stored: "Tigru", fill: true },
+  { slug: "iepure", stored: "Iepure", fill: true },
+  { slug: "dragon", stored: "Dragon", stroke: true, iconClass: "dragon" },
+  { slug: "sarpe", stored: "Șarpe", fill: true },
+  { slug: "cal", stored: "Cal", fill: true },
+  { slug: "oaie", stored: "Oaie", stroke: true, iconClass: "boldSvg" },
+  { slug: "maimuta", stored: "Maimuță", fill: true },
+  { slug: "cocos", stored: "Cocoș", fill: true },
+  { slug: "caine", stored: "Câine", fill: true },
+  { slug: "porc", stored: "Porc", stroke: true, iconClass: "boldSvg" },
+];
 
 const MONTHS = {
   ro: [
@@ -110,6 +132,88 @@ const Title = styled.h1`
   line-height: 1.05;
   text-align: left;
   text-wrap: balance;
+`;
+
+const Menu = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin: 4px 0 8px;
+`;
+
+const MenuTitle = styled.h2`
+  width: 100%;
+  margin: 8px 0 0;
+  font-size: clamp(24px, 3vw, 32px);
+  line-height: 1.2;
+  text-align: left;
+`;
+
+const Line = styled.div`
+  width: 100%;
+  height: 1px;
+  margin-top: 12px;
+  background: #d7be8a;
+`;
+
+const InfoLine = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 20px 0 8px;
+  gap: 32px;
+
+  @media (max-width: 1150px) {
+    gap: 28px 36px;
+  }
+`;
+
+const SignHolder = styled(Link)`
+  width: 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  text-transform: none;
+
+  &:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 3px;
+  }
+`;
+
+const MenuIcon = styled.span<{ $fill?: boolean; $stroke?: boolean }>`
+  width: 72px;
+  height: 72px;
+  display: flex;
+  margin-bottom: 8px;
+
+  svg {
+    width: 72px;
+    height: 72px;
+  }
+
+  path {
+    stroke: #d7be8a;
+    ${(props) => props.$fill && "fill: #d7be8a;"}
+    ${(props) => props.$stroke && "stroke: #d7be8a;"}
+  }
+
+  &:hover {
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
+  }
+`;
+
+const SignName = styled.span`
+  width: 100%;
+  font-family: "DM Serif Display", serif;
+  font-style: italic;
+  font-size: 16px;
+  line-height: 1.1;
+  text-align: center;
+  color: #ffffff;
 `;
 
 const Lead = styled.p`
@@ -494,6 +598,25 @@ function ChineseZodiacHub() {
       <Narrow>
         <Title>{text.h1}</Title>
         <Lead>{text.intro}</Lead>
+      </Narrow>
+      <Menu>
+        <MenuTitle>{text.choose}</MenuTitle>
+        <Line />
+        <InfoLine>
+          {SIGN_MENU.map((sign) => {
+            const Icon = ICONS[sign.slug];
+            return (
+              <SignHolder key={sign.slug} href={`/horoscop-anual-${sign.slug}`}>
+                <MenuIcon $fill={sign.fill} $stroke={sign.stroke}>
+                  {Icon ? <Icon className={sign.iconClass} /> : null}
+                </MenuIcon>
+                <SignName>{displayStoredName(sign.stored, locale)}</SignName>
+              </SignHolder>
+            );
+          })}
+        </InfoLine>
+      </Menu>
+      <Narrow>
         <Form onSubmit={onSubmit} noValidate>
           <Fields>
             <Legend>{text.birthLabel}</Legend>
@@ -592,13 +715,6 @@ function ChineseZodiacHub() {
       </Narrow>
 
       <Section>
-        <h2>{text.howTitle}</h2>
-        {text.how.map((paragraph) => (
-          <p key={paragraph}>{paragraph}</p>
-        ))}
-      </Section>
-
-      <Section>
         <h2>{text.animalsTitle}</h2>
         <Cards>
           {chineseAnimalCards(locale).map((card) => (
@@ -610,6 +726,13 @@ function ChineseZodiacHub() {
             </Card>
           ))}
         </Cards>
+      </Section>
+
+      <Section>
+        <h2>{text.howTitle}</h2>
+        {text.how.map((paragraph) => (
+          <p key={paragraph}>{paragraph}</p>
+        ))}
       </Section>
 
       <Section>
