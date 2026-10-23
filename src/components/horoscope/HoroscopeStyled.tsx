@@ -78,6 +78,13 @@ export const ContentBox = styled.div`
     line-height: 1.55;
     margin: 0 0 8px;
   }
+  a,
+  a:visited {
+    color: #d7be8a;
+  }
+  a:hover {
+    color: #f3e6c8;
+  }
 
   @media (max-width: 1100px) {
     width: 100%;
