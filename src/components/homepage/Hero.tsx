@@ -5,7 +5,7 @@ import styled from "styled-components";
 import Illustration from "../../Icons/illustration";
 import ZodiacGrid from "../zodiac/ZodiacGrid";
 import { formatLongDate } from "@/lib/readingDate";
-import { copy } from "@/lib/messages";
+import { homeHeading, homeLead, type Publication } from "@/lib/hubCopy";
 import { useLocale } from "../shared/LocaleProvider";
 
 const SvgWrapper = styled.div`
@@ -45,9 +45,8 @@ const Today = styled.p`
   line-height: 1.4;
 `;
 
-function Hero({ todayIso }: { todayIso: string }) {
+function Hero({ todayIso, publication }: { todayIso: string; publication: Publication }) {
   const locale = useLocale();
-  const text = copy(locale);
   const todayLabel = formatLongDate(todayIso, locale);
 
   return (
@@ -55,11 +54,12 @@ function Hero({ todayIso }: { todayIso: string }) {
       <SvgWrapper>
         <Illustration />
       </SvgWrapper>
-      <Headline>{text.hero}</Headline>
+      <Headline>{homeHeading(locale, publication)}</Headline>
       <Today>
         <time dateTime={todayIso}>{todayLabel}</time>
       </Today>
-      <ZodiacGrid />
+      <Today>{homeLead(locale, publication)}</Today>
+      <ZodiacGrid publication={publication} />
     </section>
   );
 }

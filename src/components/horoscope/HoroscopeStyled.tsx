@@ -68,6 +68,16 @@ export const ContentBox = styled.div`
   span {
     color: #d7be8a;
   }
+  h2 {
+    margin: 22px 0 8px;
+    font-size: 22px;
+    line-height: 1.3;
+  }
+  p {
+    font-weight: 500;
+    line-height: 1.55;
+    margin: 0 0 8px;
+  }
 
   @media (max-width: 1100px) {
     width: 100%;

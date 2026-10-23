@@ -190,7 +190,7 @@ const Language = styled.div`
 
 const LINK_KEYS = [
   { href: "/", key: "home" },
-  { href: "/horoscop-zilnic", key: "today" },
+  { href: "/horoscop-zilnic", key: "dailyNav" },
   { href: "/tarot/cartea-ta", key: "tarot" },
   { href: "/horoscop-saptamanal", key: "weekly" },
   { href: "/compatibilitate", key: "compatibility" },

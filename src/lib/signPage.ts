@@ -7,11 +7,11 @@ export async function signPageMeta(slug: ZodiacSlug) {
   const romanianName = signDisplay(slug, "ro")?.name || slug;
   const title =
     locale === "en"
-      ? `${name}: daily and weekly horoscope`
-      : `Horoscop ${romanianName}: zilnic și săptămânal`;
+      ? `${name}: dates, traits and compatibility`
+      : `Zodia ${romanianName}: date, trăsături și compatibilitate`;
   const description =
     locale === "en"
-      ? `Daily and weekly horoscope for ${name}. Every reader of this sign sees the same entertainment text. English follows the Romanian horoscope.`
-      : `Horoscopul zilnic și săptămânal pentru ${romanianName}, în română. Toți cititorii din zodia ${romanianName} văd același text, de divertisment.`;
+      ? `Discover the dates of ${name}, its element, symbols, strengths and challenges in astrology.`
+      : `Descoperă perioada zodiei ${romanianName}, elementul, simbolurile, punctele forte și provocările atribuite acestui semn în astrologie.`;
   return { title, description, path: `/${slug}`, locale };
 }

@@ -5,12 +5,14 @@ import { localizedPage } from "@/lib/localizedPage";
 const path = "/horoscop";
 const text = {
   ro: {
-    title: "Horoscop zilnic și săptămânal",
-    description: "Cele 12 zodii. Alege semnul și intră în horoscopul de azi și în cel al săptămânii.",
+    title: "Zodii: cele 12 semne ale zodiacului",
+    description:
+      "Descoperă cele 12 zodii, perioadele calendaristice, elementele și trăsăturile atribuite fiecărui semn în astrologia occidentală.",
   },
   en: {
-    title: "Daily and weekly horoscope",
-    description: "The 12 signs. Choose yours and open today's horoscope and this week's.",
+    title: "Zodiac signs: the 12 Western signs",
+    description:
+      "Discover the 12 signs, their calendar dates, elements, and the traits attributed to each sign in Western astrology.",
   },
 };
 

@@ -1,18 +1,19 @@
 import View from "@/views/despre-noi";
 import JsonLd from "@/components/seo/JsonLd";
 import { localizedPage } from "@/lib/localizedPage";
+import { publishedSet } from "@/lib/horoscopes";
 
 const path = "/despre-noi";
 const text = {
   ro: {
-    title: "Despre Horoscopzodii: horoscop zilnic, săptămânal și chinezesc",
+    title: "Despre HoroscopZodii: ce publicăm și cum",
     description:
-      "Horoscopzodii publică horoscopul zilei, al săptămânii și zodiacul chinezesc în română, cu compatibilitate și afirmații pentru fiecare zodie.",
+      "Află ce tipuri de horoscop publicăm, cum sunt prezentate textele și care sunt limitele interpretărilor astrologice.",
   },
   en: {
-    title: "About Horoscopzodii: daily, weekly and Chinese horoscope",
+    title: "About HoroscopZodii: what we publish",
     description:
-      "The daily horoscope, the weekly horoscope, and the Chinese zodiac, with compatibility and affirmations for each sign.",
+      "See which horoscopes we publish, how the texts are presented, and what the limits of an astrological interpretation are.",
   },
 };
 
@@ -25,7 +26,7 @@ export default async function Page() {
   return (
     <>
       <JsonLd title={meta.title} description={meta.description} path={path} />
-      <View />
+      <View publication={await publishedSet("getAllHoroscopeDaily", "day")} />
     </>
   );
 }

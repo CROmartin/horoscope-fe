@@ -4,12 +4,13 @@ import JsonLd from "@/components/seo/JsonLd";
 import HoroscopeChinesePage from "@/templates/horoscopeChinesePage";
 import HoroscopePage from "@/templates/horoscopePage";
 import HoroscopePageAzi from "@/templates/horoscopePageAzi";
-import { horoscopeDescription, horoscopeHeading, isoDate } from "@/lib/horoscopeCopy";
+import { forecastDescription, forecastHeading, isoDate } from "@/lib/horoscopeCopy";
 import { breadcrumbTrail } from "@/lib/breadcrumbs";
 import { relatedHoroscopeLinks } from "@/lib/horoscopeLinks";
 import { getHoroscopeBySlug } from "@/lib/horoscopes";
 import { pageMetadata } from "@/lib/metadata";
-import { horoscopeTitle, readingFreshness, type ReadingPeriod } from "@/lib/readingDate";
+import { readingFreshness, type ReadingFreshness, type ReadingPeriod } from "@/lib/readingDate";
+import { publishedReading } from "@/lib/readingText";
 import { currentLocale } from "@/lib/localeServer";
 import { chineseFacts } from "@/lib/chineseFacts";
 import { romanianToEnglish } from "@/lib/romanianToEnglish";
@@ -38,9 +39,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     period: readingPeriod(horoscope.interval),
     locale,
   });
-  const { reading } = await localizedReading(horoscope, locale);
-  const title = horoscopeTitle(horoscopeHeading(horoscope, locale), freshness);
-  const description = horoscopeDescription({ ...horoscope, description: reading.description }, locale);
+  const { reading } = await localizedReading(horoscope, locale, freshness);
+  const title = forecastHeading(horoscope, freshness, locale);
+  const description = forecastDescription(
+    { ...horoscope, description: reading.description },
+    freshness,
+    locale
+  );
   return pageMetadata(title, description, `/${slug}`, {
     type: "article",
     publishedTime: isoDate(horoscope.date),
@@ -59,9 +64,15 @@ export default async function HoroscopeRoute({ params }: PageProps) {
     period: readingPeriod(horoscope.interval),
     locale,
   });
-  const { reading, translated } = await localizedReading(horoscope, locale);
-  const title = horoscopeTitle(horoscopeHeading(horoscope, locale), freshness);
-  const description = horoscopeDescription({ ...horoscope, description: reading.description }, locale);
+  const { reading, translated } = await localizedReading(horoscope, locale, freshness);
+  const title = forecastHeading(horoscope, freshness, locale);
+  const description = forecastDescription(
+    { ...horoscope, description: reading.description },
+    freshness,
+    locale
+  );
+  const published =
+    freshness.iso && freshness.label ? { iso: freshness.iso, label: freshness.label, current: freshness.current } : undefined;
   const path = `/${slug}`;
   const links = relatedHoroscopeLinks({
     variant: horoscope.variant,
@@ -85,6 +96,8 @@ export default async function HoroscopeRoute({ params }: PageProps) {
         period={horoscope.interval === "anual" ? "anual" : "zilnic"}
         translated={translated}
         facts={await localizedChineseFacts(horoscope.signStandard, locale)}
+        published={published}
+        signSlug={horoscope.signStandard}
       />
     ) : horoscope.variant === "azi" ? (
       <HoroscopePageAzi
@@ -96,6 +109,8 @@ export default async function HoroscopeRoute({ params }: PageProps) {
         links={links}
         crumbs={crumbs}
         translated={translated}
+        published={published}
+        signSlug={horoscope.signStandard}
       />
     ) : (
       <HoroscopePage
@@ -108,6 +123,8 @@ export default async function HoroscopeRoute({ params }: PageProps) {
         crumbs={crumbs}
         period={horoscope.interval === "saptamanal" ? "saptamanal" : "zilnic"}
         translated={translated}
+        published={published}
+        signSlug={horoscope.signStandard}
       />
     );
 
@@ -127,12 +144,13 @@ export default async function HoroscopeRoute({ params }: PageProps) {
 
 async function localizedReading(
   horoscope: { description: string; compatibility: string; affirmations: string },
-  locale: "ro" | "en"
+  locale: "ro" | "en",
+  freshness: ReadingFreshness
 ) {
   const reading = {
-    description: horoscope.description,
-    compatibility: horoscope.compatibility,
-    affirmations: horoscope.affirmations,
+    description: publishedReading(horoscope.description, freshness),
+    compatibility: publishedReading(horoscope.compatibility, freshness),
+    affirmations: publishedReading(horoscope.affirmations, freshness),
   };
   if (locale !== "en") return { reading, translated: false };
   try {

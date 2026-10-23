@@ -8,6 +8,7 @@ import Breadcrumbs from "@/components/seo/Breadcrumbs";
 import { trackEvent } from "@/lib/analytics";
 import { copy } from "@/lib/messages";
 import type { TarotViewProps } from "@/lib/tarotView";
+import { hubCopy } from "@/lib/hubCopy";
 import { useLocale } from "../shared/LocaleProvider";
 import { TarotCardArt } from "./TarotCardArt";
 
@@ -417,7 +418,8 @@ const Archive = styled.ul`
 type Phase = "idle" | "opening" | "open" | "closing";
 
 function TarotDaily(props: TarotViewProps) {
-  const text = copy(useLocale());
+  const locale = useLocale();
+  const text = copy(locale);
   const [open, setOpen] = useState(props.startOpen);
   const [phase, setPhase] = useState<Phase>(props.startOpen ? "open" : "idle");
   const [canShare, setCanShare] = useState(false);
@@ -469,6 +471,7 @@ function TarotDaily(props: TarotViewProps) {
         <Breadcrumbs items={props.crumbs} />
         <h1>{props.heading}</h1>
         {props.dateLabel ? <p>{props.dateLabel}</p> : null}
+        <p>{hubCopy(locale).tarotDailyNote}</p>
         {props.missing ? (
           <>
             <p>{props.missing}</p>

@@ -1,10 +1,9 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { copy } from "@/lib/messages";
-import { cardLine } from "@/lib/cardLines";
+import React from "react";
 import { useLocale } from "../shared/LocaleProvider";
-import { signDisplay } from "@/lib/zodiacSigns";
+import { signProfile } from "@/lib/signProfiles";
+import { signDisplay, type ZodiacSlug } from "@/lib/zodiacSigns";
 import styled from "styled-components";
 import Aries from "./Icons/aries.svg";
 import Taurus from "./Icons/taurus.svg";
@@ -113,44 +112,53 @@ const TextHolder = styled.div`
   }
   margin-bottom: 32px;
 `;
+const ELEMENT_EN: Record<string, string> = {
+  Foc: "Fire",
+  Pământ: "Earth",
+  Aer: "Air",
+  Apă: "Water",
+};
+
+function SignMeta({ slug }: { slug: ZodiacSlug }) {
+  const locale = useLocale();
+  const sign = signDisplay(slug, locale);
+  const profile = signProfile(slug);
+  const element = profile
+    ? locale === "en"
+      ? ELEMENT_EN[profile.element] || profile.element
+      : profile.element
+    : "";
+  return (
+    <>
+      {sign?.dates}
+      {element ? ` · ${element}` : ""}
+    </>
+  );
+}
+
 function ZodiacCircle() {
   const locale = useLocale();
-  const text = copy(locale);
-  const [interval, setInterval] = React.useState("zilnic");
-
-  useEffect(() => {
-    if (window.location.pathname.includes("saptamanal")) {
-      setInterval("saptamanal");
-    }
-    if (window.location.pathname.includes("zilnic")) {
-      setInterval("zilnic");
-    }
-  }, []);
   return (
     <Holder>
-      <TextHolder>
-        <h2>{text.signsHeading}</h2>
-        <div>{text.signsLead}</div>
-      </TextHolder>
       <Zodiacs>
         <ZodiacHolder href={`/berbec`}>
           <Aries />
 
           <ZodiacName>{signDisplay("berbec", locale)?.name}</ZodiacName>
-          <ZodiacCaracteristics>{cardLine("berbec", locale)}</ZodiacCaracteristics>
+          <ZodiacCaracteristics>{<SignMeta slug="berbec" />}</ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/taur`}>
           <Taurus />
 
           <ZodiacName>{signDisplay("taur", locale)?.name}</ZodiacName>
-          <ZodiacCaracteristics>{cardLine("taur", locale)}</ZodiacCaracteristics>
+          <ZodiacCaracteristics>{<SignMeta slug="taur" />}</ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/gemeni`}>
           <Gemini />
 
           <ZodiacName>{signDisplay("gemeni", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
-            {cardLine("gemeni", locale)}
+            {<SignMeta slug="gemeni" />}
           </ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/rac`}>
@@ -158,7 +166,7 @@ function ZodiacCircle() {
 
           <ZodiacName>{signDisplay("rac", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
-            {cardLine("rac", locale)}
+            {<SignMeta slug="rac" />}
           </ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/leu`}>
@@ -166,21 +174,21 @@ function ZodiacCircle() {
 
           <ZodiacName>{signDisplay("leu", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
-            {cardLine("leu", locale)}
+            {<SignMeta slug="leu" />}
           </ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/fecioara`}>
           <Virgo />
 
           <ZodiacName>{signDisplay("fecioara", locale)?.name}</ZodiacName>
-          <ZodiacCaracteristics>{cardLine("fecioara", locale)}</ZodiacCaracteristics>
+          <ZodiacCaracteristics>{<SignMeta slug="fecioara" />}</ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/balanta`}>
           <Libra />
 
           <ZodiacName>{signDisplay("balanta", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
-            {cardLine("balanta", locale)}
+            {<SignMeta slug="balanta" />}
           </ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/scorpion`}>
@@ -188,7 +196,7 @@ function ZodiacCircle() {
 
           <ZodiacName>{signDisplay("scorpion", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
-            {cardLine("scorpion", locale)}
+            {<SignMeta slug="scorpion" />}
           </ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/sagetator`}>
@@ -196,7 +204,7 @@ function ZodiacCircle() {
 
           <ZodiacName>{signDisplay("sagetator", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
-            {cardLine("sagetator", locale)}
+            {<SignMeta slug="sagetator" />}
           </ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/capricorn`}>
@@ -204,7 +212,7 @@ function ZodiacCircle() {
 
           <ZodiacName>{signDisplay("capricorn", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
-            {cardLine("capricorn", locale)}
+            {<SignMeta slug="capricorn" />}
           </ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/varsator`}>
@@ -212,7 +220,7 @@ function ZodiacCircle() {
 
           <ZodiacName>{signDisplay("varsator", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
-            {cardLine("varsator", locale)}
+            {<SignMeta slug="varsator" />}
           </ZodiacCaracteristics>
         </ZodiacHolder>
         <ZodiacHolder href={`/pesti`}>
@@ -220,14 +228,10 @@ function ZodiacCircle() {
 
           <ZodiacName>{signDisplay("pesti", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
-            {cardLine("pesti", locale)}
+            {<SignMeta slug="pesti" />}
           </ZodiacCaracteristics>
         </ZodiacHolder>
       </Zodiacs>
-      <TextHolder>
-        <span>{text.signsBody}</span>
-        <span>{text.signsMore}</span>
-      </TextHolder>
     </Holder>
   );
 }

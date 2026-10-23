@@ -23,10 +23,10 @@ test("English related links use the same horoscope addresses", () => {
   assert.deepEqual(
     relatedHoroscopeLinks({ variant: "standard", interval: "zilnic", signSlug: "berbec", locale: "en" }),
     [
-      { href: "/horoscop-saptamanal-berbec", label: "This week's horoscope" },
-      { href: "/berbec", label: "Sign profile" },
+      { href: "/horoscop-saptamanal-berbec", label: "Weekly horoscope for Aries" },
+      { href: "/berbec", label: "About Aries" },
       { href: "/compatibilitate?a=berbec", label: "Compatibility" },
-      { href: "/tarot/cartea-ta", label: "Your card" },
+      { href: "/tarot/cartea-ta", label: "Draw a tarot card" },
     ]
   );
   assert.match(formatLongDate("2026-10-20", "en") || "", /20 October 2026/);

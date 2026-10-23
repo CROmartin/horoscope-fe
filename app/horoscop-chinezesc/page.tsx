@@ -1,16 +1,20 @@
 import View from "@/views/horoscop-chinezesc";
 import JsonLd from "@/components/seo/JsonLd";
 import { localizedPage } from "@/lib/localizedPage";
+import { chineseYearlyExcerpts, publishedSet } from "@/lib/horoscopes";
+import { currentLocale } from "@/lib/localeServer";
 
 const path = "/horoscop-chinezesc";
 const text = {
   ro: {
-    title: "Horoscop chinezesc",
-    description: "Zodiacul chinezesc: horoscopul anului și al zilei pentru cele 12 semne. Alege semnul tău.",
+    title: "Zodiac chinezesc: cele 12 animale",
+    description:
+      "Află ce reprezintă cele 12 animale ale zodiacului chinezesc și găsește horoscopul anual și zilnic pentru semnul tău.",
   },
   en: {
-    title: "Chinese horoscope",
-    description: "The Chinese zodiac: the yearly and daily horoscope for all 12 signs. Choose yours.",
+    title: "Chinese zodiac: the 12 animals",
+    description:
+      "See what the 12 animals of the Chinese zodiac represent, and find the yearly and daily horoscope for your sign.",
   },
 };
 
@@ -19,11 +23,18 @@ export async function generateMetadata() {
 }
 
 export default async function Page() {
+  const [publication, daily] = await Promise.all([
+    publishedSet("getAllHoroscopeYearly", "year"),
+    publishedSet("getAllHoroscopeDailyChinese", "day"),
+  ]);
+  const locale = await currentLocale();
+  const excerpts =
+    publication.iso && locale === "ro" ? await chineseYearlyExcerpts("getAllHoroscopeYearly") : [];
   const meta = await localizedPage(text, path);
   return (
     <>
       <JsonLd title={meta.title} description={meta.description} path={path} />
-      <View />
+      <View publication={publication} daily={daily} excerpts={excerpts} />
     </>
   );
 }

@@ -1,29 +1,54 @@
 import View from "@/views/horoscop-zilnic-chinezesc";
 import JsonLd from "@/components/seo/JsonLd";
 import { localizedPage } from "@/lib/localizedPage";
+import { chineseDailyExcerpts, publishedSet } from "@/lib/horoscopes";
+import { chineseDailyDescription } from "@/lib/hubCopy";
+import { currentLocale } from "@/lib/localeServer";
 
 const path = "/horoscop-zilnic-chinezesc";
-const text = {
-  ro: {
-    title: "Horoscop chinezesc zilnic",
-    description: "Horoscopul zilnic chinezesc pentru cele 12 semne. Alege semnul anului tău.",
-  },
-  en: {
-    title: "Daily Chinese horoscope",
-    description: "The daily Chinese horoscope for all 12 signs. Choose your year sign.",
-  },
-};
 
 export async function generateMetadata() {
-  return (await localizedPage(text, path)).metadata;
+  const publication = await publishedSet("getAllHoroscopeDailyChinese", "day");
+  const locale = await currentLocale();
+  return (
+    await localizedPage(
+      {
+        ro: {
+          title: "Horoscop chinezesc zilnic: 12 semne",
+          description: chineseDailyDescription("ro", publication),
+        },
+        en: {
+          title: "Daily Chinese horoscope: 12 signs",
+          description: chineseDailyDescription("en", publication),
+        },
+      },
+      path
+    )
+  ).metadata;
 }
 
 export default async function Page() {
-  const meta = await localizedPage(text, path);
+  const publication = await publishedSet("getAllHoroscopeDailyChinese", "day");
+  const locale = await currentLocale();
+  const excerpts =
+    publication.iso && locale === "ro" ? await chineseDailyExcerpts("getAllHoroscopeDailyChinese") : [];
+  const meta = await localizedPage(
+    {
+      ro: {
+        title: "Horoscop chinezesc zilnic: 12 semne",
+        description: chineseDailyDescription("ro", publication),
+      },
+      en: {
+        title: "Daily Chinese horoscope: 12 signs",
+        description: chineseDailyDescription("en", publication),
+      },
+    },
+    path
+  );
   return (
     <>
       <JsonLd title={meta.title} description={meta.description} path={path} />
-      <View />
+      <View publication={publication} excerpts={excerpts} />
     </>
   );
 }

@@ -37,7 +37,7 @@ export function pageMetadata(
       description: summary,
       url: path,
       siteName: SITE_NAME,
-      locale: extra?.locale === "en" ? "en_GB" : "ro_RO",
+      locale: "ro_RO",
       type: isArticle ? "article" : "website",
       ...(isArticle && extra?.publishedTime
         ? { publishedTime: extra.publishedTime }

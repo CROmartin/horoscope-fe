@@ -7,6 +7,7 @@ import PairForm from "@/components/compatibility/PairForm";
 import { SIGN_ICONS } from "@/components/zodiac/signIcons";
 import AlignWrapper from "@/components/shared/AlignWrapper";
 import { dailyHoroscopePath, signDisplay, type ZodiacSlug } from "@/lib/zodiacSigns";
+import { dailyHubLinkLabel, pairFallback, type Publication } from "@/lib/hubCopy";
 import { copy } from "@/lib/messages";
 import { useLocale } from "../shared/LocaleProvider";
 import type { Locale } from "@/lib/locale";
@@ -173,9 +174,11 @@ function signCard(slug: ZodiacSlug, locale: Locale, today: string) {
 function CompatibilityResult({
   first,
   second,
+  publication,
 }: {
   first: ZodiacSlug;
   second: ZodiacSlug;
+  publication: Publication;
 }) {
   const locale = useLocale();
   const text = copy(locale);
@@ -192,11 +195,14 @@ function CompatibilityResult({
     <AlignWrapper>
       <Article>
         <h1>{title}</h1>
-        <p>{same ? text.pairUnpublishedSame : text.pairUnpublished}</p>
+        <p>{pairFallback(locale, publication, same)}</p>
         <Signs>
           {same
-            ? signCard(first, locale, text.linkToday)
-            : [signCard(first, locale, text.linkToday), signCard(second, locale, text.linkToday)]}
+            ? signCard(first, locale, dailyHubLinkLabel(locale, publication))
+            : [
+                signCard(first, locale, dailyHubLinkLabel(locale, publication)),
+                signCard(second, locale, dailyHubLinkLabel(locale, publication)),
+              ]}
         </Signs>
         <SharePair path={path} title={title} signA={first} signB={second} />
         <h2>{text.pairAnother}</h2>

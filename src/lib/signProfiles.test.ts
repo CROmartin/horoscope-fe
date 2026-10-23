@@ -25,3 +25,13 @@ test("every western sign has one profile and the original trait text", () => {
     assert.equal(profile.likeOf.includes(" "), false);
   }
 });
+
+test("profile date ranges match the sign directory", () => {
+  const normalize = (value: string) =>
+    value.toLocaleLowerCase("ro").replace(/[–—-]/g, "-").replace(/\s+/g, " ").trim();
+  for (const sign of WESTERN_SIGNS) {
+    const profile = signProfile(sign.slug);
+    assert.ok(profile);
+    assert.equal(normalize(profile.dates), normalize(sign.dates));
+  }
+});

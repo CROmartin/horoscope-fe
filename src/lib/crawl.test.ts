@@ -1,11 +1,13 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { DISALLOWED_PREFIXES, indexablePaths, isDisallowed } from "./crawl";
+import { DISALLOWED_PREFIXES, changeFrequency, indexablePaths, isDisallowed } from "./crawl";
 
 test("the sitemap lists public horoscope pages and leaves private links out", () => {
   const paths = indexablePaths();
   assert.equal(new Set(paths).size, paths.length);
   assert.equal(paths.includes("/horoscop-zilnic-berbec"), true);
+  assert.equal(paths.includes("/horoscop-azi"), true);
+  assert.equal(paths.includes("/horoscop-azi-berbec"), false);
   assert.equal(paths.includes("/horoscop-anual-sobolan"), true);
   assert.equal(paths.includes("/compatibilitate"), true);
   assert.equal(paths.includes("/tarot/cartea-zilei"), true);
@@ -17,4 +19,11 @@ test("the sitemap lists public horoscope pages and leaves private links out", ()
   assert.equal(isDisallowed("/dezabonare/token"), true);
   assert.equal(isDisallowed("/preferinte-email/token"), true);
   assert.equal(isDisallowed("/api/abonare"), true);
+  assert.equal(changeFrequency("/horoscop-zilnic"), "daily");
+  assert.equal(changeFrequency("/horoscop-azi"), "daily");
+  assert.equal(changeFrequency("/horoscop-zilnic-berbec"), "daily");
+  assert.equal(changeFrequency("/horoscop-zilnic-chinezesc"), "daily");
+  assert.equal(changeFrequency("/horoscop-saptamanal"), "weekly");
+  assert.equal(changeFrequency("/taur"), "weekly");
+  assert.equal(changeFrequency("/compatibilitate"), "weekly");
 });

@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useLocale } from "@/components/shared/LocaleProvider";
+import { copy } from "@/lib/messages";
 import { trackEvent } from "@/lib/analytics";
 import Link from "next/link";
 import styled from "styled-components";
@@ -50,17 +51,25 @@ function ReadingStatus({
   heading,
   links,
   crumbs = [],
+  published,
 }: {
   heading: string;
   links: { href: string; label: string }[];
   crumbs?: Crumb[];
+  published?: { iso: string; label: string };
 }) {
   const locale = useLocale();
+  const text = copy(locale);
 
   return (
     <Block>
       <Breadcrumbs items={crumbs} />
       <Heading>{heading}</Heading>
+      {published ? (
+        <p>
+          {text.publishedFor} <time dateTime={published.iso}>{published.label}</time>
+        </p>
+      ) : null}
       {links.length > 0 && (
         <Related aria-label={locale === "en" ? "Other pages for the same sign" : "Alte pagini pentru aceeași zodie"}>
           {links.map((link) => (

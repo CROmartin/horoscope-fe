@@ -32,6 +32,7 @@ import Link from "next/link";
 import styled from "styled-components";
 import { renderAffirmations } from "../utils/helpers";
 import ReadingStatus from "../components/horoscope/ReadingStatus";
+import ReadingText from "../components/horoscope/ReadingText";
 import type { Crumb } from "../lib/breadcrumbs";
 import { copy } from "@/lib/messages";
 import { useLocale } from "@/components/shared/LocaleProvider";
@@ -87,6 +88,8 @@ function HoroscopePage({
   links,
   crumbs,
   translated,
+  published,
+  signSlug,
 }: {
   description: string;
   compatibility: string;
@@ -96,21 +99,24 @@ function HoroscopePage({
   links: { href: string; label: string }[];
   crumbs: Crumb[];
   translated?: boolean;
+  published?: { iso: string; label: string; current: boolean };
+  signSlug?: string;
 }) {
   const text = copy(useLocale());
   const affirmationList = renderAffirmations(affirmations);
+  const affirmationHeading = published?.current ? text.affirmationsToday : text.affirmationsHeading;
 
   return (
     <AlignWrapper>
       <HomeLink href="/">
         <Illustration />
       </HomeLink>
-      <ReadingStatus heading={heading} links={links} crumbs={crumbs} />
+      <ReadingStatus heading={heading} links={links} crumbs={crumbs} published={published} />
       <RowAzi>
         <RightSide>
           <ContentBox>
             {!translated && text.readingNote ? <p>{text.readingNote}</p> : null}
-            <p>{description}</p>
+            <ReadingText text={description} />
           </ContentBox>
         </RightSide>
 
@@ -141,14 +147,14 @@ function HoroscopePage({
         <RightSide>
           <ParagraphAzi>
             <h2>{text.compatibilityHeading}</h2>
-            <p>{compatibility}</p>
+            <ReadingText text={compatibility} />
           </ParagraphAzi>
         </RightSide>
       </RowAzi>
       <RowAzi>
         <RightSide>
           <ParagraphAzi>
-            <h2>{text.affirmationsHeading}</h2>
+            <h2>{affirmationHeading}</h2>
 
             {affirmationList.map((affirmation, index) => (
               <p key={index}>{affirmation}</p>
@@ -161,7 +167,7 @@ function HoroscopePage({
           </IconWrapperIcon>
         </LeftSide>
       </RowAzi>
-      <TryMoreZodiacSigns period="azi" />
+      <TryMoreZodiacSigns period="azi" currentSlug={signSlug} />
     </AlignWrapper>
   );
 }

@@ -2,14 +2,15 @@
 import React from "react";
 
 import AlignWrapper from "../components/shared/AlignWrapper";
-import ZodiacCircle from "../components/horoscopes/zodiacCircle";
 import HeroZilnic from "../components/homepage/HeroZilnic";
+import { DailyHubFoot } from "../components/horoscopes/HubSections";
+import type { Publication } from "@/lib/hubCopy";
 
-function Horoscop() {
+function Horoscop({ publication }: { publication: Publication }) {
   return (
     <AlignWrapper>
-      <HeroZilnic />
-      <ZodiacCircle />
+      <HeroZilnic publication={publication} />
+      <DailyHubFoot />
     </AlignWrapper>
   );
 }

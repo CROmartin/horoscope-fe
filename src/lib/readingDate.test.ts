@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { relatedHoroscopeLinks, samePeriodPath } from "./horoscopeLinks";
-import { formatCalendarDate, horoscopeTitle, isoWeekKey, readingFreshness } from "./readingDate";
+import { formatCalendarDate, horoscopeTitle, isoWeekKey, readingFreshness, weekRangeLabel } from "./readingDate";
 
 const stale = new Date("2026-10-19T21:30:00.000Z");
 
@@ -28,7 +28,18 @@ test("a daily reading is current only on its Bucharest day", () => {
     now: stale,
   });
   assert.equal(old.current, false);
-  assert.equal(horoscopeTitle("Horoscop zilnic Berbec", old), "Horoscop zilnic Berbec");
+  assert.equal(horoscopeTitle("Horoscop zilnic Berbec", old), "Horoscop zilnic Berbec – 3 martie 2024");
+});
+
+test("a week label uses the published date, not the calendar week of today", () => {
+  assert.equal(weekRangeLabel("2026-10-21"), "19–25 octombrie 2026");
+  const stored = readingFreshness({
+    contentDate: "2026-10-21",
+    period: "week",
+    now: new Date("2026-11-02T10:00:00.000Z"),
+  });
+  assert.equal(stored.current, false);
+  assert.equal(horoscopeTitle("Horoscop săptămânal Berbec", stored), "Horoscop săptămânal Berbec: 19–25 octombrie 2026");
 });
 
 test("weekly freshness follows the Monday week in Romania", () => {
@@ -61,17 +72,17 @@ test("related links stay on the existing horoscope URLs", () => {
   assert.deepEqual(
     relatedHoroscopeLinks({ variant: "standard", interval: "zilnic", signSlug: "berbec" }),
     [
-      { href: "/horoscop-saptamanal-berbec", label: "Horoscopul săptămânii" },
-      { href: "/berbec", label: "Profilul zodiei" },
+      { href: "/horoscop-saptamanal-berbec", label: "Horoscopul săptămânal pentru Berbec" },
+      { href: "/berbec", label: "Despre zodia Berbec" },
       { href: "/compatibilitate?a=berbec", label: "Compatibilitate" },
-      { href: "/tarot/cartea-ta", label: "Cartea ta" },
+      { href: "/tarot/cartea-ta", label: "Trage o carte de tarot" },
     ]
   );
   assert.deepEqual(
     relatedHoroscopeLinks({ variant: "standard", interval: "saptamanal", signSlug: "leu" }),
     [
-      { href: "/horoscop-zilnic-leu", label: "Horoscopul de azi" },
-      { href: "/leu", label: "Profilul zodiei" },
+      { href: "/horoscop-zilnic-leu", label: "Horoscopul zilnic pentru Leu" },
+      { href: "/leu", label: "Despre zodia Leu" },
       { href: "/compatibilitate?a=leu", label: "Compatibilitate" },
     ]
   );
@@ -80,7 +91,7 @@ test("related links stay on the existing horoscope URLs", () => {
     [
       { href: "/horoscop-anual-tigru", label: "Horoscopul anual" },
       { href: "/horoscop-zilnic-chinezesc", label: "Alte semne" },
-      { href: "/tarot/cartea-ta", label: "Cartea ta" },
+      { href: "/tarot/cartea-ta", label: "Trage o carte de tarot" },
     ]
   );
   assert.deepEqual(

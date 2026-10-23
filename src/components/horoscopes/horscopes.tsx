@@ -98,7 +98,7 @@ function Horoscopes() {
         </IconWrapper>
 
         <IconWrapper href="/fecioara">
-          <Aquarius />
+          <Virgo />
         </IconWrapper>
 
         <IconWrapper href="/balanta">
@@ -114,7 +114,7 @@ function Horoscopes() {
           <Capricorn />
         </IconWrapper>
         <IconWrapper href="/varsator">
-          <Virgo />
+          <Aquarius />
         </IconWrapper>
         <IconWrapper href="/pesti">
           <Pisces />

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import { dailyHoroscopePath, homepageSignLinks, signBySlug, type ZodiacSlug } from "@/lib/zodiacSigns";
+import { readTodayLabel, signGridLabel, type Publication } from "@/lib/hubCopy";
 import { copy } from "@/lib/messages";
 import { useLocale } from "@/components/shared/LocaleProvider";
 import { zodiacSelectHit } from "@/lib/analytics";
@@ -167,7 +168,7 @@ const SavedLabel = styled.span`
   color: #ffffff;
 `;
 
-function ZodiacGrid() {
+function ZodiacGrid({ publication }: { publication: Publication }) {
   const locale = useLocale();
   const text = copy(locale);
   const [saved, setSaved] = useState<ZodiacSlug | null>(null);
@@ -186,7 +187,7 @@ function ZodiacGrid() {
             {text.savedSign} <strong>{links.find((item) => item.slug === savedSign.slug)?.name}</strong>.
           </BannerCopy>
           <BannerActions>
-            <TextLink href={dailyHoroscopePath(savedSign.slug)}>{text.readToday}</TextLink>
+            <TextLink href={dailyHoroscopePath(savedSign.slug)}>{readTodayLabel(locale, publication)}</TextLink>
             <ClearButton
               type="button"
               onClick={() => {
@@ -199,7 +200,7 @@ function ZodiacGrid() {
           </BannerActions>
         </Banner>
       )}
-      <SignNav aria-label={text.gridLabel}>
+      <SignNav aria-label={signGridLabel(locale, publication)}>
       <Grid>
         {links.map((sign) => {
           const Icon = SIGN_ICONS[sign.slug];

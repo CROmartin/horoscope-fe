@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { copy } from "@/lib/messages";
+import { hubCopy } from "@/lib/hubCopy";
 import { useLocale } from "../shared/LocaleProvider";
 import { displayStoredName } from "@/lib/zodiacSigns";
 import styled from "styled-components";
@@ -21,7 +21,7 @@ import Rat from "../horoscopes/Icons/chinese/RatSmall.svg";
 import Rooster from "../horoscopes/Icons/chinese/RoosterSmall.svg";
 import Pig from "../horoscopes/Icons/chinese/PigSmall.svg";
 import Link from "next/link";
-import { TittleH1 } from "../styles/styles.styled";
+import { HubH1, HubH2, HubLead } from "../horoscopes/HubSections";
 
 const SvgWrapper = styled.div`
   width: 100%;
@@ -159,7 +159,9 @@ function Hero() {
       <SvgWrapper>
         <Illustration />
       </SvgWrapper>
-      <TittleH1>{copy(locale).horoscope}</TittleH1>
+      <HubH1>{hubCopy(locale).chineseH1}</HubH1>
+      <HubLead>{hubCopy(locale).chineseLead}</HubLead>
+      <HubH2>{hubCopy(locale).chineseChoose}</HubH2>
       <Line></Line>
       <InfoLine>
         <SignHolder href="/horoscop-anual-sobolan">

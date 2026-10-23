@@ -22,7 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
     icons: { icon: "/logo-seo.png" },
     openGraph: {
       siteName: "Horoscopzodii.ro",
-      locale: locale === "en" ? "en_GB" : "ro_RO",
+      locale: "ro_RO",
       type: "website",
     },
   };

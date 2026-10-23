@@ -106,6 +106,18 @@ const Zodiacs = styled.div`
   margin-bottom: 32px;
 `;
 
+const Selected = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  border: 2px solid #ffffff;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 16px;
+  width: 20%;
+  box-sizing: border-box;
+`;
+
 const TextHolder = styled.div`
   display: flex;
   flex-direction: column;
@@ -171,16 +183,26 @@ const IconWrapper = styled.span<IconWrapperProps>`
   }
 `;
 
-function TryMoreChineseSigns({ period }: { period: "zilnic" | "anual" }) {
+function TryMoreChineseSigns({
+  period,
+  currentSlug,
+}: {
+  period: "zilnic" | "anual";
+  currentSlug?: string;
+}) {
   const locale = useLocale();
   const href = (slug: string) => samePeriodPath(period, slug);
+  const CardLink = ({ slug, children }: { slug: string; children: React.ReactNode }) => {
+    if (slug === currentSlug) return <Selected aria-current="page">{children}</Selected>;
+    return <ZodiacHolder href={href(slug)}>{children}</ZodiacHolder>;
+  };
   return (
     <Holder>
       <TextHolder>
         <h2>{copy(locale).tryMoreChinese}</h2>
       </TextHolder>
       <Zodiacs>
-        <ZodiacHolder href={href("sobolan")}>
+        <CardLink slug="sobolan">
           <IconWrapper $fill>
             <Rat />
           </IconWrapper>
@@ -188,16 +210,16 @@ function TryMoreChineseSigns({ period }: { period: "zilnic" | "anual" }) {
           <ZodiacCaracteristics>
             {cardLine("sobolan", locale)}
           </ZodiacCaracteristics>
-        </ZodiacHolder>
-        <ZodiacHolder href={href("bivol")}>
+        </CardLink>
+        <CardLink slug="bivol">
           <IconWrapper $fill>
             <Ox />
           </IconWrapper>
 
           <ZodiacName>{displayStoredName("Bivol", locale)}</ZodiacName>
           <ZodiacCaracteristics>{cardLine("bivol", locale)}</ZodiacCaracteristics>
-        </ZodiacHolder>
-        <ZodiacHolder href={href("tigru")}>
+        </CardLink>
+        <CardLink slug="tigru">
           <IconWrapper $fill>
             <Tiger />
           </IconWrapper>
@@ -206,8 +228,8 @@ function TryMoreChineseSigns({ period }: { period: "zilnic" | "anual" }) {
           <ZodiacCaracteristics>
             {cardLine("tigru", locale)}
           </ZodiacCaracteristics>
-        </ZodiacHolder>
-        <ZodiacHolder href={href("iepure")}>
+        </CardLink>
+        <CardLink slug="iepure">
           <IconWrapper $fill>
             <Rabbit />
           </IconWrapper>
@@ -216,8 +238,8 @@ function TryMoreChineseSigns({ period }: { period: "zilnic" | "anual" }) {
           <ZodiacCaracteristics>
             {cardLine("iepure", locale)}
           </ZodiacCaracteristics>
-        </ZodiacHolder>
-        <ZodiacHolder href={href("dragon")}>
+        </CardLink>
+        <CardLink slug="dragon">
           <IconWrapper $stroke>
             <Dragon className="dragon" />
           </IconWrapper>
@@ -226,8 +248,8 @@ function TryMoreChineseSigns({ period }: { period: "zilnic" | "anual" }) {
           <ZodiacCaracteristics>
             {cardLine("dragon", locale)}
           </ZodiacCaracteristics>
-        </ZodiacHolder>
-        <ZodiacHolder href={href("sarpe")}>
+        </CardLink>
+        <CardLink slug="sarpe">
           <IconWrapper $fill>
             <Snake />
           </IconWrapper>
@@ -236,8 +258,8 @@ function TryMoreChineseSigns({ period }: { period: "zilnic" | "anual" }) {
           <ZodiacCaracteristics>
             {cardLine("sarpe", locale)}
           </ZodiacCaracteristics>
-        </ZodiacHolder>
-        <ZodiacHolder href={href("cal")}>
+        </CardLink>
+        <CardLink slug="cal">
           <IconWrapper $fill>
             <Horse />
           </IconWrapper>
@@ -246,23 +268,23 @@ function TryMoreChineseSigns({ period }: { period: "zilnic" | "anual" }) {
           <ZodiacCaracteristics>
             {cardLine("cal", locale)}
           </ZodiacCaracteristics>
-        </ZodiacHolder>
-        <ZodiacHolder href={href("oaie")}>
+        </CardLink>
+        <CardLink slug="oaie">
           <IconWrapper $stroke>
             <Goat />
           </IconWrapper>
 
           <ZodiacName>{displayStoredName("Oaie", locale)}</ZodiacName>
           <ZodiacCaracteristics>{cardLine("oaie", locale)}</ZodiacCaracteristics>
-        </ZodiacHolder>
-        <ZodiacHolder href={href("maimuta")}>
+        </CardLink>
+        <CardLink slug="maimuta">
           <IconWrapper $fill>
             <Monkey />
           </IconWrapper>
           <ZodiacName>{displayStoredName("Maimuță", locale)}</ZodiacName>
           <ZodiacCaracteristics>{cardLine("maimuta", locale)}</ZodiacCaracteristics>
-        </ZodiacHolder>
-        <ZodiacHolder href={href("cocos")}>
+        </CardLink>
+        <CardLink slug="cocos">
           <IconWrapper $fill>
             <Rooster />
           </IconWrapper>
@@ -271,8 +293,8 @@ function TryMoreChineseSigns({ period }: { period: "zilnic" | "anual" }) {
           <ZodiacCaracteristics>
             {cardLine("cocos", locale)}
           </ZodiacCaracteristics>
-        </ZodiacHolder>
-        <ZodiacHolder href={href("caine")}>
+        </CardLink>
+        <CardLink slug="caine">
           <IconWrapper $fill>
             <Dog />
           </IconWrapper>
@@ -281,8 +303,8 @@ function TryMoreChineseSigns({ period }: { period: "zilnic" | "anual" }) {
           <ZodiacCaracteristics>
             {cardLine("caine", locale)}
           </ZodiacCaracteristics>
-        </ZodiacHolder>
-        <ZodiacHolder href={href("porc")}>
+        </CardLink>
+        <CardLink slug="porc">
           <IconWrapper $stroke>
             <Pig />
           </IconWrapper>
@@ -291,7 +313,7 @@ function TryMoreChineseSigns({ period }: { period: "zilnic" | "anual" }) {
           <ZodiacCaracteristics>
             {cardLine("porc", locale)}
           </ZodiacCaracteristics>
-        </ZodiacHolder>
+        </CardLink>
       </Zodiacs>
     </Holder>
   );

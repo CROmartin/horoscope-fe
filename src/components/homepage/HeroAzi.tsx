@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { copy } from "@/lib/messages";
+import { aziLead, hubCopy, type Publication } from "@/lib/hubCopy";
 import { useLocale } from "../shared/LocaleProvider";
 import { signDisplay } from "@/lib/zodiacSigns";
 import styled from "styled-components";
@@ -20,7 +20,7 @@ import Capricorn from "../../Icons/Capricorn";
 import Aquarius from "../../Icons/Aquarius";
 import Pisces from "../../Icons/Pisces";
 import Link from "next/link";
-import { TittleH1 } from "../styles/styles.styled";
+import { HubH1, HubH2, HubLead } from "../horoscopes/HubSections";
 
 const SvgWrapper = styled.div`
   width: 100%;
@@ -124,83 +124,91 @@ const SignName = styled.div`
   text-transform: none;
 `;
 
-function HeroAzi() {
+function HeroAzi({ publication }: { publication: Publication }) {
   const locale = useLocale();
+  const text = hubCopy(locale);
   return (
     <section>
       <SvgWrapper>
         <Illustration />
       </SvgWrapper>
-      <TittleH1>{copy(locale).horoscope}</TittleH1>
+      <HubH1>{publication.current ? text.aziH1 : text.aziH1Stale}</HubH1>
+      <HubLead>{aziLead(locale, publication)}</HubLead>
+      {publication.iso && publication.label ? (
+        <HubLead>
+          <time dateTime={publication.iso}>{publication.label}</time>
+        </HubLead>
+      ) : null}
+      <HubH2>{text.dailyChoose}</HubH2>
       <Line></Line>
       <InfoLine>
-        <SignHolder href="/horoscop-azi-berbec">
+        <SignHolder href="/horoscop-zilnic-berbec">
           <IconWrapper>
             <Aries />
           </IconWrapper>
           <SignName>{signDisplay("berbec", locale)?.name}</SignName>
         </SignHolder>
-        <SignHolder href="/horoscop-azi-taur">
+        <SignHolder href="/horoscop-zilnic-taur">
           <IconWrapper>
             <Taurus />
           </IconWrapper>
           <SignName>{signDisplay("taur", locale)?.name}</SignName>
         </SignHolder>
-        <SignHolder href="/horoscop-azi-gemeni">
+        <SignHolder href="/horoscop-zilnic-gemeni">
           <IconWrapper>
             <Gemini />
           </IconWrapper>
           <SignName>{signDisplay("gemeni", locale)?.name}</SignName>
         </SignHolder>
-        <SignHolder href="/horoscop-azi-rac">
+        <SignHolder href="/horoscop-zilnic-rac">
           <IconWrapper>
             <Cancer />
           </IconWrapper>
           <SignName>{signDisplay("rac", locale)?.name}</SignName>
         </SignHolder>
-        <SignHolder href="/horoscop-azi-leu">
+        <SignHolder href="/horoscop-zilnic-leu">
           <IconWrapper>
             <Leo />
           </IconWrapper>
           <SignName>{signDisplay("leu", locale)?.name}</SignName>
         </SignHolder>
-        <SignHolder href="/horoscop-azi-fecioara">
+        <SignHolder href="/horoscop-zilnic-fecioara">
           <IconWrapper>
             <Virgo />
           </IconWrapper>
           <SignName>{signDisplay("fecioara", locale)?.name}</SignName>
         </SignHolder>
-        <SignHolder href="/horoscop-azi-balanta">
+        <SignHolder href="/horoscop-zilnic-balanta">
           <IconWrapper>
             <Libra />
           </IconWrapper>
           <SignName>{signDisplay("balanta", locale)?.name}</SignName>
         </SignHolder>
-        <SignHolder href="/horoscop-azi-scorpion">
+        <SignHolder href="/horoscop-zilnic-scorpion">
           <IconWrapper>
             <Scorpio />
           </IconWrapper>
           <SignName>{signDisplay("scorpion", locale)?.name}</SignName>
         </SignHolder>
-        <SignHolder href="/horoscop-azi-sagetator">
+        <SignHolder href="/horoscop-zilnic-sagetator">
           <IconWrapper>
             <Sagittarius />
           </IconWrapper>
           <SignName>{signDisplay("sagetator", locale)?.name}</SignName>
         </SignHolder>
-        <SignHolder href="/horoscop-azi-capricorn">
+        <SignHolder href="/horoscop-zilnic-capricorn">
           <IconWrapper>
             <Capricorn />
           </IconWrapper>
           <SignName>{signDisplay("capricorn", locale)?.name}</SignName>
         </SignHolder>
-        <SignHolder href="/horoscop-azi-varsator">
+        <SignHolder href="/horoscop-zilnic-varsator">
           <IconWrapper>
             <Aquarius />
           </IconWrapper>
           <SignName>{signDisplay("varsator", locale)?.name}</SignName>
         </SignHolder>
-        <SignHolder href="/horoscop-azi-pesti">
+        <SignHolder href="/horoscop-zilnic-pesti">
           <IconWrapper>
             <Pisces />
           </IconWrapper>

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { chineseDailyCardLabel, dailyCardBody, type Publication } from "@/lib/hubCopy";
 import { copy } from "@/lib/messages";
 import { useLocale } from "../shared/LocaleProvider";
 import styled from "styled-components";
@@ -77,8 +78,15 @@ const Paragraph = styled.div`
   color: #ffffff;
 `;
 
-function HoroscopeTypes() {
-  const text = copy(useLocale());
+function HoroscopeTypes({
+  publication,
+  chineseDaily,
+}: {
+  publication: Publication;
+  chineseDaily: Publication;
+}) {
+  const locale = useLocale();
+  const text = copy(locale);
 
   return (
     <section>
@@ -88,10 +96,10 @@ function HoroscopeTypes() {
         <TypeHolder>
           <Star />
           <TitleSub>{text.cardDailyTitle}</TitleSub>
-          <Paragraph>{text.cardDailyBody}</Paragraph>
+          <Paragraph>{dailyCardBody(locale, publication)}</Paragraph>
           <Button
             small={true}
-            message={text.readMore}
+            message={text.cardDailyCta}
             link="horoscop-zilnic"
           />
         </TypeHolder>
@@ -101,7 +109,7 @@ function HoroscopeTypes() {
           <Paragraph>{text.cardChineseDailyBody}</Paragraph>
           <Button
             small={true}
-            message={text.readMore}
+            message={chineseDailyCardLabel(locale, chineseDaily)}
             link="horoscop-zilnic-chinezesc"
           />
         </TypeHolder>
@@ -111,7 +119,7 @@ function HoroscopeTypes() {
           <Paragraph>{text.cardWeeklyBody}</Paragraph>
           <Button
             small={true}
-            message={text.readMore}
+            message={text.cardWeeklyCta}
             link="horoscop-saptamanal"
           />
         </TypeHolder>
@@ -121,7 +129,7 @@ function HoroscopeTypes() {
           <Paragraph>{text.cardChineseBody}</Paragraph>
           <Button
             small={true}
-            message={text.readMore}
+            message={text.cardChineseCta}
             link="horoscop-chinezesc"
           />
         </TypeHolder>

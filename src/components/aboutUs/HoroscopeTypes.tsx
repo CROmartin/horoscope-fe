@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { dailyCardBody, type Publication } from "@/lib/hubCopy";
 import { copy } from "@/lib/messages";
 import { useLocale } from "../shared/LocaleProvider";
 import styled from "styled-components";
@@ -74,8 +75,9 @@ const Paragraph = styled.div`
   color: #ffffff;
 `;
 
-function HoroscopeTypes() {
-  const text = copy(useLocale());
+function HoroscopeTypes({ publication }: { publication: Publication }) {
+  const locale = useLocale();
+  const text = copy(locale);
   return (
     <section>
       <Line />
@@ -84,7 +86,7 @@ function HoroscopeTypes() {
         <TypeHolder>
           <Star />
           <TitleSub>{text.cardDailyTitle}</TitleSub>
-          <Paragraph>{text.cardDailyBody}</Paragraph>
+          <Paragraph>{dailyCardBody(locale, publication)}</Paragraph>
           <Button message={text.readMore} link="/horoscop-zilnic" />
         </TypeHolder>
         <TypeHolder>

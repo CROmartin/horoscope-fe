@@ -7,6 +7,7 @@ export type ReadingFreshness = {
   period: ReadingPeriod;
   iso?: string;
   label?: string;
+  range?: string;
   current: boolean;
 };
 
@@ -81,13 +82,37 @@ export function readingFreshness({
       : period === "week"
         ? isoWeekKey(iso) === isoWeekKey(today)
         : iso.slice(0, 4) === today.slice(0, 4);
+  const range = period === "week" ? weekRangeLabel(iso, locale) : undefined;
 
-  return { period, iso, label, current };
+  return { period, iso, label, range, current };
+}
+
+export function weekRangeLabel(iso: string, locale: Locale = "ro") {
+  const match = iso.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match || !formatCalendarDate(iso, locale)) return undefined;
+  const cursor = new Date(Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3]), 12));
+  const weekday = cursor.getUTCDay() || 7;
+  cursor.setUTCDate(cursor.getUTCDate() - (weekday - 1));
+  const end = new Date(cursor);
+  end.setUTCDate(cursor.getUTCDate() + 6);
+  const startIso = cursor.toISOString().slice(0, 10);
+  const endIso = end.toISOString().slice(0, 10);
+  const startLabel = formatCalendarDate(startIso, locale);
+  const endLabel = formatCalendarDate(endIso, locale);
+  if (!startLabel || !endLabel) return undefined;
+  const startParts = startLabel.match(/^(\d+)\s+(.+)\s+(\d{4})$/);
+  const endParts = endLabel.match(/^(\d+)\s+(.+)\s+(\d{4})$/);
+  if (startParts && endParts && startParts[2] === endParts[2] && startParts[3] === endParts[3]) {
+    return `${startParts[1]}–${endParts[1]} ${endParts[2]} ${endParts[3]}`;
+  }
+  if (startParts && endParts && startParts[3] === endParts[3]) {
+    return `${startParts[1]} ${startParts[2]} – ${endParts[1]} ${endParts[2]} ${endParts[3]}`;
+  }
+  return `${startLabel} – ${endLabel}`;
 }
 
 export function horoscopeTitle(base: string, freshness: ReadingFreshness) {
-  if (freshness.current && freshness.period === "day" && freshness.label) {
-    return `${base} – ${freshness.label}`;
-  }
+  if (freshness.period === "day" && freshness.label) return `${base} – ${freshness.label}`;
+  if (freshness.period === "week" && freshness.range) return `${base}: ${freshness.range}`;
   return base;
 }

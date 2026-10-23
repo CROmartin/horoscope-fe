@@ -5,6 +5,8 @@ import styled from "styled-components";
 import PairForm from "@/components/compatibility/PairForm";
 import AlignWrapper from "@/components/shared/AlignWrapper";
 import type { ZodiacSlug } from "@/lib/zodiacSigns";
+import Link from "next/link";
+import { dayHoroscopeLink, hubCopy, type Publication } from "@/lib/hubCopy";
 import { copy } from "@/lib/messages";
 import { useLocale } from "../shared/LocaleProvider";
 
@@ -18,10 +20,15 @@ const Article = styled.article`
   gap: 20px;
 
   h1,
+  h2,
   p {
     width: 100%;
     margin: 0;
     text-align: left;
+  }
+
+  a {
+    color: #d7be8a;
   }
 
   p {
@@ -38,11 +45,15 @@ const Alert = styled.p`
 function CompatibilityHub({
   invalid,
   initialSign = "",
+  publication,
 }: {
   invalid: boolean;
   initialSign?: ZodiacSlug | "";
+  publication: Publication;
 }) {
-  const text = copy(useLocale());
+  const locale = useLocale();
+  const text = copy(locale);
+  const hub = hubCopy(locale);
 
   return (
     <AlignWrapper>
@@ -51,6 +62,13 @@ function CompatibilityHub({
         <p>{text.pairBody}</p>
         {invalid && <Alert role="alert">{text.pairInvalid}</Alert>}
         <PairForm initialA={initialSign} />
+        <h2>{hub.compatMeanH2}</h2>
+        <p>{hub.compatMeanP}</p>
+        <h2>{hub.compatMoreH2}</h2>
+        <p>
+          {hub.compatMoreP} <Link href="/horoscop">{hub.linkGuide}</Link> {hub.compatMoreOr}{" "}
+          <Link href="/horoscop-zilnic">{dayHoroscopeLink(locale, publication)}</Link>.
+        </p>
       </Article>
     </AlignWrapper>
   );

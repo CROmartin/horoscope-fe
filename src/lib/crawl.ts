@@ -23,12 +23,23 @@ export function indexablePaths(): string[] {
   const generated = [
     ...WESTERN_SLUGS.flatMap((slug) => [
       `/horoscop-zilnic-${slug}`,
-      `/horoscop-azi-${slug}`,
       `/horoscop-saptamanal-${slug}`,
     ]),
     ...CHINESE_SLUGS.flatMap((slug) => [`/horoscop-zilnic-${slug}`, `/horoscop-anual-${slug}`]),
   ];
   return [...STATIC_PATHS, ...generated];
+}
+
+export function changeFrequency(path: string): "daily" | "weekly" {
+  if (
+    path === "/horoscop-azi" ||
+    path === "/horoscop-zilnic" ||
+    path.includes("-zilnic-") ||
+    path.includes("-azi-")
+  ) {
+    return "daily";
+  }
+  return "weekly";
 }
 
 export function isDisallowed(path: string): boolean {

@@ -1,6 +1,11 @@
+"use client";
+
 import React from "react";
 import styled from "styled-components";
 import Illustration from "../../Icons/illustration";
+import { hubCopy } from "@/lib/hubCopy";
+import { useLocale } from "../shared/LocaleProvider";
+import { HubH1, HubLead } from "./HubSections";
 
 const SvgWrapper = styled.div`
   width: 100%;
@@ -34,12 +39,14 @@ const Line = styled.div`
 `;
 
 function Hero() {
+  const text = hubCopy(useLocale());
   return (
     <section>
       <SvgWrapper>
         <Illustration />
       </SvgWrapper>
-      <TittleH1>Horoscope</TittleH1>
+      <HubH1>{text.directoryH1}</HubH1>
+      <HubLead>{text.directoryLead}</HubLead>
       <Line></Line>
     </section>
   );

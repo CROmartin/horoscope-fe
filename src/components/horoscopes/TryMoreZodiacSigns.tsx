@@ -20,7 +20,7 @@ import Pisces from "./Icons/pisces.svg";
 
 import Link from "next/link";
 import { samePeriodPath } from "@/lib/horoscopeLinks";
-import { signDisplay } from "@/lib/zodiacSigns";
+import { signDisplay, type ZodiacSlug } from "@/lib/zodiacSigns";
 const Holder = styled.div`
   width: 100%;
   max-width: 100vw;
@@ -84,6 +84,18 @@ const ZodiacHolder = styled(Link)`
   }
 `;
 
+const Selected = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  border: 2px solid #ffffff;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 16px;
+  width: 20%;
+  box-sizing: border-box;
+`;
+
 const ZodiacName = styled.h3`
   color: #d7be8a;
   margin: 0;
@@ -120,104 +132,116 @@ const TextHolder = styled.div`
   }
   margin-bottom: 32px;
 `;
-function TryMoreZodiacSigns({ period }: { period: "zilnic" | "azi" | "saptamanal" }) {
+function TryMoreZodiacSigns({
+  period,
+  currentSlug,
+}: {
+  period: "zilnic" | "azi" | "saptamanal";
+  currentSlug?: string;
+}) {
   const locale = useLocale();
+  const CardLink = ({ slug, children }: { slug: ZodiacSlug; children: React.ReactNode }) => {
+    if (slug === currentSlug) {
+      return <Selected aria-current="page">{children}</Selected>;
+    }
+    return <ZodiacHolder href={samePeriodPath(period, slug)}>{children}</ZodiacHolder>;
+  };
   return (
     <Holder>
       <TextHolder>
         <h2>{copy(locale).tryMore}</h2>
       </TextHolder>
       <Zodiacs>
-        <ZodiacHolder href={samePeriodPath(period, "berbec")}>
+        <CardLink slug="berbec">
           <Aries />
 
           <ZodiacName>{signDisplay("berbec", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>{cardLine("berbec", locale)}</ZodiacCaracteristics>
-        </ZodiacHolder>
-        <ZodiacHolder href={samePeriodPath(period, "taur")}>
+        </CardLink>
+        <CardLink slug="taur">
           <Taurus />
 
           <ZodiacName>{signDisplay("taur", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>{cardLine("taur", locale)}</ZodiacCaracteristics>
-        </ZodiacHolder>
-        <ZodiacHolder href={samePeriodPath(period, "gemeni")}>
+        </CardLink>
+        <CardLink slug="gemeni">
           <Gemini />
 
           <ZodiacName>{signDisplay("gemeni", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
             {cardLine("gemeni", locale)}
           </ZodiacCaracteristics>
-        </ZodiacHolder>
-        <ZodiacHolder href={samePeriodPath(period, "rac")}>
+        </CardLink>
+        <CardLink slug="rac">
           <Cancer />
 
           <ZodiacName>{signDisplay("rac", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
             {cardLine("rac", locale)}
           </ZodiacCaracteristics>
-        </ZodiacHolder>
-        <ZodiacHolder href={samePeriodPath(period, "leu")}>
+        </CardLink>
+        <CardLink slug="leu">
           <Leo />
 
           <ZodiacName>{signDisplay("leu", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
             {cardLine("leu", locale)}
           </ZodiacCaracteristics>
-        </ZodiacHolder>
-        <ZodiacHolder href={samePeriodPath(period, "fecioara")}>
+        </CardLink>
+        <CardLink slug="fecioara">
           <Virgo />
 
           <ZodiacName>{signDisplay("fecioara", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>{cardLine("fecioara", locale)}</ZodiacCaracteristics>
-        </ZodiacHolder>
-        <ZodiacHolder href={samePeriodPath(period, "balanta")}>
+        </CardLink>
+        <CardLink slug="balanta">
           <Libra />
 
           <ZodiacName>{signDisplay("balanta", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
             {cardLine("balanta", locale)}
           </ZodiacCaracteristics>
-        </ZodiacHolder>
-        <ZodiacHolder href={samePeriodPath(period, "scorpion")}>
+        </CardLink>
+        <CardLink slug="scorpion">
           <Scorpio />
 
           <ZodiacName>{signDisplay("scorpion", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
             {cardLine("scorpion", locale)}
           </ZodiacCaracteristics>
-        </ZodiacHolder>
-        <ZodiacHolder href={samePeriodPath(period, "sagetator")}>
+        </CardLink>
+        <CardLink slug="sagetator">
           <Sagittarius />
 
           <ZodiacName>{signDisplay("sagetator", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
             {cardLine("sagetator", locale)}
           </ZodiacCaracteristics>
-        </ZodiacHolder>
-        <ZodiacHolder href={samePeriodPath(period, "capricorn")}>
+        </CardLink>
+        <CardLink slug="capricorn">
           <Capricorn />
 
           <ZodiacName>{signDisplay("capricorn", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
             {cardLine("capricorn", locale)}
           </ZodiacCaracteristics>
-        </ZodiacHolder>
-        <ZodiacHolder href={samePeriodPath(period, "varsator")}>
+        </CardLink>
+        <CardLink slug="varsator">
           <Aquarius />
 
           <ZodiacName>{signDisplay("varsator", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
             {cardLine("varsator", locale)}
           </ZodiacCaracteristics>
-        </ZodiacHolder>
-        <ZodiacHolder href={samePeriodPath(period, "pesti")}>
+        </CardLink>
+        <CardLink slug="pesti">
           <Pisces />
 
           <ZodiacName>{signDisplay("pesti", locale)?.name}</ZodiacName>
           <ZodiacCaracteristics>
             {cardLine("pesti", locale)}
           </ZodiacCaracteristics>
-        </ZodiacHolder>
+        </CardLink>
       </Zodiacs>
     </Holder>
   );

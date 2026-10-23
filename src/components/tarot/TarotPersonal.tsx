@@ -7,6 +7,7 @@ import Breadcrumbs from "@/components/seo/Breadcrumbs";
 import AlignWrapper from "@/components/shared/AlignWrapper";
 import { trackEvent } from "@/lib/analytics";
 import { breadcrumbTrail } from "@/lib/breadcrumbs";
+import { hubCopy } from "@/lib/hubCopy";
 import { copy } from "@/lib/messages";
 import { tarotCard, type TarotCard, type TarotSuit } from "@/lib/tarotCards";
 import {
@@ -372,6 +373,14 @@ export function TarotPersonal({ localDate, publishedCardId }: { localDate: strin
       <Article>
       <Breadcrumbs items={crumbs} />
       <h1>{text.tarotPersonalTitle}</h1>
+      <p>{hubCopy(locale).tarotLead}</p>
+      <section>
+        <h2>{hubCopy(locale).tarotHowH2}</h2>
+        <p>{hubCopy(locale).tarotHowP}</p>
+        <p>
+          {hubCopy(locale).tarotSharedPrompt} <Link href={TAROT_TODAY_PATH}>{hubCopy(locale).tarotSharedLink}</Link>.
+        </p>
+      </section>
       <Stage $float={phase === "idle"} onClick={phase === "idle" ? onReveal : undefined}>
         <Flipper $phase={phase} onAnimationEnd={onFlipEnd}>
           <BackFace $shine={phase === "idle"} aria-hidden={phase !== "idle" || undefined}>
@@ -397,34 +406,31 @@ export function TarotPersonal({ localDate, publishedCardId }: { localDate: strin
       {card && reading && phase !== "idle" ? (
         <Reading $rise={phase === "opening"}>
           {reading.translated ? null : text.tarotReadingNote ? <p>{text.tarotReadingNote}</p> : null}
-          <h3 ref={titleRef} tabIndex={-1}>
+          <h2 ref={titleRef} tabIndex={-1}>
             {reading.title}
-          </h3>
+          </h2>
           <p>{metaLine(card, text)}</p>
           <section>
-            <h4>{text.tarotMessage}</h4>
+            <h3>{text.tarotMessage}</h3>
             <p>
               <strong>{reading.headline}</strong>
             </p>
             <p>{reading.message}</p>
           </section>
           <section>
-            <h4>{text.tarotLove}</h4>
+            <h3>{text.tarotLove}</h3>
             <p>{reading.love}</p>
           </section>
           <section>
-            <h4>{text.tarotWork}</h4>
+            <h3>{text.tarotWork}</h3>
             <p>{reading.work}</p>
           </section>
           <section>
-            <h4>{text.tarotReflection}</h4>
+            <h3>{text.tarotReflection}</h3>
             <p>{reading.reflection}</p>
           </section>
         </Reading>
       ) : null}
-      <p>
-        <Link href={TAROT_TODAY_PATH}>{text.tarotTitle}</Link>
-      </p>
       </Article>
     </AlignWrapper>
   );

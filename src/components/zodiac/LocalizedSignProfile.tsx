@@ -1,4 +1,5 @@
 import SignProfile from "./SignProfile";
+import { publishedSet } from "@/lib/horoscopes";
 import { currentLocale } from "@/lib/localeServer";
 import { romanianToEnglish } from "@/lib/romanianToEnglish";
 import { signProfile } from "@/lib/signProfiles";
@@ -7,6 +8,10 @@ import type { ZodiacSlug } from "@/lib/zodiacSigns";
 
 export async function localizedSignProfile(slug: ZodiacSlug) {
   const locale = await currentLocale();
+  const [daily, weekly] = await Promise.all([
+    publishedSet("getAllHoroscopeDaily", "day"),
+    publishedSet("getAllHoroscopeWeekly", "week"),
+  ]);
   const profile = signProfile(slug);
   let traits:
     | { summary: string; strengths: string; weaknesses: string; likes: string; dislikes: string }
@@ -28,5 +33,5 @@ export async function localizedSignProfile(slug: ZodiacSlug) {
     }
   }
 
-  return <SignProfile slug={slug} traits={traits} />;
+  return <SignProfile slug={slug} traits={traits} daily={daily} weekly={weekly} />;
 }

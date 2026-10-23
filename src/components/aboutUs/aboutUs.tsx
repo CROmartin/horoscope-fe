@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { dailyHubLinkLabel, type Publication } from "@/lib/hubCopy";
 import { copy } from "@/lib/messages";
 import { useLocale } from "../shared/LocaleProvider";
 import styled from "styled-components";
@@ -64,8 +65,9 @@ const Actions = styled.div`
   max-width: 100%;
 `;
 
-function AboutUs() {
-  const text = copy(useLocale());
+function AboutUs({ publication }: { publication: Publication }) {
+  const locale = useLocale();
+  const text = copy(locale);
   return (
     <Holder>
       <Title>{text.aboutPageTitle}</Title>
@@ -80,7 +82,7 @@ function AboutUs() {
         </ul>
       </Paragraph>
       <Actions>
-        <Button message={text.linkToday} link="/horoscop-zilnic" />
+        <Button message={dailyHubLinkLabel(locale, publication)} link="/horoscop-zilnic" />
         <Button message={text.linkWeek} link="/horoscop-saptamanal" />
         <Button message={text.chinese} link="/horoscop-chinezesc" />
       </Actions>

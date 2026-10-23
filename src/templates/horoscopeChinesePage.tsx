@@ -41,6 +41,7 @@ import Button from "../components/shared/Button";
 import styled from "styled-components";
 import { renderAffirmations } from "../utils/helpers";
 import ReadingStatus from "../components/horoscope/ReadingStatus";
+import ReadingText from "../components/horoscope/ReadingText";
 import type { Crumb } from "../lib/breadcrumbs";
 import { copy } from "@/lib/messages";
 import { useLocale } from "@/components/shared/LocaleProvider";
@@ -145,6 +146,8 @@ function HoroscopeChinesePage({
   crumbs,
   period,
   translated,
+  published,
+  signSlug,
   facts,
 }: {
   description: string;
@@ -157,6 +160,8 @@ function HoroscopeChinesePage({
   crumbs: Crumb[];
   period: "zilnic" | "anual";
   translated?: boolean;
+  published?: { iso: string; label: string; current: boolean };
+  signSlug?: string;
   facts?: {
     element: string;
     ruler: string;
@@ -169,6 +174,8 @@ function HoroscopeChinesePage({
 }) {
   const text = copy(useLocale());
   const affirmationList = renderAffirmations(affirmations);
+  const affirmationHeading =
+    published?.current && period === "zilnic" ? text.affirmationsToday : text.affirmationsHeading;
   const signInfo = facts;
 
   return (
@@ -176,27 +183,25 @@ function HoroscopeChinesePage({
       <HomeLink href="/">
         <Illustration />
       </HomeLink>
-      <ReadingStatus heading={heading} links={links} crumbs={crumbs} />
+      <ReadingStatus heading={heading} links={links} crumbs={crumbs} published={published} />
       <Row>
         <LeftSide>
           <IntervalHolder>
             <ContentBox>
               {!translated && text.readingNote ? <p>{text.readingNote}</p> : null}
-              <p>{description}</p>
+              <ReadingText text={description} />
             </ContentBox>
           </IntervalHolder>
           <ContentBox>
+            {signStandard === "oaie" ? <p>{text.sheepAlias}</p> : null}
             <div>
-              <span>{text.element}: </span>
-              {signInfo?.element}
-            </div>
-            <div>
-              <span>{text.ruler}: </span>
+              <span>{text.polarity}: </span>
               {signInfo?.ruler}
             </div>
             <div>
               <span>{text.years}: </span> {signInfo?.years}
             </div>
+            <p>{text.yearCaveat}</p>
             <p>
               <span>{text.strengths}: </span> {signInfo?.strengths}
             </p>
@@ -279,7 +284,7 @@ function HoroscopeChinesePage({
         <LeftSide>
           <ParagraphAzi>
             <h2>{text.compatibilityHeading}</h2>
-            <p>{compatibility}</p>
+            <ReadingText text={compatibility} />
           </ParagraphAzi>
         </LeftSide>
         <RightSideIcon className="hide">
@@ -296,7 +301,7 @@ function HoroscopeChinesePage({
         </RightSideIcon>
         <LeftSide>
           <ParagraphAzi>
-            <h2>{text.affirmationsHeading}</h2>
+            <h2>{affirmationHeading}</h2>
 
             {affirmationList.map((affirmation, index) => (
               <p key={index}>{affirmation}</p>
@@ -306,9 +311,9 @@ function HoroscopeChinesePage({
       </RowAzi>
       <br />
       <Row>
-        <Button message="Mai Multe Horoscoape" link={`/horoscop`} />
+        <Button message={text.moreChinese} link="/horoscop-chinezesc" />
       </Row>
-      <TryMoreChineseSigns period={period} />
+      <TryMoreChineseSigns period={period} currentSlug={signSlug} />
     </AlignWrapper>
   );
 }

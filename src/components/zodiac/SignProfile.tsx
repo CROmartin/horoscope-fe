@@ -30,6 +30,8 @@ import Sagittarius from "@/components/horoscopes/Icons/sagittariusBig.svg";
 import Capricorn from "@/components/horoscopes/Icons/capricornBig.svg";
 import Aquarius from "@/components/horoscopes/Icons/aquariusBig.svg";
 import Pisces from "@/components/horoscopes/Icons/piscesBig.svg";
+import { hubCopy, profileDailyNote, profileWeeklyNote, type Publication } from "@/lib/hubCopy";
+import { sameElementSlugs, signArticle } from "@/lib/signArticles";
 import { signProfile } from "@/lib/signProfiles";
 import { signDisplay, type ZodiacSlug } from "@/lib/zodiacSigns";
 import { copy } from "@/lib/messages";
@@ -70,12 +72,62 @@ const RULERS: Record<string, string> = {
   "Neptun, Jupiter": "Neptune, Jupiter",
 };
 
+function ProfileArticle({ slug }: { slug: ZodiacSlug }) {
+  const article = signArticle(slug);
+  const copy = hubCopy("ro");
+  return (
+    <>
+      <ProfileSummary>{article.intro}</ProfileSummary>
+      <h2>{article.whenH2}</h2>
+      <p>{article.whenP}</p>
+      <h2>{article.howH2}</h2>
+      <p>{article.howP}</p>
+      <h2>{article.traitsH2}</h2>
+      <p>{article.traitsP}</p>
+      <h2>{article.loveH2}</h2>
+      <p>
+        {article.loveP} <Link href="/compatibilitate">{article.loveLink}</Link>.
+      </p>
+      <h2>{article.workH2}</h2>
+      <p>{article.workP}</p>
+      <h2>{article.readH2}</h2>
+      <p>
+        {article.readP} <Link href={`/horoscop-zilnic-${slug}`}>{article.readDaily}</Link> {article.readOr}{" "}
+        <Link href={`/horoscop-saptamanal-${slug}`}>{article.readWeekly}</Link>. Pentru datele celorlalte semne, vezi{" "}
+        <Link href="/horoscop">{copy.linkGuide}</Link>.
+      </p>
+    </>
+  );
+}
+
+function ElementPeers({ slug, locale, element }: { slug: ZodiacSlug; locale: "ro" | "en"; element: string }) {
+  const peers = sameElementSlugs(slug);
+  if (!peers.length) return null;
+  return (
+    <p>
+      {locale === "en" ? "Same element" : "Același element"}, {element}
+      {": "}
+      {peers.map((peer, index) => (
+        <span key={peer}>
+          {index > 0 ? ", " : null}
+          <Link href={`/${peer}`}>{signDisplay(peer, locale)?.name}</Link>
+        </span>
+      ))}
+      .
+    </p>
+  );
+}
+
 function SignProfile({
   slug,
   traits,
+  daily,
+  weekly,
 }: {
   slug: ZodiacSlug;
   traits?: { summary: string; strengths: string; weaknesses: string; likes: string; dislikes: string };
+  daily: Publication;
+  weekly: Publication;
 }) {
   const locale = useLocale();
   const text = copy(locale);
@@ -91,21 +143,37 @@ function SignProfile({
       <Link href="/">
         <Illustration />
       </Link>
-      <h1>{sign.name}</h1>
+      <h1>
+        {locale === "en"
+          ? `${sign.name}: traits and personality`
+          : `Zodia ${sign.name}: caracteristici și personalitate`}
+      </h1>
       <Row>
         <LeftSide>
           <IntervalHolder>
             <IntervalBox>
               <Star />
               <h2>{text.profileDaily}</h2>
-              <div>{text.profileDailyNote}</div>
-              <Button message={text.readMore} link={`/horoscop-zilnic-${slug}`} />
+              <div>{profileDailyNote(locale, daily)}</div>
+              <Button
+                message={
+                  locale === "en" ? `Daily horoscope for ${sign.name}` : `Horoscopul zilnic pentru ${sign.name}`
+                }
+                link={`/horoscop-zilnic-${slug}`}
+              />
             </IntervalBox>
             <IntervalBox>
               <Halfmoon />
               <h2>{text.profileWeekly}</h2>
-              <div>{text.profileWeeklyNote}</div>
-              <Button message={text.readMore} link={`/horoscop-saptamanal-${slug}`} />
+              <div>{profileWeeklyNote(locale, weekly)}</div>
+              <Button
+                message={
+                  locale === "en"
+                    ? `Weekly horoscope for ${sign.name}`
+                    : `Horoscopul săptămânal pentru ${sign.name}`
+                }
+                link={`/horoscop-saptamanal-${slug}`}
+              />
             </IntervalBox>
           </IntervalHolder>
           <RowHoroscopes>
@@ -113,7 +181,12 @@ function SignProfile({
             <Button message={text.profileChinese} link="/horoscop-chinezesc" />
           </RowHoroscopes>
           <ContentBox>
-            <ProfileSummary>{traits?.summary || profile.summary}</ProfileSummary>
+            {locale === "ro" ? (
+              <ProfileArticle slug={slug} />
+            ) : (
+              <ProfileSummary>{traits?.summary || profile.summary}</ProfileSummary>
+            )}
+            <ElementPeers slug={slug} locale={locale} element={element} />
             <div>
               <span>{text.element}: </span>
               {element}

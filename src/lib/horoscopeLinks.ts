@@ -1,5 +1,6 @@
 import type { Locale } from "./locale";
 import { copy } from "./messages";
+import { signDisplay, type ZodiacSlug } from "./zodiacSigns";
 
 export type HoroscopeInterval = "zilnic" | "azi" | "saptamanal" | "anual";
 
@@ -15,14 +16,33 @@ export function relatedHoroscopeLinks(input: {
 }) {
   const { variant, interval, signSlug, locale = "ro" } = input;
   const text = copy(locale);
+  const sign = signDisplay(signSlug as ZodiacSlug, locale)?.name;
   const links =
     variant === "chinese"
       ? interval === "anual"
         ? [{ href: samePeriodPath("zilnic", signSlug), label: text.linkChineseDaily }]
         : [{ href: samePeriodPath("anual", signSlug), label: text.linkYear }]
       : interval === "saptamanal"
-        ? [{ href: samePeriodPath("zilnic", signSlug), label: text.linkToday }]
-        : [{ href: samePeriodPath("saptamanal", signSlug), label: text.linkWeek }];
+        ? [
+            {
+              href: samePeriodPath("zilnic", signSlug),
+              label: sign
+                ? locale === "en"
+                  ? `Daily horoscope for ${sign}`
+                  : `Horoscopul zilnic pentru ${sign}`
+                : text.linkToday,
+            },
+          ]
+        : [
+            {
+              href: samePeriodPath("saptamanal", signSlug),
+              label: sign
+                ? locale === "en"
+                  ? `Weekly horoscope for ${sign}`
+                  : `Horoscopul săptămânal pentru ${sign}`
+                : text.linkWeek,
+            },
+          ];
 
   if (variant === "chinese") {
     links.push({
@@ -33,12 +53,15 @@ export function relatedHoroscopeLinks(input: {
 
   if (variant !== "chinese") {
     links.push(
-      { href: `/${signSlug}`, label: text.linkProfile },
+      {
+        href: `/${signSlug}`,
+        label: sign ? (locale === "en" ? `About ${sign}` : `Despre zodia ${sign}`) : text.linkProfile,
+      },
       { href: `/compatibilitate?a=${signSlug}`, label: text.compatibility }
     );
   }
   if (interval === "zilnic" || interval === "azi") {
-    links.push({ href: "/tarot/cartea-ta", label: text.tarotPersonalTitle });
+    links.push({ href: "/tarot/cartea-ta", label: text.linkTarot });
   }
   return links;
 }

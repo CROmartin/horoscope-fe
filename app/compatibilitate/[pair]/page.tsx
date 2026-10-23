@@ -3,6 +3,8 @@ import { notFound, permanentRedirect } from "next/navigation";
 import CompatibilityResult from "@/components/compatibility/CompatibilityResult";
 import JsonLd from "@/components/seo/JsonLd";
 import { allCanonicalPairs, parsePairParam } from "@/lib/compatibility";
+import { pairFallback } from "@/lib/hubCopy";
+import { publishedSet } from "@/lib/horoscopes";
 import { pageMetadata } from "@/lib/metadata";
 import { signDisplay, type ZodiacSlug } from "@/lib/zodiacSigns";
 import { currentLocale } from "@/lib/localeServer";
@@ -27,7 +29,7 @@ async function pairText(first: ZodiacSlug, second: ZodiacSlug) {
   return {
     locale,
     title: `${text.pairHeading} ${names}`,
-    description: first === second ? text.pairUnpublishedSame : text.pairUnpublished,
+    description: pairFallback(locale, await publishedSet("getAllHoroscopeDaily", "day"), first === second),
   };
 }
 
@@ -52,13 +54,14 @@ export default async function Page({ params }: PageProps) {
   if (pair !== parsed.canonical) {
     permanentRedirect(`/compatibilitate/${parsed.canonical}`);
   }
+  const publication = await publishedSet("getAllHoroscopeDaily", "day");
   const text = await pairText(parsed.first, parsed.second);
   const path = `/compatibilitate/${parsed.canonical}`;
 
   return (
     <>
       <JsonLd title={text.title} description={text.description} path={path} />
-      <CompatibilityResult first={parsed.first} second={parsed.second} />
+      <CompatibilityResult first={parsed.first} second={parsed.second} publication={publication} />
     </>
   );
 }

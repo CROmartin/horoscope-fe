@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { copy } from "@/lib/messages";
+import { dailyLead, hubCopy, type Publication } from "@/lib/hubCopy";
 import { useLocale } from "../shared/LocaleProvider";
 import { signDisplay } from "@/lib/zodiacSigns";
 import styled from "styled-components";
@@ -20,7 +20,7 @@ import Capricorn from "../../Icons/Capricorn";
 import Aquarius from "../../Icons/Aquarius";
 import Pisces from "../../Icons/Pisces";
 import Link from "next/link";
-import { TittleH1 } from "../styles/styles.styled";
+import { HubH1, HubH2, HubLead } from "../horoscopes/HubSections";
 
 const SvgWrapper = styled.div`
   width: 100%;
@@ -124,14 +124,22 @@ const SignName = styled.div`
   text-transform: none;
 `;
 
-function HeroZilnic() {
+function HeroZilnic({ publication }: { publication: Publication }) {
   const locale = useLocale();
+  const text = hubCopy(locale);
   return (
     <section>
       <SvgWrapper>
         <Illustration />
       </SvgWrapper>
-      <TittleH1>{copy(locale).horoscope}</TittleH1>
+      <HubH1>{text.dailyH1}</HubH1>
+      <HubLead>{dailyLead(locale, publication)}</HubLead>
+      {publication.iso && publication.label ? (
+        <HubLead>
+          <time dateTime={publication.iso}>{publication.label}</time>
+        </HubLead>
+      ) : null}
+      <HubH2>{text.dailyChoose}</HubH2>
       <Line></Line>
       <InfoLine>
         <SignHolder href="/horoscop-zilnic-berbec">

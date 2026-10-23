@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { copy } from "@/lib/messages";
+import { chineseDailyLead, hubCopy, type Publication } from "@/lib/hubCopy";
 import { useLocale } from "../shared/LocaleProvider";
 import { displayStoredName } from "@/lib/zodiacSigns";
 import styled from "styled-components";
@@ -21,7 +21,7 @@ import Rat from "../horoscopes/Icons/chinese/RatSmall.svg";
 import Rooster from "../horoscopes/Icons/chinese/RoosterSmall.svg";
 import Pig from "../horoscopes/Icons/chinese/PigSmall.svg";
 import Link from "next/link";
-import { TittleH1 } from "../styles/styles.styled";
+import { HubH1, HubH2, HubLead } from "../horoscopes/HubSections";
 
 const SvgWrapper = styled.div`
   width: 100%;
@@ -152,14 +152,22 @@ const SignName = styled.div`
   text-transform: none;
 `;
 
-function HeroDaily() {
+function HeroDaily({ publication }: { publication: Publication }) {
   const locale = useLocale();
+  const text = hubCopy(locale);
   return (
     <section>
       <SvgWrapper>
         <Illustration />
       </SvgWrapper>
-      <TittleH1>{copy(locale).horoscope}</TittleH1>
+      <HubH1>{text.chineseDailyH1}</HubH1>
+      <HubLead>{chineseDailyLead(locale, publication)}</HubLead>
+      {publication.iso && publication.label ? (
+        <HubLead>
+          <time dateTime={publication.iso}>{publication.label}</time>
+        </HubLead>
+      ) : null}
+      <HubH2>{text.chineseDailyChoose}</HubH2>
       <Line></Line>
       <InfoLine>
         <SignHolder href="/horoscop-zilnic-sobolan">
