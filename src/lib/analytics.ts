@@ -8,7 +8,7 @@ declare global {
   }
 }
 
-export const GA_MEASUREMENT_ID = "G-9LWQ12D876";
+export const GTM_CONTAINER_ID = "GTM-N5XRMBTN";
 export const ANALYTICS_CONSENT_KEY = "horoscopzodii.analytics";
 
 export const MEASURED_CHINESE_SLUGS = [
@@ -99,9 +99,14 @@ export function hitsForPath(pathname: string): AnalyticsHit[] {
   return hits;
 }
 
+export function dataLayerEvent(name: string, params?: Record<string, string>) {
+  return { event: name, ...(params ?? {}) };
+}
+
 export function trackEvent(name: string, params?: Record<string, string>) {
-  if (typeof window === "undefined") return;
-  window.gtag?.("event", name, params);
+  if (typeof window === "undefined" || typeof window.gtag !== "function") return;
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push(dataLayerEvent(name, params));
 }
 
 export function zodiacSelectHit(sign: string): AnalyticsHit | null {

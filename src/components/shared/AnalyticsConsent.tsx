@@ -10,7 +10,8 @@ import { useLocale } from "./LocaleProvider";
 import {
   type AnalyticsConsent,
   type AnalyticsHit,
-  GA_MEASUREMENT_ID,
+  GTM_CONTAINER_ID,
+  dataLayerEvent,
   hitsForPath,
   readAnalyticsConsent,
   writeAnalyticsConsent,
@@ -24,33 +25,33 @@ const ConsentContext = createContext<{
   choose: (value: AnalyticsConsent) => void;
 } | null>(null);
 
-function gtagReady(): boolean {
-  return typeof window !== "undefined" && typeof window.gtag === "function";
+function tagManagerReady(): boolean {
+  return typeof document !== "undefined" && document.getElementById("gtm-container") !== null;
 }
 
-function loadGoogleAnalytics() {
-  if (typeof document === "undefined" || gtagReady()) return;
+function loadTagManager() {
+  if (typeof document === "undefined" || tagManagerReady()) return;
   window.dataLayer = window.dataLayer || [];
-  const gtag = function gtag() {
-    window.dataLayer?.push(arguments);
+  window.gtag = function gtag(...args: unknown[]) {
+    if (args[0] !== "event" || typeof args[1] !== "string") return;
+    const params =
+      args[2] && typeof args[2] === "object" ? (args[2] as Record<string, string>) : undefined;
+    window.dataLayer?.push(dataLayerEvent(args[1], params));
   } as NonNullable<Window["gtag"]>;
-  window.gtag = gtag;
-  gtag("js", new Date());
-  gtag("config", GA_MEASUREMENT_ID, {
-    anonymize_ip: true,
-    send_page_view: false,
-  });
+  window.dataLayer.push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
   const script = document.createElement("script");
+  script.id = "gtm-container";
   script.async = true;
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
-  document.head.appendChild(script);
+  script.src = `https://www.googletagmanager.com/gtm.js?id=${GTM_CONTAINER_ID}`;
+  const first = document.getElementsByTagName("script")[0];
+  if (first?.parentNode) first.parentNode.insertBefore(script, first);
+  else document.head.appendChild(script);
 }
 
 function deliver(hits: AnalyticsHit[]) {
-  if (!gtagReady()) return;
+  window.dataLayer = window.dataLayer || [];
   for (const hit of hits) {
-    if (hit.params) window.gtag?.("event", hit.name, hit.params);
-    else window.gtag?.("event", hit.name);
+    window.dataLayer.push(dataLayerEvent(hit.name, hit.params));
   }
 }
 
@@ -72,7 +73,7 @@ export function AnalyticsConsent({ children }: { children: React.ReactNode }) {
     const stored = readAnalyticsConsent(window.localStorage);
     setConsent(stored);
     setReady(true);
-    if (stored === "granted") loadGoogleAnalytics();
+    if (stored === "granted") loadTagManager();
   }, []);
 
   useEffect(() => {
@@ -86,7 +87,7 @@ export function AnalyticsConsent({ children }: { children: React.ReactNode }) {
     writeAnalyticsConsent(window.localStorage, value);
     setConsent(value);
     if (value === "granted") {
-      loadGoogleAnalytics();
+      loadTagManager();
       sentPath.current = null;
     }
   }

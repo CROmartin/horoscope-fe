@@ -3,6 +3,7 @@ import test from "node:test";
 import { CHINESE_SLUGS } from "./horoscopes";
 import {
   ANALYTICS_CONSENT_KEY,
+  dataLayerEvent,
   hitsForPath,
   MEASURED_CHINESE_SLUGS,
   readAnalyticsConsent,
@@ -21,6 +22,14 @@ function memoryStorage(initial: Record<string, string> = {}) {
     },
   };
 }
+
+test("tag manager events keep the event name and its parameters", () => {
+  assert.deepEqual(dataLayerEvent("horoscope_view", { sign: "berbec", period: "day" }), {
+    event: "horoscope_view",
+    sign: "berbec",
+    period: "day",
+  });
+});
 
 test("analytics consent ignores anything other than granted or denied", () => {
   const storage = memoryStorage({ [ANALYTICS_CONSENT_KEY]: "maybe" });
