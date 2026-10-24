@@ -38,17 +38,21 @@ const Line = styled.div`
   background: #d7be8a;
 `;
 
+const Intro = styled.section`
+  margin-bottom: 16px;
+`;
+
 function Hero() {
   const text = hubCopy(useLocale());
   return (
-    <section>
+    <Intro>
       <SvgWrapper>
         <Illustration />
       </SvgWrapper>
       <HubH1>{text.directoryH1}</HubH1>
       <HubLead>{text.directoryLead}</HubLead>
       <Line></Line>
-    </section>
+    </Intro>
   );
 }
 

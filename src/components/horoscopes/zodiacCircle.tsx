@@ -26,17 +26,9 @@ const Holder = styled.div`
   justify-content: center;
   flex-wrap: wrap;
 
-  margin-top: 96px;
-  @media (max-width: 760px) {
-  }
-
-  @media (max-width: 485px) {
-    margin-top: 32px;
-  }
+  margin-top: 0;
   @media (max-width: 400px) {
     padding: 0 5%;
-
-    margin-top: 32px;
   }
 `;
 
