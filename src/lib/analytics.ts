@@ -9,6 +9,8 @@ declare global {
 }
 
 export const GTM_CONTAINER_ID = "GTM-N5XRMBTN";
+export const GOOGLE_ADS_ID = "AW-18534752015";
+export const PAGE_VIEW_CONVERSION_SEND_TO = "AW-18534752015/uAbCCNT2k6gdEI--h4ZF";
 export const ANALYTICS_CONSENT_KEY = "horoscopzodii.analytics";
 
 export const MEASURED_CHINESE_SLUGS = [
@@ -101,6 +103,19 @@ export function hitsForPath(pathname: string): AnalyticsHit[] {
 
 export function dataLayerEvent(name: string, params?: Record<string, string>) {
   return { event: name, ...(params ?? {}) };
+}
+
+export function pageViewConversionEvent() {
+  return {
+    send_to: PAGE_VIEW_CONVERSION_SEND_TO,
+    value: 1.0,
+    currency: "EUR" as const,
+  };
+}
+
+export function trackPageViewConversion() {
+  if (typeof window === "undefined" || typeof window.gtag !== "function") return;
+  window.gtag("event", "conversion", pageViewConversionEvent());
 }
 
 export function trackEvent(name: string, params?: Record<string, string>) {

@@ -5,6 +5,7 @@ import {
   ANALYTICS_CONSENT_KEY,
   dataLayerEvent,
   hitsForPath,
+  pageViewConversionEvent,
   MEASURED_CHINESE_SLUGS,
   readAnalyticsConsent,
   writeAnalyticsConsent,
@@ -22,6 +23,14 @@ function memoryStorage(initial: Record<string, string> = {}) {
     },
   };
 }
+
+test("page view conversion keeps the Ads label and euro value", () => {
+  assert.deepEqual(pageViewConversionEvent(), {
+    send_to: "AW-18534752015/uAbCCNT2k6gdEI--h4ZF",
+    value: 1,
+    currency: "EUR",
+  });
+});
 
 test("tag manager events keep the event name and its parameters", () => {
   assert.deepEqual(dataLayerEvent("horoscope_view", { sign: "berbec", period: "day" }), {

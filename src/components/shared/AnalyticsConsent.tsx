@@ -10,10 +10,12 @@ import { useLocale } from "./LocaleProvider";
 import {
   type AnalyticsConsent,
   type AnalyticsHit,
+  GOOGLE_ADS_ID,
   GTM_CONTAINER_ID,
   dataLayerEvent,
   hitsForPath,
   readAnalyticsConsent,
+  trackPageViewConversion,
   writeAnalyticsConsent,
 } from "@/lib/analytics";
 
@@ -32,20 +34,24 @@ function tagManagerReady(): boolean {
 function loadTagManager() {
   if (typeof document === "undefined" || tagManagerReady()) return;
   window.dataLayer = window.dataLayer || [];
-  window.gtag = function gtag(...args: unknown[]) {
-    if (args[0] !== "event" || typeof args[1] !== "string") return;
-    const params =
-      args[2] && typeof args[2] === "object" ? (args[2] as Record<string, string>) : undefined;
-    window.dataLayer?.push(dataLayerEvent(args[1], params));
+  window.gtag = function gtag() {
+    window.dataLayer?.push(arguments);
   } as NonNullable<Window["gtag"]>;
+  window.gtag("js", new Date());
+  window.gtag("config", GOOGLE_ADS_ID);
   window.dataLayer.push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
-  const script = document.createElement("script");
-  script.id = "gtm-container";
-  script.async = true;
-  script.src = `https://www.googletagmanager.com/gtm.js?id=${GTM_CONTAINER_ID}`;
-  const first = document.getElementsByTagName("script")[0];
-  if (first?.parentNode) first.parentNode.insertBefore(script, first);
-  else document.head.appendChild(script);
+  const ads = document.createElement("script");
+  ads.id = "google-ads-tag";
+  ads.async = true;
+  ads.src = `https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`;
+  const gtm = document.createElement("script");
+  gtm.id = "gtm-container";
+  gtm.async = true;
+  gtm.src = `https://www.googletagmanager.com/gtm.js?id=${GTM_CONTAINER_ID}`;
+  const first = document.getElementsByTagName("script")[0] ?? null;
+  const parent = first?.parentNode ?? document.head;
+  parent.insertBefore(gtm, first);
+  parent.insertBefore(ads, gtm);
 }
 
 function deliver(hits: AnalyticsHit[]) {
@@ -68,6 +74,7 @@ export function AnalyticsConsent({ children }: { children: React.ReactNode }) {
   const [consent, setConsent] = useState<ConsentValue>(null);
   const [ready, setReady] = useState(false);
   const sentPath = useRef<string | null>(null);
+  const pageViewConversionSent = useRef(false);
 
   useEffect(() => {
     const stored = readAnalyticsConsent(window.localStorage);
@@ -81,6 +88,9 @@ export function AnalyticsConsent({ children }: { children: React.ReactNode }) {
     if (sentPath.current === pathname) return;
     sentPath.current = pathname;
     deliver(hitsForPath(pathname));
+    if (pageViewConversionSent.current || typeof window.gtag !== "function") return;
+    pageViewConversionSent.current = true;
+    trackPageViewConversion();
   }, [consent, pathname, ready]);
 
   function choose(value: AnalyticsConsent) {
