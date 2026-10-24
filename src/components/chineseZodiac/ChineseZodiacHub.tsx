@@ -153,7 +153,6 @@ const MenuTitle = styled.h2`
 const Line = styled.div`
   width: 100%;
   height: 1px;
-  margin-top: 12px;
   background: #d7be8a;
 `;
 
@@ -170,67 +169,51 @@ const InfoLine = styled.div`
   }
 `;
 
-const SignHolder = styled(Link)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  align-content: center;
-  min-width: 6%;
-  max-width: 6%;
-  text-decoration: none;
-  text-transform: none;
-  cursor: pointer;
+interface IconWrapperProps {
+  $fill?: boolean;
+  $stroke?: boolean;
+}
 
-  @media (max-width: 1150px) {
-    min-width: max-content;
-    max-width: max-content;
-  }
-
-  &:focus-visible {
-    outline: 2px solid #ffffff;
-    outline-offset: 3px;
-  }
-`;
-
-const TunedIcon = styled.span<{ $fill?: boolean; $stroke?: boolean }>`
-  display: flex;
-
-  .dragon path {
-    stroke-width: 0.2px;
+const IconWrapper = styled.div<IconWrapperProps>`
+  min-width: 80px;
+  min-height: 80px;
+  max-width: 80px;
+  max-height: 80px;
+  min-width: 100%;
+  min-height: 70%;
+  max-width: 100%;
+  max-height: 70%;
+  .dragon {
+    path {
+      stroke-width: 0.2px;
+    }
   }
 
   path {
     stroke-width: 0.2px;
   }
 
-  .boldSvg path {
-    stroke-width: 0.6px;
+  .boldSvg {
+    path {
+      stroke-width: 0.6px;
+    }
   }
-
-  svg path {
-    ${(props) => props.$fill && "fill: #d7be8a;"}
-    ${(props) => props.$stroke && "stroke: #d7be8a;"}
-    stroke: #d7be8a;
-  }
-
-  &:hover {
-    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
-  }
-`;
-
-const MenuIcon = styled(TunedIcon)`
-  min-width: 100%;
-  min-height: 70%;
-  max-width: 100%;
-  max-height: 70%;
-  margin-bottom: 16px;
 
   svg {
-    width: 100%;
     min-width: 90px;
     min-height: 90px;
     max-width: 90px;
     max-height: 90px;
+  }
+  svg {
+    width: 100%;
+    path {
+      ${(props) => props.$fill && `fill: #d7be8a;`}
+      ${(props) => props.$stroke && `stroke: #d7be8a;`}
+    }
+    path {
+      stroke: #d7be8a;
+    }
   }
 
   @media (max-width: 1150px) {
@@ -246,21 +229,39 @@ const MenuIcon = styled(TunedIcon)`
       max-height: 90px;
     }
   }
+  :hover {
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
+  }
+  margin-bottom: 16px;
 `;
 
-const SignName = styled.span`
-  font-family: "DM Serif Display", serif;
+const SignHolder = styled(Link)`
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  cursor: pointer;
+  min-width: 6%;
+  max-width: 6%;
+  text-transform: none;
+  @media (max-width: 1150px) {
+    min-width: max-content;
+    max-width: max-content;
+  }
+`;
+
+const SignName = styled.div`
+  font-family: "DM Serif Display";
   font-style: italic;
   font-weight: 400;
   font-size: 16px;
   line-height: 92.02%;
-  text-align: center;
-  text-transform: none;
   color: #ffffff;
-
   @media (max-width: 1150px) {
     font-size: 20px;
   }
+  text-transform: none;
 `;
 
 const Lead = styled.p`
@@ -512,16 +513,6 @@ const Card = styled(Link)`
   }
 `;
 
-const IconSlot = styled(TunedIcon)`
-  width: 48px;
-  height: 48px;
-
-  svg {
-    width: 48px;
-    height: 48px;
-  }
-`;
-
 const TableWrap = styled.details`
   width: 100%;
   max-width: min(42rem, 100%);
@@ -564,9 +555,9 @@ function SignIcon({ slug }: { slug: string }) {
   const Icon = ICONS[slug];
   if (!Icon || !sign) return null;
   return (
-    <IconSlot aria-hidden="true" $fill={sign.fill} $stroke={sign.stroke}>
+    <IconWrapper aria-hidden="true" $fill={sign.fill} $stroke={sign.stroke}>
       <Icon className={sign.iconClass} />
-    </IconSlot>
+    </IconWrapper>
   );
 }
 
@@ -649,9 +640,9 @@ function ChineseZodiacHub() {
             const Icon = ICONS[sign.slug];
             return (
               <SignHolder key={sign.slug} href={`/horoscop-anual-${sign.slug}`}>
-                <MenuIcon $fill={sign.fill} $stroke={sign.stroke}>
+                <IconWrapper $fill={sign.fill} $stroke={sign.stroke}>
                   {Icon ? <Icon className={sign.iconClass} /> : null}
-                </MenuIcon>
+                </IconWrapper>
                 <SignName>{displayStoredName(sign.stored, locale)}</SignName>
               </SignHolder>
             );
