@@ -41,6 +41,29 @@ const ro = {
   directoryH1: "Zodii: cele 12 semne ale zodiacului occidental",
   directoryLead:
     "Zodiacul occidental cuprinde 12 semne, asociate unor perioade ale anului și unor simboluri astrologice. Explorează elementul, trăsăturile tradiționale și caracteristicile atribuite fiecărei zodii.",
+  finderIntro:
+    "Nu știi ce zodie ești? Alege ziua și luna nașterii pentru a afla semnul zodiacal occidental și elementul asociat. Mai jos poți descoperi toate cele 12 zodii, perioadele lor și semnificațiile atribuite în astrologie.",
+  finderH2: "Ce zodie ești? Află după data nașterii",
+  finderDay: "Ziua nașterii",
+  finderMonth: "Luna nașterii",
+  finderChoose: "Alege",
+  finderSubmit: "Află zodia mea",
+  finderHelp:
+    "Folosim intervalele calendaristice obișnuite ale zodiilor occidentale. Dacă te-ai născut chiar la trecerea dintre două zodii, semnul astrologic exact poate depinde de anul, ora și locul nașterii.",
+  finderMissing: "Alege ziua și luna.",
+  finderInvalid: "Ziua aleasă nu există în luna respectivă.",
+  finderResult: "Zodia ta este",
+  finderElement: "Element:",
+  finderGuide: "Citește despre zodia",
+  finderDaily: "Vezi horoscopul",
+  finderDailyTail: "de azi",
+  finderCompat: "Vezi compatibilitatea",
+  systemsH2: "Zodiac occidental sau zodiac chinezesc?",
+  systemsP:
+    "Zodiacul occidental împarte anul în 12 semne asociate cu perioada nașterii. Zodiacul chinezesc folosește un ciclu de 12 animale legate de ani și de calendarul tradițional chinezesc. Dacă vrei să afli animalul tău, folosește",
+  systemsLink: "calculatorul de zodiac chinezesc",
+  finderDisclaimer:
+    "Descrierile astrologice sunt oferite pentru divertisment și reflecție, nu ca evaluări științifice ale personalității.",
   directoryChoose: "Descoperă zodia ta",
   elementsH2: "Cele patru elemente zodiacale",
   elementsP:
@@ -146,6 +169,29 @@ const en = {
   directoryH1: "Zodiac signs: the 12 signs of the Western zodiac",
   directoryLead:
     "The Western zodiac has 12 signs, tied to parts of the year and to astrological symbols. Explore the element, the traditional traits, and the characteristics attributed to each sign.",
+  finderIntro:
+    "Not sure of your sign? Choose the day and month of birth to find the Western zodiac sign and its element. Further down you can explore all 12 signs, their dates, and the meanings attributed to them in astrology.",
+  finderH2: "What is your sign? Find it from the day and month",
+  finderDay: "Day of birth",
+  finderMonth: "Month of birth",
+  finderChoose: "Choose",
+  finderSubmit: "Find my sign",
+  finderHelp:
+    "We use the usual calendar ranges of the Western signs. If you were born right on the change between two signs, the exact astrological sign can depend on the year, the time, and the place of birth.",
+  finderMissing: "Choose both the day and the month.",
+  finderInvalid: "That day does not exist in the chosen month.",
+  finderResult: "Your sign is",
+  finderElement: "Element:",
+  finderGuide: "Read about",
+  finderDaily: "See today's horoscope for",
+  finderDailyTail: "",
+  finderCompat: "See compatibility",
+  systemsH2: "Western zodiac or Chinese zodiac?",
+  systemsP:
+    "The Western zodiac divides the year into 12 signs tied to the time of birth. The Chinese zodiac uses a cycle of 12 animals tied to years and to the traditional Chinese calendar. To find your animal, use the",
+  systemsLink: "Chinese zodiac calculator",
+  finderDisclaimer:
+    "Astrological descriptions are offered for entertainment and reflection, not as a scientific assessment of personality.",
   directoryChoose: "Find your sign",
   elementsH2: "The four zodiac elements",
   elementsP:

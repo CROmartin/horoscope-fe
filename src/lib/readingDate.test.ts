@@ -40,6 +40,10 @@ test("a daily reading is current only on its Bucharest day", () => {
 
 test("a week label uses the published date, not the calendar week of today", () => {
   assert.equal(weekRangeLabel("2026-10-21"), "19–25 octombrie 2026");
+  assert.equal(weekRangeLabel("2026-03-29"), "23–29 martie 2026");
+  assert.equal(weekRangeLabel("2026-03-30"), "30 martie – 5 aprilie 2026");
+  assert.equal(weekRangeLabel("2026-10-25"), "19–25 octombrie 2026");
+  assert.equal(weekRangeLabel("2026-10-26"), "26 octombrie – 1 noiembrie 2026");
   const stored = readingFreshness({
     contentDate: "2026-10-21",
     period: "week",

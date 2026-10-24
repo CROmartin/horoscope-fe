@@ -123,6 +123,11 @@ export function DirectoryElements() {
           </li>
         ))}
       </ul>
+      <h2>{text.systemsH2}</h2>
+      <p>
+        {text.systemsP} <Link href="/horoscop-chinezesc">{text.systemsLink}</Link>.
+      </p>
+      <p>{text.finderDisclaimer}</p>
       <h2>{text.furtherH2}</h2>
       <p>
         {text.furtherP} <Link href="/horoscop-zilnic">{text.linkDaily}</Link> {text.furtherAnd}{" "}

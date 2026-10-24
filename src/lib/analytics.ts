@@ -128,3 +128,8 @@ export function zodiacSelectHit(sign: string): AnalyticsHit | null {
   if (!WESTERN.has(sign)) return null;
   return { name: "zodiac_select", params: { sign } };
 }
+
+export function directoryLookupHit(sign: string): AnalyticsHit | null {
+  if (!zodiacSelectHit(sign)) return null;
+  return { name: "zodiac_select", params: { sign, origin: "directory_lookup" } };
+}

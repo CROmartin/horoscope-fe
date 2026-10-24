@@ -59,15 +59,35 @@ export function readingHasMarkup(source: string) {
 }
 
 const TODAY = "(?:astăzi|azi)";
+const WEEK_MONTH =
+  "ianuarie|februarie|martie|aprilie|mai|iunie|iulie|august|septembrie|octombrie|noiembrie|decembrie";
+const WEEK_RANGE = new RegExp(
+  `\\d{1,2}(?:\\s+(?:${WEEK_MONTH})(?:\\s+\\d{4})?)?\\s*[–—-]\\s*\\d{1,2}\\s+(?:${WEEK_MONTH})\\s+\\d{4}`,
+  "giu"
+);
+
+function normalizeRange(value: string) {
+  return value.replace(/\s+/g, " ").replace(/\s*[–—-]\s*/g, "–").trim();
+}
+
+/** A dated week span in stored prose follows the Monday–Sunday range of the stored forecast date. */
+export function alignWeeklyRange(source: string, canonical: string) {
+  if (!source || !canonical) return source;
+  const target = normalizeRange(canonical);
+  return source.replace(WEEK_RANGE, (match) => (normalizeRange(match) === target ? match : canonical));
+}
 
 export function publishedReading(
   source: string,
   freshness: { current: boolean; label?: string; range?: string; period?: "day" | "week" | "year" }
 ) {
-  if (!source || freshness.current) return source;
+  if (!source) return source;
+  const textWithWeek =
+    freshness.period === "week" && freshness.range ? alignWeeklyRange(source, freshness.range) : source;
+  if (freshness.current) return textWithWeek;
   const when = freshness.period === "week" ? freshness.range || freshness.label : freshness.label;
-  if (!when) return source;
-  let text = source;
+  if (!when) return textWithWeek;
+  let text = textWithWeek;
   const keepCase = (phrase: string) => (match: string) =>
     match.charAt(0) === match.charAt(0).toLocaleUpperCase("ro")
       ? phrase.charAt(0).toLocaleUpperCase("ro") + phrase.slice(1)

@@ -9,6 +9,7 @@ import {
   MEASURED_CHINESE_SLUGS,
   readAnalyticsConsent,
   writeAnalyticsConsent,
+  directoryLookupHit,
   zodiacSelectHit,
 } from "./analytics";
 
@@ -87,6 +88,10 @@ test("hubs and unknown signs do not emit a horoscope event", () => {
   }
   assert.equal(zodiacSelectHit("berbec")?.name, "zodiac_select");
   assert.equal(zodiacSelectHit("tigru"), null);
+  const lookup = directoryLookupHit("leu");
+  assert.deepEqual(lookup, { name: "zodiac_select", params: { sign: "leu", origin: "directory_lookup" } });
+  assert.equal(JSON.stringify(lookup).match(/date|dob|birth|year|month|day|iso/i), null);
+  assert.equal(directoryLookupHit("tigru"), null);
   assert.deepEqual(hitsForPath("/compatibilitate"), [
     { name: "page_view", params: { page_path: "/compatibilitate" } },
     { name: "compatibility_started" },

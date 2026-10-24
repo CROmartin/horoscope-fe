@@ -39,6 +39,8 @@ test("Romanian hub headings match the page they belong to", () => {
   assert.equal(text.aziH1, "Horoscopul de azi, semn cu semn");
   assert.equal(text.weeklyH1, "Horoscop săptămânal pentru toate zodiile");
   assert.equal(text.directoryH1, "Zodii: cele 12 semne ale zodiacului occidental");
+  assert.equal(text.finderH2, "Ce zodie ești? Află după data nașterii");
+  assert.equal(text.systemsH2, "Zodiac occidental sau zodiac chinezesc?");
   assert.equal(text.chineseH1, "Zodiacul chinezesc: cele 12 semne");
   assert.equal(text.chineseDailyH1, "Horoscop chinezesc zilnic");
   assert.equal(text.dailyLeadToday, DAILY_TODAY);
@@ -172,6 +174,22 @@ test("a stale reading keeps its sentences and drops today", () => {
   assert.equal(
     publishedReading("Săptămâna aceasta rămâne.", { current: true, period: "week", range: "19–25 octombrie 2026" }),
     "Săptămâna aceasta rămâne."
+  );
+  const currentWeek = { current: true, period: "week" as const, range: "19–25 octombrie 2026" };
+  const aligned = publishedReading(
+    "Intervalul 21–27 octombrie 2026 aduce un ritm. 19–25 octombrie 2026 rămâne. 21 martie – 19 aprilie nu se schimbă.",
+    currentWeek
+  );
+  assert.equal(aligned.includes("21–27"), false);
+  assert.equal(aligned.includes("19–25 octombrie 2026"), true);
+  assert.equal(aligned.includes("21 martie – 19 aprilie"), true);
+  const staleRange = publishedReading("În această săptămână, 21-27 octombrie 2026.", staleWeek);
+  assert.equal(staleRange.includes("21-27"), false);
+  assert.equal(staleRange.includes("această săptămână"), false);
+  assert.equal(staleRange.includes("săptămâna 19–25 octombrie 2026"), true);
+  assert.equal(
+    publishedReading("28 septembrie – 4 octombrie 2026", currentWeek),
+    "19–25 octombrie 2026"
   );
 });
 
