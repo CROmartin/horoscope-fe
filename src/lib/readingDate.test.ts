@@ -1,7 +1,14 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { relatedHoroscopeLinks, samePeriodPath } from "./horoscopeLinks";
-import { formatCalendarDate, horoscopeTitle, isoWeekKey, readingFreshness, weekRangeLabel } from "./readingDate";
+import {
+  formatCalendarDate,
+  horoscopeTitle,
+  isoWeekKey,
+  publicationCaption,
+  readingFreshness,
+  weekRangeLabel,
+} from "./readingDate";
 
 const stale = new Date("2026-10-19T21:30:00.000Z");
 
@@ -54,6 +61,26 @@ test("weekly freshness follows the Monday week in Romania", () => {
     readingFreshness({ contentDate: "2024-03-03", period: "week", now: stale }).current,
     false
   );
+});
+
+test("a yearly forecast names the year and keeps the update date separate", () => {
+  const year = readingFreshness({ contentDate: "2026-10-21", period: "year", now: stale });
+  assert.deepEqual(publicationCaption(year, "ro"), {
+    yearLine: "Horoscop pentru anul 2026",
+    prefix: "Ultima actualizare",
+    iso: "2026-10-21",
+    label: "21 octombrie 2026",
+  });
+  assert.deepEqual(publicationCaption(year, "en")?.yearLine, "Horoscope for 2026");
+  assert.equal(publicationCaption(year, "en")?.prefix, "Last updated");
+
+  const day = readingFreshness({ contentDate: "2026-10-20", period: "day", now: stale });
+  assert.equal(publicationCaption(day, "ro")?.yearLine, undefined);
+  assert.equal(publicationCaption(day, "ro")?.prefix, "Publicat pentru");
+
+  const week = readingFreshness({ contentDate: "2026-10-21", period: "week", now: stale });
+  assert.equal(publicationCaption(week, "ro")?.yearLine, undefined);
+  assert.equal(publicationCaption(week, "ro")?.prefix, "Publicat pentru");
 });
 
 test("yearly freshness follows the Bucharest calendar year", () => {

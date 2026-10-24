@@ -9,7 +9,7 @@ import { breadcrumbTrail } from "@/lib/breadcrumbs";
 import { relatedHoroscopeLinks } from "@/lib/horoscopeLinks";
 import { getHoroscopeBySlug } from "@/lib/horoscopes";
 import { pageMetadata } from "@/lib/metadata";
-import { readingFreshness, type ReadingFreshness, type ReadingPeriod } from "@/lib/readingDate";
+import { publicationCaption, readingFreshness, type ReadingFreshness, type ReadingPeriod } from "@/lib/readingDate";
 import { publishedReading } from "@/lib/readingText";
 import { currentLocale } from "@/lib/localeServer";
 import { chineseFacts } from "@/lib/chineseFacts";
@@ -71,8 +71,8 @@ export default async function HoroscopeRoute({ params }: PageProps) {
     freshness,
     locale
   );
-  const published =
-    freshness.iso && freshness.label ? { iso: freshness.iso, label: freshness.label, current: freshness.current } : undefined;
+  const caption = publicationCaption(freshness, locale);
+  const published = caption ? { ...caption, current: freshness.current } : undefined;
   const path = `/${slug}`;
   const links = relatedHoroscopeLinks({
     variant: horoscope.variant,

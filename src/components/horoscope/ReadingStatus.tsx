@@ -56,7 +56,7 @@ function ReadingStatus({
   heading: string;
   links: { href: string; label: string }[];
   crumbs?: Crumb[];
-  published?: { iso: string; label: string };
+  published?: { iso: string; label: string; yearLine?: string; prefix?: string };
 }) {
   const locale = useLocale();
   const text = copy(locale);
@@ -65,9 +65,10 @@ function ReadingStatus({
     <Block>
       <Breadcrumbs items={crumbs} />
       <Heading>{heading}</Heading>
+      {published?.yearLine ? <p>{published.yearLine}</p> : null}
       {published ? (
         <p>
-          {text.publishedFor} <time dateTime={published.iso}>{published.label}</time>
+          {published.prefix ?? text.publishedFor} <time dateTime={published.iso}>{published.label}</time>
         </p>
       ) : null}
       {links.length > 0 && (

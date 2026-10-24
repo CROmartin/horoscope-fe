@@ -116,3 +116,31 @@ export function horoscopeTitle(base: string, freshness: ReadingFreshness) {
   if (freshness.period === "week" && freshness.range) return `${base}: ${freshness.range}`;
   return base;
 }
+
+export type PublicationCaption = {
+  yearLine?: string;
+  prefix: string;
+  iso: string;
+  label: string;
+};
+
+export function publicationCaption(
+  freshness: ReadingFreshness,
+  locale: Locale = "ro"
+): PublicationCaption | undefined {
+  if (!freshness.iso || !freshness.label) return undefined;
+  if (freshness.period === "year") {
+    const year = freshness.iso.slice(0, 4);
+    return {
+      yearLine: locale === "en" ? `Horoscope for ${year}` : `Horoscop pentru anul ${year}`,
+      prefix: locale === "en" ? "Last updated" : "Ultima actualizare",
+      iso: freshness.iso,
+      label: freshness.label,
+    };
+  }
+  return {
+    prefix: locale === "en" ? "Published for" : "Publicat pentru",
+    iso: freshness.iso,
+    label: freshness.label,
+  };
+}
