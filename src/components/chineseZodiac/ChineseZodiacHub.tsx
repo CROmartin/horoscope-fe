@@ -161,22 +161,30 @@ const InfoLine = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
-  padding: 20px 0 8px;
+  padding: 20px 0;
   gap: 32px;
 
   @media (max-width: 1150px) {
-    gap: 28px 36px;
+    flex-wrap: wrap;
+    gap: 48px;
   }
 `;
 
 const SignHolder = styled(Link)`
-  width: 72px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  align-content: center;
+  min-width: 6%;
+  max-width: 6%;
   text-decoration: none;
   text-transform: none;
+  cursor: pointer;
+
+  @media (max-width: 1150px) {
+    min-width: max-content;
+    max-width: max-content;
+  }
 
   &:focus-visible {
     outline: 2px solid #ffffff;
@@ -184,21 +192,25 @@ const SignHolder = styled(Link)`
   }
 `;
 
-const MenuIcon = styled.span<{ $fill?: boolean; $stroke?: boolean }>`
-  width: 72px;
-  height: 72px;
+const TunedIcon = styled.span<{ $fill?: boolean; $stroke?: boolean }>`
   display: flex;
-  margin-bottom: 8px;
 
-  svg {
-    width: 72px;
-    height: 72px;
+  .dragon path {
+    stroke-width: 0.2px;
   }
 
   path {
-    stroke: #d7be8a;
+    stroke-width: 0.2px;
+  }
+
+  .boldSvg path {
+    stroke-width: 0.6px;
+  }
+
+  svg path {
     ${(props) => props.$fill && "fill: #d7be8a;"}
     ${(props) => props.$stroke && "stroke: #d7be8a;"}
+    stroke: #d7be8a;
   }
 
   &:hover {
@@ -206,14 +218,49 @@ const MenuIcon = styled.span<{ $fill?: boolean; $stroke?: boolean }>`
   }
 `;
 
+const MenuIcon = styled(TunedIcon)`
+  min-width: 100%;
+  min-height: 70%;
+  max-width: 100%;
+  max-height: 70%;
+  margin-bottom: 16px;
+
+  svg {
+    width: 100%;
+    min-width: 90px;
+    min-height: 90px;
+    max-width: 90px;
+    max-height: 90px;
+  }
+
+  @media (max-width: 1150px) {
+    min-width: 80px;
+    min-height: 80px;
+    max-width: 80px;
+    max-height: 80px;
+
+    svg {
+      min-width: 90px;
+      min-height: 90px;
+      max-width: 90px;
+      max-height: 90px;
+    }
+  }
+`;
+
 const SignName = styled.span`
-  width: 100%;
   font-family: "DM Serif Display", serif;
   font-style: italic;
+  font-weight: 400;
   font-size: 16px;
-  line-height: 1.1;
+  line-height: 92.02%;
   text-align: center;
+  text-transform: none;
   color: #ffffff;
+
+  @media (max-width: 1150px) {
+    font-size: 20px;
+  }
 `;
 
 const Lead = styled.p`
@@ -465,19 +512,13 @@ const Card = styled(Link)`
   }
 `;
 
-const IconSlot = styled.span`
+const IconSlot = styled(TunedIcon)`
   width: 48px;
   height: 48px;
-  display: flex;
 
   svg {
     width: 48px;
     height: 48px;
-  }
-
-  path {
-    stroke: #d7be8a;
-    fill: #d7be8a;
   }
 `;
 
@@ -519,11 +560,12 @@ function track(name: string, params: Record<string, string>) {
 }
 
 function SignIcon({ slug }: { slug: string }) {
+  const sign = SIGN_MENU.find((item) => item.slug === slug);
   const Icon = ICONS[slug];
-  if (!Icon) return null;
+  if (!Icon || !sign) return null;
   return (
-    <IconSlot aria-hidden="true">
-      <Icon />
+    <IconSlot aria-hidden="true" $fill={sign.fill} $stroke={sign.stroke}>
+      <Icon className={sign.iconClass} />
     </IconSlot>
   );
 }
