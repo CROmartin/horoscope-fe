@@ -489,15 +489,17 @@ const Cards = styled.div`
 
 const Card = styled(Link)`
   width: 100%;
+  min-width: 0;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 8px;
   padding: 16px;
   border: 1px solid #d7be8a;
   color: #ffffff;
   text-decoration: none;
+  overflow: hidden;
 
   &:visited {
     color: #ffffff;
@@ -508,8 +510,46 @@ const Card = styled(Link)`
     outline-offset: 3px;
   }
 
+  h3,
+  p,
+  strong {
+    width: 100%;
+    max-width: 100%;
+  }
+
   strong {
     color: #d7be8a;
+  }
+`;
+
+const CardIcon = styled.span<IconWrapperProps>`
+  width: 72px;
+  height: 72px;
+  display: flex;
+  flex: 0 0 auto;
+  overflow: hidden;
+
+  .dragon path {
+    stroke-width: 0.2px;
+  }
+
+  path {
+    stroke-width: 0.2px;
+  }
+
+  .boldSvg path {
+    stroke-width: 0.6px;
+  }
+
+  svg {
+    width: 72px;
+    height: 72px;
+    max-width: 100%;
+    path {
+      ${(props) => props.$fill && `fill: #d7be8a;`}
+      ${(props) => props.$stroke && `stroke: #d7be8a;`}
+      stroke: #d7be8a;
+    }
   }
 `;
 
@@ -555,9 +595,9 @@ function SignIcon({ slug }: { slug: string }) {
   const Icon = ICONS[slug];
   if (!Icon || !sign) return null;
   return (
-    <IconWrapper aria-hidden="true" $fill={sign.fill} $stroke={sign.stroke}>
+    <CardIcon aria-hidden="true" $fill={sign.fill} $stroke={sign.stroke}>
       <Icon className={sign.iconClass} />
-    </IconWrapper>
+    </CardIcon>
   );
 }
 
