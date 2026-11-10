@@ -6,8 +6,10 @@ import PairForm from "@/components/compatibility/PairForm";
 import AlignWrapper from "@/components/shared/AlignWrapper";
 import type { ZodiacSlug } from "@/lib/zodiacSigns";
 import Link from "next/link";
+import { EXAMPLE_PAIRS, examplePairPath } from "@/lib/compatibility";
 import { dayHoroscopeLink, hubCopy, type Publication } from "@/lib/hubCopy";
 import { copy } from "@/lib/messages";
+import { signDisplay } from "@/lib/zodiacSigns";
 import { useLocale } from "../shared/LocaleProvider";
 
 const Article = styled.article`
@@ -36,6 +38,23 @@ const Article = styled.article`
   }
 `;
 
+const Examples = styled.ul`
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+`;
+
+const ExampleLink = styled(Link)`
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+`;
+
 const Alert = styled.p`
   width: 100%;
   margin: 0;
@@ -62,6 +81,17 @@ function CompatibilityHub({
         <p>{text.pairBody}</p>
         {invalid && <Alert role="alert">{text.pairInvalid}</Alert>}
         <PairForm initialA={initialSign} />
+        <h2>{hub.compatExamplesH2}</h2>
+        <Examples>
+          {EXAMPLE_PAIRS.map(([first, second]) => (
+            <li key={`${first}-${second}`}>
+              <ExampleLink href={examplePairPath(first, second)}>
+                {signDisplay(first, locale)?.name} {text.pairJoin} {signDisplay(second, locale)?.name}
+              </ExampleLink>
+            </li>
+          ))}
+        </Examples>
+        <p>{hub.compatExamplesNote}</p>
         <h2>{hub.compatMeanH2}</h2>
         <p>{hub.compatMeanP}</p>
         <h2>{hub.compatMoreH2}</h2>

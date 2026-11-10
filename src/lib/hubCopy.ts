@@ -113,6 +113,9 @@ const ro = {
   tarotSharedLink: "cartea de tarot a zilei",
   tarotDailyNote:
     "Cartea de tarot a zilei este o interpretare simbolică publicată pentru toți cititorii. Folosește mesajul ca punct de plecare pentru reflecție.",
+  compatExamplesH2: "Încearcă o combinație populară",
+  compatExamplesNote:
+    "Interpretările sunt pentru divertisment. Compatibilitatea reală dintre persoane nu poate fi stabilită prin semnele zodiacale.",
   compatMeanH2: "Ce înseamnă compatibilitatea zodiacală?",
   compatMeanP:
     "Compatibilitatea descrisă aici este simbolică și se bazează pe asocierile tradiționale dintre semne. Nu poate stabili calitatea reală a unei relații și nu înlocuiește comunicarea sau experiențele celor doi oameni.",
@@ -242,6 +245,9 @@ const en = {
   tarotSharedLink: "today's tarot card",
   tarotDailyNote:
     "Today's tarot card is a symbolic interpretation published for every reader. Use the message as a starting point for reflection.",
+  compatExamplesH2: "Try a popular combination",
+  compatExamplesNote:
+    "The readings are entertainment. A real relationship between two people cannot be decided from their zodiac signs.",
   compatMeanH2: "What does zodiac compatibility mean?",
   compatMeanP:
     "The compatibility described here is symbolic and rests on traditional associations between signs. It cannot judge a real relationship, and it does not replace the two people's communication or experience.",

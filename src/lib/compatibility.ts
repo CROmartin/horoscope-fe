@@ -2,6 +2,18 @@ import { isZodiacSlug, WESTERN_SIGNS, type ZodiacSlug } from "./zodiacSigns";
 
 const ORDER = WESTERN_SIGNS.map((sign) => sign.slug);
 
+export const EXAMPLE_PAIRS: ReadonlyArray<readonly [ZodiacSlug, ZodiacSlug]> = [
+  ["berbec", "leu"],
+  ["taur", "scorpion"],
+  ["gemeni", "balanta"],
+];
+
+export function examplePairPath(first: ZodiacSlug, second: ZodiacSlug): string {
+  const canonical = canonicalPairSlug(first, second);
+  if (!canonical) throw new Error(`example pair is not canonical: ${first}-${second}`);
+  return `/compatibilitate/${canonical}`;
+}
+
 export function canonicalPairSlug(a: string, b: string): string | null {
   if (!isZodiacSlug(a) || !isZodiacSlug(b)) return null;
   const left = ORDER.indexOf(a) <= ORDER.indexOf(b) ? a : b;
