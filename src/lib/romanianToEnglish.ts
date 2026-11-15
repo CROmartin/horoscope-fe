@@ -1,7 +1,12 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
-const ENDPOINT = "https://translate.googleapis.com/translate_a/single";
+const USER_AGENT =
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
+const ENDPOINTS = [
+  "https://clients5.google.com/translate_a/t?client=dict-chrome-ex",
+  "https://translate.googleapis.com/translate_a/single?client=gtx&dt=t",
+];
 const memory = new Map<string, string>();
 const cachePath = path.join(process.cwd(), ".cache", "translations.json");
 let loaded = false;
@@ -29,6 +34,11 @@ function saveCache() {
 }
 
 export function parseGoogleTranslation(payload: unknown): string {
+  if (Array.isArray(payload) && payload.every((part) => typeof part === "string")) {
+    const text = payload.join("");
+    if (!text.trim()) throw new Error("The translation came back empty");
+    return text;
+  }
   if (!Array.isArray(payload) || !Array.isArray(payload[0])) {
     throw new Error("Translation response was not a translation");
   }
@@ -39,20 +49,43 @@ export function parseGoogleTranslation(payload: unknown): string {
   return text;
 }
 
-export async function googleTranslate(text: string, fetchImpl: typeof fetch = fetch): Promise<string> {
-  const url = new URL(ENDPOINT);
-  url.searchParams.set("client", "gtx");
-  url.searchParams.set("sl", "ro");
-  url.searchParams.set("tl", "en");
-  url.searchParams.set("dt", "t");
-  url.searchParams.set("q", text);
-  const response = await fetchImpl(url, {
-    headers: { "User-Agent": "Mozilla/5.0" },
-  });
-  if (!response.ok) throw new Error(`Translation request failed: ${response.status}`);
-  const body = await response.text();
-  if (body.trimStart().startsWith("<")) throw new Error("Translation response was HTML");
-  return parseGoogleTranslation(JSON.parse(body));
+let pending: Promise<unknown> = Promise.resolve();
+
+function oneAtATime<T>(job: () => Promise<T>): Promise<T> {
+  const run = pending.then(job, job);
+  pending = run.then(
+    () => undefined,
+    () => undefined
+  );
+  return run;
+}
+
+async function requestTranslation(text: string, fetchImpl: typeof fetch): Promise<string> {
+  let lastError: Error | undefined;
+  for (const endpoint of ENDPOINTS) {
+    const url = new URL(endpoint);
+    url.searchParams.set("sl", "ro");
+    url.searchParams.set("tl", "en");
+    url.searchParams.set("q", text);
+    const response = await fetchImpl(url, {
+      headers: { "User-Agent": USER_AGENT, Accept: "application/json" },
+    });
+    const body = await response.text();
+    if (body.trimStart().startsWith("<")) {
+      lastError = new Error("Translation response was HTML");
+      continue;
+    }
+    if (!response.ok) {
+      lastError = new Error(`Translation request failed: ${response.status}`);
+      continue;
+    }
+    return parseGoogleTranslation(JSON.parse(body));
+  }
+  throw lastError ?? new Error("Translation request failed");
+}
+
+export function googleTranslate(text: string, fetchImpl: typeof fetch = fetch): Promise<string> {
+  return oneAtATime(() => requestTranslation(text, fetchImpl));
 }
 
 export async function romanianToEnglish(text: string, fetchImpl: typeof fetch = fetch) {
