@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styled from "styled-components";
+import { bucharestISODate } from "@/lib/bucharestDate";
 import { copy } from "@/lib/messages";
 import { useLocale } from "./LocaleProvider";
 import {
@@ -12,9 +13,11 @@ import {
   type AnalyticsHit,
   GOOGLE_ADS_ID,
   GTM_CONTAINER_ID,
+  clearVisitDay,
   dataLayerEvent,
   hitsForPath,
   readAnalyticsConsent,
+  returnVisitHit,
   trackPageViewConversion,
   writeAnalyticsConsent,
 } from "@/lib/analytics";
@@ -87,7 +90,10 @@ export function AnalyticsConsent({ children }: { children: React.ReactNode }) {
     if (!ready || consent !== "granted") return;
     if (sentPath.current === pathname) return;
     sentPath.current = pathname;
-    deliver(hitsForPath(pathname));
+    const hits = hitsForPath(pathname);
+    const visit = returnVisitHit(window.localStorage, bucharestISODate(), pathname);
+    if (visit) hits.push(visit);
+    deliver(hits);
     if (pageViewConversionSent.current || typeof window.gtag !== "function") return;
     pageViewConversionSent.current = true;
     trackPageViewConversion();
@@ -99,6 +105,8 @@ export function AnalyticsConsent({ children }: { children: React.ReactNode }) {
     if (value === "granted") {
       loadTagManager();
       sentPath.current = null;
+    } else {
+      clearVisitDay(window.localStorage);
     }
   }
 

@@ -11,16 +11,24 @@ import {
   writeAnalyticsConsent,
   directoryLookupHit,
   zodiacSelectHit,
+  VISIT_DAY_KEY,
+  clearVisitDay,
+  returnVisitForInstant,
+  returnVisitHit,
 } from "./analytics";
 
 function memoryStorage(initial: Record<string, string> = {}) {
   const data = { ...initial };
   return {
+    data,
     getItem(key: string) {
       return Object.prototype.hasOwnProperty.call(data, key) ? data[key] : null;
     },
     setItem(key: string, value: string) {
       data[key] = value;
+    },
+    removeItem(key: string) {
+      delete data[key];
     },
   };
 }
@@ -103,4 +111,56 @@ test("hubs and unknown signs do not emit a horoscope event", () => {
   assert.deepEqual(hitsForPath("/compatibilitate/leu-berbec"), [
     { name: "page_view", params: { page_path: "/compatibilitate/leu-berbec" } },
   ]);
+});
+
+test("return visit counts later Bucharest calendar days and keeps the existing event names", () => {
+  const storage = memoryStorage();
+  assert.equal(returnVisitForInstant(storage, "/", new Date("2026-10-24T20:30:00.000Z")), null);
+  assert.equal(storage.data[VISIT_DAY_KEY], "2026-10-24");
+  assert.equal(returnVisitForInstant(storage, "/horoscop-zilnic-berbec", new Date("2026-10-24T20:59:00.000Z")), null);
+
+  const hit = returnVisitForInstant(storage, "/horoscop-zilnic-berbec", new Date("2026-10-24T21:30:00.000Z"));
+  assert.deepEqual(hit, {
+    name: "return_visit",
+    params: {
+      days_since_prior_visit: "1",
+      entry_route: "/horoscop-zilnic-berbec",
+    },
+  });
+  assert.equal(storage.data[VISIT_DAY_KEY], "2026-10-25");
+  assert.equal(JSON.stringify(hit).includes("2026-"), false);
+  assert.equal(JSON.stringify(hit).match(/birth|dob|email|date/i), null);
+  assert.deepEqual(hitsForPath("/"), [
+    { name: "page_view", params: { page_path: "/" } },
+    { name: "home_view" },
+  ]);
+});
+
+test("return visit ignores a same-day repeat, a future stamp, and a stopped measurement", () => {
+  const storage = memoryStorage({ [VISIT_DAY_KEY]: "2026-03-29" });
+  assert.equal(returnVisitHit(storage, "2026-03-29", "/"), null);
+  assert.equal(returnVisitHit(storage, "2026-03-28", "/"), null);
+  assert.equal(storage.data[VISIT_DAY_KEY], "2026-03-28");
+
+  const acrossDst = returnVisitHit(storage, "2026-03-30", "/tarot/cartea-zilei");
+  assert.deepEqual(acrossDst, {
+    name: "return_visit",
+    params: {
+      days_since_prior_visit: "2",
+      entry_route: "/tarot/cartea-zilei",
+    },
+  });
+
+  const broken = memoryStorage({ [VISIT_DAY_KEY]: "16.02.2026" });
+  assert.equal(returnVisitHit(broken, "2026-11-23", "/"), null);
+  assert.equal(broken.data[VISIT_DAY_KEY], "2026-11-23");
+  assert.equal(returnVisitHit(broken, "2026-02-31", "/"), null);
+  assert.equal(returnVisitHit(broken, "2026-11-24", "horoscop"), null);
+
+  clearVisitDay(storage);
+  assert.equal(storage.data[VISIT_DAY_KEY], undefined);
+  assert.equal(returnVisitHit({
+    getItem() { throw new Error("blocked"); },
+    setItem() { throw new Error("blocked"); },
+  }, "2026-11-23", "/"), null);
 });

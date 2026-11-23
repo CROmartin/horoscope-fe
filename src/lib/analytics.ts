@@ -1,3 +1,4 @@
+import { bucharestISODate } from "./bucharestDate";
 import { WESTERN_SIGNS } from "./zodiacSigns";
 import { pairFromPath } from "./compatibility";
 
@@ -12,6 +13,7 @@ export const GTM_CONTAINER_ID = "GTM-N5XRMBTN";
 export const GOOGLE_ADS_ID = "AW-18534752015";
 export const PAGE_VIEW_CONVERSION_SEND_TO = "AW-18534752015/uAbCCNT2k6gdEI--h4ZF";
 export const ANALYTICS_CONSENT_KEY = "horoscopzodii.analytics";
+export const VISIT_DAY_KEY = "horoscopzodii.visit";
 
 export const MEASURED_CHINESE_SLUGS = [
   "sobolan",
@@ -132,4 +134,68 @@ export function zodiacSelectHit(sign: string): AnalyticsHit | null {
 export function directoryLookupHit(sign: string): AnalyticsHit | null {
   if (!zodiacSelectHit(sign)) return null;
   return { name: "zodiac_select", params: { sign, origin: "directory_lookup" } };
+}
+
+type VisitStorage = {
+  getItem(key: string): string | null;
+  setItem(key: string, value: string): void;
+};
+
+const ISO_DAY = /^(\d{4})-(\d{2})-(\d{2})$/;
+
+function isCalendarDay(value: string) {
+  const match = ISO_DAY.exec(value);
+  if (!match) return false;
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  const date = new Date(Date.UTC(year, month - 1, day));
+  return date.getUTCFullYear() === year && date.getUTCMonth() === month - 1 && date.getUTCDate() === day;
+}
+
+function calendarDaysBetween(earlier: string, later: string) {
+  const start = Date.parse(`${earlier}T00:00:00Z`);
+  const end = Date.parse(`${later}T00:00:00Z`);
+  return Math.round((end - start) / 86_400_000);
+}
+
+export function returnVisitHit(
+  storage: VisitStorage,
+  today: string,
+  entryRoute: string
+): AnalyticsHit | null {
+  if (!isCalendarDay(today) || !entryRoute.startsWith("/")) return null;
+  let stored: string | null;
+  try {
+    stored = storage.getItem(VISIT_DAY_KEY);
+    storage.setItem(VISIT_DAY_KEY, today);
+  } catch {
+    return null;
+  }
+  if (!stored || !isCalendarDay(stored) || stored >= today) return null;
+  const days = calendarDaysBetween(stored, today);
+  if (days < 1) return null;
+  return {
+    name: "return_visit",
+    params: {
+      days_since_prior_visit: String(days),
+      entry_route: entryRoute,
+    },
+  };
+}
+
+export function returnVisitForInstant(
+  storage: VisitStorage,
+  entryRoute: string,
+  now = new Date()
+) {
+  return returnVisitHit(storage, bucharestISODate(now), entryRoute);
+}
+
+export function clearVisitDay(storage: { removeItem(key: string): void }) {
+  try {
+    storage.removeItem(VISIT_DAY_KEY);
+  } catch {
+    return;
+  }
 }
