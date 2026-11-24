@@ -1,22 +1,22 @@
 import CompatibilityHub from "@/components/compatibility/CompatibilityHub";
 import JsonLd from "@/components/seo/JsonLd";
 import { canonicalPairSlug } from "@/lib/compatibility";
+import { pairSummaries } from "@/lib/compatibilityContent";
+import { seasonalMessage } from "@/lib/compatibilitySeason";
 import { localizedPage } from "@/lib/localizedPage";
-import { publishedSet } from "@/lib/horoscopes";
 import { isZodiacSlug, type ZodiacSlug } from "@/lib/zodiacSigns";
 import { permanentRedirect } from "next/navigation";
 
 const path = "/compatibilitate";
 const text = {
   ro: {
-    title: "Compatibilitate zodii: compară două semne",
+    title: "Cât de bine vă potriviți?",
     description:
-      "Alege două zodii și explorează compatibilitatea lor astrologică: puncte comune, posibile diferențe și idei pentru comunicare.",
+      "Alege zodia ta și pe a lui sau a ei. Află în 10 secunde ce vă leagă, unde vă ciocniți și ce să vă întrebați.",
   },
   en: {
-    title: "Zodiac compatibility: compare two signs",
-    description:
-      "Choose two signs and explore their astrological compatibility: what they share, where they differ, and ideas for communication.",
+    title: "How well do you match?",
+    description: "Choose your sign and theirs. In ten seconds, see what binds you, where you clash, and what to ask.",
   },
 };
 
@@ -52,7 +52,8 @@ export default async function Page({ searchParams }: HubProps) {
       <CompatibilityHub
         invalid={Boolean((a || b) && !preset)}
         initialSign={preset}
-        publication={await publishedSet("getAllHoroscopeDaily", "day")}
+        summaries={pairSummaries()}
+        season={seasonalMessage()}
       />
     </>
   );

@@ -1,3 +1,4 @@
+import { publishedPairSlugs } from "./compatibilityContent";
 import { CHINESE_SLUGS, WESTERN_SLUGS } from "./horoscopes";
 
 const STATIC_PATHS = [
@@ -27,7 +28,7 @@ export function indexablePaths(): string[] {
     ]),
     ...CHINESE_SLUGS.flatMap((slug) => [`/horoscop-zilnic-${slug}`, `/horoscop-anual-${slug}`]),
   ];
-  return [...STATIC_PATHS, ...generated];
+  return [...STATIC_PATHS, ...generated, ...publishedPairSlugs().map((slug) => `/compatibilitate/${slug}`)];
 }
 
 export function changeFrequency(path: string): "daily" | "weekly" {

@@ -15,7 +15,8 @@ test("the sitemap lists public horoscope pages and leaves private links out", ()
   assert.equal(paths.some((path) => path.includes("lunar")), false);
   assert.equal(paths.includes("/compatibilitate"), true);
   assert.equal(paths.includes("/tarot/cartea-zilei"), true);
-  assert.equal(paths.some((path) => path.startsWith("/compatibilitate/")), false);
+  assert.equal(paths.includes("/compatibilitate/berbec-leu"), true);
+  assert.equal(paths.filter((path) => path.startsWith("/compatibilitate/")).length, 78);
   assert.equal(paths.some((path) => path.startsWith("/tarot/cartea-zilei/")), false);
   assert.equal(paths.includes("/tarot/cartea-ta"), false);
   for (const path of paths) assert.equal(isDisallowed(path), false);

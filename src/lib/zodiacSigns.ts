@@ -74,6 +74,34 @@ export function dailyHoroscopePath(slug: ZodiacSlug) {
   return `/horoscop-zilnic-${slug}`;
 }
 
+const SIGN_SPANS: Array<{ slug: ZodiacSlug; from: [number, number]; to: [number, number] }> = [
+  { slug: "capricorn", from: [12, 22], to: [1, 19] },
+  { slug: "varsator", from: [1, 20], to: [2, 18] },
+  { slug: "pesti", from: [2, 19], to: [3, 20] },
+  { slug: "berbec", from: [3, 21], to: [4, 19] },
+  { slug: "taur", from: [4, 20], to: [5, 20] },
+  { slug: "gemeni", from: [5, 21], to: [6, 20] },
+  { slug: "rac", from: [6, 21], to: [7, 22] },
+  { slug: "leu", from: [7, 23], to: [8, 22] },
+  { slug: "fecioara", from: [8, 23], to: [9, 22] },
+  { slug: "balanta", from: [9, 23], to: [10, 22] },
+  { slug: "scorpion", from: [10, 23], to: [11, 21] },
+  { slug: "sagetator", from: [11, 22], to: [12, 21] },
+];
+
+export function signFromMonthDay(month: number, day: number): ZodiacSlug | null {
+  if (!Number.isInteger(month) || !Number.isInteger(day) || month < 1 || month > 12 || day < 1 || day > 31) {
+    return null;
+  }
+  for (const span of SIGN_SPANS) {
+    const wraps = span.from[0] > span.to[0];
+    const afterStart = month > span.from[0] || (month === span.from[0] && day >= span.from[1]);
+    const beforeEnd = month < span.to[0] || (month === span.to[0] && day <= span.to[1]);
+    if (wraps ? afterStart || beforeEnd : afterStart && beforeEnd) return span.slug;
+  }
+  return null;
+}
+
 export function signDisplay(slug: ZodiacSlug, locale: Locale = "ro") {
   const sign = BY_SLUG.get(slug);
   if (!sign) return undefined;

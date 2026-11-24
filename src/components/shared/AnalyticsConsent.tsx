@@ -125,24 +125,32 @@ const Bar = styled.aside`
   bottom: 0;
   z-index: 30;
   width: 100%;
+  max-height: 25vh;
+  max-width: 100%;
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 12px 20px;
-  padding: 16px 5vw 20px;
+  gap: 8px 16px;
+  padding: 10px 5vw 12px;
+  overflow: auto;
   background: #111111;
   border-top: 1px solid #d7be8a;
-  color: #ffffff;
+  color: #f5efe6;
+  font-family: Inter, system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.4;
 `;
 
 const Copy = styled.p`
   width: auto;
+  min-width: 0;
   max-width: 720px;
   flex: 1 1 240px;
   margin: 0;
-  line-height: 1.45;
+  line-height: 1.4;
 
   a {
     color: #d7be8a;

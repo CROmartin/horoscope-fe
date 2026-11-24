@@ -28,14 +28,14 @@ test("every ordered pair collapses to one of 78 canonical pages", () => {
   assert.equal(canonicalPairSlug("tigru", "leu"), null);
 });
 
-test("the hub offers three canonical example pairs and the sitemap omits them", () => {
+test("the hub offers three canonical example pairs and the sitemap includes published ones", () => {
   assert.deepEqual(
     EXAMPLE_PAIRS.map(([first, second]) => examplePairPath(first, second)),
     ["/compatibilitate/berbec-leu", "/compatibilitate/taur-scorpion", "/compatibilitate/gemeni-balanta"]
   );
   const indexable = new Set(indexablePaths());
   for (const [first, second] of EXAMPLE_PAIRS) {
-    assert.equal(indexable.has(examplePairPath(first, second)), false);
+    assert.equal(indexable.has(examplePairPath(first, second)), true);
   }
 });
 

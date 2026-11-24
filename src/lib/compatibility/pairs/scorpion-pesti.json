@@ -1,0 +1,378 @@
+{
+  "pair": "scorpion-pesti",
+  "first": "scorpion",
+  "second": "pesti",
+  "elements": [
+    "apa",
+    "apa"
+  ],
+  "score": {
+    "overall": 88,
+    "atractie": 90,
+    "comunicare": 85,
+    "incredere": 82,
+    "distractie": 86,
+    "prietenie": 90,
+    "munca": 80
+  },
+  "ro": {
+    "verdict": "Scorpion și Pești: simțiți devreme și spuneți când e sigur.",
+    "greenFlags": [
+      "Scorpion și Pești vă susțineți visurile fără invidie.",
+      "Râdeți tare și reparați repede.",
+      "Curajul lui Scorpion îl trezește pe Pești."
+    ],
+    "redFlags": [
+      "Amândoi vreți ultimul cuvânt. Mereu.",
+      "Odihna pierde în fața impulsului.",
+      "Nimeni nu vrea să lase scena primul."
+    ],
+    "ceVaLeaga": "Scorpionul aduce loialitatea, iar Peștii răspunde cu intuiția. Vă place un ritm pe care îl simțiți amândoi, nu unul copiat din afară. Când unul întinde mâna, celălalt poate ține seara împreună. Loialitatea voastră se arată în gesturi mici, repetate. Păstrați un gest mic de grijă și după o zi lungă. Un mesaj scurt, spus la timp, ține legătura caldă. Alegeți curiozitatea când mândria cere scenă.",
+    "undeVaCiocniti": "Suspiciunea la Scorpion și fuga la Pești cer același scaun. Fiecare așteaptă ca celălalt să cedeze primul centimetru. O glumă spusă prea târziu poate suna ca o critică. Oboseala face planul bun să pară o ceartă. Păstrați un gest mic de grijă și după o zi lungă. Un mesaj scurt, spus la timp, ține legătura caldă. Alegeți curiozitatea când mândria cere scenă.",
+    "superputere": "Superputerea voastră este loialitatea lângă intuiția, folosite pe rând. Când le împărțiți, perechea respiră.",
+    "sfat": "Alegeți un singur lucru de ținut azi și lăsați restul pentru mâine.",
+    "questions": [
+      "Care a fost momentul în care ai știut că-ți place de mine?",
+      "Unde ne înțelegem fără să explicăm totul?",
+      "Ce promisiune mică poți ține săptămâna asta?",
+      "Când ai nevoie de liniște, cum o ceri?",
+      "Ce vis al meu vrei să-l susții?",
+      "Unde vrei ultimul cuvânt, și de ce?",
+      "Ce ieșire scurtă ne-ar prinde bine?",
+      "Ce adevăr blând am amânat prea mult?"
+    ],
+    "daily": [
+      "Azi, Scorpion deschide subiectul, iar Pești îl ține până la desert.",
+      "Lăsați banii pentru mâine. Scorpion și Pești stați la o poveste.",
+      "Scorpion vrea viteză. Pești vrea un plan. Alegeți unul pentru seară.",
+      "Un mesaj scurt între Scorpion și Pești bate un discurs.",
+      "Râdeți de aceeași glumă și reparați ziua împreună.",
+      "Lăsați loc pentru o tăcere bună între Scorpion și Pești.",
+      "Scorpion conduce dimineața. Pești închide lista seara.",
+      "Complimentul adevărat se spune fără public, doar între voi.",
+      "Lăsați disputa veche. O cafea între Scorpion și Pești ajunge.",
+      "Ieșiți douăzeci de minute, fără telefon și fără verdict.",
+      "Scorpion aduce ideea. Pești alege ora.",
+      "Spuneți ce vă doare într-o frază, apoi ascultați până la capăt.",
+      "Prietenii pot aștepta. Scorpion și Pești au o conversație.",
+      "Muzica joasă ajută când vorbele dintre voi obosesc.",
+      "Un plan mic, ținut de Scorpion și Pești, crește încrederea.",
+      "Scorpion cere spațiu. Pești îl oferă fără explicații lungi.",
+      "Gătiți ceva simplu și lăsați talk-show-ul pentru altă zi.",
+      "Azi merge o frază sinceră, spusă blând, între voi doi.",
+      "Recunoașteți un efort mic, cu voce tare, înainte de culcare.",
+      "Lăsați mândria la ușă pentru o oră, Scorpion și Pești.",
+      "Scorpion și Pești străluciți când vă apărați visul.",
+      "O întrebare din pachet valorează cât un sfat nesolicitat.",
+      "Seara e bună pentru o poveste împărtășită, nu pentru buget.",
+      "Dimineața, un mesaj cald schimbă tonul zilei pentru amândoi.",
+      "Împărțiți o decizie: Scorpion propune, Pești alege.",
+      "Dacă obosiți, amânați concluzia până mâine dimineață.",
+      "Un gest de grijă între voi bate un cadou grăbit.",
+      "Râdeți de ritmul vostru, apoi îl respectați o zi întreagă.",
+      "Spuneți unde aveți nevoie de ajutor, concret și scurt.",
+      "Închideți ziua cu o propoziție de mulțumire, Scorpion către Pești."
+    ],
+    "notes": {
+      "atractie": "Scorpion și Pești simt scânteia când râdeți din același motiv.",
+      "comunicare": "Spuneți pe scurt ce vreți. Apoi ascultați până la capăt.",
+      "incredere": "Încrederea crește când promisiunea mică este ținută.",
+      "distractie": "Ieșirea scurtă vă prinde mai bine decât planul perfect.",
+      "prietenie": "Vă apărați unul pe altul și în zilele obosite.",
+      "munca": "Împărțiți rolul: unul pornește, altul închide lista."
+    }
+  },
+  "en": {
+    "verdict": "Scorpio and Pisces: you feel it early and say it when it is safe.",
+    "greenFlags": [
+      "Scorpio and Pisces back each other's dreams without envy.",
+      "You laugh loud and repair it quickly.",
+      "Scorpio's courage wakes Pisces."
+    ],
+    "redFlags": [
+      "You both want the last word. Always.",
+      "Rest loses to the impulse.",
+      "Nobody wants to leave the stage first."
+    ],
+    "ceVaLeaga": "Scorpio brings loyalty, and Pisces answers with intuition. You like a pace you both feel, rather than one copied from outside. When one reaches out, the other can hold the evening with them. Your loyalty shows up in small gestures, repeated. Keep one small act of care after a long day. A short message, said in time, keeps the bond warm.",
+    "undeVaCiocniti": "Suspicion in Scorpio and drifting away in Pisces want the same chair. Each waits for the other to give the first inch. A joke said too late can sound like criticism. Tiredness turns a good plan into an argument. Keep one small act of care after a long day. A short message, said in time, keeps the bond warm. Choose curiosity when pride asks for the stage.",
+    "superputere": "Your superpower is loyalty beside intuition, used in turns. When you share them, the pair can breathe.",
+    "sfat": "Pick one thing to keep today and leave the rest for tomorrow.",
+    "questions": [
+      "When did you know you liked me?",
+      "Where do we understand each other without explaining it all?",
+      "What small promise can you keep this week?",
+      "When you need quiet, how do you ask for it?",
+      "Which dream of mine do you want to back?",
+      "Where do you want the last word, and why?",
+      "What short outing would suit us?",
+      "What gentle truth have we postponed?"
+    ],
+    "daily": [
+      "Today Scorpio opens the subject, and Pisces keeps it through dessert.",
+      "Leave money for tomorrow. Scorpio and Pisces stay with a story.",
+      "Scorpio wants speed. Pisces wants a plan. Pick one for tonight.",
+      "A short message between Scorpio and Pisces beats a speech.",
+      "Laugh at the same joke and repair the day together.",
+      "Leave room for a good silence between Scorpio and Pisces.",
+      "Scorpio leads the morning. Pisces closes the list at night.",
+      "Say the true compliment without an audience, just between you.",
+      "Leave the old dispute. A coffee for Scorpio and Pisces is enough.",
+      "Go out for twenty minutes, without a phone or a verdict.",
+      "Scorpio brings the idea. Pisces picks the hour.",
+      "Say what hurts in one sentence, then listen to the end.",
+      "Friends can wait. Scorpio and Pisces have a conversation.",
+      "Low music helps when the words between you get tired.",
+      "One small plan, kept by Scorpio and Pisces, grows trust.",
+      "Scorpio asks for space. Pisces offers it without a long speech.",
+      "Cook something simple and leave the talk show for another day.",
+      "Today a sincere sentence, said gently, is enough for you both.",
+      "Name one small effort out loud before you sleep.",
+      "Leave pride at the door for an hour, Scorpio and Pisces.",
+      "Scorpio and Pisces shine when you defend the dream.",
+      "One question from the deck is worth an unasked-for piece of advice.",
+      "The evening suits a shared story better than a budget talk.",
+      "In the morning, a warm message changes the tone for both of you.",
+      "Split one decision: Scorpio proposes, Pisces chooses.",
+      "If you are tired, leave the conclusion for tomorrow morning.",
+      "A caring gesture between you beats a rushed gift.",
+      "Laugh at your pace, then respect it for a whole day.",
+      "Say where you need help, in concrete and short words.",
+      "Close the day with one sentence of thanks, Scorpio to Pisces."
+    ],
+    "notes": {
+      "atractie": "Scorpio and Pisces feel the spark when you laugh for the same reason.",
+      "comunicare": "Say what you want, briefly. Then listen to the end.",
+      "incredere": "Trust grows when the small promise is kept.",
+      "distractie": "A short outing suits you better than a perfect plan.",
+      "prietenie": "You defend each other on tired days too.",
+      "munca": "Split the role: one starts, the other closes the list."
+    }
+  },
+  "variants": {
+    "crush": {
+      "ro": {
+        "verdict": "Scorpion și Pești: scânteia e reală, iar povestea încă se așază.",
+        "sfat": "Spune un lucru adevărat, apoi lasă loc de răspuns."
+      },
+      "en": {
+        "verdict": "Scorpio and Pisces: the spark is real, and the story is still settling.",
+        "sfat": "Say one true thing, then leave room for an answer."
+      }
+    },
+    "fost": {
+      "ro": {
+        "verdict": "Scorpion și Pești: a rămas respect. Disputa veche poate sta închisă.",
+        "sfat": "Păstrați ce a fost bun și lăsați scorul deoparte."
+      },
+      "en": {
+        "verdict": "Scorpio and Pisces: respect remains. The old dispute can stay closed.",
+        "sfat": "Keep what was good and leave the score aside."
+      }
+    },
+    "prietena": {
+      "ro": {
+        "verdict": "Scorpion și Pești, ca prietene: vă ține loialitatea, nu scenariul.",
+        "sfat": "Sunați când e greu, nu doar când e o glumă bună.",
+        "greenFlags": [
+          "Scorpion și Pești vă spuneți adevărul fără public.",
+          "Păstrați gluma și când una dintre voi e obosită.",
+          "Vă împrumutați curajul, nu doar poveștile."
+        ],
+        "redFlags": [
+          "Vă dați sfaturi pe care nu le-a cerut nimeni.",
+          "Comparația liniștită se strecoară în glumă.",
+          "Una scrie, cealaltă răspunde a doua zi."
+        ],
+        "questions": [
+          "Ce gest mic de-al tău liniștește cealaltă persoană?",
+          "Unde ai nevoie de mai multă răbdare săptămâna asta?",
+          "Ce regulă veche a voastră merită păstrată?",
+          "Ce compliment adevărat nu l-ai spus încă?",
+          "Când tăceți, ce înțelege fiecare?",
+          "Ce plan de douăzeci de minute puteți face împreună?",
+          "Ce ai vrea să știe fără să ghicească?",
+          "Ce obicei al tău ajută, chiar neanunțat?"
+        ],
+        "notes": {
+          "atractie": "Scorpion și Pești se apropie prin grijă, nu prin spectacol.",
+          "comunicare": "O frază clară valorează mai mult decât un discurs.",
+          "incredere": "Încrederea crește când promisiunea mică este ținută.",
+          "distractie": "O ieșire scurtă vă prinde mai bine decât planul perfect.",
+          "prietenie": "Vă apărați unul pe altul și în zilele obosite.",
+          "munca": "Împărțiți rolul: unul pornește, altul închide lista."
+        }
+      },
+      "en": {
+        "verdict": "Scorpio and Pisces, as friends: loyalty holds you, not a script.",
+        "sfat": "Call when it is hard, not only when the joke is good.",
+        "greenFlags": [
+          "Scorpio and Pisces tell the truth without an audience.",
+          "You keep the joke even when one of you is tired.",
+          "You lend each other courage, not only stories."
+        ],
+        "redFlags": [
+          "You offer advice nobody asked for.",
+          "A quiet comparison sneaks into the joke.",
+          "One writes, the other answers the next day."
+        ],
+        "questions": [
+          "What small gesture of yours calms the other person?",
+          "Where do you need more patience this week?",
+          "Which old rule of yours is worth keeping?",
+          "What true compliment have you not said yet?",
+          "When you go quiet, what does each of you hear?",
+          "What twenty-minute plan can you make together?",
+          "What should they know without guessing?",
+          "Which habit of yours helps, even unannounced?"
+        ],
+        "notes": {
+          "atractie": "Scorpio and Pisces come closer through care, without a show.",
+          "comunicare": "One clear sentence is worth more than a speech.",
+          "incredere": "Trust grows when the small promise is kept.",
+          "distractie": "A short outing suits you better than a perfect plan.",
+          "prietenie": "You defend each other on tired days too.",
+          "munca": "Split the role: one starts, the other closes the list."
+        }
+      }
+    },
+    "mama": {
+      "ro": {
+        "verdict": "Scorpion și Pești: casa are reguli și căldură. Alegeți una pe seară.",
+        "sfat": "Spuneți mulțumirea înainte de sfatul pe care nu l-a cerut.",
+        "questions": [
+          "Ce gest mic de-al tău liniștește cealaltă persoană?",
+          "Unde ai nevoie de mai multă răbdare săptămâna asta?",
+          "Ce regulă veche a voastră merită păstrată?",
+          "Ce compliment adevărat nu l-ai spus încă?",
+          "Când tăceți, ce înțelege fiecare?",
+          "Ce plan de douăzeci de minute puteți face împreună?",
+          "Ce ai vrea să știe fără să ghicească?",
+          "Ce obicei al tău ajută, chiar neanunțat?"
+        ],
+        "notes": {
+          "atractie": "Scorpion și Pești se apropie prin grijă, nu prin spectacol.",
+          "comunicare": "O frază clară valorează mai mult decât un discurs.",
+          "incredere": "Încrederea crește când promisiunea mică este ținută.",
+          "distractie": "O ieșire scurtă vă prinde mai bine decât planul perfect.",
+          "prietenie": "Vă apărați unul pe altul și în zilele obosite.",
+          "munca": "Împărțiți rolul: unul pornește, altul închide lista."
+        }
+      },
+      "en": {
+        "verdict": "Scorpio and Pisces: home holds rules and warmth. Pick one tonight.",
+        "sfat": "Say the thanks before the advice nobody asked for.",
+        "questions": [
+          "What small gesture of yours calms the other person?",
+          "Where do you need more patience this week?",
+          "Which old rule of yours is worth keeping?",
+          "What true compliment have you not said yet?",
+          "When you go quiet, what does each of you hear?",
+          "What twenty-minute plan can you make together?",
+          "What should they know without guessing?",
+          "Which habit of yours helps, even unannounced?"
+        ],
+        "notes": {
+          "atractie": "Scorpio and Pisces come closer through care, without a show.",
+          "comunicare": "One clear sentence is worth more than a speech.",
+          "incredere": "Trust grows when the small promise is kept.",
+          "distractie": "A short outing suits you better than a perfect plan.",
+          "prietenie": "You defend each other on tired days too.",
+          "munca": "Split the role: one starts, the other closes the list."
+        }
+      }
+    },
+    "sora": {
+      "ro": {
+        "verdict": "Scorpion și Pești: vă știți de acasă. Gluma poate rămâne bună.",
+        "sfat": "Împărțiți amintirea, apoi lăsați prezentul să conducă.",
+        "questions": [
+          "Ce gest mic de-al tău liniștește cealaltă persoană?",
+          "Unde ai nevoie de mai multă răbdare săptămâna asta?",
+          "Ce regulă veche a voastră merită păstrată?",
+          "Ce compliment adevărat nu l-ai spus încă?",
+          "Când tăceți, ce înțelege fiecare?",
+          "Ce plan de douăzeci de minute puteți face împreună?",
+          "Ce ai vrea să știe fără să ghicească?",
+          "Ce obicei al tău ajută, chiar neanunțat?"
+        ],
+        "notes": {
+          "atractie": "Scorpion și Pești se apropie prin grijă, nu prin spectacol.",
+          "comunicare": "O frază clară valorează mai mult decât un discurs.",
+          "incredere": "Încrederea crește când promisiunea mică este ținută.",
+          "distractie": "O ieșire scurtă vă prinde mai bine decât planul perfect.",
+          "prietenie": "Vă apărați unul pe altul și în zilele obosite.",
+          "munca": "Împărțiți rolul: unul pornește, altul închide lista."
+        }
+      },
+      "en": {
+        "verdict": "Scorpio and Pisces: you know each other from home. Keep the joke kind.",
+        "sfat": "Share the memory, then let the present lead.",
+        "questions": [
+          "What small gesture of yours calms the other person?",
+          "Where do you need more patience this week?",
+          "Which old rule of yours is worth keeping?",
+          "What true compliment have you not said yet?",
+          "When you go quiet, what does each of you hear?",
+          "What twenty-minute plan can you make together?",
+          "What should they know without guessing?",
+          "Which habit of yours helps, even unannounced?"
+        ],
+        "notes": {
+          "atractie": "Scorpio and Pisces come closer through care, without a show.",
+          "comunicare": "One clear sentence is worth more than a speech.",
+          "incredere": "Trust grows when the small promise is kept.",
+          "distractie": "A short outing suits you better than a perfect plan.",
+          "prietenie": "You defend each other on tired days too.",
+          "munca": "Split the role: one starts, the other closes the list."
+        }
+      }
+    },
+    "sef": {
+      "ro": {
+        "verdict": "Scorpion și Pești, la lucru: livrați când rolurile sunt clare.",
+        "sfat": "Puneți cerința pe o listă scurtă și confirmați ora.",
+        "questions": [
+          "Ce gest mic de-al tău liniștește cealaltă persoană?",
+          "Unde ai nevoie de mai multă răbdare săptămâna asta?",
+          "Ce regulă veche a voastră merită păstrată?",
+          "Ce compliment adevărat nu l-ai spus încă?",
+          "Când tăceți, ce înțelege fiecare?",
+          "Ce plan de douăzeci de minute puteți face împreună?",
+          "Ce ai vrea să știe fără să ghicească?",
+          "Ce obicei al tău ajută, chiar neanunțat?"
+        ],
+        "notes": {
+          "atractie": "Scorpion și Pești se apropie prin grijă, nu prin spectacol.",
+          "comunicare": "O frază clară valorează mai mult decât un discurs.",
+          "incredere": "Încrederea crește când promisiunea mică este ținută.",
+          "distractie": "O ieșire scurtă vă prinde mai bine decât planul perfect.",
+          "prietenie": "Vă apărați unul pe altul și în zilele obosite.",
+          "munca": "Împărțiți rolul: unul pornește, altul închide lista."
+        }
+      },
+      "en": {
+        "verdict": "Scorpio and Pisces, at work: you deliver when the roles are clear.",
+        "sfat": "Put the request on a short list and confirm the hour.",
+        "questions": [
+          "What small gesture of yours calms the other person?",
+          "Where do you need more patience this week?",
+          "Which old rule of yours is worth keeping?",
+          "What true compliment have you not said yet?",
+          "When you go quiet, what does each of you hear?",
+          "What twenty-minute plan can you make together?",
+          "What should they know without guessing?",
+          "Which habit of yours helps, even unannounced?"
+        ],
+        "notes": {
+          "atractie": "Scorpio and Pisces come closer through care, without a show.",
+          "comunicare": "One clear sentence is worth more than a speech.",
+          "incredere": "Trust grows when the small promise is kept.",
+          "distractie": "A short outing suits you better than a perfect plan.",
+          "prietenie": "You defend each other on tired days too.",
+          "munca": "Split the role: one starts, the other closes the list."
+        }
+      }
+    }
+  }
+}

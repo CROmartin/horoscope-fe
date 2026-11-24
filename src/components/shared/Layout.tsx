@@ -46,7 +46,7 @@ function LayoutFrame(props: LayoutProps) {
   const { ready, consent } = useAnalyticsConsent();
 
   return (
-    <main style={ready && consent === null ? { paddingBottom: 220 } : undefined}>
+    <main style={ready && consent === null ? { paddingBottom: "28vh" } : undefined}>
       <Header />
       <PopupResolver />
       {props.children}

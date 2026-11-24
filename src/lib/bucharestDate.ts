@@ -9,6 +9,13 @@ export function bucharestISODate(date = new Date()) {
   }).format(date);
 }
 
+export function bucharestDayOfYear(date = new Date()) {
+  const [year, month, day] = bucharestISODate(date).split("-").map(Number);
+  const start = Date.UTC(year, 0, 1);
+  const current = Date.UTC(year, month - 1, day);
+  return Math.floor((current - start) / 86400000);
+}
+
 export function formatBucharestDate(date = new Date()) {
   const formatted = new Intl.DateTimeFormat("ro-RO", {
     timeZone: TIME_ZONE,

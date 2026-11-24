@@ -53,13 +53,13 @@ const Select = styled.select`
   padding: 8px 12px;
 `;
 
-export function UnsubscribePanel({ token }: { token: string }) {
+export function UnsubscribePanel({ token, endpoint = "/api/dezabonare" }: { token: string; endpoint?: string }) {
   const text = copy(useLocale());
   const [state, setState] = useState<"ready" | "done" | "error">("ready");
   const [message, setMessage] = useState("");
 
   async function stop() {
-    const response = await fetch("/api/dezabonare", {
+    const response = await fetch(endpoint, {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ token }),
