@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { reviewNotice, type SocialDraft, type SocialState } from "@/lib/socialReviewClient";
+import { reviewNotice, workButton, workLabel, type SocialDraft, type SocialState } from "@/lib/socialReviewClient";
 import { PhonePreview } from "./preview";
 
 const NOTICES: Record<string, string> = {
@@ -44,9 +44,12 @@ export function ReviewDesk({ initial, initialNotice }: { initial: Loaded; initia
   const [loaded, setLoaded] = useState(initial);
   const [notice, setNotice] = useState(initialNotice);
   const [pending, setPending] = useState("");
-  const [polling, setPolling] = useState(initialNotice === "rendering");
-  const rendering = useRef(new Set<string>());
-  const publishing = useRef(new Set<string>());
+  const [polling, setPolling] = useState(
+    initialNotice === "rendering" ||
+      (initial.authenticated && "state" in initial && initial.state.drafts.some((draft) => draft.work))
+  );
+  const loadedRef = useRef(loaded);
+  loadedRef.current = loaded;
 
   useEffect(() => {
     if (!initialNotice) return;
@@ -62,27 +65,11 @@ export function ReviewDesk({ initial, initialNotice }: { initial: Loaded; initia
     const timer = setInterval(async () => {
       const next = await readState();
       if (stopped || !next) return;
+      noteFinishedWork(loadedRef.current, next, setNotice);
       setLoaded(next);
-      if ("state" in next && (rendering.current.size || publishing.current.size)) {
-        for (const id of [...rendering.current]) {
-          const draft = next.state.drafts.find((item) => item.id === id);
-          if (!draft || draft.status === "rendered" || draft.status === "failed") rendering.current.delete(id);
-        }
-        for (const id of [...publishing.current]) {
-          const draft = next.state.drafts.find((item) => item.id === id);
-          const publication = draft?.publications?.find((item) => item.postUrl || item.status === "published" || item.status === "failed");
-          if (!draft || publication?.postUrl || publication?.status === "published") {
-            publishing.current.delete(id);
-            if (publication?.postUrl) setNotice("published");
-          } else if (publication?.status === "failed") {
-            publishing.current.delete(id);
-            setNotice("instagram");
-          }
-        }
-        if (rendering.current.size === 0 && publishing.current.size === 0) setPolling(false);
-      }
-    }, 4000);
-    const stop = setTimeout(() => setPolling(false), 3 * 60 * 1000);
+      if (!("state" in next) || !next.state.drafts.some((draft) => draft.work)) setPolling(false);
+    }, 2000);
+    const stop = setTimeout(() => setPolling(false), 10 * 60 * 1000);
     return () => {
       stopped = true;
       clearInterval(timer);
@@ -101,18 +88,13 @@ export function ReviewDesk({ initial, initialNotice }: { initial: Loaded; initia
       });
       const payload = await response.json().catch(() => null);
       setNotice(reviewNotice(payload, response.ok));
-      const started = path.match(/\/drafts\/([^/]+)\/render$/);
-      if (payload?.reason === "rendering" && started) {
-        rendering.current.add(decodeURIComponent(started[1]));
-        setPolling(true);
-      }
-      const startedPublish = path.match(/\/drafts\/([^/]+)\/publish$/);
-      if (payload?.reason === "publishing" && startedPublish) {
-        publishing.current.add(decodeURIComponent(startedPublish[1]));
-        setPolling(true);
-      }
+      if (payload?.reason === "rendering" || payload?.reason === "publishing") setPolling(true);
       const next = await readState();
-      if (next) setLoaded(next);
+      if (next) {
+        noteFinishedWork(loadedRef.current, next, setNotice);
+        setLoaded(next);
+        if ("state" in next && next.state.drafts.some((draft) => draft.work)) setPolling(true);
+      }
     } catch {
       setNotice("esuat");
     } finally {
@@ -133,6 +115,22 @@ export function ReviewDesk({ initial, initialNotice }: { initial: Loaded; initia
       ) : null}
     </>
   );
+}
+
+function noteFinishedWork(previous: Loaded, next: Loaded, setNotice: (notice: string) => void) {
+  if (!("state" in previous) || !("state" in next)) return;
+  for (const before of previous.state.drafts) {
+    if (!before.work) continue;
+    const after = next.state.drafts.find((item) => item.id === before.id);
+    if (after?.work) continue;
+    if (before.work.activity === "publishing") {
+      const publication = after?.publications?.find((item) => item.postUrl || item.status === "published" || item.status === "failed");
+      if (publication?.postUrl || publication?.status === "published") setNotice("published");
+      else if (publication?.status === "failed") setNotice("instagram");
+    } else if (before.work.activity === "rendering" && after?.status === "failed") {
+      setNotice("esuat");
+    }
+  }
 }
 
 async function readState(): Promise<Loaded | null> {
@@ -230,8 +228,8 @@ function Draft({
     <section style={{ borderTop: "1px solid #d7be8a", marginTop: 28, paddingTop: 16 }}>
       <h2 style={{ fontSize: 22 }}>
         {draft.campaign} · {draft.platform} · {draft.format} · {draft.status}
-        {pending.startsWith(action("")) ? " · working" : ""}
       </h2>
+      {draft.work ? <p>{workLabel(draft.work)}</p> : pending.startsWith(action("")) ? <p>Working.</p> : null}
       {draft.blocking?.length ? <p>Blocks: {draft.blocking.join(", ")}</p> : null}
       <PhonePreview draft={draft} />
       <p><strong>{draft.hook}</strong></p>
@@ -268,17 +266,21 @@ function Draft({
         <button type="submit" disabled={pending !== ""}>Edit</button>
       </form>
       <p style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-        <button type="button" disabled={pending !== ""} onClick={() => onRun(action("approve"))}>Approve</button>
-        <button type="button" disabled={pending !== ""} onClick={() => onRun(action("reject"))}>Reject</button>
-        <button type="button" disabled={pending !== ""} onClick={() => onRun(action("regenerate"))}>Regenerate</button>
+        <button type="button" disabled={pending !== "" || Boolean(draft.work)} onClick={() => onRun(action("approve"))}>Approve</button>
+        <button type="button" disabled={pending !== "" || Boolean(draft.work)} onClick={() => onRun(action("reject"))}>Reject</button>
+        <button type="button" disabled={pending !== "" || Boolean(draft.work)} onClick={() => onRun(action("regenerate"))}>Regenerate</button>
         {draft.format === "caption" ? null : (
-          <button type="button" disabled={pending !== ""} onClick={() => onRun(action("render"))}>Render</button>
+          <button type="button" disabled={pending !== "" || Boolean(draft.work)} onClick={() => onRun(action("render"))}>
+            {draft.work?.activity === "rendering" ? workButton(draft.work, "Render") : "Render"}
+          </button>
         )}
         {draft.platform === "instagram" && draft.format === "carousel" && ["rendered", "queued", "exported"].includes(draft.status) ? (
-          <button type="button" disabled={pending !== ""} onClick={() => onRun(action("publish"))}>Publish to Instagram</button>
+          <button type="button" disabled={pending !== "" || Boolean(draft.work)} onClick={() => onRun(action("publish"))}>
+            {draft.work?.activity === "publishing" ? workButton(draft.work, "Publish to Instagram") : "Publish to Instagram"}
+          </button>
         ) : null}
-        <button type="button" disabled={pending !== ""} onClick={() => onRun(action("schedule"))}>Schedule</button>
-        <button type="button" disabled={pending !== ""} onClick={() => onRun(action("export"))}>Download package</button>
+        <button type="button" disabled={pending !== "" || Boolean(draft.work)} onClick={() => onRun(action("schedule"))}>Schedule</button>
+        <button type="button" disabled={pending !== "" || Boolean(draft.work)} onClick={() => onRun(action("export"))}>Download package</button>
       </p>
       {(draft.publications || []).flatMap((publication) => [
         publication.postUrl ? (

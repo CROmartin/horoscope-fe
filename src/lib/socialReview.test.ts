@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { reviewNotice } from "./socialReviewClient";
+import { reviewNotice, workButton, workLabel } from "./socialReviewClient";
 import { reviewLocation } from "./socialReview";
 
 test("review redirect uses the public host instead of the bind address", () => {
@@ -20,6 +20,9 @@ test("a started render is not reported as a plain save", () => {
   assert.equal(reviewNotice({ ok: true, reason: "rendering" }, true), "rendering");
   assert.equal(reviewNotice({ ok: true, reason: "publishing" }, true), "publishing");
   assert.equal(reviewNotice({ ok: true, reason: "published" }, true), "published");
+  assert.equal(workLabel({ activity: "publishing", done: 4, total: 12, percent: 33 }), "Publishing to Instagram, 4 of 12 (33%).");
+  assert.equal(workButton({ activity: "publishing", done: 4, total: 12, percent: 33 }, "Publish to Instagram"), "Publishing… 33%");
+  assert.equal(workLabel(null), null);
   assert.equal(reviewNotice({ ok: true }, true), "salvat");
   assert.equal(reviewNotice({ ok: false, reason: "caption" }, false), "caption");
 });
