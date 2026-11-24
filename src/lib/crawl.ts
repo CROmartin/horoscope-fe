@@ -17,7 +17,7 @@ const STATIC_PATHS = [
   ...WESTERN_SLUGS.map((slug) => `/${slug}`),
 ];
 
-export const DISALLOWED_PREFIXES = ["/dezabonare", "/preferinte-email", "/api"];
+export const DISALLOWED_PREFIXES = ["/dezabonare", "/preferinte-email", "/api", "/social-review"];
 
 export function indexablePaths(): string[] {
   const generated = [

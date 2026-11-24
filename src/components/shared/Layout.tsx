@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Header from "./Header";
 import PopupResolver from "./PopupResolver";
 import SiteFooter from "./SiteFooter";
@@ -10,7 +11,11 @@ type LayoutProps = {
 };
 
 function Layout(props: LayoutProps) {
+  const pathname = usePathname();
+  const bare = pathname === "/social-review";
+
   useEffect(() => {
+    if (bare) return;
     let priceHoroscope = parseInt(
       localStorage.getItem("priceHoroscope") || "0"
     );
@@ -26,7 +31,9 @@ function Layout(props: LayoutProps) {
       }
       localStorage.setItem("priceHoroscope", priceHoroscope.toString());
     }
-  }, []);
+  }, [bare]);
+
+  if (bare) return <>{props.children}</>;
 
   return (
     <AnalyticsConsent>
