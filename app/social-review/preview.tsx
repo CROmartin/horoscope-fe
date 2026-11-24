@@ -69,48 +69,49 @@ function StatusBar() {
 }
 
 function InstagramPost({ caption, stills }: { caption: string; stills: string[] }) {
-  const scroller = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
   const [open, setOpen] = useState(false);
+  const drag = useRef<number | null>(null);
 
   function go(next: number) {
-    const root = scroller.current;
-    if (!root) return;
-    const clamped = Math.max(0, Math.min(stills.length - 1, next));
-    root.scrollTo({ left: clamped * root.clientWidth, behavior: "smooth" });
-    setIndex(clamped);
+    setIndex(Math.max(0, Math.min(stills.length - 1, next)));
   }
 
   return (
-    <div style={{ background: "#000", color: "#fff", fontFamily: "Helvetica, Arial, sans-serif" }}>
+    <div style={{ width: "100%", maxWidth: "100%", minWidth: 0, overflow: "hidden", background: "#000", color: "#fff", fontFamily: "Helvetica, Arial, sans-serif" }}>
       <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px 10px" }}>
         <Avatar />
         <strong style={{ fontSize: 14 }}>horoscopzodii</strong>
       </div>
-      <div style={ratioFrame("125%")}>
+      <Stage width={4} height={5}>
         <div
-          ref={scroller}
-          onScroll={(event) => {
-            const root = event.currentTarget;
-            if (!root.clientWidth) return;
-            setIndex(Math.round(root.scrollLeft / root.clientWidth));
+          style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+          onPointerDown={(event) => {
+            if (event.button !== 0) return;
+            drag.current = event.clientX;
           }}
-          style={{ position: "absolute", inset: 0, display: "flex", overflowX: "auto", scrollSnapType: "x mandatory", scrollbarWidth: "none" }}
+          onPointerUp={(event) => {
+            if (drag.current === null) return;
+            const delta = event.clientX - drag.current;
+            drag.current = null;
+            if ((event.target as HTMLElement).closest("button")) return;
+            if (delta <= -48) go(index + 1);
+            else if (delta >= 48) go(index - 1);
+          }}
+          onPointerCancel={() => {
+            drag.current = null;
+          }}
         >
-          {stills.map((id) => (
-            <div key={id} style={{ position: "relative", flex: "0 0 100%", height: "100%", scrollSnapAlign: "start", overflow: "hidden", background: "#111" }}>
-              <img alt="" src={mediaSrc(id)} style={fittedMedia} />
-            </div>
-          ))}
+          <img alt="" src={mediaSrc(stills[index] || "")} style={fittedMedia} />
+          <button type="button" aria-label="Previous card" onClick={() => go(index - 1)} style={{ ...edge, left: 0 }} />
+          <button type="button" aria-label="Next card" onClick={() => go(index + 1)} style={{ ...edge, right: 0 }} />
+          <div style={{ position: "absolute", left: 0, right: 0, bottom: 10, display: "flex", justifyContent: "center", gap: 4 }}>
+            {stills.map((id, card) => (
+              <button key={id} type="button" aria-label={`Card ${card + 1}`} onClick={() => go(card)} style={{ width: card === index ? 7 : 6, height: card === index ? 7 : 6, border: 0, borderRadius: 99, padding: 0, background: card === index ? "#3897f0" : "rgba(255,255,255,0.7)" }} />
+            ))}
+          </div>
         </div>
-        <button type="button" aria-label="Previous card" onClick={() => go(index - 1)} style={{ ...edge, left: 0 }} />
-        <button type="button" aria-label="Next card" onClick={() => go(index + 1)} style={{ ...edge, right: 0 }} />
-        <div style={{ position: "absolute", left: 0, right: 0, bottom: 10, display: "flex", justifyContent: "center", gap: 4 }}>
-          {stills.map((id, card) => (
-            <button key={id} type="button" aria-label={`Card ${card + 1}`} onClick={() => go(card)} style={{ width: card === index ? 7 : 6, height: card === index ? 7 : 6, border: 0, borderRadius: 99, padding: 0, background: card === index ? "#3897f0" : "rgba(255,255,255,0.7)" }} />
-          ))}
-        </div>
-      </div>
+      </Stage>
       <div style={{ display: "flex", alignItems: "center", gap: 14, padding: "10px 12px 4px" }}>
         <Heart />
         <Comment />
@@ -157,7 +158,8 @@ function VerticalApp({
   }
 
   return (
-    <div style={{ ...ratioFrame("177.7778%"), color: "#fff", fontFamily: "Helvetica, Arial, sans-serif" }}>
+    <Stage width={9} height={16}>
+      <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", color: "#fff", fontFamily: "Helvetica, Arial, sans-serif" }}>
       {videoId ? (
         <video
           ref={videoRef}
@@ -202,7 +204,8 @@ function VerticalApp({
         </button>
       </div>
       {paused ? <span style={{ position: "absolute", inset: 0, display: "grid", placeItems: "center", pointerEvents: "none", fontSize: 42 }}>▶</span> : null}
-    </div>
+      </div>
+    </Stage>
   );
 }
 
@@ -233,19 +236,23 @@ function Battery() {
   return <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0.5" y="0.5" width="21" height="11" rx="2" stroke="#fff" fill="none" /><rect x="2" y="2" width="16" height="8" rx="1" fill="#fff" /><rect x="22.5" y="3.5" width="2" height="5" rx="1" fill="#fff" /></svg>;
 }
 
-function ratioFrame(paddingBottom: string): CSSProperties {
-  return { position: "relative", width: "100%", height: 0, paddingBottom, overflow: "hidden", background: "#000" };
+function Stage({ width, height, children }: { width: number; height: number; children: ReactNode }) {
+  return (
+    <div style={{ position: "relative", width: "100%", maxWidth: "100%", minWidth: 0, overflow: "hidden", background: "#000" }}>
+      <svg viewBox={`0 0 ${width} ${height}`} style={{ display: "block", width: "100%", height: "auto" }} aria-hidden="true" />
+      <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}>{children}</div>
+    </div>
+  );
 }
 
 const fittedMedia: CSSProperties = {
   position: "absolute",
-  inset: 0,
+  top: 0,
+  left: 0,
   width: "100%",
   height: "100%",
-  maxWidth: "100%",
   objectFit: "contain",
   display: "block",
-  background: "#000",
 };
 
 const edge: CSSProperties = { position: "absolute", top: 0, bottom: 24, width: "18%", border: 0, background: "transparent", cursor: "pointer" };
