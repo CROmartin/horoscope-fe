@@ -159,12 +159,17 @@ function VerticalApp({
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-    video.muted = false;
-    video.play().catch(() => {
-      video.muted = true;
-      setMuted(true);
-      video.play().catch(() => setPaused(true));
+    let gone = false;
+    video.muted = true;
+    setMuted(true);
+    video.play().then(() => {
+      if (!gone) setPaused(false);
+    }).catch(() => {
+      if (!gone) setPaused(true);
     });
+    return () => {
+      gone = true;
+    };
   }, [videoId]);
 
   function togglePlay() {
@@ -200,8 +205,6 @@ function VerticalApp({
           ref={videoRef}
           src={mediaSrc(videoId)}
           poster={stillId ? mediaSrc(stillId) : undefined}
-          autoPlay
-          muted={muted}
           loop
           playsInline
           onClick={togglePlay}
@@ -214,7 +217,7 @@ function VerticalApp({
         <img alt="" src={mediaSrc(stillId || "")} style={fittedMedia} />
       )}
       <div style={{ position: "absolute", top: 10, left: 14, fontSize: 16, fontWeight: 700 }}>{tiktok ? "Following" : "Reels"}</div>
-      <div style={{ position: "absolute", right: 10, bottom: 86, display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
+      <div style={{ position: "absolute", right: 10, bottom: 86, zIndex: 3, display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
         {tiktok ? <Avatar /> : null}
         <Heart />
         <Comment />
@@ -223,13 +226,22 @@ function VerticalApp({
         {videoId ? (
           <button
             type="button"
-            onClick={() => {
+            onClick={(event) => {
+              event.stopPropagation();
               const video = videoRef.current;
               if (!video) return;
-              video.muted = !video.muted;
-              setMuted(video.muted);
+              if (video.muted) {
+                video.defaultMuted = false;
+                video.muted = false;
+                video.volume = 1;
+                setMuted(false);
+                video.play().then(() => setPaused(false)).catch(() => setPaused(true));
+                return;
+              }
+              video.muted = true;
+              setMuted(true);
             }}
-            style={{ border: 0, background: "transparent", color: "#fff", fontSize: 11, padding: 0 }}
+            style={{ border: 0, background: "rgba(0,0,0,0.45)", color: "#fff", fontSize: 12, fontWeight: 700, borderRadius: 99, padding: "6px 8px", cursor: "pointer" }}
           >
             {muted ? "Play sound" : "Mute"}
           </button>
