@@ -22,7 +22,7 @@ const NOTICES: Record<string, string> = {
   rendering: "Rendering started. The pictures will appear on this draft when they are ready.",
   caption: "This draft is text only. There is nothing to render.",
   instagram_unconfigured: "Instagram publishing is not configured on the server.",
-  not_carousel: "Only an Instagram carousel can be published this way.",
+  not_carousel: "Only an Instagram carousel or reel can be published this way.",
   publishing: "Instagram is publishing this carousel. The link will appear here when it is ready.",
   instagram: "Instagram did not accept the carousel.",
   too_many_cards: "Instagram accepts at most 10 cards.",
@@ -274,7 +274,7 @@ function Draft({
             {draft.work?.activity === "rendering" ? workButton(draft.work, "Render") : "Render"}
           </button>
         )}
-        {draft.platform === "instagram" && draft.format === "carousel" && ["rendered", "queued", "exported"].includes(draft.status) ? (
+        {draft.platform === "instagram" && ["carousel", "vertical_video"].includes(draft.format) && ["rendered", "queued", "exported"].includes(draft.status) ? (
           <button type="button" disabled={pending !== "" || Boolean(draft.work)} onClick={() => onRun(action("publish"))}>
             {draft.work?.activity === "publishing" ? workButton(draft.work, "Publish to Instagram") : "Publish to Instagram"}
           </button>

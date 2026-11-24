@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import type { SocialDraft } from "@/lib/socialReviewClient";
 
 const PHONE_WIDTH = 390;
@@ -150,9 +150,20 @@ function VerticalApp({
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [paused, setPaused] = useState(false);
-  const [muted, setMuted] = useState(true);
+  const [muted, setMuted] = useState(false);
   const [open, setOpen] = useState(false);
   const tiktok = platform === "tiktok";
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = false;
+    video.play().catch(() => {
+      video.muted = true;
+      setMuted(true);
+      video.play().catch(() => setPaused(true));
+    });
+  }, [videoId]);
 
   function togglePlay() {
     const video = videoRef.current;
@@ -202,7 +213,7 @@ function VerticalApp({
             }}
             style={{ border: 0, background: "transparent", color: "#fff", fontSize: 11, padding: 0 }}
           >
-            {muted ? "Sound" : "Mute"}
+            {muted ? "Play sound" : "Mute"}
           </button>
         ) : null}
       </div>
