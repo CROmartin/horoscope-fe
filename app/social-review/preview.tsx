@@ -152,6 +152,8 @@ function VerticalApp({
   const [paused, setPaused] = useState(false);
   const [muted, setMuted] = useState(false);
   const [open, setOpen] = useState(false);
+  const [time, setTime] = useState(0);
+  const [duration, setDuration] = useState(0);
   const tiktok = platform === "tiktok";
 
   useEffect(() => {
@@ -177,6 +179,19 @@ function VerticalApp({
     }
   }
 
+  function rememberTime(video: HTMLVideoElement) {
+    setTime(video.currentTime || 0);
+    if (Number.isFinite(video.duration)) setDuration(video.duration);
+  }
+
+  function seekTo(seconds: number) {
+    const video = videoRef.current;
+    if (!video || !Number.isFinite(video.duration)) return;
+    const next = Math.max(0, Math.min(video.duration, seconds));
+    video.currentTime = next;
+    setTime(next);
+  }
+
   return (
     <Stage width={9} height={16}>
       <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", color: "#fff", fontFamily: "Helvetica, Arial, sans-serif" }}>
@@ -190,6 +205,9 @@ function VerticalApp({
           loop
           playsInline
           onClick={togglePlay}
+          onLoadedMetadata={(event) => rememberTime(event.currentTarget)}
+          onDurationChange={(event) => rememberTime(event.currentTarget)}
+          onTimeUpdate={(event) => rememberTime(event.currentTarget)}
           style={fittedMedia}
         />
       ) : (
@@ -217,7 +235,23 @@ function VerticalApp({
           </button>
         ) : null}
       </div>
-      <div style={{ position: "absolute", left: 12, right: 64, bottom: 16 }}>
+      {videoId ? (
+        <div style={{ position: "absolute", left: 12, right: 12, bottom: 4, zIndex: 2 }}>
+          <input
+            type="range"
+            min={0}
+            max={Math.max(1, Math.floor(duration))}
+            step={1}
+            value={Math.min(Math.floor(time), Math.max(0, Math.floor(duration)))}
+            aria-label="Video time in seconds"
+            disabled={!duration}
+            onChange={(event) => seekTo(Number(event.target.value))}
+            style={{ display: "block", width: "100%", margin: 0, accentColor: "#fff", cursor: "pointer" }}
+          />
+          <span style={{ fontSize: 11, fontWeight: 600, textShadow: "0 1px 2px #000" }}>{clock(time)} / {clock(duration)}</span>
+        </div>
+      ) : null}
+      <div style={{ position: "absolute", left: 12, right: 64, bottom: 52 }}>
         <strong style={{ display: "block", marginBottom: 4 }}>{tiktok ? "@horoscopzodii" : "horoscopzodii"}</strong>
         <button type="button" onClick={() => setOpen((value) => !value)} style={textButton}>
           <span style={clamp(open ? 0 : 2)}>{caption}</span>
@@ -291,6 +325,12 @@ const carouselCount: CSSProperties = {
 };
 
 const textButton: CSSProperties = { display: "inline", padding: 0, border: 0, background: "transparent", color: "inherit", font: "inherit", textAlign: "left", cursor: "pointer" };
+
+function clock(seconds: number) {
+  if (!Number.isFinite(seconds) || seconds < 0) return "0:00";
+  const whole = Math.floor(seconds);
+  return `${Math.floor(whole / 60)}:${String(whole % 60).padStart(2, "0")}`;
+}
 
 function clamp(lines: number): CSSProperties {
   if (!lines) return {};
