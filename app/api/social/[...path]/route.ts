@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import { SOCIAL_COOKIE, socialApiBase } from "@/lib/socialReview";
+import { SOCIAL_COOKIE, reviewLocation, socialApiBase } from "@/lib/socialReview";
 
 type RouteContext = { params: Promise<{ path: string[] }> };
 
@@ -31,7 +31,7 @@ async function forward(request: Request, parts: string[]) {
     } catch {
       notice = response.ok ? "salvat" : "esuat";
     }
-    return NextResponse.redirect(new URL(`/social-review?notice=${encodeURIComponent(notice)}`, request.url), 303);
+    return NextResponse.redirect(reviewLocation(request, notice), 303);
   }
 
   const out = new Headers();
