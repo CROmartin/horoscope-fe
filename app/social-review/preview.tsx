@@ -71,10 +71,20 @@ function StatusBar() {
 function InstagramPost({ caption, stills }: { caption: string; stills: string[] }) {
   const [index, setIndex] = useState(0);
   const [open, setOpen] = useState(false);
-  const drag = useRef<number | null>(null);
+  const [shift, setShift] = useState(0);
+  const drag = useRef<{ x: number } | null>(null);
 
   function go(next: number) {
     setIndex(Math.max(0, Math.min(stills.length - 1, next)));
+  }
+
+  function finishDrag(clientX: number) {
+    if (!drag.current) return;
+    const delta = clientX - drag.current.x;
+    drag.current = null;
+    setShift(0);
+    if (delta <= -48) go(index + 1);
+    else if (delta >= 48) go(index - 1);
   }
 
   return (
@@ -85,31 +95,30 @@ function InstagramPost({ caption, stills }: { caption: string; stills: string[] 
       </div>
       <Stage width={4} height={5}>
         <div
-          style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+          style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", touchAction: "none", cursor: "grab" }}
           onPointerDown={(event) => {
             if (event.button !== 0) return;
-            drag.current = event.clientX;
+            drag.current = { x: event.clientX };
+            try {
+              event.currentTarget.setPointerCapture(event.pointerId);
+            } catch {
+              /* The pointer still ends on this surface. */
+            }
           }}
-          onPointerUp={(event) => {
-            if (drag.current === null) return;
-            const delta = event.clientX - drag.current;
-            drag.current = null;
-            if ((event.target as HTMLElement).closest("button")) return;
-            if (delta <= -48) go(index + 1);
-            else if (delta >= 48) go(index - 1);
+          onPointerMove={(event) => {
+            if (!drag.current) return;
+            setShift(event.clientX - drag.current.x);
           }}
+          onPointerUp={(event) => finishDrag(event.clientX)}
           onPointerCancel={() => {
             drag.current = null;
+            setShift(0);
           }}
         >
-          <img alt="" src={mediaSrc(stills[index] || "")} style={fittedMedia} />
-          <button type="button" aria-label="Previous card" onClick={() => go(index - 1)} style={{ ...edge, left: 0 }} />
-          <button type="button" aria-label="Next card" onClick={() => go(index + 1)} style={{ ...edge, right: 0 }} />
-          <div style={{ position: "absolute", left: 0, right: 0, bottom: 10, display: "flex", justifyContent: "center", gap: 4 }}>
-            {stills.map((id, card) => (
-              <button key={id} type="button" aria-label={`Card ${card + 1}`} onClick={() => go(card)} style={{ width: card === index ? 7 : 6, height: card === index ? 7 : 6, border: 0, borderRadius: 99, padding: 0, background: card === index ? "#3897f0" : "rgba(255,255,255,0.7)" }} />
-            ))}
-          </div>
+          <img alt="" src={mediaSrc(stills[index] || "")} style={{ ...fittedMedia, transform: `translateX(${shift}px)`, pointerEvents: "none" }} />
+          {stills.length > 1 ? (
+            <span style={carouselCount}>{index + 1}/{stills.length}</span>
+          ) : null}
         </div>
       </Stage>
       <div style={{ display: "flex", alignItems: "center", gap: 14, padding: "10px 12px 4px" }}>
@@ -255,7 +264,21 @@ const fittedMedia: CSSProperties = {
   display: "block",
 };
 
-const edge: CSSProperties = { position: "absolute", top: 0, bottom: 24, width: "18%", border: 0, background: "transparent", cursor: "pointer" };
+const carouselCount: CSSProperties = {
+  position: "absolute",
+  top: 12,
+  right: 12,
+  zIndex: 1,
+  padding: "4px 9px",
+  borderRadius: 12,
+  background: "rgba(0,0,0,0.65)",
+  color: "#fff",
+  fontSize: 13,
+  fontWeight: 600,
+  lineHeight: 1.2,
+  pointerEvents: "none",
+};
+
 const textButton: CSSProperties = { display: "inline", padding: 0, border: 0, background: "transparent", color: "inherit", font: "inherit", textAlign: "left", cursor: "pointer" };
 
 function clamp(lines: number): CSSProperties {
