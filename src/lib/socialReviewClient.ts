@@ -40,6 +40,7 @@ export type SocialDraft = {
   ctaUrl: string;
   hashtags: string[];
   blocking: string[];
+  failureReason?: string;
   sources: { name: string; text: string }[];
   assets: { id: string; kind: string; width?: number; height?: number }[];
   publications: { id: string; status: string; files: string[]; postUrl?: string | null }[];

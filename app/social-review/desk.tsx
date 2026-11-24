@@ -20,6 +20,7 @@ const NOTICES: Record<string, string> = {
   not_approved: "Approve the draft first.",
   render_disabled: "Rendering is off on the server.",
   rendering: "Rendering started. The pictures will appear on this draft when they are ready.",
+  narration: "The voice could not be recorded, so the video was not saved.",
   caption: "This draft is text only. There is nothing to render.",
   instagram_unconfigured: "Instagram publishing is not configured on the server.",
   not_carousel: "Only an Instagram carousel or reel can be published this way.",
@@ -128,7 +129,7 @@ function noteFinishedWork(previous: Loaded, next: Loaded, setNotice: (notice: st
       if (publication?.postUrl || publication?.status === "published") setNotice("published");
       else if (publication?.status === "failed") setNotice("instagram");
     } else if (before.work.activity === "rendering" && after?.status === "failed") {
-      setNotice("esuat");
+      setNotice(after.failureReason === "narration" ? "narration" : "esuat");
     }
   }
 }
