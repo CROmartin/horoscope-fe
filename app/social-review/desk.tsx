@@ -284,6 +284,11 @@ function Draft({
         <button type="button" disabled={pending !== "" || Boolean(draft.work)} onClick={() => onRun(action("export"))}>Download package</button>
       </p>
       {(draft.publications || []).flatMap((publication) => [
+        publication.status === "removed" ? (
+          <span key={`${publication.id}-removed`} style={{ display: "inline-block", marginRight: 12 }}>
+            The Instagram post was deleted.
+          </span>
+        ) : null,
         publication.postUrl ? (
           <a key={`${publication.id}-post`} href={publication.postUrl} style={{ display: "inline-block", marginRight: 12, color: "#d7be8a" }}>
             Instagram post
