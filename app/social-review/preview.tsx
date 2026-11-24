@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type CSSProperties } from "react";
+import { useRef, useState, type CSSProperties, type ReactNode } from "react";
 import type { SocialDraft } from "@/lib/socialReviewClient";
 
 const PHONE_WIDTH = 390;
@@ -16,18 +16,130 @@ export function PhonePreview({ draft }: { draft: SocialDraft }) {
     .filter((asset) => asset.kind === "still" || asset.kind === "preview")
     .slice()
     .sort((a, b) => a.id.localeCompare(b.id));
-  if (draft.format === "vertical_video" && (video || stills.length)) {
-    return <ReelFrame caption={draft.caption} videoId={video?.id} stillId={stills[0]?.id} />;
-  }
-  if (stills.length) return <CarouselFrame caption={draft.caption} stills={stills.map((asset) => asset.id)} />;
-  return null;
+  if (!video && stills.length === 0) return null;
+  const reel = draft.format === "vertical_video";
+  return (
+    <div style={{ width: "100%", maxWidth: PHONE_WIDTH, margin: "8px 0 36px" }}>
+      <Phone>
+        {reel ? (
+          <VerticalApp
+            platform={draft.platform === "tiktok" ? "tiktok" : "instagram"}
+            caption={draft.caption}
+            videoId={video?.id}
+            stillId={stills[0]?.id}
+          />
+        ) : (
+          <InstagramPost caption={draft.caption} stills={stills.map((asset) => asset.id)} />
+        )}
+      </Phone>
+    </div>
+  );
 }
 
-function ReelFrame({ caption, videoId, stillId }: { caption: string; videoId?: string; stillId?: string }) {
+function Phone({ children }: { children: ReactNode }) {
+  return (
+    <div style={{
+      boxSizing: "border-box",
+      width: "100%",
+      padding: "12px 10px 14px",
+      borderRadius: 46,
+      background: "#0a0a0a",
+      boxShadow: "0 0 0 2px #2a2a2a, 0 24px 48px rgba(0,0,0,0.55)",
+    }}>
+      <StatusBar />
+      <div style={{ overflow: "hidden", borderRadius: 8, background: "#000" }}>{children}</div>
+      <div style={{ width: 124, height: 5, margin: "12px auto 0", borderRadius: 99, background: "#f2f2f2" }} />
+    </div>
+  );
+}
+
+function StatusBar() {
+  return (
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", height: 28, padding: "0 16px 6px", color: "#fff", fontFamily: "Helvetica, Arial, sans-serif", fontSize: 14, fontWeight: 600 }}>
+      <span>9:41</span>
+      <span style={{ display: "flex", gap: 5, alignItems: "center" }}>
+        <Signal />
+        <Battery />
+      </span>
+    </div>
+  );
+}
+
+function InstagramPost({ caption, stills }: { caption: string; stills: string[] }) {
+  const scroller = useRef<HTMLDivElement>(null);
+  const [index, setIndex] = useState(0);
+  const [open, setOpen] = useState(false);
+
+  function go(next: number) {
+    const root = scroller.current;
+    if (!root) return;
+    const clamped = Math.max(0, Math.min(stills.length - 1, next));
+    root.scrollTo({ left: clamped * root.clientWidth, behavior: "smooth" });
+    setIndex(clamped);
+  }
+
+  return (
+    <div style={{ background: "#000", color: "#fff", fontFamily: "Helvetica, Arial, sans-serif" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px 10px" }}>
+        <Avatar />
+        <strong style={{ fontSize: 14 }}>horoscopzodii</strong>
+      </div>
+      <div style={{ position: "relative" }}>
+        <div
+          ref={scroller}
+          onScroll={(event) => {
+            const root = event.currentTarget;
+            if (!root.clientWidth) return;
+            setIndex(Math.round(root.scrollLeft / root.clientWidth));
+          }}
+          style={{ display: "flex", width: "100%", overflowX: "auto", scrollSnapType: "x mandatory", scrollbarWidth: "none" }}
+        >
+          {stills.map((id) => (
+            <div key={id} style={{ flex: "0 0 100%", width: "100%", minWidth: 0, aspectRatio: "4 / 5", scrollSnapAlign: "start", background: "#000" }}>
+              <img alt="" src={mediaSrc(id)} style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
+            </div>
+          ))}
+        </div>
+        <button type="button" aria-label="Previous card" onClick={() => go(index - 1)} style={{ ...edge, left: 0 }} />
+        <button type="button" aria-label="Next card" onClick={() => go(index + 1)} style={{ ...edge, right: 0 }} />
+        <div style={{ position: "absolute", left: 0, right: 0, bottom: 10, display: "flex", justifyContent: "center", gap: 4 }}>
+          {stills.map((id, card) => (
+            <button key={id} type="button" aria-label={`Card ${card + 1}`} onClick={() => go(card)} style={{ width: card === index ? 7 : 6, height: card === index ? 7 : 6, border: 0, borderRadius: 99, padding: 0, background: card === index ? "#3897f0" : "rgba(255,255,255,0.7)" }} />
+          ))}
+        </div>
+      </div>
+      <div style={{ display: "flex", alignItems: "center", gap: 14, padding: "10px 12px 4px" }}>
+        <Heart />
+        <Comment />
+        <Share />
+        <span style={{ marginLeft: "auto" }}><Bookmark /></span>
+      </div>
+      <p style={{ margin: 0, padding: "4px 12px 14px", fontSize: 14, lineHeight: 1.35 }}>
+        <strong>horoscopzodii </strong>
+        <button type="button" onClick={() => setOpen((value) => !value)} style={textButton}>
+          <span style={clamp(open ? 0 : 2)}>{caption}</span>
+        </button>
+      </p>
+    </div>
+  );
+}
+
+function VerticalApp({
+  platform,
+  caption,
+  videoId,
+  stillId,
+}: {
+  platform: "instagram" | "tiktok";
+  caption: string;
+  videoId?: string;
+  stillId?: string;
+}) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [paused, setPaused] = useState(false);
   const [muted, setMuted] = useState(true);
   const [open, setOpen] = useState(false);
+  const tiktok = platform === "tiktok";
 
   function togglePlay() {
     const video = videoRef.current;
@@ -42,7 +154,7 @@ function ReelFrame({ caption, videoId, stillId }: { caption: string; videoId?: s
   }
 
   return (
-    <figure style={frameStyle("9 / 16")}>
+    <div style={{ position: "relative", aspectRatio: "9 / 16", background: "#000", color: "#fff", fontFamily: "Helvetica, Arial, sans-serif" }}>
       {videoId ? (
         <video
           ref={videoRef}
@@ -53,165 +165,75 @@ function ReelFrame({ caption, videoId, stillId }: { caption: string; videoId?: s
           loop
           playsInline
           onClick={togglePlay}
-          style={fillStyle}
+          style={{ width: "100%", height: "100%", objectFit: "contain", display: "block", background: "#000" }}
         />
       ) : (
-        <img alt="" src={mediaSrc(stillId || "")} style={fillStyle} />
+        <img alt="" src={mediaSrc(stillId || "")} style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
       )}
-      <figcaption style={captionStyle}>
-        <button type="button" onClick={() => setOpen((value) => !value)} style={captionButton}>
-          <span style={{ display: "-webkit-box", WebkitLineClamp: open ? "unset" : 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
-            {caption}
-          </span>
-        </button>
-      </figcaption>
-      {videoId ? (
-        <button
-          type="button"
-          onClick={() => {
-            const video = videoRef.current;
-            if (!video) return;
-            video.muted = !video.muted;
-            setMuted(video.muted);
-          }}
-          style={muteStyle}
-        >
-          {muted ? "Sound off" : "Sound on"}
-        </button>
-      ) : null}
-      {paused ? <span style={playStyle}>Paused</span> : null}
-    </figure>
-  );
-}
-
-function CarouselFrame({ caption, stills }: { caption: string; stills: string[] }) {
-  const scroller = useRef<HTMLDivElement>(null);
-  const [index, setIndex] = useState(0);
-
-  function go(next: number) {
-    const root = scroller.current;
-    if (!root) return;
-    const clamped = Math.max(0, Math.min(stills.length - 1, next));
-    root.scrollTo({ left: clamped * root.clientWidth, behavior: "smooth" });
-    setIndex(clamped);
-  }
-
-  return (
-    <figure style={frameStyle("4 / 5")}>
-      <div
-        ref={scroller}
-        onScroll={(event) => {
-          const root = event.currentTarget;
-          if (!root.clientWidth) return;
-          setIndex(Math.round(root.scrollLeft / root.clientWidth));
-        }}
-        style={{ display: "flex", height: "100%", overflowX: "auto", scrollSnapType: "x mandatory", scrollbarWidth: "none" }}
-      >
-        {stills.map((id) => (
-          <img key={id} alt="" src={mediaSrc(id)} style={{ ...fillStyle, flex: "0 0 100%", scrollSnapAlign: "start" }} />
-        ))}
-      </div>
-      <button type="button" aria-label="Previous card" onClick={() => go(index - 1)} style={{ ...edgeStyle, left: 0 }} />
-      <button type="button" aria-label="Next card" onClick={() => go(index + 1)} style={{ ...edgeStyle, right: 0 }} />
-      <div style={dotsStyle}>
-        {stills.map((id, card) => (
+      <div style={{ position: "absolute", top: 10, left: 14, fontSize: 16, fontWeight: 700 }}>{tiktok ? "Following" : "Reels"}</div>
+      <div style={{ position: "absolute", right: 10, bottom: 86, display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
+        {tiktok ? <Avatar /> : null}
+        <Heart />
+        <Comment />
+        {tiktok ? <Bookmark /> : null}
+        <Share />
+        {videoId ? (
           <button
-            key={id}
             type="button"
-            aria-label={`Card ${card + 1}`}
-            onClick={() => go(card)}
-            style={{ width: card === index ? 16 : 6, height: 6, border: 0, borderRadius: 99, padding: 0, background: card === index ? "#fff" : "rgba(255,255,255,0.55)" }}
-          />
-        ))}
+            onClick={() => {
+              const video = videoRef.current;
+              if (!video) return;
+              video.muted = !video.muted;
+              setMuted(video.muted);
+            }}
+            style={{ border: 0, background: "transparent", color: "#fff", fontSize: 11, padding: 0 }}
+          >
+            {muted ? "Sound" : "Mute"}
+          </button>
+        ) : null}
       </div>
-      <figcaption style={captionStyle}>
-        <span style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{caption}</span>
-      </figcaption>
-    </figure>
+      <div style={{ position: "absolute", left: 12, right: 64, bottom: 16 }}>
+        <strong style={{ display: "block", marginBottom: 4 }}>{tiktok ? "@horoscopzodii" : "horoscopzodii"}</strong>
+        <button type="button" onClick={() => setOpen((value) => !value)} style={textButton}>
+          <span style={clamp(open ? 0 : 2)}>{caption}</span>
+        </button>
+      </div>
+      {paused ? <span style={{ position: "absolute", inset: 0, display: "grid", placeItems: "center", pointerEvents: "none", fontSize: 42 }}>▶</span> : null}
+    </div>
   );
 }
 
-function frameStyle(ratio: string): CSSProperties {
-  return {
-    position: "relative",
-    width: "100%",
-    maxWidth: PHONE_WIDTH,
-    aspectRatio: ratio,
-    margin: 0,
-    overflow: "hidden",
-    borderRadius: 28,
-    background: "#000",
-    boxShadow: "0 0 0 8px #1c1c1c, 0 18px 40px rgba(0,0,0,0.45)",
-  };
+function Avatar() {
+  return <span style={{ width: 32, height: 32, borderRadius: "50%", background: "linear-gradient(135deg,#f9ce34,#ee2a7b,#6228d7)", display: "inline-block", flex: "0 0 auto" }} />;
 }
 
-const fillStyle: CSSProperties = { width: "100%", height: "100%", objectFit: "cover", display: "block" };
+function IconButton({ children, label }: { children: ReactNode; label: string }) {
+  return <span role="img" aria-label={label} style={{ display: "inline-flex", color: "#fff" }}>{children}</span>;
+}
 
-const captionStyle: CSSProperties = {
-  position: "absolute",
-  left: 0,
-  right: 0,
-  bottom: 0,
-  margin: 0,
-  padding: "36px 14px 16px",
-  color: "#fff",
-  background: "linear-gradient(transparent, rgba(0,0,0,0.72))",
-  fontFamily: "Georgia, serif",
-  fontSize: 15,
-  lineHeight: 1.35,
-};
+function Heart() {
+  return <IconButton label="Like"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 4.6-7 9-7 9z" /></svg></IconButton>;
+}
+function Comment() {
+  return <IconButton label="Comment"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 17.5 3 21l4.2-1.2A9 9 0 1 0 5 17.5z" /></svg></IconButton>;
+}
+function Share() {
+  return <IconButton label="Share"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 4 10 13M21 4l-7 17-4-7-7-4 18-6z" /></svg></IconButton>;
+}
+function Bookmark() {
+  return <IconButton label="Save"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 3h10a1 1 0 0 1 1 1v17l-6-3-6 3V4a1 1 0 0 1 1-1z" /></svg></IconButton>;
+}
+function Signal() {
+  return <svg width="16" height="12" viewBox="0 0 16 12" fill="#fff"><rect x="0" y="8" width="3" height="4" /><rect x="4.5" y="5" width="3" height="7" /><rect x="9" y="2" width="3" height="10" /><rect x="13.5" y="0" width="2.5" height="12" /></svg>;
+}
+function Battery() {
+  return <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0.5" y="0.5" width="21" height="11" rx="2" stroke="#fff" fill="none" /><rect x="2" y="2" width="16" height="8" rx="1" fill="#fff" /><rect x="22.5" y="3.5" width="2" height="5" rx="1" fill="#fff" /></svg>;
+}
 
-const captionButton: CSSProperties = {
-  display: "block",
-  width: "100%",
-  padding: 0,
-  border: 0,
-  background: "transparent",
-  color: "inherit",
-  textAlign: "left",
-  font: "inherit",
-  cursor: "pointer",
-};
+const edge: CSSProperties = { position: "absolute", top: 0, bottom: 24, width: "18%", border: 0, background: "transparent", cursor: "pointer" };
+const textButton: CSSProperties = { display: "inline", padding: 0, border: 0, background: "transparent", color: "inherit", font: "inherit", textAlign: "left", cursor: "pointer" };
 
-const muteStyle: CSSProperties = {
-  position: "absolute",
-  top: 12,
-  right: 12,
-  border: 0,
-  borderRadius: 99,
-  padding: "6px 10px",
-  background: "rgba(0,0,0,0.55)",
-  color: "#fff",
-  fontSize: 12,
-};
-
-const playStyle: CSSProperties = {
-  position: "absolute",
-  inset: 0,
-  display: "grid",
-  placeItems: "center",
-  color: "#fff",
-  fontSize: 18,
-  pointerEvents: "none",
-  textShadow: "0 1px 8px #000",
-};
-
-const dotsStyle: CSSProperties = {
-  position: "absolute",
-  top: 12,
-  left: 0,
-  right: 0,
-  display: "flex",
-  justifyContent: "center",
-  gap: 4,
-};
-
-const edgeStyle: CSSProperties = {
-  position: "absolute",
-  top: 28,
-  bottom: 72,
-  width: "22%",
-  border: 0,
-  background: "transparent",
-  cursor: "pointer",
-};
+function clamp(lines: number): CSSProperties {
+  if (!lines) return {};
+  return { display: "-webkit-box", WebkitLineClamp: lines, WebkitBoxOrient: "vertical", overflow: "hidden" };
+}

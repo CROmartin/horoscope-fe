@@ -209,6 +209,7 @@ function Draft({
         {pending.startsWith(action("")) ? " · working" : ""}
       </h2>
       {draft.blocking?.length ? <p>Blocks: {draft.blocking.join(", ")}</p> : null}
+      <PhonePreview draft={draft} />
       <p><strong>{draft.hook}</strong></p>
       {(draft.script || []).map((line) => (
         <p key={line}>{line}</p>
@@ -222,7 +223,6 @@ function Draft({
           {source.text}
         </p>
       ))}
-      <PhonePreview draft={draft} />
       <form
         onSubmit={(event) => {
           event.preventDefault();
