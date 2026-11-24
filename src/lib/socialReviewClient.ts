@@ -1,5 +1,6 @@
 export function reviewNotice(body: { ok?: boolean; reason?: string } | null, responseOk: boolean) {
   if (body?.reason === "rendering") return "rendering";
+  if (body?.reason === "publishing") return "publishing";
   if (body?.reason === "published") return "published";
   if (body) return body.ok ? "salvat" : String(body.reason || "esuat");
   return responseOk ? "salvat" : "esuat";

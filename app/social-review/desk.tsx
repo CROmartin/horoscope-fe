@@ -23,7 +23,7 @@ const NOTICES: Record<string, string> = {
   caption: "This draft is text only. There is nothing to render.",
   instagram_unconfigured: "Instagram publishing is not configured on the server.",
   not_carousel: "Only an Instagram carousel can be published this way.",
-  publishing: "Instagram is already publishing this carousel.",
+  publishing: "Instagram is publishing this carousel. The link will appear here when it is ready.",
   instagram: "Instagram did not accept the carousel.",
   too_many_cards: "Instagram accepts at most 10 cards.",
   caption_length: "The caption is longer than Instagram allows.",
@@ -46,6 +46,7 @@ export function ReviewDesk({ initial, initialNotice }: { initial: Loaded; initia
   const [pending, setPending] = useState("");
   const [polling, setPolling] = useState(initialNotice === "rendering");
   const rendering = useRef(new Set<string>());
+  const publishing = useRef(new Set<string>());
 
   useEffect(() => {
     if (!initialNotice) return;
@@ -62,12 +63,23 @@ export function ReviewDesk({ initial, initialNotice }: { initial: Loaded; initia
       const next = await readState();
       if (stopped || !next) return;
       setLoaded(next);
-      if ("state" in next && rendering.current.size) {
+      if ("state" in next && (rendering.current.size || publishing.current.size)) {
         for (const id of [...rendering.current]) {
           const draft = next.state.drafts.find((item) => item.id === id);
           if (!draft || draft.status === "rendered" || draft.status === "failed") rendering.current.delete(id);
         }
-        if (rendering.current.size === 0) setPolling(false);
+        for (const id of [...publishing.current]) {
+          const draft = next.state.drafts.find((item) => item.id === id);
+          const publication = draft?.publications?.find((item) => item.postUrl || item.status === "published" || item.status === "failed");
+          if (!draft || publication?.postUrl || publication?.status === "published") {
+            publishing.current.delete(id);
+            if (publication?.postUrl) setNotice("published");
+          } else if (publication?.status === "failed") {
+            publishing.current.delete(id);
+            setNotice("instagram");
+          }
+        }
+        if (rendering.current.size === 0 && publishing.current.size === 0) setPolling(false);
       }
     }, 4000);
     const stop = setTimeout(() => setPolling(false), 3 * 60 * 1000);
@@ -92,6 +104,11 @@ export function ReviewDesk({ initial, initialNotice }: { initial: Loaded; initia
       const started = path.match(/\/drafts\/([^/]+)\/render$/);
       if (payload?.reason === "rendering" && started) {
         rendering.current.add(decodeURIComponent(started[1]));
+        setPolling(true);
+      }
+      const startedPublish = path.match(/\/drafts\/([^/]+)\/publish$/);
+      if (payload?.reason === "publishing" && startedPublish) {
+        publishing.current.add(decodeURIComponent(startedPublish[1]));
         setPolling(true);
       }
       const next = await readState();
