@@ -35,7 +35,7 @@ export default async function SocialReviewPage({
   const loaded = await loadSocialState();
 
   return (
-    <main style={{ maxWidth: 920, margin: "0 auto", padding: "32px 20px 80px", fontFamily: "Georgia, serif", color: "#16120c" }}>
+    <main style={{ maxWidth: 920, margin: "0 auto", padding: "32px 20px 80px", fontFamily: "Georgia, serif", color: "#f3efe6" }}>
       <h1 style={{ fontSize: 32, marginBottom: 8 }}>Revizuire social</h1>
       <p style={{ marginTop: 0 }}>Ciornele pleacă doar ca pachet de export. Nimic nu se publică singur.</p>
       {notice ? <p>{NOTICES[notice] || "Acțiunea nu a reușit."}</p> : null}
@@ -51,7 +51,7 @@ function Login() {
     <form method="post" action="/api/social/session">
       <label>
         Secretul de generare
-        <input name="secret" type="password" autoComplete="current-password" required style={{ display: "block", margin: "8px 0 16px", width: "100%" }} />
+        <input name="secret" type="password" autoComplete="current-password" required style={{ display: "block", margin: "8px 0 16px", width: "100%", color: "#16120c", background: "#fff" }} />
       </label>
       <button type="submit">Intră</button>
     </form>
@@ -97,7 +97,7 @@ function Draft({ draft }: { draft: SocialDraft }) {
       ))}
       <p>{draft.caption}</p>
       <p>{(draft.hashtags || []).join(" ")}</p>
-      <p><a href={draft.ctaUrl}>{draft.ctaUrl}</a></p>
+      <p><a href={draft.ctaUrl} style={{ color: "#d7be8a" }}>{draft.ctaUrl}</a></p>
       {(draft.sources || []).map((source) => (
         <p key={source.name}>
           <strong>{source.name}: </strong>
@@ -115,11 +115,11 @@ function Draft({ draft }: { draft: SocialDraft }) {
       <form method="post" action={action("edit")}>
         <label>
           Hook
-          <textarea name="hook" defaultValue={draft.hook} rows={2} style={{ display: "block", width: "100%" }} />
+          <textarea name="hook" defaultValue={draft.hook} rows={2} style={{ display: "block", width: "100%", color: "#16120c", background: "#fff" }} />
         </label>
         <label>
           Caption
-          <textarea name="caption" defaultValue={draft.caption} rows={4} style={{ display: "block", width: "100%" }} />
+          <textarea name="caption" defaultValue={draft.caption} rows={4} style={{ display: "block", width: "100%", color: "#16120c", background: "#fff" }} />
         </label>
         <button type="submit">Editează</button>
       </form>
@@ -134,7 +134,7 @@ function Draft({ draft }: { draft: SocialDraft }) {
           <a
             key={`${publication.id}-${file}`}
             href={`/api/social/v1/social/export?id=${encodeURIComponent(publication.id)}&file=${encodeURIComponent(file)}`}
-            style={{ display: "inline-block", marginRight: 12 }}
+            style={{ display: "inline-block", marginRight: 12, color: "#d7be8a" }}
           >
             {file}
           </a>
