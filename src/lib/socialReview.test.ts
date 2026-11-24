@@ -21,6 +21,7 @@ test("a started render is not reported as a plain save", () => {
   assert.equal(reviewNotice({ ok: true, reason: "publishing" }, true), "publishing");
   assert.equal(reviewNotice({ ok: true, reason: "published" }, true), "published");
   assert.equal(workLabel({ activity: "publishing", done: 4, total: 12, percent: 33 }), "Publishing to Instagram, 4 of 12 (33%).");
+  assert.equal(workLabel({ activity: "rendering", done: 37, total: 100, percent: 37, label: "Rendering the video" }), "Rendering the video (37%).");
   assert.equal(workButton({ activity: "publishing", done: 4, total: 12, percent: 33 }, "Publish to Instagram"), "Publishing… 33%");
   assert.equal(workLabel(null), null);
   assert.equal(reviewNotice({ ok: true }, true), "salvat");

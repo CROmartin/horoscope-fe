@@ -11,10 +11,12 @@ export type SocialWork = {
   done: number;
   total: number;
   percent: number;
+  label?: string;
 };
 
 export function workLabel(work: SocialWork | null | undefined) {
   if (!work) return null;
+  if (work.label) return `${work.label} (${work.percent}%).`;
   const name = work.activity === "publishing" ? "Publishing to Instagram" : work.activity === "rendering" ? "Rendering" : "Working";
   return `${name}, ${work.done} of ${work.total} (${work.percent}%).`;
 }
