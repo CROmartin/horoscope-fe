@@ -21,6 +21,13 @@ const NOTICES: Record<string, string> = {
   render_disabled: "Rendering is off on the server.",
   rendering: "Rendering started. The pictures will appear on this draft when they are ready.",
   caption: "This draft is text only. There is nothing to render.",
+  instagram_unconfigured: "Instagram publishing is not configured on the server.",
+  not_carousel: "Only an Instagram carousel can be published this way.",
+  publishing: "Instagram is already publishing this carousel.",
+  instagram: "Instagram did not accept the carousel.",
+  too_many_cards: "Instagram accepts at most 10 cards.",
+  caption_length: "The caption is longer than Instagram allows.",
+  published: "The carousel is on Instagram.",
   incomplete: "The set of 12 signs is incomplete.",
   "mixed-date": "The signs do not share one date.",
   esuat: "The action failed.",
@@ -250,11 +257,19 @@ function Draft({
         {draft.format === "caption" ? null : (
           <button type="button" disabled={pending !== ""} onClick={() => onRun(action("render"))}>Render</button>
         )}
+        {draft.platform === "instagram" && draft.format === "carousel" && ["rendered", "queued", "exported"].includes(draft.status) ? (
+          <button type="button" disabled={pending !== ""} onClick={() => onRun(action("publish"))}>Publish to Instagram</button>
+        ) : null}
         <button type="button" disabled={pending !== ""} onClick={() => onRun(action("schedule"))}>Schedule</button>
         <button type="button" disabled={pending !== ""} onClick={() => onRun(action("export"))}>Download package</button>
       </p>
-      {(draft.publications || []).flatMap((publication) =>
-        (publication.files || []).map((file) => (
+      {(draft.publications || []).flatMap((publication) => [
+        publication.postUrl ? (
+          <a key={`${publication.id}-post`} href={publication.postUrl} style={{ display: "inline-block", marginRight: 12, color: "#d7be8a" }}>
+            Instagram post
+          </a>
+        ) : null,
+        ...(publication.files || []).map((file) => (
           <a
             key={`${publication.id}-${file}`}
             href={`/api/social/v1/social/export?id=${encodeURIComponent(publication.id)}&file=${encodeURIComponent(file)}`}
@@ -262,8 +277,8 @@ function Draft({
           >
             {file}
           </a>
-        ))
-      )}
+        )),
+      ])}
     </section>
   );
 }
