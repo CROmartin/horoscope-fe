@@ -275,7 +275,7 @@ function Draft({
             {draft.work?.activity === "rendering" ? workButton(draft.work, "Render") : "Render"}
           </button>
         )}
-        {draft.platform === "instagram" && ["carousel", "vertical_video"].includes(draft.format) && ["rendered", "queued", "exported"].includes(draft.status) ? (
+        {draft.platform === "instagram" && ["carousel", "vertical_video"].includes(draft.format) && (["rendered", "queued", "exported"].includes(draft.status) || (draft.status === "cancelled" && (draft.publications || []).some((item) => item.status === "removed"))) ? (
           <button type="button" disabled={pending !== "" || Boolean(draft.work)} onClick={() => onRun(action("publish"))}>
             {draft.work?.activity === "publishing" ? workButton(draft.work, "Publish to Instagram") : "Publish to Instagram"}
           </button>
