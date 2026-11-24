@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { reviewNotice, type SocialDraft, type SocialState } from "@/lib/socialReviewClient";
+import { PhonePreview } from "./preview";
 
 const NOTICES: Record<string, string> = {
   salvat: "Saved.",
@@ -221,16 +222,7 @@ function Draft({
           {source.text}
         </p>
       ))}
-      <div>
-        {(draft.assets || []).filter((asset) => asset.kind !== "video").map((asset) => (
-          <img
-            key={asset.id}
-            alt=""
-            src={`/api/social/v1/social/asset?id=${encodeURIComponent(asset.id)}`}
-            style={{ width: 180, marginRight: 8 }}
-          />
-        ))}
-      </div>
+      <PhonePreview draft={draft} />
       <form
         onSubmit={(event) => {
           event.preventDefault();

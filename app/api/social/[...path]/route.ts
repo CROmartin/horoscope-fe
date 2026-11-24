@@ -15,6 +15,8 @@ async function forward(request: Request, parts: string[]) {
   headers.set("authorization", `Bearer ${secret}`);
   const contentType = request.headers.get("content-type");
   if (contentType) headers.set("content-type", contentType);
+  const range = request.headers.get("range");
+  if (range) headers.set("range", range);
   const method = request.method;
   const response = await fetch(target, {
     method,
@@ -35,8 +37,10 @@ async function forward(request: Request, parts: string[]) {
   }
 
   const out = new Headers();
-  const type = response.headers.get("content-type");
-  if (type) out.set("content-type", type);
+  for (const name of ["content-type", "content-length", "content-range", "accept-ranges"]) {
+    const value = response.headers.get(name);
+    if (value) out.set(name, value);
+  }
   out.set("cache-control", "private, no-store");
   return new Response(response.body, { status: response.status, headers: out });
 }
