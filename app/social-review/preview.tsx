@@ -19,7 +19,7 @@ export function PhonePreview({ draft }: { draft: SocialDraft }) {
   if (!video && stills.length === 0) return null;
   const reel = draft.format === "vertical_video";
   return (
-    <div style={{ width: "100%", maxWidth: PHONE_WIDTH, margin: "8px 0 36px" }}>
+    <div style={{ width: PHONE_WIDTH, maxWidth: "100%", minWidth: 0, margin: "8px 0 36px" }}>
       <Phone>
         {reel ? (
           <VerticalApp
@@ -41,13 +41,16 @@ function Phone({ children }: { children: ReactNode }) {
     <div style={{
       boxSizing: "border-box",
       width: "100%",
+      maxWidth: "100%",
+      minWidth: 0,
+      overflow: "hidden",
       padding: "12px 10px 14px",
       borderRadius: 46,
       background: "#0a0a0a",
       boxShadow: "0 0 0 2px #2a2a2a, 0 24px 48px rgba(0,0,0,0.55)",
     }}>
       <StatusBar />
-      <div style={{ overflow: "hidden", borderRadius: 8, background: "#000" }}>{children}</div>
+      <div style={{ width: "100%", minWidth: 0, overflow: "hidden", borderRadius: 8, background: "#000" }}>{children}</div>
       <div style={{ width: 124, height: 5, margin: "12px auto 0", borderRadius: 99, background: "#f2f2f2" }} />
     </div>
   );
@@ -92,11 +95,11 @@ function InstagramPost({ caption, stills }: { caption: string; stills: string[] 
             if (!root.clientWidth) return;
             setIndex(Math.round(root.scrollLeft / root.clientWidth));
           }}
-          style={{ display: "flex", width: "100%", overflowX: "auto", scrollSnapType: "x mandatory", scrollbarWidth: "none" }}
+          style={{ display: "flex", width: "100%", minWidth: 0, overflowX: "auto", scrollSnapType: "x mandatory", scrollbarWidth: "none" }}
         >
           {stills.map((id) => (
-            <div key={id} style={{ flex: "0 0 100%", width: "100%", minWidth: 0, aspectRatio: "4 / 5", scrollSnapAlign: "start", background: "#000" }}>
-              <img alt="" src={mediaSrc(id)} style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
+            <div key={id} style={{ position: "relative", flex: "0 0 100%", width: "100%", maxWidth: "100%", minWidth: 0, aspectRatio: "4 / 5", scrollSnapAlign: "start", overflow: "hidden", background: "#000" }}>
+              <img alt="" src={mediaSrc(id)} style={fittedMedia} />
             </div>
           ))}
         </div>
@@ -154,7 +157,7 @@ function VerticalApp({
   }
 
   return (
-    <div style={{ position: "relative", aspectRatio: "9 / 16", background: "#000", color: "#fff", fontFamily: "Helvetica, Arial, sans-serif" }}>
+    <div style={{ position: "relative", width: "100%", maxWidth: "100%", minWidth: 0, aspectRatio: "9 / 16", overflow: "hidden", background: "#000", color: "#fff", fontFamily: "Helvetica, Arial, sans-serif" }}>
       {videoId ? (
         <video
           ref={videoRef}
@@ -165,10 +168,10 @@ function VerticalApp({
           loop
           playsInline
           onClick={togglePlay}
-          style={{ width: "100%", height: "100%", objectFit: "contain", display: "block", background: "#000" }}
+          style={fittedMedia}
         />
       ) : (
-        <img alt="" src={mediaSrc(stillId || "")} style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
+        <img alt="" src={mediaSrc(stillId || "")} style={fittedMedia} />
       )}
       <div style={{ position: "absolute", top: 10, left: 14, fontSize: 16, fontWeight: 700 }}>{tiktok ? "Following" : "Reels"}</div>
       <div style={{ position: "absolute", right: 10, bottom: 86, display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
@@ -229,6 +232,17 @@ function Signal() {
 function Battery() {
   return <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0.5" y="0.5" width="21" height="11" rx="2" stroke="#fff" fill="none" /><rect x="2" y="2" width="16" height="8" rx="1" fill="#fff" /><rect x="22.5" y="3.5" width="2" height="5" rx="1" fill="#fff" /></svg>;
 }
+
+const fittedMedia: CSSProperties = {
+  position: "absolute",
+  inset: 0,
+  width: "100%",
+  height: "100%",
+  maxWidth: "100%",
+  objectFit: "contain",
+  display: "block",
+  background: "#000",
+};
 
 const edge: CSSProperties = { position: "absolute", top: 0, bottom: 24, width: "18%", border: 0, background: "transparent", cursor: "pointer" };
 const textButton: CSSProperties = { display: "inline", padding: 0, border: 0, background: "transparent", color: "inherit", font: "inherit", textAlign: "left", cursor: "pointer" };
