@@ -87,7 +87,7 @@ function InstagramPost({ caption, stills }: { caption: string; stills: string[] 
         <Avatar />
         <strong style={{ fontSize: 14 }}>horoscopzodii</strong>
       </div>
-      <div style={{ position: "relative" }}>
+      <div style={ratioFrame("125%")}>
         <div
           ref={scroller}
           onScroll={(event) => {
@@ -95,10 +95,10 @@ function InstagramPost({ caption, stills }: { caption: string; stills: string[] 
             if (!root.clientWidth) return;
             setIndex(Math.round(root.scrollLeft / root.clientWidth));
           }}
-          style={{ display: "flex", width: "100%", minWidth: 0, overflowX: "auto", scrollSnapType: "x mandatory", scrollbarWidth: "none" }}
+          style={{ position: "absolute", inset: 0, display: "flex", overflowX: "auto", scrollSnapType: "x mandatory", scrollbarWidth: "none" }}
         >
           {stills.map((id) => (
-            <div key={id} style={{ position: "relative", flex: "0 0 100%", width: "100%", maxWidth: "100%", minWidth: 0, aspectRatio: "4 / 5", scrollSnapAlign: "start", overflow: "hidden", background: "#000" }}>
+            <div key={id} style={{ position: "relative", flex: "0 0 100%", height: "100%", scrollSnapAlign: "start", overflow: "hidden", background: "#111" }}>
               <img alt="" src={mediaSrc(id)} style={fittedMedia} />
             </div>
           ))}
@@ -157,7 +157,7 @@ function VerticalApp({
   }
 
   return (
-    <div style={{ position: "relative", width: "100%", maxWidth: "100%", minWidth: 0, aspectRatio: "9 / 16", overflow: "hidden", background: "#000", color: "#fff", fontFamily: "Helvetica, Arial, sans-serif" }}>
+    <div style={{ ...ratioFrame("177.7778%"), color: "#fff", fontFamily: "Helvetica, Arial, sans-serif" }}>
       {videoId ? (
         <video
           ref={videoRef}
@@ -231,6 +231,10 @@ function Signal() {
 }
 function Battery() {
   return <svg width="25" height="12" viewBox="0 0 25 12"><rect x="0.5" y="0.5" width="21" height="11" rx="2" stroke="#fff" fill="none" /><rect x="2" y="2" width="16" height="8" rx="1" fill="#fff" /><rect x="22.5" y="3.5" width="2" height="5" rx="1" fill="#fff" /></svg>;
+}
+
+function ratioFrame(paddingBottom: string): CSSProperties {
+  return { position: "relative", width: "100%", height: 0, paddingBottom, overflow: "hidden", background: "#000" };
 }
 
 const fittedMedia: CSSProperties = {
