@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { reviewNotice, type SocialDraft, type SocialState } from "@/lib/socialReview";
+import { reviewNotice, type SocialDraft, type SocialState } from "@/lib/socialReviewClient";
 
 const NOTICES: Record<string, string> = {
   salvat: "Saved.",

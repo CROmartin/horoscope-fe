@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { reviewLocation, reviewNotice } from "./socialReview";
+import { reviewNotice } from "./socialReviewClient";
+import { reviewLocation } from "./socialReview";
 
 test("review redirect uses the public host instead of the bind address", () => {
   const request = new Request("https://localhost:3001/api/social/session", {

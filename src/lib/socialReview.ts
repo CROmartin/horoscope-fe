@@ -1,12 +1,10 @@
 import { cookies } from "next/headers";
+import type { SocialState } from "./socialReviewClient";
+
+export { reviewNotice } from "./socialReviewClient";
+export type { SocialDraft, SocialState } from "./socialReviewClient";
 
 export const SOCIAL_COOKIE = "social_review";
-
-export function reviewNotice(body: { ok?: boolean; reason?: string } | null, responseOk: boolean) {
-  if (body?.reason === "rendering") return "rendering";
-  if (body) return body.ok ? "salvat" : String(body.reason || "esuat");
-  return responseOk ? "salvat" : "esuat";
-}
 
 export function reviewLocation(request: Request, notice?: string) {
   const forwarded = request.headers.get("x-forwarded-host") || request.headers.get("host") || "";
@@ -26,39 +24,6 @@ export function socialApiBase() {
   if (process.env.NODE_ENV === "development") return "http://127.0.0.1:3000";
   return (process.env.URL || "").replace(/\/$/, "");
 }
-
-export type SocialDraft = {
-  id: string;
-  status: string;
-  platform: string;
-  format: string;
-  campaign: string;
-  variant: string;
-  hook: string;
-  caption: string;
-  script: string[];
-  ctaUrl: string;
-  hashtags: string[];
-  blocking: string[];
-  sources: { name: string; text: string }[];
-  assets: { id: string; kind: string; width?: number; height?: number }[];
-  publications: { id: string; status: string; files: string[] }[];
-};
-
-export type SocialState = {
-  settings: {
-    pauseAll: boolean;
-    autopublishEnabled: boolean;
-    instagram: { enabled: boolean };
-    tiktok: { enabled: boolean };
-  };
-  capabilities: {
-    instagram: { reel: string; carousel: string; autopublish: boolean };
-    tiktok: { video: string; directPost: string; autopublish: boolean };
-  };
-  source: { ok: boolean; reason?: string; localDate?: string; today?: string; date?: string };
-  drafts: SocialDraft[];
-};
 
 export async function loadSocialState(): Promise<
   | { authenticated: false }
