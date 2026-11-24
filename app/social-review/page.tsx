@@ -21,6 +21,7 @@ const NOTICES: Record<string, string> = {
   not_rendered: "Render the draft first.",
   not_approved: "Approve the draft first.",
   render_disabled: "Rendering is off on the server.",
+  rendering: "Rendering started. Refresh this page in a minute. The pictures show up when it finishes.",
   incomplete: "The set of 12 signs is incomplete.",
   "mixed-date": "The signs do not share one date.",
   esuat: "The action failed.",

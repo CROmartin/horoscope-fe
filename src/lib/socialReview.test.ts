@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { reviewLocation } from "./socialReview.ts";
+import { reviewLocation, reviewNotice } from "./socialReview.ts";
 
 test("review redirect uses the public host instead of the bind address", () => {
   const request = new Request("https://localhost:3001/api/social/session", {
@@ -13,6 +13,12 @@ test("review redirect uses the public host instead of the bind address", () => {
     reviewLocation(request, "auth").toString(),
     "https://horoscopzodii.ro/social-review?notice=auth"
   );
+});
+
+test("a started render is not reported as a plain save", () => {
+  assert.equal(reviewNotice({ ok: true, reason: "rendering" }, true), "rendering");
+  assert.equal(reviewNotice({ ok: true }, true), "salvat");
+  assert.equal(reviewNotice({ ok: false, reason: "caption" }, false), "caption");
 });
 
 test("review redirect stays on localhost during local development", () => {

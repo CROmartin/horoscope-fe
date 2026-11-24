@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import { SOCIAL_COOKIE, reviewLocation, socialApiBase } from "@/lib/socialReview";
+import { SOCIAL_COOKIE, reviewLocation, reviewNotice, socialApiBase } from "@/lib/socialReview";
 
 type RouteContext = { params: Promise<{ path: string[] }> };
 
@@ -24,12 +24,12 @@ async function forward(request: Request, parts: string[]) {
   });
 
   if (contentType?.includes("application/x-www-form-urlencoded")) {
-    let notice = response.ok ? "salvat" : "esuat";
+    let notice = reviewNotice(null, response.ok);
     try {
       const body = (await response.json()) as { ok?: boolean; reason?: string };
-      notice = body?.ok ? "salvat" : String(body?.reason || "esuat");
+      notice = reviewNotice(body, response.ok);
     } catch {
-      notice = response.ok ? "salvat" : "esuat";
+      notice = reviewNotice(null, response.ok);
     }
     return NextResponse.redirect(reviewLocation(request, notice), 303);
   }

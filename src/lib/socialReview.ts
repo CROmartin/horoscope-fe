@@ -2,6 +2,12 @@ import { cookies } from "next/headers";
 
 export const SOCIAL_COOKIE = "social_review";
 
+export function reviewNotice(body: { ok?: boolean; reason?: string } | null, responseOk: boolean) {
+  if (body?.reason === "rendering") return "rendering";
+  if (body) return body.ok ? "salvat" : String(body.reason || "esuat");
+  return responseOk ? "salvat" : "esuat";
+}
+
 export function reviewLocation(request: Request, notice?: string) {
   const forwarded = request.headers.get("x-forwarded-host") || request.headers.get("host") || "";
   const host = forwarded.split(",")[0].trim();
