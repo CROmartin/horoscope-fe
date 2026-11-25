@@ -30,6 +30,7 @@ const NOTICES: Record<string, string> = {
   too_many_cards: "Instagram accepts at most 10 cards.",
   caption_length: "The caption is longer than Instagram allows.",
   published: "The carousel is on Instagram.",
+  already_published: "These pictures are already on Instagram. Render again, then publish, to post the new ones.",
   incomplete: "The set of 12 signs is incomplete.",
   "mixed-date": "The signs do not share one date.",
   esuat: "The action failed.",
