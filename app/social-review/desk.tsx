@@ -1,8 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { draftDateLabel, draftStateCopy, orderedDrafts, reviewNotice, workButton, workLabel, type SocialDraft, type SocialState } from "@/lib/socialReviewClient";
-import { PhonePreview } from "./preview";
+import { noticeTarget, reviewNotice, type SocialState } from "@/lib/socialReviewClient";
+import { Activity } from "./activity";
+import { Drafts } from "./drafts";
+import { Header } from "./header";
+import { Health, NeedsYou } from "./health";
+import { Published } from "./published";
+import { Rules } from "./rules";
+import { Today } from "./today";
+import { Week } from "./week";
 
 const NOTICES: Record<string, string> = {
   salvat: "Saved.",
@@ -28,12 +35,14 @@ const NOTICES: Record<string, string> = {
   caption: "This draft is text only. There is nothing to render.",
   instagram_unconfigured: "Instagram publishing is not configured on the server.",
   not_carousel: "Only an Instagram carousel or reel can be published this way.",
-  publishing: "Instagram is publishing this carousel. The link will appear here when it is ready.",
-  instagram: "Instagram did not accept the carousel.",
+  publishing: "Instagram is publishing this post. The link will appear here when it is ready.",
+  instagram: "Instagram did not accept the post.",
   too_many_cards: "Instagram accepts at most 10 cards.",
   caption_length: "The caption is longer than Instagram allows.",
-  published: "The carousel is on Instagram.",
-  already_published: "These pictures are already on Instagram. Render again, then publish, to post the new ones.",
+  published: "The post is on Instagram.",
+  already_published: "These pictures are already on Instagram.",
+  already_live: "This draft is already live. Confirm to post it again. The earlier post stays up.",
+  wrong_date: "That draft is for a different day.",
   incomplete: "The set of 12 signs is incomplete.",
   "mixed-date": "The signs do not share one date.",
   esuat: "The action failed.",
@@ -45,18 +54,19 @@ type Loaded =
   | { authenticated: true; state: SocialState };
 
 const field = { display: "block", width: "100%", color: "#16120c", background: "#fff" } as const;
+const TABS = ["today", "week", "drafts", "rules", "activity", "published"] as const;
 
 export function ReviewDesk({ initial, initialNotice }: { initial: Loaded; initialNotice: string }) {
   const [loaded, setLoaded] = useState(initial);
   const [notice, setNotice] = useState(initialNotice);
+  const [notes, setNotes] = useState<Record<string, string>>({});
   const [pending, setPending] = useState("");
-  const [polling, setPolling] = useState(
-    initialNotice === "rendering" ||
-      initialNotice === "generating" ||
-      (initial.authenticated && "state" in initial && (initial.state.generating || initial.state.drafts.some((draft) => draft.work)))
-  );
+  const [tab, setTab] = useState<(typeof TABS)[number]>("today");
+  const [selected, setSelected] = useState<string | null>(null);
+  const [polling, setPolling] = useState(false);
   const loadedRef = useRef(loaded);
   loadedRef.current = loaded;
+  const busy = loaded.authenticated && "state" in loaded && loaded.state.drafts.some((draft) => draft.work);
 
   useEffect(() => {
     if (!initialNotice) return;
@@ -67,14 +77,13 @@ export function ReviewDesk({ initial, initialNotice }: { initial: Loaded; initia
   }, [initialNotice]);
 
   useEffect(() => {
-    if (!polling) return;
+    if (!busy && !polling) return;
     let stopped = false;
     const timer = setInterval(async () => {
       const next = await readState();
       if (stopped || !next) return;
-      noteFinishedWork(loadedRef.current, next, setNotice);
       setLoaded(next);
-      if (!("state" in next) || (!next.state.generating && !next.state.drafts.some((draft) => draft.work))) setPolling(false);
+      if ("state" in next && !next.state.generating && !next.state.drafts.some((draft) => draft.work)) setPolling(false);
     }, 2000);
     const stop = setTimeout(() => setPolling(false), 10 * 60 * 1000);
     return () => {
@@ -82,9 +91,24 @@ export function ReviewDesk({ initial, initialNotice }: { initial: Loaded; initia
       clearInterval(timer);
       clearTimeout(stop);
     };
-  }, [polling]);
+  }, [busy, polling]);
 
-  async function run(path: string, body?: Record<string, string>) {
+  useEffect(() => {
+    if (busy || polling) return;
+    let stopped = false;
+    const timer = setInterval(async () => {
+      if (document.visibilityState !== "visible") return;
+      const next = await readState();
+      if (!stopped && next) setLoaded(next);
+    }, 30000);
+    return () => {
+      stopped = true;
+      clearInterval(timer);
+    };
+  }, [busy, polling]);
+
+  async function run(path: string, body?: unknown) {
+    const target = noticeTarget(path);
     setPending(path);
     try {
       const response = await fetch(path, {
@@ -94,16 +118,16 @@ export function ReviewDesk({ initial, initialNotice }: { initial: Loaded; initia
         credentials: "same-origin",
       });
       const payload = await response.json().catch(() => null);
-      setNotice(reviewNotice(payload, response.ok));
+      const code = reviewNotice(payload, response.ok);
+      const text = NOTICES[code] || code;
+      if (target.scope === "page") setNotice(text);
+      else setNotes((current) => ({ ...current, [target.id]: text }));
       if (payload?.reason === "rendering" || payload?.reason === "publishing" || payload?.reason === "generating") setPolling(true);
       const next = await readState();
-      if (next) {
-        noteFinishedWork(loadedRef.current, next, setNotice);
-        setLoaded(next);
-        if ("state" in next && next.state.drafts.some((draft) => draft.work)) setPolling(true);
-      }
+      if (next) setLoaded(next);
     } catch {
-      setNotice("esuat");
+      if (target.scope === "page") setNotice(NOTICES.esuat);
+      else setNotes((current) => ({ ...current, [target.id]: NOTICES.esuat }));
     } finally {
       setPending("");
     }
@@ -111,34 +135,41 @@ export function ReviewDesk({ initial, initialNotice }: { initial: Loaded; initia
 
   return (
     <>
-      {notice ? <p>{NOTICES[notice] || "The action failed."}</p> : null}
+      <style>{`
+        @media (max-width: 720px) {
+          .today-layout { grid-template-columns: 1fr !important; }
+          .slot-sheet { position: fixed; inset: 0; background: #16120c; z-index: 5; overflow: auto; padding: 16px; }
+        }
+      `}</style>
+      {notice ? <p>{notice}</p> : null}
       {!loaded.authenticated ? <Login onSuccess={async () => {
         const next = await readState();
         if (next) setLoaded(next);
       }} onNotice={setNotice} /> : null}
       {loaded.authenticated && "error" in loaded ? <p>{loaded.error}</p> : null}
       {loaded.authenticated && "state" in loaded ? (
-        <Queue state={loaded.state} pending={pending} onRun={run} onSignedOut={() => setLoaded({ authenticated: false })} onNotice={setNotice} />
+        <>
+          <Header state={loaded.state} onRun={run} onSignedOut={() => setLoaded({ authenticated: false })} />
+          <Health state={loaded.state} />
+          <NeedsYou state={loaded.state} onOpen={(id) => { setSelected(id); setTab("today"); }} />
+          <p>
+            <button type="button" disabled={pending !== ""} onClick={() => run("/api/social/v1/social/ensure")}>Generate drafts</button>
+          </p>
+          <nav style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            {TABS.map((name) => (
+              <button key={name} type="button" onClick={() => setTab(name)} style={{ fontWeight: tab === name ? 700 : 400 }}>{name}</button>
+            ))}
+          </nav>
+          {tab === "today" ? <Today state={loaded.state} selected={selected} notes={notes} onSelect={setSelected} onRun={run} /> : null}
+          {tab === "week" ? <Week state={loaded.state} onSelect={(id) => { setSelected(id); setTab("today"); }} onRun={run} /> : null}
+          {tab === "drafts" ? <Drafts state={loaded.state} pending={pending} notes={notes} notices={NOTICES} onRun={run} /> : null}
+          {tab === "rules" ? <Rules state={loaded.state} onRun={run} /> : null}
+          {tab === "activity" ? <Activity state={loaded.state} /> : null}
+          {tab === "published" ? <Published state={loaded.state} onRun={run} /> : null}
+        </>
       ) : null}
     </>
   );
-}
-
-function noteFinishedWork(previous: Loaded, next: Loaded, setNotice: (notice: string) => void) {
-  if (!("state" in previous) || !("state" in next)) return;
-  if (previous.state.generating && !next.state.generating) setNotice("generated");
-  for (const before of previous.state.drafts) {
-    if (!before.work) continue;
-    const after = next.state.drafts.find((item) => item.id === before.id);
-    if (after?.work) continue;
-    if (before.work.activity === "publishing") {
-      const publication = after?.publications?.find((item) => item.postUrl || item.status === "published" || item.status === "failed");
-      if (publication?.postUrl || publication?.status === "published") setNotice("published");
-      else if (publication?.status === "failed") setNotice("instagram");
-    } else if (before.work.activity === "rendering" && after?.status === "failed") {
-      setNotice(after.failureReason === "narration" ? "narration" : "esuat");
-    }
-  }
 }
 
 async function readState(): Promise<Loaded | null> {
@@ -171,156 +202,5 @@ function Login({ onSuccess, onNotice }: { onSuccess: () => Promise<void>; onNoti
       </label>
       <button type="submit">Sign in</button>
     </form>
-  );
-}
-
-function Queue({
-  state,
-  pending,
-  onRun,
-  onSignedOut,
-  onNotice,
-}: {
-  state: SocialState;
-  pending: string;
-  onRun: (path: string, body?: Record<string, string>) => Promise<void>;
-  onSignedOut: () => void;
-  onNotice: (notice: string) => void;
-}) {
-  const source = state.source.ok
-    ? `Horoscope published for ${state.source.localDate}.`
-    : `Today's source: ${state.source.reason || "incomplete"}${state.source.today ? ` (${state.source.today})` : ""}.`;
-  return (
-    <>
-      <p>{source}</p>
-      <p>
-        Global pause: {state.settings.pauseAll ? "yes" : "no"}. Autopublish:{" "}
-        {state.settings.autopublishEnabled ? "yes" : "no"}. TikTok direct: {state.capabilities.tiktok.directPost}.
-      </p>
-      <p style={{ display: "flex", gap: 8 }}>
-        <button type="button" disabled={pending !== ""} onClick={() => onRun("/api/social/v1/social/ensure")}>Generate drafts</button>
-        <button
-          type="button"
-          onClick={async () => {
-            const response = await fetch("/api/social/session", {
-              method: "POST",
-              headers: { accept: "application/json", "content-type": "application/x-www-form-urlencoded" },
-              body: new URLSearchParams({ logout: "1" }),
-              credentials: "same-origin",
-            });
-            if (response.ok) onSignedOut();
-            else onNotice("esuat");
-          }}
-        >
-          Sign out
-        </button>
-      </p>
-      {orderedDrafts(state.drafts, state.source.localDate).map((draft) => (
-        <Draft key={draft.id} draft={draft} today={state.source.localDate} pending={pending} onRun={onRun} />
-      ))}
-    </>
-  );
-}
-
-function Draft({
-  draft,
-  today,
-  pending,
-  onRun,
-}: {
-  draft: SocialDraft;
-  today?: string;
-  pending: string;
-  onRun: (path: string, body?: Record<string, string>) => Promise<void>;
-}) {
-  const action = (name: string) => `/api/social/v1/social/drafts/${encodeURIComponent(draft.id)}/${name}`;
-  const earlier = Boolean(today && draft.sourceDate && draft.sourceDate !== today);
-  return (
-    <section style={{ borderTop: "1px solid #d7be8a", marginTop: 28, paddingTop: 16 }}>
-      <h2 style={{ fontSize: 22 }}>
-        {draftDateLabel(draft.sourceDate)} · {draft.campaign} · {draft.platform} · {draft.format}
-      </h2>
-      <p style={{ margin: "8px 0 16px", padding: "10px 12px", borderLeft: "3px solid #d7be8a", fontWeight: 600 }}>
-        {earlier
-          ? `This draft is for ${draftDateLabel(draft.sourceDate)}. Use the ${draftDateLabel(today)} draft above.`
-          : draftStateCopy(draft)}
-      </p>
-      {draft.work ? <p>{workLabel(draft.work)}</p> : pending.startsWith(action("")) ? <p>Working.</p> : null}
-      {draft.blocking?.filter((item) => item !== "cancelled").length ? (
-        <p>{draft.blocking.filter((item) => item !== "cancelled").map((item) => NOTICES[item] || item).join(" ")}</p>
-      ) : null}
-      <PhonePreview draft={draft} />
-      <p><strong>{draft.hook}</strong></p>
-      {(draft.script || []).map((line) => (
-        <p key={line}>{line}</p>
-      ))}
-      <p>{draft.caption}</p>
-      <p>{(draft.hashtags || []).join(" ")}</p>
-      <p><a href={draft.ctaUrl} style={{ color: "#d7be8a" }}>{draft.ctaUrl}</a></p>
-      {(draft.sources || []).map((source) => (
-        <p key={source.name}>
-          <strong>{source.name}: </strong>
-          {source.text}
-        </p>
-      ))}
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-          const data = new FormData(event.currentTarget);
-          onRun(action("edit"), {
-            hook: String(data.get("hook") || ""),
-            caption: String(data.get("caption") || ""),
-          });
-        }}
-      >
-        <label>
-          Hook
-          <textarea name="hook" defaultValue={draft.hook} rows={2} style={field} />
-        </label>
-        <label>
-          Caption
-          <textarea name="caption" defaultValue={draft.caption} rows={4} style={{ ...field, marginBottom: 8 }} />
-        </label>
-        <button type="submit" disabled={pending !== ""}>Edit</button>
-      </form>
-      <p style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-        <button type="button" disabled={pending !== "" || Boolean(draft.work)} onClick={() => onRun(action("approve"))}>Approve</button>
-        <button type="button" disabled={pending !== "" || Boolean(draft.work)} onClick={() => onRun(action("reject"))}>Reject</button>
-        <button type="button" disabled={pending !== "" || Boolean(draft.work)} onClick={() => onRun(action("regenerate"))}>Regenerate</button>
-        {draft.format === "caption" ? null : (
-          <button type="button" disabled={pending !== "" || Boolean(draft.work)} onClick={() => onRun(action("render"))}>
-            {draft.work?.activity === "rendering" ? workButton(draft.work, "Render") : "Render"}
-          </button>
-        )}
-        {draft.platform === "instagram" && ["carousel", "vertical_video"].includes(draft.format) && (["rendered", "queued", "exported"].includes(draft.status) || (draft.status === "cancelled" && (draft.publications || []).some((item) => item.status === "removed"))) ? (
-          <button type="button" disabled={pending !== "" || Boolean(draft.work)} onClick={() => onRun(action("publish"))}>
-            {draft.work?.activity === "publishing" ? workButton(draft.work, "Publish to Instagram") : "Publish to Instagram"}
-          </button>
-        ) : null}
-        <button type="button" disabled={pending !== "" || Boolean(draft.work)} onClick={() => onRun(action("schedule"))}>Schedule</button>
-        <button type="button" disabled={pending !== "" || Boolean(draft.work)} onClick={() => onRun(action("export"))}>Download package</button>
-      </p>
-      {(draft.publications || []).flatMap((publication) => [
-        publication.status === "removed" ? (
-          <span key={`${publication.id}-removed`} style={{ display: "inline-block", marginRight: 12 }}>
-            The Instagram post was deleted.
-          </span>
-        ) : null,
-        publication.postUrl ? (
-          <a key={`${publication.id}-post`} href={publication.postUrl} style={{ display: "inline-block", marginRight: 12, color: "#d7be8a" }}>
-            Instagram post
-          </a>
-        ) : null,
-        ...(publication.files || []).map((file) => (
-          <a
-            key={`${publication.id}-${file}`}
-            href={`/api/social/v1/social/export?id=${encodeURIComponent(publication.id)}&file=${encodeURIComponent(file)}`}
-            style={{ display: "inline-block", marginRight: 12, color: "#d7be8a" }}
-          >
-            {file}
-          </a>
-        )),
-      ])}
-    </section>
   );
 }

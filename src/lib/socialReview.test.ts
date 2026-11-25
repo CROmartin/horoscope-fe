@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { draftDateLabel, draftStateCopy, orderedDrafts, reviewNotice, workButton, workLabel } from "./socialReviewClient";
+import { automationSubtitle, draftDateLabel, draftStateCopy, formatPreviewRun, noticeTarget, orderedDrafts, reviewNotice, slotButtons, slotSentence, workButton, workLabel } from "./socialReviewClient";
 import { reviewLocation } from "./socialReview";
 
 test("review redirect uses the public host instead of the bind address", () => {
@@ -45,6 +45,29 @@ test("a started render is not reported as a plain save", () => {
   assert.equal(draftStateCopy({ status: "cancelled" }), "Cancelled. Click Regenerate to bring it back, then approve and render.");
   assert.equal(reviewNotice({ ok: true }, true), "salvat");
   assert.equal(reviewNotice({ ok: false, reason: "caption" }, false), "caption");
+});
+
+test("automation copy follows the engine and the slot", () => {
+  const now = new Date("2026-11-26T07:00:00.000Z");
+  assert.equal(automationSubtitle(null, now), "Instagram posts go out only when you press Publish.");
+  assert.equal(automationSubtitle({ automation: { enabled: false, dryRun: true } }, now), "Instagram posts go out only when you press Publish.");
+  assert.equal(automationSubtitle({ automation: { enabled: true, dryRun: true } }, now), "Dry run: the schedule logs what it would publish, and nothing is sent.");
+  assert.equal(automationSubtitle({ automation: { enabled: true, dryRun: false } }, now), "Automation is live. Approved posts go out on the schedule.");
+  assert.match(automationSubtitle({ automation: { enabled: true, dryRun: false, pausedUntil: "2099-01-01T00:00:00.000Z" } }, now), /paused/);
+  const states = ["planned", "preparing", "blocked", "waiting_approval", "rendering", "ready", "held", "publishing", "published", "missed", "skipped", "failed", "needs_attention", "off", "reminder"];
+  for (const state of states) {
+    assert.ok(slotSentence({ state, localTime: "08:00", forDate: "2026-11-26" }).length > 8);
+    assert.ok(Array.isArray(slotButtons(state)));
+  }
+  assert.deepEqual(slotButtons("ready"), ["Publish now", "Hold", "Skip", "Move", "Swap", "Preview"]);
+  assert.equal(slotButtons("publishing").length, 0);
+  assert.equal(slotSentence({ state: "publishing", dryRun: true, reason: "Would publish now" }), "Dry run: Would publish now");
+  assert.equal(
+    formatPreviewRun({ forDate: "2026-11-26", localTime: "08:00", timezone: "Europe/Bucharest", dueAt: "2026-11-26T06:00:00.000Z" }, "Europe/Zagreb"),
+    "Thu 26 Nov, 08:00 Bucharest (07:00 your time)"
+  );
+  assert.equal(noticeTarget("/api/social/v1/social/drafts/daily-carousel-2026-11-26-carousel-a/publish").scope, "draft");
+  assert.equal(noticeTarget("/api/social/v1/social/ensure").scope, "page");
 });
 
 test("review redirect stays on localhost during local development", () => {
