@@ -53,7 +53,7 @@ export function Rules({ state, onRun }: { state: SocialState; onRun: (path: stri
 
   return (
     <div>
-      {(state.rules || []).map((rule) => (
+      {(state.rules || []).filter((rule) => !rule.archivedAt).map((rule) => (
         <p key={rule.id} className="desk-row">
           <span>
             <strong>{rule.name || "Untitled"}</strong> {rule.enabled ? "on" : "off"} · {rule.content.campaign} {rule.content.kind} · {rule.days.join(" ")} · {rule.times.join(", ")}
@@ -74,13 +74,12 @@ export function Rules({ state, onRun }: { state: SocialState; onRun: (path: stri
             className="desk-quiet"
             onClick={async () => {
               if (!rule.id) return;
-              if (!window.confirm(`Archive ${rule.name || rule.id}? It will stop and stay off.`)) return;
-              await fetch(`/api/social/v1/social/schedules/${encodeURIComponent(rule.id)}`, { method: "DELETE", credentials: "same-origin" });
+              if (!window.confirm(`Delete ${rule.name || "this rule"}? Future slots are removed.`)) return;
               if (draft.id === rule.id) setDraft(empty);
-              await onRun("/api/social/v1/social/automation", {});
+              await onRun(`/api/social/v1/social/schedules/${encodeURIComponent(rule.id)}`, {}, "DELETE");
             }}
           >
-            Archive
+            Delete
           </button>
         </p>
       ))}

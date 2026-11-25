@@ -128,6 +128,7 @@ export type SocialRule = {
   approval: string;
   late: { mode: string; minutes: number };
   skipDates?: string[];
+  archivedAt?: string | null;
 };
 
 export type SocialEvent = {

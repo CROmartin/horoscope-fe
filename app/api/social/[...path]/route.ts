@@ -54,3 +54,13 @@ export async function POST(request: Request, context: RouteContext) {
   const { path } = await context.params;
   return forward(request, path);
 }
+
+export async function PUT(request: Request, context: RouteContext) {
+  const { path } = await context.params;
+  return forward(request, path);
+}
+
+export async function DELETE(request: Request, context: RouteContext) {
+  const { path } = await context.params;
+  return forward(request, path);
+}
