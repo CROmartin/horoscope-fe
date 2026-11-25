@@ -34,6 +34,8 @@ export function llmsTxt() {
       "horoscopul zilei pentru animalele zodiacului chinezesc"
     ),
     link("/compatibilitate", "Compatibilitate", "compatibilitatea dintre două zodii occidentale"),
+    link("/tarot", "Tarot", "cartea ta de azi, cartea tuturor și cele 78 de cărți"),
+    link("/tarot/cartea-ta", "Cartea ta de azi", "trage o carte pentru reflecția zilei, pe telefonul tău"),
     link("/tarot/cartea-zilei", "Cartea de tarot a zilei", "cartea publicată pentru ziua curentă"),
     "",
     "## Cele 12 zodii",

@@ -35,6 +35,13 @@ const SUIT_INK: Record<TarotSuit, string> = {
   pentacles: "#2b5a38",
 };
 
+const SUIT_WASH: Record<TarotSuit, string> = {
+  wands: "rgba(255, 138, 101, 0.16)",
+  cups: "rgba(124, 198, 214, 0.2)",
+  swords: "rgba(195, 181, 255, 0.22)",
+  pentacles: "rgba(168, 198, 134, 0.2)",
+};
+
 function starPoints(cx: number, cy: number, outer: number, inner: number, points = 8) {
   const pairs: string[] = [];
   for (let index = 0; index < points; index += 1) {
@@ -511,22 +518,33 @@ export function TarotCardArt({
   arcana,
   suit,
   number,
+  label,
+  caption,
 }: {
   face: "back" | "face";
   arcana: "major" | "minor";
   suit: TarotSuit | null;
   number: number;
+  label?: string;
+  caption?: string;
 }) {
   const raw = useId().replace(/:/g, "");
   const velvet = `velvet-${raw}`;
   const paper = `paper-${raw}`;
   const foil = `foil-${raw}`;
   const lattice = `lattice-${raw}`;
-  const label = indexLabel(arcana, number);
+  const indexText = indexLabel(arcana, number);
   const ink = suit ? SUIT_INK[suit] : "#3c2b1e";
 
   return (
-    <svg viewBox="0 0 300 520" width="100%" height="100%" aria-hidden="true">
+    <svg
+      viewBox="0 0 300 520"
+      width="100%"
+      height="100%"
+      role={label ? "img" : "presentation"}
+      aria-hidden={label ? undefined : true}
+      aria-label={label}
+    >
       <defs>
         <radialGradient id={velvet} cx="50%" cy="42%" r="70%">
           <stop offset="0%" stopColor="#3a2142" />
@@ -586,13 +604,14 @@ export function TarotCardArt({
         <>
           <rect x="2" y="2" width="296" height="516" rx="22" fill={`url(#${paper})`} />
           <rect x="12" y="12" width="276" height="496" rx="16" fill="none" stroke="#6e522c" strokeWidth="2.2" />
+          {suit ? <rect x="28" y="118" width="244" height="300" rx="20" fill={SUIT_WASH[suit]} /> : null}
           <rect x="20" y="20" width="260" height="480" rx="12" fill="none" stroke={`url(#${foil})`} strokeWidth="1.5" />
           <Flourish x={30} y={30} turn={0} />
           <Flourish x={270} y={30} turn={90} />
           <Flourish x={270} y={490} turn={180} />
           <Flourish x={30} y={490} turn={270} />
           <text x="40" y="68" fill={ink} fontSize="20" fontFamily="Georgia, 'Times New Roman', serif">
-            {label}
+            {indexText}
           </text>
           {suit ? (
             <g transform="translate(48 92) scale(0.34)">
@@ -601,9 +620,21 @@ export function TarotCardArt({
           ) : null}
           {arcana === "major" ? (
             <g>
-              <circle cx="150" cy="260" r="100" fill="#6e522c" opacity="0.04" />
+              <circle cx="150" cy="260" r="108" fill="#1a1028" opacity="0.06" />
               <circle cx="150" cy="260" r="100" fill="none" stroke="#b8893e" strokeWidth="1.5" />
               <circle cx="150" cy="260" r="90" fill="none" stroke="#e7d3ae" strokeWidth="1" />
+              {Array.from({ length: 12 }, (_, index) => {
+                const angle = (index / 12) * Math.PI * 2 - Math.PI / 2;
+                return (
+                  <circle
+                    key={index}
+                    cx={150 + Math.cos(angle) * 112}
+                    cy={260 + Math.sin(angle) * 112}
+                    r={index % 3 === 0 ? 2.4 : 1.3}
+                    fill="#b8893e"
+                  />
+                );
+              })}
               <g transform="translate(150 262) scale(1.08) translate(-150 -246)">
                 <MajorEmblem number={number} />
               </g>
@@ -612,6 +643,11 @@ export function TarotCardArt({
           {arcana === "minor" && suit && number === 1 ? <Ace suit={suit} /> : null}
           {arcana === "minor" && suit && number > 1 && number <= 10 ? <Pips suit={suit} number={number} /> : null}
           {arcana === "minor" && suit && number > 10 ? <Court suit={suit} /> : null}
+          {caption ? (
+            <text x="150" y="424" textAnchor="middle" fill={ink} fontSize="13" fontFamily="Georgia, 'Times New Roman', serif">
+              {caption}
+            </text>
+          ) : null}
           <path d="M96 448 H204" stroke="#b8893e" strokeWidth="1.15" />
           <rect x="146" y="444" width="8" height="8" transform="rotate(45 150 448)" fill="#b8893e" />
         </>

@@ -14,14 +14,7 @@ export async function generateMetadata() {
   const meta = pageMetadata(text.tarotPersonalTitle, text.tarotPersonalDescription, PERSONAL_PATH, {
     locale,
   });
-  return {
-    ...meta,
-    robots: {
-      index: false,
-      follow: true,
-      googleBot: { index: false, follow: true },
-    },
-  };
+  return meta;
 }
 
 export default function Page() {

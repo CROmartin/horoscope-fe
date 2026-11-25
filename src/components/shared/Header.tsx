@@ -191,7 +191,7 @@ const Language = styled.div`
 const LINK_KEYS = [
   { href: "/", key: "home" },
   { href: "/horoscop-zilnic", key: "dailyNav" },
-  { href: "/tarot/cartea-ta", key: "tarot" },
+  { href: "/tarot", key: "tarot" },
   { href: "/horoscop-saptamanal", key: "weekly" },
   { href: "/compatibilitate", key: "compatibility" },
   { href: "/horoscop", key: "signs" },
@@ -201,7 +201,7 @@ const LINK_KEYS = [
 function isCurrent(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
   if (href === "/compatibilitate") return pathname === href || pathname.startsWith(`${href}/`);
-  if (href === "/tarot/cartea-ta") return pathname.startsWith("/tarot/");
+  if (href === "/tarot") return pathname === "/tarot" || pathname.startsWith("/tarot/");
   return pathname === href;
 }
 
@@ -253,7 +253,7 @@ function Header() {
             aria-current={isCurrent(pathname, item.href) ? "page" : undefined}
             onClick={() => {
               if (isCurrent(pathname, item.href)) setOpen(false);
-              if (item.href === "/tarot/cartea-ta") {
+              if (item.href === "/tarot") {
                 trackEvent("feature_card_clicked", { feature: "tarot", location: "header" });
               }
             }}

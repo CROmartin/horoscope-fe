@@ -135,6 +135,13 @@ const Bar = styled.aside`
   gap: 8px 16px;
   padding: 10px 5vw 12px;
   overflow: auto;
+
+  @media (max-width: 720px) {
+    gap: 6px;
+    padding: 8px 12px;
+    font-size: 13px;
+    line-height: 1.3;
+  }
   background: #111111;
   border-top: 1px solid #d7be8a;
   color: #f5efe6;

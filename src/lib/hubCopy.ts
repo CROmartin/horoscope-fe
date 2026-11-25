@@ -105,10 +105,10 @@ const ro = {
   linkChinese: "zodiacul chinezesc",
   linkDayHoroscope: "horoscopul zilei",
   tarotLead:
-    "Alege o carte și descoperă o interpretare simbolică pentru reflecția de astăzi. Nu trebuie să creezi un cont.",
+    "Respiră. Gândește-te la ce te frământă. Apoi alege o carte. Nu trebuie să creezi un cont.",
   tarotHowH2: "Cum funcționează?",
   tarotHowP:
-    "Tragi o carte și citești semnificația ei, alături de o întrebare care te poate ajuta să privești ziua din alt unghi. Interpretarea este de divertisment și nu prezice cu certitudine evenimente viitoare.",
+    "Tragi o carte pe zi, pe telefonul acesta. Tarotul e o oglindă, nu un oracol: o invitație la reflecție, pentru distracție.",
   tarotSharedPrompt: "Vrei să vezi și selecția comună a zilei? Explorează",
   tarotSharedLink: "cartea de tarot a zilei",
   tarotDailyNote:
@@ -237,10 +237,10 @@ const en = {
   linkChinese: "Chinese zodiac",
   linkDayHoroscope: "today's horoscope",
   tarotLead:
-    "Choose a card and read a symbolic interpretation for today's reflection. You do not need an account.",
+    "Breathe. Think of what is on your mind. Then choose a card. You do not need an account.",
   tarotHowH2: "How does it work?",
   tarotHowP:
-    "You draw a card and read its meaning, along with a question that can help you look at the day from another angle. The interpretation is entertainment and does not predict future events with certainty.",
+    "You draw one card a day, on this phone. Tarot is a mirror, not an oracle: an invitation to reflect, for fun.",
   tarotSharedPrompt: "Want the shared card of the day as well? Open",
   tarotSharedLink: "today's tarot card",
   tarotDailyNote:

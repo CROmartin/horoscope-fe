@@ -21,12 +21,19 @@ test("a Chinese daily reading uses the Chinese hub", () => {
 test("a dated tarot card sits under the daily tarot page", () => {
   assert.deepEqual(breadcrumbTrail("/tarot/cartea-zilei", "Cartea de tarot a zilei"), [
     { name: "Acasă", path: "/" },
+    { name: "Tarot", path: "/tarot" },
     { name: "Cartea de tarot a zilei", path: "/tarot/cartea-zilei" },
   ]);
   assert.deepEqual(breadcrumbTrail("/tarot/cartea-zilei/2026-10-21", "21 octombrie 2026"), [
     { name: "Acasă", path: "/" },
+    { name: "Tarot", path: "/tarot" },
     { name: "Cartea de tarot a zilei", path: "/tarot/cartea-zilei" },
     { name: "21 octombrie 2026", path: "/tarot/cartea-zilei/2026-10-21" },
+  ]);
+  assert.deepEqual(breadcrumbTrail("/tarot/cartea-ta", "Cartea ta de azi"), [
+    { name: "Acasă", path: "/" },
+    { name: "Tarot", path: "/tarot" },
+    { name: "Cartea ta de azi", path: "/tarot/cartea-ta" },
   ]);
 });
 

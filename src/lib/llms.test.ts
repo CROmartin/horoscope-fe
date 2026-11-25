@@ -11,11 +11,13 @@ test("llms.txt highlights the public hubs and leaves private pages out", () => {
   assert.equal(text.includes("https://horoscopzodii.ro/horoscop-chinezesc"), true);
   assert.equal(text.includes("https://horoscopzodii.ro/compatibilitate)"), true);
   assert.equal(text.includes("https://horoscopzodii.ro/tarot/cartea-zilei"), true);
+  assert.equal(text.includes("https://horoscopzodii.ro/tarot)"), true);
+  assert.equal(text.includes("https://horoscopzodii.ro/tarot/cartea-ta"), true);
   assert.equal(text.includes("https://horoscopzodii.ro/berbec"), true);
   assert.equal(text.includes("https://horoscopzodii.ro/horoscop-anual-sobolan"), true);
   assert.equal(llmsPathsArePublic(), true);
   assert.equal(new Set(llmsPaths()).size, llmsPaths().length);
-  for (const blocked of ["/tarot/cartea-ta", "/compatibilitate/", "/dezabonare", "/api", "/horoscop-2027"]) {
+  for (const blocked of ["/compatibilitate/", "/dezabonare", "/api", "/horoscop-2027"]) {
     assert.equal(text.includes(`https://horoscopzodii.ro${blocked}`), false);
   }
   assert.equal(text.includes("lunar"), false);

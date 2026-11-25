@@ -15,10 +15,14 @@ test("the sitemap lists public horoscope pages and leaves private links out", ()
   assert.equal(paths.some((path) => path.includes("lunar")), false);
   assert.equal(paths.includes("/compatibilitate"), true);
   assert.equal(paths.includes("/tarot/cartea-zilei"), true);
+  assert.equal(paths.includes("/tarot"), true);
+  assert.equal(paths.includes("/tarot/cartea-ta"), true);
+  assert.equal(paths.includes("/tarot/carti/trei-de-sabii"), true);
+  assert.equal(paths.filter((path) => path.startsWith("/tarot/carti/")).length, 78);
+  assert.equal(paths.includes("/tarot/trecut-prezent-viitor"), false);
   assert.equal(paths.includes("/compatibilitate/berbec-leu"), true);
   assert.equal(paths.filter((path) => path.startsWith("/compatibilitate/")).length, 78);
   assert.equal(paths.some((path) => path.startsWith("/tarot/cartea-zilei/")), false);
-  assert.equal(paths.includes("/tarot/cartea-ta"), false);
   for (const path of paths) assert.equal(isDisallowed(path), false);
   assert.deepEqual(DISALLOWED_PREFIXES, ["/dezabonare", "/preferinte-email", "/api", "/social-review"]);
   assert.equal(isDisallowed("/dezabonare/token"), true);
