@@ -29,7 +29,7 @@ export function Drafts({
         <section key={title}>
           <h2 style={{ fontSize: 18 }}>{title}</h2>
           {drafts.map((draft) => (
-            <Draft key={draft.id} draft={draft} today={state.source.localDate} pending={pending} note={notes[draft.id]} notices={notices} account={state.health?.instagram?.account || "the Instagram account"} onRun={onRun} />
+            <Draft key={draft.id} draft={draft} drafts={state.drafts} today={state.source.localDate} pending={pending} note={notes[draft.id]} notices={notices} account={state.health?.instagram?.account || "the Instagram account"} onRun={onRun} />
           ))}
         </section>
       ))}
@@ -39,6 +39,7 @@ export function Drafts({
 
 export function Draft({
   draft,
+  drafts,
   today,
   pending,
   note,
@@ -47,6 +48,7 @@ export function Draft({
   onRun,
 }: {
   draft: SocialDraft;
+  drafts?: SocialDraft[];
   today?: string;
   pending: string;
   note?: string;
@@ -57,16 +59,19 @@ export function Draft({
   const action = (name: string) => `/api/social/v1/social/drafts/${encodeURIComponent(draft.id)}/${name}`;
   const earlier = Boolean(today && draft.sourceDate && draft.sourceDate !== today);
   const live = (draft.publications || []).find((item) => item.live && item.status !== "removed");
+  const part = carouselPart(draft, drafts || []);
+  const publishRest = Boolean(live && part?.laterUnpublished);
   const next = nextDraftStep(draft, Boolean(live));
   const more = moreDraftSteps(draft, next?.name);
   function runStep(name: string) {
-    if (name === "publish" && live && !window.confirm(`This publishes another post on ${account}. The earlier post stays up.`)) return;
-    onRun(action(name), name === "publish" && live ? { confirmRepost: "1" } : undefined);
+    if (name === "publish" && live && !publishRest && !window.confirm(`This publishes another post on ${account}. The earlier post stays up.`)) return;
+    onRun(action(name), name === "publish" && live && !publishRest ? { confirmRepost: "1" } : undefined);
   }
   return (
     <section style={{ borderTop: "1px solid #d7be8a", marginTop: 28, paddingTop: 16 }}>
       <h2 style={{ fontSize: 22 }}>
         {draftDateLabel(draft.sourceDate)} · {draft.campaign} · {draft.platform} · {draft.format}
+        {part ? ` · Part ${part.index} of ${part.total}` : ""}
       </h2>
       {live ? (
         <p>
@@ -106,7 +111,7 @@ export function Draft({
             disabled={pending !== "" || Boolean(draft.work)}
             onClick={() => runStep(next.name)}
           >
-            {draft.work ? workButton(draft.work, next.label) : next.label}
+            {draft.work ? workButton(draft.work, next.label) : publishRest ? "Publish the rest" : next.label}
           </button>
         </p>
       ) : null}
@@ -122,6 +127,22 @@ export function Draft({
       </details>
     </section>
   );
+}
+
+function carouselPart(draft: SocialDraft, drafts: SocialDraft[]) {
+  const date = draft.sourceDate;
+  const siblings = drafts.filter(
+    (item) =>
+      item.format === "carousel" &&
+      item.platform === draft.platform &&
+      item.campaign === draft.campaign &&
+      item.sourceDate === date
+  );
+  if (siblings.length < 2) return null;
+  const ordered = [...siblings].sort((a, b) => a.id.localeCompare(b.id));
+  const index = ordered.findIndex((item) => item.id === draft.id);
+  const laterUnpublished = ordered.slice(index + 1).some((item) => !(item.publications || []).some((post) => post.live && post.status !== "removed"));
+  return { index: index + 1, total: ordered.length, laterUnpublished };
 }
 
 function canPublish(draft: SocialDraft) {

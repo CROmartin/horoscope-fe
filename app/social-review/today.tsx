@@ -1,6 +1,6 @@
 "use client";
 
-import { primarySlotAction, slotButtons, slotColor, slotSentence, type SocialDraft, type SocialSlot, type SocialState } from "@/lib/socialReviewClient";
+import { slotButtons, slotColor, slotPublishLabel, slotSentence, type SocialDraft, type SocialSlot, type SocialState } from "@/lib/socialReviewClient";
 import { PhonePreview } from "./preview";
 
 const ACTIONS: Record<string, string> = {
@@ -10,6 +10,7 @@ const ACTIONS: Record<string, string> = {
   Release: "release",
   Swap: "swap",
   "Publish now": "publish-now",
+  "Publish the rest": "publish-now",
   Retry: "retry",
   Resolve: "resolve",
   "Undo skip": "undo-skip",
@@ -41,6 +42,7 @@ export function Today({
           <SlotCard
             key={slot.id}
             slot={slot}
+            drafts={state.drafts}
             note={notes[slot.id]}
             account={account}
             selected={slot.id === selected}
@@ -57,8 +59,8 @@ export function Today({
         {draft ? <PhonePreview draft={draft} /> : <p>Select a slot to preview it.</p>}
         {current ? (
           <>
-            <p>{slotSentence(current)}</p>
-            <SlotActions slot={current} labels={panelLabels(current)} account={account} onSelect={() => onSelect(current.id)} onRun={onRun} />
+            <p>{slotLine(current, state.drafts)}</p>
+            <SlotActions slot={current} drafts={state.drafts} labels={panelLabels(current, state.drafts)} account={account} onSelect={() => onSelect(current.id)} onRun={onRun} />
           </>
         ) : null}
       </aside>
@@ -68,6 +70,7 @@ export function Today({
 
 export function SlotCard({
   slot,
+  drafts,
   note,
   account,
   selected,
@@ -75,39 +78,51 @@ export function SlotCard({
   onRun,
 }: {
   slot: SocialSlot;
+  drafts: SocialDraft[];
   note?: string;
   account: string;
   selected?: boolean;
   onSelect: () => void;
   onRun: (path: string, body?: Record<string, string>) => Promise<void>;
 }) {
-  const primary = primarySlotAction(slot.state);
+  const primary = slotPublishLabel(slot, drafts);
   return (
     <article className={selected ? "desk-card is-on" : "desk-card"} style={{ borderTop: `3px solid ${slotColor(slot.state)}` }}>
       <button type="button" className="desk-quiet" onClick={onSelect} style={{ textDecoration: "none", padding: 0 }}>
         <strong>{slot.localTime}</strong> · {slot.campaign} {slot.kind} · {slot.platform}
       </button>
-      <p>{slotSentence(slot)}</p>
+      <p>{slotLine(slot, drafts)}</p>
       {note ? <p>{note}</p> : null}
-      {primary && !selected ? <SlotActions slot={slot} labels={[primary]} account={account} onSelect={onSelect} onRun={onRun} /> : null}
+      {primary && !selected ? <SlotActions slot={slot} drafts={drafts} labels={[primary]} account={account} onSelect={onSelect} onRun={onRun} /> : null}
     </article>
   );
 }
 
-function panelLabels(slot: SocialSlot) {
-  const primary = primarySlotAction(slot.state);
-  const rest = slotButtons(slot.state).filter((label) => label !== primary);
+function slotLine(slot: SocialSlot, drafts: SocialDraft[]) {
+  if (slotPublishLabel(slot, drafts) === "Publish the rest") {
+    return "The first part is already on Instagram. Publish the rest sends the next post.";
+  }
+  return slotSentence(slot);
+}
+
+function panelLabels(slot: SocialSlot, drafts: SocialDraft[]) {
+  const primary = slotPublishLabel(slot, drafts);
+  const rest = slotButtons(slot.state)
+    .map((label) => (primary === "Publish the rest" && (label === "Publish now" || label === "Retry") ? "Publish the rest" : label))
+    .filter((label, index, labels) => labels.indexOf(label) === index && label !== primary);
   return primary ? [primary, ...rest] : rest;
 }
 
 function SlotActions({
   slot,
+  drafts,
   labels,
   account,
   onSelect,
   onRun,
 }: {
   slot: SocialSlot;
+  drafts: SocialDraft[];
   labels: string[];
   account: string;
   onSelect: () => void;
@@ -115,15 +130,17 @@ function SlotActions({
 }) {
   if (!labels.length) return null;
   const path = (action: string) => `/api/social/v1/social/slots/${encodeURIComponent(slot.id)}/${action}`;
+  const primary = slotPublishLabel(slot, drafts);
   return (
     <p className="desk-row">
       {labels.map((label) => (
         <button
           key={label}
           type="button"
-          className={label === primarySlotAction(slot.state) ? "desk-primary" : "desk-quiet"}
+          className={label === primary ? "desk-primary" : "desk-quiet"}
           onClick={() => {
             if (label === "Preview" || label === "View") return onSelect();
+            if (label === "Publish the rest" && !window.confirm(`Publish the remaining cards now on ${account}? The first post stays up.`)) return;
             if ((label === "Publish now" || label === "Retry") && !window.confirm(`Publish this slot now on ${account}?`)) return;
             if (label === "Move") {
               const localTime = window.prompt("New time HH:MM", slot.localTime);

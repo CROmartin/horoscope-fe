@@ -225,6 +225,22 @@ export function primarySlotAction(state: string) {
   return label && slotButtons(state).includes(label) ? label : null;
 }
 
+export function slotPublishLabel(
+  slot: { state: string; draftIds?: string[] },
+  drafts: { id: string; publications?: { live?: boolean; status: string }[] }[]
+) {
+  const primary = primarySlotAction(slot.state);
+  if (primary !== "Publish now" && primary !== "Retry") return primary;
+  const rows = (slot.draftIds || []).flatMap((id) => {
+    const draft = drafts.find((item) => item.id === id);
+    return draft ? [draft] : [];
+  });
+  const live = (draft: { publications?: { live?: boolean; status: string }[] }) =>
+    (draft.publications || []).some((post) => post.live && post.status !== "removed");
+  if (rows.some((draft) => live(draft)) && rows.some((draft) => !live(draft))) return "Publish the rest";
+  return primary;
+}
+
 export function slotSentence(slot: { state: string; reason?: string; localTime?: string; forDate?: string; dryRun?: boolean }) {
   const reason = slot.reason || defaultSlotSentence(slot);
   if (slot.dryRun && !reason.startsWith("Dry run:")) return `Dry run: ${reason}`;
