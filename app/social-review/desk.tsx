@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { reviewNotice, workButton, workLabel, type SocialDraft, type SocialState } from "@/lib/socialReviewClient";
+import { draftStateCopy, reviewNotice, workButton, workLabel, type SocialDraft, type SocialState } from "@/lib/socialReviewClient";
 import { PhonePreview } from "./preview";
 
 const NOTICES: Record<string, string> = {
   salvat: "Saved.",
+  regenerated: "Rebuilt from the published text. This draft is waiting for approval.",
   auth: "The secret was not accepted.",
   placeholder: "The text contains a forbidden example.",
   span: "A quote is not in the published horoscope.",
@@ -228,8 +229,11 @@ function Draft({
   return (
     <section style={{ borderTop: "1px solid #d7be8a", marginTop: 28, paddingTop: 16 }}>
       <h2 style={{ fontSize: 22 }}>
-        {draft.campaign} · {draft.platform} · {draft.format} · {draft.status}
+        {draft.campaign} · {draft.platform} · {draft.format}
       </h2>
+      <p style={{ margin: "8px 0 16px", padding: "10px 12px", borderLeft: "3px solid #d7be8a", fontWeight: 600 }}>
+        {draftStateCopy(draft)}
+      </p>
       {draft.work ? <p>{workLabel(draft.work)}</p> : pending.startsWith(action("")) ? <p>Working.</p> : null}
       {draft.blocking?.length ? <p>Blocks: {draft.blocking.join(", ")}</p> : null}
       <PhonePreview draft={draft} />

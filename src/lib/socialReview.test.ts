@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { reviewNotice, workButton, workLabel } from "./socialReviewClient";
+import { draftStateCopy, reviewNotice, workButton, workLabel } from "./socialReviewClient";
 import { reviewLocation } from "./socialReview";
 
 test("review redirect uses the public host instead of the bind address", () => {
@@ -24,6 +24,10 @@ test("a started render is not reported as a plain save", () => {
   assert.equal(workLabel({ activity: "rendering", done: 37, total: 100, percent: 37, label: "Rendering the video" }), "Rendering the video (37%).");
   assert.equal(workButton({ activity: "publishing", done: 4, total: 12, percent: 33 }, "Publish to Instagram"), "Publishing… 33%");
   assert.equal(workLabel(null), null);
+  assert.equal(reviewNotice({ ok: true, reason: "regenerated" }, true), "regenerated");
+  assert.equal(draftStateCopy({ status: "needs_review" }), "Waiting for approval. Approve it, then render the pictures.");
+  assert.equal(draftStateCopy({ status: "rendered", platform: "instagram", format: "carousel" }), "Rendered. The pictures are ready to publish.");
+  assert.equal(draftStateCopy({ status: "rendered", platform: "tiktok", format: "vertical_video" }), "Rendered. The pictures are ready.");
   assert.equal(reviewNotice({ ok: true }, true), "salvat");
   assert.equal(reviewNotice({ ok: false, reason: "caption" }, false), "caption");
 });

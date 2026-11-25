@@ -2,8 +2,35 @@ export function reviewNotice(body: { ok?: boolean; reason?: string } | null, res
   if (body?.reason === "rendering") return "rendering";
   if (body?.reason === "publishing") return "publishing";
   if (body?.reason === "published") return "published";
+  if (body?.reason === "regenerated") return "regenerated";
   if (body) return body.ok ? "salvat" : String(body.reason || "esuat");
   return responseOk ? "salvat" : "esuat";
+}
+
+export function draftStateCopy(draft: {
+  status: string;
+  platform?: string;
+  format?: string;
+  failureReason?: string;
+  work?: SocialWork | null;
+}) {
+  if (draft.work?.activity === "rendering") return "Rendering the pictures now.";
+  if (draft.work?.activity === "publishing") return "Publishing to Instagram now.";
+  if (draft.status === "needs_review") return "Waiting for approval. Approve it, then render the pictures.";
+  if (draft.status === "approved") return "Approved. Render it to make the pictures.";
+  if (draft.status === "rendered") {
+    const canPublish = draft.platform === "instagram" && (draft.format === "carousel" || draft.format === "vertical_video");
+    return canPublish ? "Rendered. The pictures are ready to publish." : "Rendered. The pictures are ready.";
+  }
+  if (draft.status === "failed") {
+    return draft.failureReason === "narration"
+      ? "Failed. The voice was not recorded, so the video was not saved."
+      : "Failed. The last render did not finish.";
+  }
+  if (draft.status === "cancelled") return "Cancelled.";
+  if (draft.status === "queued") return "Queued.";
+  if (draft.status === "exported") return "Exported. The files are ready to download.";
+  return draft.status;
 }
 
 export type SocialWork = {
