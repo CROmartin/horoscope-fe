@@ -9,6 +9,64 @@ function mediaSrc(id: string) {
   return `/api/social/v1/social/asset?id=${encodeURIComponent(id)}`;
 }
 
+function lookSlides(draft: SocialDraft) {
+  const cards = (draft.cards || []).map((card) => {
+    if (card.role === "pair") return { title: `${card.leftName || ""} și ${card.rightName || ""}`.trim(), body: "" };
+    if (card.role === "sign" || card.role === "affirmation") return { title: card.name || "", body: card.body || "" };
+    return { title: card.title || card.name || "", body: card.headline || card.body || "" };
+  }).filter((card) => card.title || card.body);
+  if (cards.length) return cards;
+  return (draft.highlights || []).map((item) => ({ title: item.name || "", body: item.sourceSpan || item.text || "" })).filter((item) => item.title || item.body);
+}
+
+function LookPost({ caption, slides }: { caption: string; slides: { title: string; body: string }[] }) {
+  const [index, setIndex] = useState(0);
+  const [shift, setShift] = useState(0);
+  const drag = useRef<{ x: number } | null>(null);
+  const slide = slides[Math.min(index, slides.length - 1)] || { title: "", body: "" };
+
+  function go(next: number) {
+    setIndex(Math.max(0, Math.min(slides.length - 1, next)));
+  }
+
+  return (
+    <div style={{ width: "100%", maxWidth: "100%", minWidth: 0, overflow: "hidden", background: "#16120c", color: "#f4ecdd", fontFamily: "Georgia, serif" }}>
+      <Stage width={4} height={5}>
+        <div
+          style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", padding: "28px 22px", boxSizing: "border-box", touchAction: "none", cursor: "grab" }}
+          onPointerDown={(event) => {
+            if (event.button !== 0) return;
+            drag.current = { x: event.clientX };
+          }}
+          onPointerUp={(event) => {
+            if (!drag.current) return;
+            const delta = event.clientX - drag.current.x;
+            drag.current = null;
+            setShift(0);
+            if (delta <= -48) go(index + 1);
+            else if (delta >= 48) go(index - 1);
+          }}
+          onPointerCancel={() => {
+            drag.current = null;
+            setShift(0);
+          }}
+          onPointerMove={(event) => {
+            if (!drag.current) return;
+            setShift(event.clientX - drag.current.x);
+          }}
+        >
+          <div style={{ transform: `translateX(${shift}px)` }}>
+            <strong style={{ display: "block", color: "#d7be8a", fontSize: 22, lineHeight: 1.2 }}>{slide.title}</strong>
+            <p style={{ margin: "16px 0 0", fontSize: 16, lineHeight: 1.4 }}>{slide.body}</p>
+          </div>
+          {slides.length > 1 ? <span style={carouselCount}>{index + 1}/{slides.length}</span> : null}
+        </div>
+      </Stage>
+      <p style={{ margin: 0, padding: "12px 14px 16px", fontSize: 14, lineHeight: 1.35 }}>{caption}</p>
+    </div>
+  );
+}
+
 export function PhonePreview({ draft }: { draft: SocialDraft }) {
   const assets = draft.assets || [];
   const video = assets.find((asset) => asset.kind === "video");
@@ -16,8 +74,19 @@ export function PhonePreview({ draft }: { draft: SocialDraft }) {
     .filter((asset) => asset.kind === "still" || asset.kind === "preview")
     .slice()
     .sort((a, b) => a.id.localeCompare(b.id));
-  if (!video && stills.length === 0) return null;
+  const slides = lookSlides(draft);
+  if (!video && stills.length === 0 && slides.length === 0) return null;
   const reel = draft.format === "vertical_video";
+  if (!video && stills.length === 0) {
+    return (
+      <div style={{ width: PHONE_WIDTH, maxWidth: "100%", minWidth: 0, margin: "8px 0 36px" }}>
+        <p>A look at the scheduled post. These are not the pictures that will be posted.</p>
+        <Phone>
+          <LookPost caption={draft.caption} slides={slides} />
+        </Phone>
+      </div>
+    );
+  }
   return (
     <div style={{ width: PHONE_WIDTH, maxWidth: "100%", minWidth: 0, margin: "8px 0 36px" }}>
       <Phone>

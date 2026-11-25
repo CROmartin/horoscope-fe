@@ -95,6 +95,8 @@ export type SocialDraft = {
   blocking: string[];
   failureReason?: string;
   sources: { name: string; text: string }[];
+  cards?: { role?: string; title?: string; body?: string; name?: string; headline?: string; leftName?: string; rightName?: string }[];
+  highlights?: { name?: string; text?: string; sourceSpan?: string }[];
   assets: { id: string; kind: string; width?: number; height?: number }[];
   publications: { id: string; status: string; files: string[]; postUrl?: string | null; live?: boolean; publishedAt?: string | null; trigger?: string | null }[];
   work?: SocialWork | null;

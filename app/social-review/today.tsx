@@ -33,7 +33,7 @@ export function Today({
   const today = state.health?.source?.today || state.source.today || state.source.localDate;
   const slots = (state.slots || []).filter((slot) => !today || slot.forDate === today);
   const current = slots.find((slot) => slot.id === selected) || null;
-  const draft = current ? draftFor(state, current) : null;
+  const drafts = current ? draftsFor(state, current) : [];
   const account = state.health?.instagram?.account || "the Instagram account";
   return (
     <div className="today-layout" style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(280px, 420px)", gap: 24 }}>
@@ -56,7 +56,12 @@ export function Today({
         {current ? (
           <button type="button" className="desk-quiet" onClick={() => onSelect(null)}>Close</button>
         ) : null}
-        {draft ? <PhonePreview draft={draft} /> : <p>Select a slot to preview it.</p>}
+        {drafts.length ? drafts.map((item, index) => (
+          <div key={item.id}>
+            {drafts.length > 1 ? <p>Part {index + 1} of {drafts.length}</p> : null}
+            <PhonePreview draft={item} />
+          </div>
+        )) : <p>Select a slot to preview it.</p>}
         {current ? (
           <>
             <p>{slotLine(current, state.drafts)}</p>
@@ -161,7 +166,11 @@ function SlotActions({
   );
 }
 
-function draftFor(state: SocialState, slot: SocialSlot): SocialDraft | null {
-  const id = slot.draftIds?.[0];
-  return state.drafts.find((draft) => draft.id === id) || state.drafts.find((draft) => draft.sourceDate === slot.forDate && draft.campaign === slot.campaign) || null;
+function draftsFor(state: SocialState, slot: SocialSlot): SocialDraft[] {
+  const listed = (slot.draftIds || []).flatMap((id) => {
+    const draft = state.drafts.find((item) => item.id === id);
+    return draft ? [draft] : [];
+  });
+  if (listed.length) return listed;
+  return state.drafts.filter((draft) => draft.sourceDate === slot.forDate && draft.campaign === slot.campaign && draft.platform === slot.platform);
 }
