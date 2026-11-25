@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { draftStateCopy, reviewNotice, workButton, workLabel, type SocialDraft, type SocialState } from "@/lib/socialReviewClient";
+import { draftDateLabel, draftStateCopy, orderedDrafts, reviewNotice, workButton, workLabel, type SocialDraft, type SocialState } from "@/lib/socialReviewClient";
 import { PhonePreview } from "./preview";
 
 const NOTICES: Record<string, string> = {
   salvat: "Saved.",
   regenerated: "Rebuilt from the published text. This draft is waiting for approval.",
-  old_draft: "This draft is from an earlier day. Click Generate drafts for today's set.",
+  old_draft: "This draft is from an earlier day. Today's draft is at the top of the page.",
   generating: "Building today's drafts. They will appear on this page.",
   generated: "Today's drafts are ready.",
   auth: "The secret was not accepted.",
@@ -215,8 +215,8 @@ function Queue({
           Sign out
         </button>
       </p>
-      {state.drafts.map((draft) => (
-        <Draft key={draft.id} draft={draft} pending={pending} onRun={onRun} />
+      {orderedDrafts(state.drafts, state.source.localDate).map((draft) => (
+        <Draft key={draft.id} draft={draft} today={state.source.localDate} pending={pending} onRun={onRun} />
       ))}
     </>
   );
@@ -224,21 +224,26 @@ function Queue({
 
 function Draft({
   draft,
+  today,
   pending,
   onRun,
 }: {
   draft: SocialDraft;
+  today?: string;
   pending: string;
   onRun: (path: string, body?: Record<string, string>) => Promise<void>;
 }) {
   const action = (name: string) => `/api/social/v1/social/drafts/${encodeURIComponent(draft.id)}/${name}`;
+  const earlier = Boolean(today && draft.sourceDate && draft.sourceDate !== today);
   return (
     <section style={{ borderTop: "1px solid #d7be8a", marginTop: 28, paddingTop: 16 }}>
       <h2 style={{ fontSize: 22 }}>
-        {draft.campaign} · {draft.platform} · {draft.format}
+        {draftDateLabel(draft.sourceDate)} · {draft.campaign} · {draft.platform} · {draft.format}
       </h2>
       <p style={{ margin: "8px 0 16px", padding: "10px 12px", borderLeft: "3px solid #d7be8a", fontWeight: 600 }}>
-        {draftStateCopy(draft)}
+        {earlier
+          ? `This draft is for ${draftDateLabel(draft.sourceDate)}. Use the ${draftDateLabel(today)} draft above.`
+          : draftStateCopy(draft)}
       </p>
       {draft.work ? <p>{workLabel(draft.work)}</p> : pending.startsWith(action("")) ? <p>Working.</p> : null}
       {draft.blocking?.filter((item) => item !== "cancelled").length ? (

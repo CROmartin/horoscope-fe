@@ -54,6 +54,25 @@ export function workLabel(work: SocialWork | null | undefined) {
   return `${name}, ${work.done} of ${work.total} (${work.percent}%).`;
 }
 
+export function draftDateLabel(iso?: string) {
+  if (!iso || !/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso || "";
+  const [year, month, day] = iso.split("-").map(Number);
+  return new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", timeZone: "UTC" }).format(
+    new Date(Date.UTC(year, month - 1, day))
+  );
+}
+
+export function orderedDrafts<T extends { id: string; sourceDate?: string }>(drafts: T[], today?: string) {
+  return [...drafts].sort((a, b) => {
+    const rank = (date?: string) => (today && date === today ? 0 : 1);
+    const byToday = rank(a.sourceDate) - rank(b.sourceDate);
+    if (byToday) return byToday;
+    const byDate = (b.sourceDate || "").localeCompare(a.sourceDate || "");
+    if (byDate) return byDate;
+    return a.id.localeCompare(b.id);
+  });
+}
+
 export function workButton(work: SocialWork | null | undefined, idle: string) {
   if (!work) return idle;
   const name = work.activity === "publishing" ? "Publishing" : work.activity === "rendering" ? "Rendering" : "Working";
@@ -67,6 +86,7 @@ export type SocialDraft = {
   format: string;
   campaign: string;
   variant: string;
+  sourceDate?: string;
   hook: string;
   caption: string;
   script: string[];

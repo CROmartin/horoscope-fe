@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { draftStateCopy, reviewNotice, workButton, workLabel } from "./socialReviewClient";
+import { draftDateLabel, draftStateCopy, orderedDrafts, reviewNotice, workButton, workLabel } from "./socialReviewClient";
 import { reviewLocation } from "./socialReview";
 
 test("review redirect uses the public host instead of the bind address", () => {
@@ -27,6 +27,17 @@ test("a started render is not reported as a plain save", () => {
   assert.equal(workLabel(null), null);
   assert.equal(reviewNotice({ ok: true, reason: "regenerated" }, true), "regenerated");
   assert.equal(reviewNotice({ ok: false, reason: "old_draft" }, false), "old_draft");
+  assert.equal(draftDateLabel("2026-11-25"), "25 November");
+  assert.deepEqual(
+    orderedDrafts(
+      [
+        { id: "daily-carousel-2026-11-24-carousel-a", sourceDate: "2026-11-24" },
+        { id: "daily-carousel-2026-11-25-carousel-a", sourceDate: "2026-11-25" },
+      ],
+      "2026-11-25"
+    ).map((draft) => draft.id),
+    ["daily-carousel-2026-11-25-carousel-a", "daily-carousel-2026-11-24-carousel-a"]
+  );
   assert.equal(reviewNotice({ ok: true, reason: "generating" }, true), "generating");
   assert.equal(draftStateCopy({ status: "needs_review" }), "Waiting for approval. Approve it, then render the pictures.");
   assert.equal(draftStateCopy({ status: "rendered", platform: "instagram", format: "carousel" }), "Rendered. The pictures are ready to publish.");
