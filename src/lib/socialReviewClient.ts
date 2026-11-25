@@ -207,6 +207,23 @@ export function slotButtons(state: string) {
   return SLOT_BUTTONS[state] || [];
 }
 
+const PRIMARY_SLOT: Record<string, string> = {
+  ready: "Publish now",
+  missed: "Publish now",
+  failed: "Retry",
+  needs_attention: "Resolve",
+  held: "Release",
+  skipped: "Undo skip",
+  reminder: "Mark posted",
+  waiting_approval: "Approve",
+  published: "View",
+};
+
+export function primarySlotAction(state: string) {
+  const label = PRIMARY_SLOT[state];
+  return label && slotButtons(state).includes(label) ? label : null;
+}
+
 export function slotSentence(slot: { state: string; reason?: string; localTime?: string; forDate?: string; dryRun?: boolean }) {
   const reason = slot.reason || defaultSlotSentence(slot);
   if (slot.dryRun && !reason.startsWith("Dry run:")) return `Dry run: ${reason}`;

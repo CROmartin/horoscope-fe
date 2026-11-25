@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { automationSubtitle, draftDateLabel, draftStateCopy, formatPreviewRun, noticeTarget, orderedDrafts, reviewNotice, slotButtons, slotSentence, workButton, workLabel } from "./socialReviewClient";
+import { automationSubtitle, draftDateLabel, draftStateCopy, formatPreviewRun, noticeTarget, orderedDrafts, primarySlotAction, reviewNotice, slotButtons, slotSentence, workButton, workLabel } from "./socialReviewClient";
 import { reviewLocation } from "./socialReview";
 
 test("review redirect uses the public host instead of the bind address", () => {
@@ -60,6 +60,8 @@ test("automation copy follows the engine and the slot", () => {
     assert.ok(Array.isArray(slotButtons(state)));
   }
   assert.deepEqual(slotButtons("ready"), ["Publish now", "Hold", "Skip", "Move", "Swap", "Preview"]);
+  assert.equal(primarySlotAction("ready"), "Publish now");
+  assert.equal(primarySlotAction("planned"), null);
   assert.equal(slotButtons("publishing").length, 0);
   assert.equal(slotSentence({ state: "publishing", dryRun: true, reason: "Would publish now" }), "Dry run: Would publish now");
   assert.equal(

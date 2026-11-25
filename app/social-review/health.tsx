@@ -30,7 +30,7 @@ export function NeedsYou({ state, onOpen }: { state: SocialState; onOpen: (id: s
     <div>
       {state.health?.instagram?.authError ? <p>Instagram refused the access token. No Instagram slot will publish until it is replaced.</p> : null}
       {open.map((slot) => (
-        <p key={slot.id}><button type="button" onClick={() => onOpen(slot.id)}>{slot.localTime} {slot.reason || slot.state}</button></p>
+        <p key={slot.id}><button type="button" className="desk-quiet" onClick={() => onOpen(slot.id)}>{slot.localTime} {slot.reason || slot.state}</button></p>
       ))}
     </div>
   );

@@ -107,12 +107,12 @@ export function ReviewDesk({ initial, initialNotice }: { initial: Loaded; initia
     };
   }, [busy, polling]);
 
-  async function run(path: string, body?: unknown) {
+  async function run(path: string, body?: unknown, method = "POST") {
     const target = noticeTarget(path);
     setPending(path);
     try {
       const response = await fetch(path, {
-        method: "POST",
+        method,
         headers: { accept: "application/json", "content-type": "application/json" },
         body: JSON.stringify(body || {}),
         credentials: "same-origin",
@@ -136,6 +136,80 @@ export function ReviewDesk({ initial, initialNotice }: { initial: Loaded; initia
   return (
     <>
       <style>{`
+        .desk-primary, .desk-quiet, .desk-mode button, .desk-tabs button, .desk-chip {
+          font: inherit;
+          cursor: pointer;
+        }
+        .desk-primary {
+          background: #f3efe6;
+          color: #16120c;
+          border: 0;
+          border-radius: 999px;
+          padding: 8px 14px;
+        }
+        .desk-quiet {
+          background: transparent;
+          color: #d7be8a;
+          border: 0;
+          padding: 8px 2px;
+          text-decoration: underline;
+          text-underline-offset: 3px;
+        }
+        .desk-quiet:disabled, .desk-primary:disabled { opacity: 0.5; cursor: default; }
+        .desk-mode {
+          display: inline-flex;
+          border: 1px solid #d7be8a;
+          border-radius: 999px;
+          overflow: hidden;
+        }
+        .desk-mode button {
+          background: transparent;
+          color: #f3efe6;
+          border: 0;
+          padding: 8px 14px;
+        }
+        .desk-mode button.is-on { background: #f3efe6; color: #16120c; }
+        .desk-tabs {
+          display: flex;
+          gap: 18px;
+          flex-wrap: wrap;
+          margin: 8px 0 20px;
+          border-bottom: 1px solid #3a3228;
+        }
+        .desk-tabs button {
+          background: transparent;
+          color: #f3efe6;
+          border: 0;
+          border-bottom: 2px solid transparent;
+          padding: 8px 0 10px;
+        }
+        .desk-tabs button.is-on { border-bottom-color: #f3efe6; font-weight: 700; }
+        .desk-chip {
+          background: transparent;
+          color: #f3efe6;
+          border: 1px solid #3a3228;
+          border-radius: 999px;
+          padding: 6px 10px;
+          margin: 0 6px 6px 0;
+        }
+        .desk-chip.is-on { background: #f3efe6; color: #16120c; border-color: #f3efe6; }
+        .desk-card { margin-top: 16px; padding: 12px 0; border-top: 1px solid #3a3228; }
+        .desk-card.is-on { background: #241e18; padding: 12px; }
+        .desk-field {
+          display: block;
+          width: 100%;
+          box-sizing: border-box;
+          color: #16120c;
+          background: #fff;
+          border: 0;
+          border-radius: 6px;
+          padding: 8px;
+          margin: 6px 0 12px;
+          font: inherit;
+        }
+        .desk-more { margin-top: 8px; }
+        .desk-more summary { cursor: pointer; color: #d7be8a; }
+        .desk-row { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
         @media (max-width: 720px) {
           .today-layout { grid-template-columns: 1fr !important; }
           .slot-sheet { position: fixed; inset: 0; background: #16120c; z-index: 5; overflow: auto; padding: 16px; }
@@ -153,11 +227,11 @@ export function ReviewDesk({ initial, initialNotice }: { initial: Loaded; initia
           <Health state={loaded.state} />
           <NeedsYou state={loaded.state} onOpen={(id) => { setSelected(id); setTab("today"); }} />
           <p>
-            <button type="button" disabled={pending !== ""} onClick={() => run("/api/social/v1/social/ensure")}>Generate drafts</button>
+            <button type="button" className="desk-quiet" disabled={pending !== ""} onClick={() => run("/api/social/v1/social/ensure")}>Generate drafts</button>
           </p>
-          <nav style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+          <nav className="desk-tabs">
             {TABS.map((name) => (
-              <button key={name} type="button" onClick={() => setTab(name)} style={{ fontWeight: tab === name ? 700 : 400 }}>{name}</button>
+              <button key={name} type="button" className={tab === name ? "is-on" : undefined} onClick={() => setTab(name)}>{name}</button>
             ))}
           </nav>
           {tab === "today" ? <Today state={loaded.state} selected={selected} notes={notes} onSelect={setSelected} onRun={run} /> : null}
@@ -200,7 +274,7 @@ function Login({ onSuccess, onNotice }: { onSuccess: () => Promise<void>; onNoti
         Generation secret
         <input name="secret" type="password" autoComplete="current-password" required style={{ ...field, margin: "8px 0 16px" }} />
       </label>
-      <button type="submit">Sign in</button>
+      <button type="submit" className="desk-primary">Sign in</button>
     </form>
   );
 }

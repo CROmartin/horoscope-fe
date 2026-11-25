@@ -57,6 +57,12 @@ export function Draft({
   const action = (name: string) => `/api/social/v1/social/drafts/${encodeURIComponent(draft.id)}/${name}`;
   const earlier = Boolean(today && draft.sourceDate && draft.sourceDate !== today);
   const live = (draft.publications || []).find((item) => item.live && item.status !== "removed");
+  const next = nextDraftStep(draft, Boolean(live));
+  const more = moreDraftSteps(draft, next?.name);
+  function runStep(name: string) {
+    if (name === "publish" && live && !window.confirm(`This publishes another post on ${account}. The earlier post stays up.`)) return;
+    onRun(action(name), name === "publish" && live ? { confirmRepost: "1" } : undefined);
+  }
   return (
     <section style={{ borderTop: "1px solid #d7be8a", marginTop: 28, paddingTop: 16 }}>
       <h2 style={{ fontSize: 22 }}>
@@ -90,35 +96,60 @@ export function Draft({
       >
         <label>Hook<textarea name="hook" defaultValue={draft.hook} rows={2} style={field} /></label>
         <label>Caption<textarea name="caption" defaultValue={draft.caption} rows={4} style={{ ...field, marginBottom: 8 }} /></label>
-        <button type="submit" disabled={pending !== ""}>Edit</button>
+        <button type="submit" className="desk-primary" disabled={pending !== ""}>Save</button>
       </form>
-      <p style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-        <button type="button" disabled={pending !== "" || Boolean(draft.work)} onClick={() => onRun(action("approve"))}>Approve</button>
-        <button type="button" disabled={pending !== "" || Boolean(draft.work)} onClick={() => onRun(action("reject"))}>Reject</button>
-        <button type="button" disabled={pending !== "" || Boolean(draft.work)} onClick={() => onRun(action("regenerate"))}>Regenerate</button>
-        {draft.format === "caption" ? null : (
-          <button type="button" disabled={pending !== "" || Boolean(draft.work)} onClick={() => onRun(action("render"))}>
-            {draft.work?.activity === "rendering" ? workButton(draft.work, "Render") : "Render"}
-          </button>
-        )}
-        {draft.platform === "instagram" && ["carousel", "vertical_video"].includes(draft.format) && (["rendered", "queued", "exported"].includes(draft.status) || (draft.status === "cancelled" && (draft.publications || []).some((item) => item.status === "removed"))) ? (
+      {next ? (
+        <p>
           <button
             type="button"
+            className="desk-primary"
             disabled={pending !== "" || Boolean(draft.work)}
-            onClick={() => {
-              if (live && !window.confirm(`This publishes another post on ${account}. The earlier post stays up.`)) return;
-              onRun(action("publish"), live ? { confirmRepost: "1" } : undefined);
-            }}
+            onClick={() => runStep(next.name)}
           >
-            {draft.work?.activity === "publishing" ? workButton(draft.work, "Publish to Instagram") : live ? "Publish again" : "Publish to Instagram"}
+            {draft.work ? workButton(draft.work, next.label) : next.label}
           </button>
-        ) : null}
-        <button type="button" disabled={pending !== "" || Boolean(draft.work)} onClick={() => onRun(action("schedule"))}>Schedule</button>
-        <button type="button" disabled={pending !== "" || Boolean(draft.work)} onClick={() => onRun(action("export"))}>Download package</button>
-        {draft.platform === "tiktok" ? (
-          <button type="button" disabled={pending !== ""} onClick={() => onRun(action("mark-posted"))}>Mark posted</button>
-        ) : null}
-      </p>
+        </p>
+      ) : null}
+      <details className="desk-more">
+        <summary>More</summary>
+        <p className="desk-row">
+          {more.map((step) => (
+            <button key={step.name} type="button" className="desk-quiet" disabled={pending !== "" || Boolean(draft.work)} onClick={() => runStep(step.name)}>
+              {step.label}
+            </button>
+          ))}
+        </p>
+      </details>
     </section>
   );
+}
+
+function canPublish(draft: SocialDraft) {
+  return draft.platform === "instagram" && ["carousel", "vertical_video"].includes(draft.format);
+}
+
+function nextDraftStep(draft: SocialDraft, live: boolean): { name: string; label: string } | null {
+  const removed = (draft.publications || []).some((item) => item.status === "removed");
+  if (draft.status === "cancelled" && !(removed && canPublish(draft))) return { name: "regenerate", label: "Regenerate" };
+  if (draft.status === "needs_review") return { name: "approve", label: "Approve" };
+  if ((draft.status === "approved" || draft.status === "failed") && draft.format !== "caption") return { name: "render", label: "Render" };
+  if (canPublish(draft) && (["rendered", "queued", "exported"].includes(draft.status) || (draft.status === "cancelled" && removed))) {
+    return { name: "publish", label: live ? "Publish again" : "Publish to Instagram" };
+  }
+  if (draft.platform === "tiktok" && ["rendered", "queued", "exported"].includes(draft.status)) return { name: "mark-posted", label: "Mark posted" };
+  return null;
+}
+
+function moreDraftSteps(draft: SocialDraft, primary?: string) {
+  const steps = [
+    { name: "approve", label: "Approve" },
+    { name: "reject", label: "Reject" },
+    { name: "regenerate", label: "Regenerate" },
+    ...(draft.format === "caption" ? [] : [{ name: "render", label: "Render" }]),
+    ...(canPublish(draft) ? [{ name: "publish", label: "Publish to Instagram" }] : []),
+    { name: "schedule", label: "Schedule" },
+    { name: "export", label: "Download package" },
+    ...(draft.platform === "tiktok" ? [{ name: "mark-posted", label: "Mark posted" }] : []),
+  ];
+  return steps.filter((step) => step.name !== primary);
 }

@@ -12,7 +12,9 @@ export function Header({
   onSignedOut: () => void;
 }) {
   const account = state.health?.instagram?.account || "the connected Instagram account";
-  const mode = state.health?.engine?.mode || (state.automation?.enabled ? "live" : "off");
+  const automation = state.automation;
+  const paused = Boolean(automation?.pausedUntil && Date.parse(automation.pausedUntil) > Date.now());
+  const mode = !automation?.enabled ? "off" : automation?.dryRun === false ? "live" : "dry";
   async function automate(body: { enabled?: boolean; dryRun?: boolean; pausedUntil?: string | null }) {
     if (body.enabled === true && body.dryRun === false) {
       if (!window.confirm(`Switch automation to live on ${account}? Approved posts will be published.`)) return;
@@ -22,23 +24,27 @@ export function Header({
   return (
     <header>
       <p>{automationSubtitle(state)}</p>
-      <p>Automation: {mode}. Account: {account}.</p>
-      <p style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-        <button type="button" onClick={() => automate({ enabled: true, dryRun: false, pausedUntil: null })}>Live</button>
-        <button type="button" onClick={() => automate({ enabled: true, dryRun: true, pausedUntil: null })}>Dry run</button>
+      <p>Account: {account}.</p>
+      <div className="desk-row">
+        <div className="desk-mode" role="group" aria-label="Automation">
+          <button type="button" className={mode === "off" ? "is-on" : undefined} onClick={() => automate({ enabled: false })}>Off</button>
+          <button type="button" className={mode === "dry" ? "is-on" : undefined} onClick={() => automate({ enabled: true, dryRun: true, pausedUntil: null })}>Dry run</button>
+          <button type="button" className={mode === "live" ? "is-on" : undefined} onClick={() => automate({ enabled: true, dryRun: false, pausedUntil: null })}>Live</button>
+        </div>
         <button
           type="button"
+          className="desk-quiet"
           onClick={() => {
             const until = window.prompt("Pause until (ISO time), or leave empty to pause until you resume", "");
             if (until === null) return;
             automate({ enabled: true, pausedUntil: until || null });
           }}
         >
-          Pause until
+          {paused ? "Paused" : "Pause until"}
         </button>
-        <button type="button" onClick={() => automate({ enabled: false })}>Off</button>
         <button
           type="button"
+          className="desk-quiet"
           onClick={async () => {
             const response = await fetch("/api/social/session", {
               method: "POST",
@@ -51,7 +57,7 @@ export function Header({
         >
           Sign out
         </button>
-      </p>
+      </div>
     </header>
   );
 }

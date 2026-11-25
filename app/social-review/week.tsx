@@ -16,6 +16,7 @@ export function Week({
     <div>
       <button
         type="button"
+        className="desk-quiet"
         onClick={() => {
           const forDate = window.prompt("Date YYYY-MM-DD", days[0] || "");
           const localTime = window.prompt("Time HH:MM", "08:00");

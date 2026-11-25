@@ -16,7 +16,7 @@ export function Published({ state, onRun }: { state: SocialState; onRun: (path: 
           {post.campaign} · {post.platform} · {post.trigger || "manual"} · {post.publishedAt || ""}{" "}
           {post.postUrl ? <a href={post.postUrl} style={{ color: "#d7be8a" }}>{post.postUrl}</a> : null}
           {post.live ? (
-            <button type="button" onClick={() => onRun(`/api/social/v1/social/publications/${encodeURIComponent(post.id)}/check`)}>Mark removed</button>
+            <button type="button" className="desk-quiet" onClick={() => onRun(`/api/social/v1/social/publications/${encodeURIComponent(post.id)}/check`)}>Mark removed</button>
           ) : null}
         </p>
       ))}
