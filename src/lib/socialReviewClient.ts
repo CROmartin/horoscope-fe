@@ -13,7 +13,11 @@ export function draftStateCopy(draft: {
   format?: string;
   failureReason?: string;
   work?: SocialWork | null;
+  blocking?: string[];
 }) {
+  if (draft.blocking?.includes("cancelled") || draft.status === "cancelled") {
+    return "Cancelled. Click Regenerate to bring it back, then approve and render.";
+  }
   if (draft.work?.activity === "rendering") return "Rendering the pictures now.";
   if (draft.work?.activity === "publishing") return "Publishing to Instagram now.";
   if (draft.status === "needs_review") return "Waiting for approval. Approve it, then render the pictures.";
@@ -27,7 +31,6 @@ export function draftStateCopy(draft: {
       ? "Failed. The voice was not recorded, so the video was not saved."
       : "Failed. The last render did not finish.";
   }
-  if (draft.status === "cancelled") return "Cancelled.";
   if (draft.status === "queued") return "Queued.";
   if (draft.status === "exported") return "Exported. The files are ready to download.";
   return draft.status;

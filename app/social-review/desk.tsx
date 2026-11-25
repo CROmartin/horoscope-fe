@@ -15,7 +15,7 @@ const NOTICES: Record<string, string> = {
   "stale-content": "The published text changed. Review the draft again.",
   paused: "Export is paused.",
   channel_disabled: "That channel is off.",
-  cancelled: "The draft stays cancelled.",
+  cancelled: "Cancelled. Click Regenerate to bring it back, then approve and render.",
   needs_review: "The draft has to be approved again.",
   not_rendered: "Render the draft first.",
   not_approved: "Approve the draft first.",
@@ -235,7 +235,9 @@ function Draft({
         {draftStateCopy(draft)}
       </p>
       {draft.work ? <p>{workLabel(draft.work)}</p> : pending.startsWith(action("")) ? <p>Working.</p> : null}
-      {draft.blocking?.length ? <p>Blocks: {draft.blocking.join(", ")}</p> : null}
+      {draft.blocking?.filter((item) => item !== "cancelled").length ? (
+        <p>{draft.blocking.filter((item) => item !== "cancelled").map((item) => NOTICES[item] || item).join(" ")}</p>
+      ) : null}
       <PhonePreview draft={draft} />
       <p><strong>{draft.hook}</strong></p>
       {(draft.script || []).map((line) => (

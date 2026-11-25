@@ -28,6 +28,7 @@ test("a started render is not reported as a plain save", () => {
   assert.equal(draftStateCopy({ status: "needs_review" }), "Waiting for approval. Approve it, then render the pictures.");
   assert.equal(draftStateCopy({ status: "rendered", platform: "instagram", format: "carousel" }), "Rendered. The pictures are ready to publish.");
   assert.equal(draftStateCopy({ status: "rendered", platform: "tiktok", format: "vertical_video" }), "Rendered. The pictures are ready.");
+  assert.equal(draftStateCopy({ status: "cancelled" }), "Cancelled. Click Regenerate to bring it back, then approve and render.");
   assert.equal(reviewNotice({ ok: true }, true), "salvat");
   assert.equal(reviewNotice({ ok: false, reason: "caption" }, false), "caption");
 });
