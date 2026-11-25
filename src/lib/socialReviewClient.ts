@@ -227,6 +227,22 @@ export function primarySlotAction(state: string) {
   return label && slotButtons(state).includes(label) ? label : null;
 }
 
+export function slotCardActions(
+  slot: { state: string; draftIds?: string[] },
+  drafts: { id: string; publications?: { live?: boolean; status: string }[] }[]
+) {
+  const primary = slotPublishLabel(slot, drafts);
+  return primary && primary !== "Preview" ? ["Preview", primary] : ["Preview"];
+}
+
+export function draftsToPicture<T extends { status: string; format: string; assets?: { kind: string }[] }>(drafts: T[]) {
+  return drafts.filter((draft) => {
+    if (draft.status !== "approved" || draft.format === "caption") return false;
+    const assets = draft.assets || [];
+    return !assets.some((asset) => asset.kind === "video" || asset.kind === "still" || asset.kind === "preview");
+  });
+}
+
 export function slotPublishLabel(
   slot: { state: string; draftIds?: string[] },
   drafts: { id: string; publications?: { live?: boolean; status: string }[] }[]

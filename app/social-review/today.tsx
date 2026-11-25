@@ -1,6 +1,6 @@
 "use client";
 
-import { slotButtons, slotColor, slotPublishLabel, slotSentence, type SocialDraft, type SocialSlot, type SocialState } from "@/lib/socialReviewClient";
+import { draftsToPicture, slotButtons, slotCardActions, slotColor, slotPublishLabel, slotSentence, type SocialDraft, type SocialSlot, type SocialState } from "@/lib/socialReviewClient";
 import { PhonePreview } from "./preview";
 
 const ACTIONS: Record<string, string> = {
@@ -30,10 +30,10 @@ export function Today({
   onSelect: (id: string | null) => void;
   onRun: (path: string, body?: Record<string, string>) => Promise<void>;
 }) {
-  const today = state.health?.source?.today || state.source.today || state.source.localDate;
-  const slots = (state.slots || []).filter((slot) => !today || slot.forDate === today);
+  const today = state.source.localDate || state.health?.source?.storedDate || "";
+  const slots = (state.slots || []).filter((slot) => slot.forDate === today || slot.id === selected);
   const current = slots.find((slot) => slot.id === selected) || null;
-  const drafts = current ? draftsFor(state, current) : [];
+  const drafts = current ? draftsFor(state.drafts, current) : [];
   const account = state.health?.instagram?.account || "the Instagram account";
   return (
     <div className="today-layout" style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(280px, 420px)", gap: 24 }}>
@@ -61,7 +61,7 @@ export function Today({
             {drafts.length > 1 ? <p>Part {index + 1} of {drafts.length}</p> : null}
             <PhonePreview draft={item} />
           </div>
-        )) : <p>Select a slot to preview it.</p>}
+        )) : current ? <p>This day's posts are not built yet. Preview does not publish.</p> : <p>Select a slot to preview it.</p>}
         {current ? (
           <>
             <p>{slotLine(current, state.drafts)}</p>
@@ -90,7 +90,7 @@ export function SlotCard({
   onSelect: () => void;
   onRun: (path: string, body?: Record<string, string>) => Promise<void>;
 }) {
-  const primary = slotPublishLabel(slot, drafts);
+  const labels = selected ? ["Preview"] : slotCardActions(slot, drafts);
   return (
     <article className={selected ? "desk-card is-on" : "desk-card"} style={{ borderTop: `3px solid ${slotColor(slot.state)}` }}>
       <button type="button" className="desk-quiet" onClick={onSelect} style={{ textDecoration: "none", padding: 0 }}>
@@ -98,7 +98,7 @@ export function SlotCard({
       </button>
       <p>{slotLine(slot, drafts)}</p>
       {note ? <p>{note}</p> : null}
-      {primary && !selected ? <SlotActions slot={slot} drafts={drafts} labels={[primary]} account={account} onSelect={onSelect} onRun={onRun} /> : null}
+      <SlotActions slot={slot} drafts={drafts} labels={labels} account={account} onSelect={onSelect} onRun={onRun} />
     </article>
   );
 }
@@ -142,9 +142,20 @@ function SlotActions({
         <button
           key={label}
           type="button"
-          className={label === primary ? "desk-primary" : "desk-quiet"}
+          className={label === primary || (label === "Preview" && !primary) ? "desk-primary" : "desk-quiet"}
           onClick={() => {
-            if (label === "Preview" || label === "View") return onSelect();
+            if (label === "Preview" || label === "View") {
+              onSelect();
+              if (label === "View") return;
+              const targets = draftsToPicture(draftsFor(drafts, slot));
+              if (!targets.length) return;
+              void (async () => {
+                for (const draft of targets) {
+                  await onRun(`/api/social/v1/social/drafts/${encodeURIComponent(draft.id)}/render`);
+                }
+              })();
+              return;
+            }
             if (label === "Publish the rest" && !window.confirm(`Publish the remaining cards now on ${account}? The first post stays up.`)) return;
             if ((label === "Publish now" || label === "Retry") && !window.confirm(`Publish this slot now on ${account}?`)) return;
             if (label === "Move") {
@@ -166,11 +177,11 @@ function SlotActions({
   );
 }
 
-function draftsFor(state: SocialState, slot: SocialSlot): SocialDraft[] {
+function draftsFor(drafts: SocialDraft[], slot: SocialSlot): SocialDraft[] {
   const listed = (slot.draftIds || []).flatMap((id) => {
-    const draft = state.drafts.find((item) => item.id === id);
+    const draft = drafts.find((item) => item.id === id);
     return draft ? [draft] : [];
   });
   if (listed.length) return listed;
-  return state.drafts.filter((draft) => draft.sourceDate === slot.forDate && draft.campaign === slot.campaign && draft.platform === slot.platform);
+  return drafts.filter((draft) => draft.sourceDate === slot.forDate && draft.campaign === slot.campaign && draft.platform === slot.platform);
 }

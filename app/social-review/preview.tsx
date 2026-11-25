@@ -78,9 +78,10 @@ export function PhonePreview({ draft }: { draft: SocialDraft }) {
   if (!video && stills.length === 0 && slides.length === 0) return null;
   const reel = draft.format === "vertical_video";
   if (!video && stills.length === 0) {
+    const waiting = draft.status === "needs_review" || draft.status === "cancelled";
     return (
       <div style={{ width: PHONE_WIDTH, maxWidth: "100%", minWidth: 0, margin: "8px 0 36px" }}>
-        <p>A look at the scheduled post. These are not the pictures that will be posted.</p>
+        <p>{waiting ? "The pictures are made after you approve this post." : "Preview makes the pictures that will be posted. It does not publish."}</p>
         <Phone>
           <LookPost caption={draft.caption} slides={slides} />
         </Phone>
