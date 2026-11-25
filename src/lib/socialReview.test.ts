@@ -79,9 +79,10 @@ test("automation copy follows the engine and the slot", () => {
       { status: "needs_review", format: "carousel", assets: [] },
       { status: "approved", format: "carousel", assets: [] },
       { status: "approved", format: "carousel", assets: [{ kind: "still" }] },
+      { status: "rendered", format: "vertical_video", assets: [] },
       { status: "approved", format: "caption", assets: [] },
     ]).map((draft) => `${draft.status}:${draft.format}`),
-    ["approved:carousel"]
+    ["approved:carousel", "rendered:vertical_video"]
   );
   assert.equal(slotButtons("publishing").length, 0);
   assert.equal(slotSentence({ state: "publishing", dryRun: true, reason: "Would publish now" }), "Dry run: Would publish now");

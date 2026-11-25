@@ -237,7 +237,8 @@ export function slotCardActions(
 
 export function draftsToPicture<T extends { status: string; format: string; assets?: { kind: string }[] }>(drafts: T[]) {
   return drafts.filter((draft) => {
-    if (draft.status !== "approved" || draft.format === "caption") return false;
+    if (draft.format === "caption") return false;
+    if (!["approved", "rendered", "queued", "exported"].includes(draft.status)) return false;
     const assets = draft.assets || [];
     return !assets.some((asset) => asset.kind === "video" || asset.kind === "still" || asset.kind === "preview");
   });
