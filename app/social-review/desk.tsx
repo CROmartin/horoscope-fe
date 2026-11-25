@@ -7,6 +7,9 @@ import { PhonePreview } from "./preview";
 const NOTICES: Record<string, string> = {
   salvat: "Saved.",
   regenerated: "Rebuilt from the published text. This draft is waiting for approval.",
+  old_draft: "This draft is from an earlier day. Click Generate drafts for today's set.",
+  generating: "Building today's drafts. They will appear on this page.",
+  generated: "Today's drafts are ready.",
   auth: "The secret was not accepted.",
   placeholder: "The text contains a forbidden example.",
   span: "A quote is not in the published horoscope.",
@@ -49,7 +52,8 @@ export function ReviewDesk({ initial, initialNotice }: { initial: Loaded; initia
   const [pending, setPending] = useState("");
   const [polling, setPolling] = useState(
     initialNotice === "rendering" ||
-      (initial.authenticated && "state" in initial && initial.state.drafts.some((draft) => draft.work))
+      initialNotice === "generating" ||
+      (initial.authenticated && "state" in initial && (initial.state.generating || initial.state.drafts.some((draft) => draft.work)))
   );
   const loadedRef = useRef(loaded);
   loadedRef.current = loaded;
@@ -70,7 +74,7 @@ export function ReviewDesk({ initial, initialNotice }: { initial: Loaded; initia
       if (stopped || !next) return;
       noteFinishedWork(loadedRef.current, next, setNotice);
       setLoaded(next);
-      if (!("state" in next) || !next.state.drafts.some((draft) => draft.work)) setPolling(false);
+      if (!("state" in next) || (!next.state.generating && !next.state.drafts.some((draft) => draft.work))) setPolling(false);
     }, 2000);
     const stop = setTimeout(() => setPolling(false), 10 * 60 * 1000);
     return () => {
@@ -91,7 +95,7 @@ export function ReviewDesk({ initial, initialNotice }: { initial: Loaded; initia
       });
       const payload = await response.json().catch(() => null);
       setNotice(reviewNotice(payload, response.ok));
-      if (payload?.reason === "rendering" || payload?.reason === "publishing") setPolling(true);
+      if (payload?.reason === "rendering" || payload?.reason === "publishing" || payload?.reason === "generating") setPolling(true);
       const next = await readState();
       if (next) {
         noteFinishedWork(loadedRef.current, next, setNotice);
@@ -122,6 +126,7 @@ export function ReviewDesk({ initial, initialNotice }: { initial: Loaded; initia
 
 function noteFinishedWork(previous: Loaded, next: Loaded, setNotice: (notice: string) => void) {
   if (!("state" in previous) || !("state" in next)) return;
+  if (previous.state.generating && !next.state.generating) setNotice("generated");
   for (const before of previous.state.drafts) {
     if (!before.work) continue;
     const after = next.state.drafts.find((item) => item.id === before.id);

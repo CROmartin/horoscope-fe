@@ -4,6 +4,8 @@ export function reviewNotice(body: { ok?: boolean; reason?: string } | null, res
   if (body?.reason === "published") return "published";
   if (body?.reason === "already_published") return "already_published";
   if (body?.reason === "regenerated") return "regenerated";
+  if (body?.reason === "generating") return "generating";
+  if (body?.reason === "old_draft") return "old_draft";
   if (body) return body.ok ? "salvat" : String(body.reason || "esuat");
   return responseOk ? "salvat" : "esuat";
 }
@@ -91,4 +93,5 @@ export type SocialState = {
   };
   source: { ok: boolean; reason?: string; localDate?: string; today?: string; date?: string };
   drafts: SocialDraft[];
+  generating?: boolean;
 };
